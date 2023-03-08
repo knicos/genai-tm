@@ -8,18 +8,18 @@ export const tfModel = atom<TeachableMobileNet | null>({
 
 export interface IClassification {
     label: string;
-    samples: [];
+    samples: HTMLImageElement[];
 };
 
 export const stateClassifications = atom<IClassification[]>({
     key: 'classifications',
     default: [
         {
-            label: 'Classification 1',
+            label: 'Class 1',
             samples: []
         },
         {
-            label: 'Classification 2',
+            label: 'Class 2',
             samples: []
         }
     ]
