@@ -5,7 +5,7 @@ import { useRecoilState } from "recoil";
 import { stateClassifications } from "../../state";
 
 export function Classifications() {
-    const [activeIndex, setActiveIndex] = useState(0);
+    const [activeIndex, setActiveIndex] = useState(-1);
     const [classes, setClasses] = useRecoilState(stateClassifications);
     return <div>
         {classes.map((c, ix) => <Classification

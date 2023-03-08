@@ -4,11 +4,12 @@ import { TeachableMobileNet } from '@teachablemachine/image';
 export const tfModel = atom<TeachableMobileNet | null>({
     key: 'tfmodel',
     default: null,
+    dangerouslyAllowMutability: true,
 });
 
 export interface IClassification {
     label: string;
-    samples: HTMLImageElement[];
+    samples: HTMLCanvasElement[];
 };
 
 export const stateClassifications = atom<IClassification[]>({
@@ -23,4 +24,9 @@ export const stateClassifications = atom<IClassification[]>({
             samples: []
         }
     ]
+});
+
+export const trainingData = atom<IClassification[]>({
+    key: 'trainingdata',
+    default: []
 });

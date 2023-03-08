@@ -21,7 +21,7 @@ export function Classification({index, name, active, onActivate}: Props) {
             <h1>{name}</h1>
         </header>
         {(active) ? <Webcam capture={true} interval={10000} onCapture={(image) => {
-            image.width = 64;
+            image.style.width = "58px";
             imageListRef.current?.appendChild(image);
 
             setClasses((old) => {

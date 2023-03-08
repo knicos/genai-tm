@@ -4,7 +4,7 @@ import { Webcam as TMWebcam } from "@teachablemachine/image";
 interface Props {
     interval?: number;
     capture?: boolean;
-    onCapture?: (image: HTMLImageElement) => void;
+    onCapture?: (image: HTMLCanvasElement) => void;
 }
 
 export function Webcam({interval, capture, onCapture}: Props) {
@@ -21,8 +21,12 @@ export function Webcam({interval, capture, onCapture}: Props) {
             webcam.update();
             const actualInterval = (interval !== undefined) ? interval : 1000.0;
             if (capture && onCapture && (timestamp - previousTimeRef.current) >= actualInterval) {
-                const newImage = document.createElement('img');
-                newImage.src = webcam.canvas.toDataURL();
+                const newImage = document.createElement('canvas');
+                newImage.width = webcam.canvas.width;
+                newImage.height = webcam.canvas.height;
+                const context = newImage.getContext('2d');
+                if (!context) console.error('Failed to get context');
+                context?.drawImage(webcam.canvas, 0, 0);
                 onCapture(newImage);
                 previousTimeRef.current = timestamp;
             }
@@ -31,7 +35,7 @@ export function Webcam({interval, capture, onCapture}: Props) {
     }
 
     async function initWebcam() {
-        const newWebcam = new TMWebcam(200, 200, true);
+        const newWebcam = new TMWebcam(224, 224, true);
         await newWebcam.setup();
         setWebcam(newWebcam);
     }
@@ -56,9 +60,23 @@ export function Webcam({interval, capture, onCapture}: Props) {
             }
             webcamRef.current.appendChild(webcam.canvas);
             webcam.play();
-            requestRef.current = window.requestAnimationFrame(loop);
+            /*if (requestRef.current >= 0) {
+                console.log('Cancel animation', requestRef.current);
+                window.cancelAnimationFrame(requestRef.current);
+            }
+            requestRef.current = window.requestAnimationFrame(loop);*/
         }
     }, [webcamRef, webcam]);
+
+    useEffect(() => {
+        if (webcam) {
+            if (requestRef.current >= 0) {
+                console.log('Cancel animation', requestRef.current);
+                window.cancelAnimationFrame(requestRef.current);
+            }
+            requestRef.current = window.requestAnimationFrame(loop);
+        }
+    }, [webcam, capture, onCapture, interval]);
 
     return <div ref={webcamRef} />;
 }
