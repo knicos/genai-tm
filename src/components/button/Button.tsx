@@ -1,10 +1,7 @@
 import React from "react";
-import style from "./button.module.css";
+import MButton from "@mui/material/Button";
+import { styled } from '@mui/material/styles';
 
-interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {}
-
-export function Button({children, ...rest}: Props) {
-    return <button className={style.button} {...rest}>
-        {children}
-    </button>
-}
+export const Button = styled(MButton)({
+    textTransform: 'none',
+});

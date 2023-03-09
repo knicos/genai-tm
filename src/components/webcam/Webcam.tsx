@@ -41,6 +41,10 @@ export function Webcam({interval, capture, onCapture}: Props) {
     }
 
     useEffect(() => {
+        if (capture) previousTimeRef.current = 0;
+    }, [capture]);
+
+    useEffect(() => {
         initWebcam();
         return () => {
             if (webcam) {

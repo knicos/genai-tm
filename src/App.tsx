@@ -1,21 +1,33 @@
 import React from 'react';
-import logo from './logo.svg';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 import './App.css';
-import { TeachableMachine } from './components/tfmodels/TeachableMachine';
 import { RecoilRoot } from 'recoil';
-import { Classifications } from './components/classifications/Classifications';
-import { Trainer } from './components/trainer/Trainer';
-import { Preview } from './components/preview/Preview';
+import { TeachableMachine } from './views/TeachableMachine/TeachableMachine';
+
+const theme = createTheme({
+    typography: {
+        fontFamily: [
+          'Andika',
+          '-apple-system',
+          'BlinkMacSystemFont',
+          '"Segoe UI"',
+          'Roboto',
+          '"Helvetica Neue"',
+          'Arial',
+          'sans-serif',
+          '"Apple Color Emoji"',
+          '"Segoe UI Emoji"',
+          '"Segoe UI Symbol"',
+        ].join(','),
+    },
+});
 
 function App() {
   return (
     <RecoilRoot>
-        <TeachableMachine />
-        <div className="App">
-            <Classifications />
-            <Trainer />
-            <Preview />
-        </div>
+        <ThemeProvider theme={theme}>
+            <TeachableMachine />
+        </ThemeProvider>
     </RecoilRoot>
   );
 }

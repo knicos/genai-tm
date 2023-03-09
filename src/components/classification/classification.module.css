@@ -1,6 +1,42 @@
-.classification {
-    background: white;
-    border-radius: 20px;
-    padding: 0.2rem;
-    margin: 0.5rem;
+.samplelist {
+    list-style-type: none;
+    display: flex;
+    flex-direction: row;
+    gap: 0.3rem;
+    flex-wrap: wrap;
+    max-width: 400px;
+    padding: 0.5rem;
+    justify-content: start;
+    align-content: start;
+}
+
+.sample {
+    overflow: hidden;
+    height: 58px;
+    border-radius: 5px;
+}
+
+.container {
+    display: flex;
+    flex-direction: row;
+    gap: 0.2rem;
+}
+
+.webcamwindow {
+    background: lightblue;
+    padding: 0.5rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.webcamcontainer {
+    overflow: hidden;
+    border-radius: 6px;
+}
+
+.webcamtitle {
+    font-size: 12pt;
+    color: blue;
+    font-weight: bold;
+    margin: 0.2rem;
 }
