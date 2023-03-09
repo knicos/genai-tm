@@ -87,6 +87,8 @@ stages:
   - job: AzureSWA
     displayName: Deploy to static app
     steps:
+    - download: current
+      artifact: DistFolder
     - task: AzureStaticWebApp@0
       inputs:
         app_location: '/build'
