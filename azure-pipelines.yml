@@ -91,6 +91,6 @@ stages:
       artifact: DistFolder
     - task: AzureStaticWebApp@0
       inputs:
-        app_location: '/build'
-        output_location: '/build'
+        app_location: 'build'
+        output_location: 'build'
         azure_static_web_apps_api_token: $(deployment_token)
