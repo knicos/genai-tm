@@ -91,6 +91,9 @@ stages:
       artifact: DistFolder
     - task: AzureStaticWebApp@0
       inputs:
-        app_location: 'build'
-        output_location: 'build'
+        app_location: 'DistFolder'
+        output_location: 'DistFolder'
+        cwd: $(Pipeline.Workspace)
+        skip_api_build: true
+        skip_app_build: true
         azure_static_web_apps_api_token: $(deployment_token)
