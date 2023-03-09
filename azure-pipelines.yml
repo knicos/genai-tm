@@ -72,7 +72,7 @@ stages:
       artifact: DistFolder
     - script: |
         npm ci
-        npm run test
+        CI=true npm test
       displayName: 'Test'
     - task: PublishTestResults@2
       displayName: Publish Test Results
