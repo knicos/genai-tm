@@ -80,3 +80,15 @@ stages:
       inputs:
         testRunner: JUnit
         testResultsFiles: '**/junit.xml'
+
+- stage: Deploy
+  dependsOn: Test
+  jobs:
+  - job: AzureSWA
+    displayName: Deploy to static app
+    steps:
+    - task: AzureStaticWebApp@0
+      inputs:
+        app_location: '/build'
+        output_location: '/build'
+        azure_static_web_apps_api_token: $(deployment_token)
