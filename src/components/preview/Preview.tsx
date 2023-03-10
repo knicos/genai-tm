@@ -29,7 +29,6 @@ export function Preview({model}: Props) {
     const doPrediction = async (image: HTMLCanvasElement) => {
         if (model) {
             const prediction = await model.predict(image);
-            console.log(prediction);
             setLastPrediction(prediction);
         }
     }

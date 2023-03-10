@@ -52,7 +52,6 @@ export function Webcam({interval, capture, onCapture}: Props) {
                 webcam.stop();
             }
             if (requestRef.current >= 0) {
-                console.log('Cancel animation', requestRef.current);
                 window.cancelAnimationFrame(requestRef.current);
             }
         }
@@ -76,7 +75,6 @@ export function Webcam({interval, capture, onCapture}: Props) {
     useEffect(() => {
         if (webcam) {
             if (requestRef.current >= 0) {
-                console.log('Cancel animation', requestRef.current);
                 window.cancelAnimationFrame(requestRef.current);
             }
             requestRef.current = window.requestAnimationFrame(loop);

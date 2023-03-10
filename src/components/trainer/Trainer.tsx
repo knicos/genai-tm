@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import * as tf from '@tensorflow/tfjs';
 import * as tmImage from '@teachablemachine/image';
 import Accordion from '@mui/material/Accordion';
@@ -7,7 +7,7 @@ import { IClassification, tfModel, stateClassifications } from "../../state";
 import { Button } from "../button/Button";
 import { Widget } from "../widget/Widget";
 import style from "./trainer.module.css";
-import { AccordionDetails, AccordionSummary } from "@mui/material";
+import { AccordionDetails, AccordionSummary, LinearProgress } from "@mui/material";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 interface Props {
@@ -16,11 +16,15 @@ interface Props {
     setModel: (model: tmImage.TeachableMobileNet) => void;
 }
 
-export function Trainer({data, model, setModel}: Props) {
-    const training = data;
+type TrainingStage = 'ready' | 'loading' | 'prepare' | 'training' | 'done';
 
-    const sampleMin = Math.min(...training.map((v) => v.samples.length));
-    const isTrainable = training.length >= 2 && sampleMin >= 2;
+export function Trainer({data, model, setModel}: Props) {
+    const [training, setTraining] = useState(false);
+    const [trainingStage, setTrainingStage] = useState('done');
+    const [epochs, setEpochs] = useState(0);
+
+    const sampleMin = Math.min(...data.map((v) => v.samples.length));
+    const isTrainable = data.length >= 2 && sampleMin >= 2;
 
     async function loadModel() {
         await tf.ready();
@@ -41,6 +45,8 @@ export function Trainer({data, model, setModel}: Props) {
     }
 
     const startTraining = async (training: IClassification[]) => {
+        setTrainingStage('loading');
+        setEpochs(0);
         const tm = await loadModel();
 
         if (!tm) {
@@ -51,6 +57,8 @@ export function Trainer({data, model, setModel}: Props) {
         console.log('Start training', training);
         tm.setLabels(training.map((t) => t.label));
         tm.setSeed("something");
+
+        setTrainingStage('examples');
         for (let ix = 0; ix < training.length; ++ix) {
             const {label, samples} = training[ix];
             console.log('Adding class', ix, label);
@@ -58,6 +66,7 @@ export function Trainer({data, model, setModel}: Props) {
         }
         console.log('Samples added');
 
+        setTrainingStage('training');
         await tm.train({
             denseUnits: 100,
             epochs: 50,
@@ -66,13 +75,20 @@ export function Trainer({data, model, setModel}: Props) {
         }, {
             onEpochEnd: (epoch, logs) => {
                 console.log('Epoch', epoch, logs);
+                setEpochs(epoch / 50);
             },
         });
         console.log('Trained');
 
         if (model) model.dispose();
         setModel(tm);
+        setTrainingStage('done');
+        setTraining(false);
     }
+
+    useEffect(() => {
+        if (training) startTraining(data);
+    }, [training]);
 
     useEffect(() => {
         return () => {
@@ -82,10 +98,21 @@ export function Trainer({data, model, setModel}: Props) {
 
     return <Widget title="Training">
         <div className={style.buttonContainer}>
-            <Button variant="contained" size="large" disabled={false} onClick={() => {
-                startTraining(data);
+            <Button variant="contained" size="large" disabled={training} onClick={() => {
+                setTraining(true);
             }}>Train model</Button>
         </div>
+
+        {training && <div className={style.statusContainer}>
+            {trainingStage === 'loading' && <span>Loading model</span>}
+            {trainingStage === 'examples' && <span>Prepairing examples...</span>}
+            {trainingStage === 'training' && <div>
+                <span>Training the model</span>
+                <LinearProgress value={epochs * 100} variant="determinate" />
+            </div>}
+            {trainingStage === 'done' && <span>Training complete.</span>}
+        </div>}
+
         <Accordion>
             <AccordionSummary expandIcon={<ExpandMoreIcon />}>
                 Advanced
