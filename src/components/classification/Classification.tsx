@@ -1,12 +1,11 @@
 import React, { useRef } from "react";
-import { useSetRecoilState } from "recoil";
-import { Webcam } from "../webcam/Webcam";
 import style from "./classification.module.css";
 import { IClassification, stateClassifications } from "../../state";
 import { Button } from "../button/Button";
 import { Widget } from "../widget/Widget";
 import Sample from "./Sample";
 import WebcamCapture from "./WebcamCapture";
+import VideocamIcon from '@mui/icons-material/Videocam';
 
 interface Props {
     name: string;
@@ -14,9 +13,10 @@ interface Props {
     onActivate?: () => void;
     data: IClassification;
     setData: (data: IClassification) => void;
+    setActive: (active: boolean) => void;
 }
 
-export function Classification({name, active, data, setData, onActivate}: Props) {
+export function Classification({name, active, data, setData, onActivate, setActive}: Props) {
     return <Widget title={name}>
         <div className={style.container}>
         {(active) ? <WebcamCapture visible={true} onCapture={(image) => {
@@ -26,10 +26,12 @@ export function Classification({name, active, data, setData, onActivate}: Props)
                 label: name,
                 samples: [...data.samples, image],
             });
-        }} /> : null}
-        {!active && <Button onClick={onActivate}>Webcam</Button>}
+        }} onClose={() => setActive(false)}/> : null}
+        {!active && <div className={style.buttoncontainer}>
+            <Button variant="outlined" startIcon={<VideocamIcon />} onClick={onActivate}>Webcam</Button>
+        </div>}
         <ol className={style.samplelist}>
-            {data.samples.map((s) => <Sample image={s} />)}
+            {data.samples.map((s, ix) => <Sample key={ix} image={s} />)}
         </ol>
         </div>
     </Widget>;

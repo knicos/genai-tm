@@ -25,11 +25,12 @@ export function TrainingData({active, data, setData}: Props) {
                 setData(newdata);
             }}
             onActivate={() => active && setActiveIndex(ix)}
+            setActive={(active: boolean) => setActiveIndex((active) ? ix : -1)}
             />)}
         <Button variant="contained" onClick={() => {
             setData([...data, { label: `Class ${data.length + 1}`, samples: []}]);
         }}>
-            Add Classification
+            Add a class
         </Button>
     </div>;
 }

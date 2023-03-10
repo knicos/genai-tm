@@ -22,11 +22,18 @@
     gap: 0.2rem;
 }
 
+.buttoncontainer {
+    margin: 1rem;
+}
+
 .webcamwindow {
-    background: lightblue;
-    padding: 0.5rem;
+    background: #E8F0FE;
+    padding: 1rem;
     display: flex;
     flex-direction: column;
+    gap: 0.6rem;
+    height: 400px;
+    width: 224px;
 }
 
 .webcamcontainer {
@@ -34,9 +41,29 @@
     border-radius: 6px;
 }
 
-.webcamtitle {
+.webcamheader {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.webcamheader > h2 {
     font-size: 12pt;
-    color: blue;
+    color: #1976d2;
     font-weight: bold;
     margin: 0.2rem;
+}
+
+.webcambuttoncontainer {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+}
+
+.formfield {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: start;
+    gap: 1rem;
 }

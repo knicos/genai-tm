@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Webcam as TMWebcam } from "@teachablemachine/image";
+import style from "./webcam.module.css";
 
 interface Props {
     interval?: number;
@@ -82,5 +83,5 @@ export function Webcam({interval, capture, onCapture}: Props) {
         }
     }, [webcam, capture, onCapture, interval]);
 
-    return <div ref={webcamRef} />;
+    return <div className={style.container} ref={webcamRef} />;
 }
