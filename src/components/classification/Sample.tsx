@@ -15,7 +15,7 @@ export default function Sample({image}: Props) {
             }
             ref.current.appendChild(image);
         }
-    }, [ref.current, image]);
+    }, [image]);
 
     return <li className={style.sample} ref={ref}></li>
 }

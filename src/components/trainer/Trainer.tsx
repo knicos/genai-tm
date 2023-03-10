@@ -92,12 +92,14 @@ export function Trainer({data, model, setModel}: Props) {
 
     useEffect(() => {
         if (training) startTraining(data);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [training]);
 
     useEffect(() => {
         return () => {
             if (model) model.dispose();
         }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     return <Widget title="Training">

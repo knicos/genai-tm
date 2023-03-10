@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import { Webcam as TMWebcam } from "@teachablemachine/image";
 import style from "./webcam.module.css";
 
@@ -14,7 +14,7 @@ export function Webcam({interval, capture, onCapture}: Props) {
     const requestRef = useRef(-1);
     const previousTimeRef = useRef(0);
 
-    function loop(timestamp: number) {
+    const loop = useCallback((timestamp: number) => {
         if (webcam) {
             if (previousTimeRef.current === 0) {
                 previousTimeRef.current = timestamp;
@@ -33,7 +33,7 @@ export function Webcam({interval, capture, onCapture}: Props) {
             }
         }
         requestRef.current = window.requestAnimationFrame(loop);
-    }
+    }, [webcam, interval, capture, onCapture]);
 
     async function initWebcam() {
         const newWebcam = new TMWebcam(224, 224, true);
@@ -55,6 +55,7 @@ export function Webcam({interval, capture, onCapture}: Props) {
                 window.cancelAnimationFrame(requestRef.current);
             }
         }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     useEffect(() => {
@@ -79,7 +80,7 @@ export function Webcam({interval, capture, onCapture}: Props) {
             }
             requestRef.current = window.requestAnimationFrame(loop);
         }
-    }, [webcam, capture, onCapture, interval]);
+    }, [webcam, loop]);
 
     return <div className={style.container} ref={webcamRef} />;
 }

@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
-import SettingsIcon from '@mui/icons-material/Settings';
+// import SettingsIcon from '@mui/icons-material/Settings';
 import { Button } from "../button/Button";
 import { Webcam } from "../webcam/Webcam";
 import style from "./classification.module.css";

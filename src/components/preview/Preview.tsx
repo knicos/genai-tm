@@ -1,6 +1,5 @@
 import { TeachableMobileNet } from "@teachablemachine/image";
 import React, { useState } from "react";
-import { tfModel } from "../../state";
 import { Webcam } from "../webcam/Webcam";
 import { Widget } from "../widget/Widget";
 import PercentageBar, {Colours} from "../PercentageBar/PercentageBar";

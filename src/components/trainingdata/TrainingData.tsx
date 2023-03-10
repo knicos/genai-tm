@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Classification } from "../classification/Classification";
 import { Button } from "../button/Button";
 import { IClassification } from "../../state";

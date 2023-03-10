@@ -1,6 +1,6 @@
-import React, { useRef } from "react";
+import React from "react";
 import style from "./classification.module.css";
-import { IClassification, stateClassifications } from "../../state";
+import { IClassification } from "../../state";
 import { Button } from "../button/Button";
 import { Widget } from "../widget/Widget";
 import Sample from "./Sample";
