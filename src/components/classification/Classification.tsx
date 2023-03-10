@@ -17,7 +17,12 @@ interface Props {
 }
 
 export function Classification({name, active, data, setData, onActivate, setActive}: Props) {
-    return <Widget title={name}>
+    return <Widget title={name} setTitle={(title: string) => {
+        setData({
+            label: title,
+            samples: data.samples,
+        });
+    }}>
         <div className={style.container}>
         {(active) ? <WebcamCapture visible={true} onCapture={(image) => {
             image.style.width = "58px";

@@ -38,14 +38,15 @@ export function Preview({model}: Props) {
             <div className={style.previewContainer}>
                 <Webcam capture={!!model} interval={200} onCapture={doPrediction}/>
                 <table className={style.table}>
-                    {lastPrediction.map((p, ix) => <tr>
+                    <tbody>
+                        {lastPrediction.map((p, ix) => <tr key={ix}>
                             <td className={style.labelCell}>{p.className}</td>
                             <td className={style.valueCell}><PercentageBar
-                                key={ix}
                                 colour={colourWheel[ix % colourWheel.length]}
                                 value={p.probability * 100}
                             /></td>
                         </tr>)}
+                    </tbody>
                 </table>
             </div>
         }
