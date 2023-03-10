@@ -7,3 +7,16 @@
 .statusContainer {
     margin: 1rem;
 }
+
+.formfield {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    border-top: 1px solid #eee;
+}
+
+.advancedTitle {
+    font-weight: bold;
+    color: #1976d2;
+}

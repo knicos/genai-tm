@@ -9,6 +9,10 @@ import style from "./trainer.module.css";
 import { AccordionDetails, AccordionSummary, LinearProgress } from "@mui/material";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Alert from '@mui/material/Alert';
+import TextField from '@mui/material/TextField';
+import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
+import Tooltip, { TooltipProps, tooltipClasses } from '@mui/material/Tooltip';
+import { styled } from '@mui/material/styles';
 
 interface Props {
     data: IClassification[];
@@ -16,12 +20,27 @@ interface Props {
     setModel: (model: tmImage.TeachableMobileNet) => void;
 }
 
+const HelpTooltip = styled(({ className, ...props }: TooltipProps) => (
+    <Tooltip {...props} classes={{ popper: className }} />
+  ))(({ theme }) => ({
+    [`& .${tooltipClasses.tooltip}`]: {
+      backgroundColor: "rgba(0,0,0,0.8)",
+      color: "white",
+      maxWidth: 220,
+      fontSize: "12pt",
+      padding: "1.5rem",
+    },
+  }));
+
 type TrainingStage = 'ready' | 'loading' | 'prepare' | 'training' | 'done' | 'none';
 
 export function Trainer({data, model, setModel}: Props) {
     const [training, setTraining] = useState(false);
     const [trainingStage, setTrainingStage] = useState<TrainingStage>('none');
     const [epochs, setEpochs] = useState(0);
+    const [settingEpochs, setSettingEpochs] = useState(50);
+    const [settingRate, setSettingRate] = useState(0.001);
+    const [settingBatch, setSettingBatch] = useState(16);
 
     const sampleMin = Math.min(...data.map((v) => v.samples.length));
     const isTrainable = data.length >= 2 && sampleMin >= 1;
@@ -69,9 +88,9 @@ export function Trainer({data, model, setModel}: Props) {
         setTrainingStage('training');
         await tm.train({
             denseUnits: 100,
-            epochs: 50,
-            learningRate: 0.001,
-            batchSize: 16,
+            epochs: settingEpochs,
+            learningRate: settingRate,
+            batchSize: settingBatch,
         }, {
             onEpochEnd: (epoch, logs) => {
                 console.log('Epoch', epoch, logs);
@@ -123,10 +142,63 @@ export function Trainer({data, model, setModel}: Props) {
 
         <Accordion>
             <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                Advanced
+                <span className={style.advancedTitle}>Advanced</span>
             </AccordionSummary>
             <AccordionDetails>
-
+                <div className={style.formfield}>
+                    <span>Epochs:</span>
+                    <TextField
+                        sx={{maxWidth: "6rem"}}
+                        hiddenLabel
+                        id="epochs"
+                        variant="filled"
+                        type="number"
+                        size="small"
+                        value={settingEpochs}
+                        onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                            setSettingEpochs(event.target.valueAsNumber);
+                        }}
+                    />
+                    <HelpTooltip title="The number of times each sample is used for training" placement="left">
+                        <HelpOutlineIcon sx={{marginLeft: "auto"}} color="info" />
+                    </HelpTooltip>
+                </div>
+                <div className={style.formfield}>
+                    <span>Learning Rate:</span>
+                    <TextField
+                        sx={{maxWidth: "6rem"}}
+                        hiddenLabel
+                        id="learningrate"
+                        variant="filled"
+                        type="number"
+                        size="small"
+                        value={settingRate}
+                        onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                            setSettingRate(event.target.valueAsNumber);
+                        }}
+                    />
+                    <HelpTooltip title="Only make small adjustments to this, it should be less than 0.1." placement="left">
+                        <HelpOutlineIcon sx={{marginLeft: "auto"}} color="info" />
+                    </HelpTooltip>
+                </div>
+                <div className={style.formfield}>
+                    <span>Batch Size:</span>
+                    <TextField
+                        sx={{maxWidth: "6rem"}}
+                        hiddenLabel
+                        id="batch"
+                        variant="filled"
+                        type="number"
+                        size="small"
+                        value={settingBatch}
+                        onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                            setSettingBatch(event.target.valueAsNumber);
+                        }}
+                    />
+                    <HelpTooltip title="Has minimal effect on the training. It is the number of samples used on each iteration of the training." placement="left">
+                        <HelpOutlineIcon sx={{marginLeft: "auto"}} color="info" />
+                    </HelpTooltip>
+                </div>
             </AccordionDetails>
         </Accordion>
     </Widget>;
