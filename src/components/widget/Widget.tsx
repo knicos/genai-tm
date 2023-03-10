@@ -18,7 +18,7 @@ const TextField = styled(MTextField)({
     }
 });
 
-export function Widget({title, setTitle, children}: Props) {
+export function Widget({title, setTitle, children, menu}: Props) {
     const [editing, setEditing] = useState(false);
 
     return <section className={style.widget}>
@@ -40,6 +40,7 @@ export function Widget({title, setTitle, children}: Props) {
             {setTitle && !editing && <IconButton aria-label="edit" size="small" onClick={() => setEditing(true)}>
                 <EditIcon fontSize="small"/>
             </IconButton>}
+            {menu && <div className={style.widget_menu}>{menu}</div>}
         </header>}
         <div className={style.widget_content}>
         {children}

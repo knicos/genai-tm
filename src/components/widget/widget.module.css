@@ -21,6 +21,11 @@
     padding: 0.6rem 1rem;
 }
 
+.widget_menu {
+    flex-grow: 1;
+    text-align: right;
+}
+
 .widget_content {
     padding: 0;
 }

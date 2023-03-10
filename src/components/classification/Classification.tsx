@@ -6,23 +6,27 @@ import { Widget } from "../widget/Widget";
 import Sample from "./Sample";
 import WebcamCapture from "./WebcamCapture";
 import VideocamIcon from '@mui/icons-material/Videocam';
+import ClassMenu from "./ClassMenu";
 
 interface Props {
     name: string;
     active: boolean;
     onActivate?: () => void;
+    onDelete: () => void;
     data: IClassification;
     setData: (data: IClassification) => void;
     setActive: (active: boolean) => void;
 }
 
-export function Classification({name, active, data, setData, onActivate, setActive}: Props) {
+export function Classification({name, active, data, setData, onActivate, setActive, onDelete}: Props) {
     return <Widget title={name} setTitle={(title: string) => {
         setData({
             label: title,
             samples: data.samples,
         });
-    }}>
+    }} menu={<ClassMenu hasSamples={data.samples.length > 0} onDeleteClass={onDelete} onRemoveSamples={() => {
+        setData({label: data.label, samples: []});
+    }} />}>
         <div className={style.container}>
         {(active) ? <WebcamCapture visible={true} onCapture={(image) => {
             image.style.width = "58px";

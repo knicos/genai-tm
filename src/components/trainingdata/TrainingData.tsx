@@ -15,6 +15,9 @@ export function TrainingData({active, data, setData}: Props) {
 
     return <div className={style.trainingcontainer}>
         {data.map((c, ix) => <Classification
+            onDelete={() => {
+                setData(data.filter((v, index) => index !== ix));
+            }}
             key={ix}
             name={c.label}
             active={ix === activeIndex}
