@@ -1,5 +1,7 @@
 .buttonContainer {
-    margin: 2rem;
+    margin: 1rem;
+    display: flex;
+    justify-content: stretch;
 }
 
 .statusContainer {

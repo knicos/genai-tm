@@ -2,13 +2,13 @@ import React, { useEffect, useState } from "react";
 import * as tf from '@tensorflow/tfjs';
 import * as tmImage from '@teachablemachine/image';
 import Accordion from '@mui/material/Accordion';
-import { useRecoilState, useRecoilValue } from "recoil";
-import { IClassification, tfModel, stateClassifications } from "../../state";
+import { IClassification } from "../../state";
 import { Button } from "../button/Button";
 import { Widget } from "../widget/Widget";
 import style from "./trainer.module.css";
 import { AccordionDetails, AccordionSummary, LinearProgress } from "@mui/material";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import Alert from '@mui/material/Alert';
 
 interface Props {
     data: IClassification[];
@@ -16,15 +16,15 @@ interface Props {
     setModel: (model: tmImage.TeachableMobileNet) => void;
 }
 
-type TrainingStage = 'ready' | 'loading' | 'prepare' | 'training' | 'done';
+type TrainingStage = 'ready' | 'loading' | 'prepare' | 'training' | 'done' | 'none';
 
 export function Trainer({data, model, setModel}: Props) {
     const [training, setTraining] = useState(false);
-    const [trainingStage, setTrainingStage] = useState('done');
+    const [trainingStage, setTrainingStage] = useState<TrainingStage>('none');
     const [epochs, setEpochs] = useState(0);
 
     const sampleMin = Math.min(...data.map((v) => v.samples.length));
-    const isTrainable = data.length >= 2 && sampleMin >= 2;
+    const isTrainable = data.length >= 2 && sampleMin >= 1;
 
     async function loadModel() {
         await tf.ready();
@@ -58,7 +58,7 @@ export function Trainer({data, model, setModel}: Props) {
         tm.setLabels(training.map((t) => t.label));
         tm.setSeed("something");
 
-        setTrainingStage('examples');
+        setTrainingStage('prepare');
         for (let ix = 0; ix < training.length; ++ix) {
             const {label, samples} = training[ix];
             console.log('Adding class', ix, label);
@@ -87,6 +87,10 @@ export function Trainer({data, model, setModel}: Props) {
     }
 
     useEffect(() => {
+        setTrainingStage('none');
+    }, [data]);
+
+    useEffect(() => {
         if (training) startTraining(data);
     }, [training]);
 
@@ -98,19 +102,21 @@ export function Trainer({data, model, setModel}: Props) {
 
     return <Widget title="Training">
         <div className={style.buttonContainer}>
-            <Button variant="contained" size="large" disabled={training} onClick={() => {
+            <Button sx={{flexGrow: 1}} variant="contained" size="large" disabled={training || !isTrainable} onClick={() => {
                 setTraining(true);
             }}>Train model</Button>
         </div>
 
-        {training && <div className={style.statusContainer}>
+        {<div className={style.statusContainer}>
+            {trainingStage === 'none' && isTrainable && <Alert severity="warning">The models needs training</Alert>}
+            {trainingStage === 'none' && !isTrainable && <Alert severity="info">Add more samples or classes first</Alert>}
             {trainingStage === 'loading' && <span>Loading model</span>}
-            {trainingStage === 'examples' && <span>Prepairing examples...</span>}
+            {trainingStage === 'prepare' && <span>Prepairing examples...</span>}
             {trainingStage === 'training' && <div>
                 <span>Training the model</span>
                 <LinearProgress value={epochs * 100} variant="determinate" />
             </div>}
-            {trainingStage === 'done' && <span>Training complete.</span>}
+            {trainingStage === 'done' && <Alert severity="success">Training complete.</Alert>}
         </div>}
 
         <Accordion>
