@@ -4,6 +4,7 @@ import { TrainingData } from "../../components/trainingdata/TrainingData";
 import { Trainer } from "../../components/trainer/Trainer";
 import { Preview } from "../../components/preview/Preview";
 import { IClassification } from "../../state";
+import style from "./TeachableMachine.module.css";
 
 export function TeachableMachine() {
     const [model, setModel] = useState<TeachableMobileNet | undefined>();
@@ -18,7 +19,7 @@ export function TeachableMachine() {
         }
     ]);
 
-    return <div className="App">
+    return <div className={style.container}>
         <TrainingData data={data} setData={setData} active={true} />
         <Trainer data={data} model={model} setModel={setModel} />
         <Preview model={model} />
