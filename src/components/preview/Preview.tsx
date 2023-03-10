@@ -1,12 +1,10 @@
 import { TeachableMobileNet } from "@teachablemachine/image";
 import React, { useState } from "react";
-import { useRecoilValue } from "recoil";
 import { tfModel } from "../../state";
 import { Webcam } from "../webcam/Webcam";
 import { Widget } from "../widget/Widget";
-import LinearProgress, { LinearProgressProps } from '@mui/material/LinearProgress';
-import Typography from '@mui/material/Typography';
-import Box from '@mui/material/Box';
+import PercentageBar, {Colours} from "../PercentageBar/PercentageBar";
+import style from "./Preview.module.css";
 
 interface IPrediction {
     className: string;
@@ -17,20 +15,13 @@ interface Props {
     model?: TeachableMobileNet;
 }
 
-function LinearProgressWithLabel(props: LinearProgressProps & { value: number }) {
-    return (
-      <Box sx={{ display: 'flex', alignItems: 'center' }}>
-        <Box sx={{ width: '100%', mr: 1 }}>
-          <LinearProgress variant="determinate" {...props} />
-        </Box>
-        <Box sx={{ minWidth: 35 }}>
-          <Typography variant="body2" color="text.secondary">{`${Math.round(
-            props.value,
-          )}%`}</Typography>
-        </Box>
-      </Box>
-    );
-  }
+const colourWheel: Colours[] = [
+    'orange',
+    'purple',
+    'blue',
+    'green',
+    'red',
+];
 
 export function Preview({model}: Props) {
     const [lastPrediction, setLastPrediction] = useState<IPrediction[]>([])
@@ -45,9 +36,18 @@ export function Preview({model}: Props) {
 
     return <Widget title="Machine">
         {model &&
-            <div>
+            <div className={style.previewContainer}>
                 <Webcam capture={!!model} interval={200} onCapture={doPrediction}/>
-                {lastPrediction.map((p) => <LinearProgressWithLabel value={p.probability * 100}/>)}
+                <table className={style.table}>
+                    {lastPrediction.map((p, ix) => <tr>
+                            <td className={style.labelCell}>{p.className}</td>
+                            <td className={style.valueCell}><PercentageBar
+                                key={ix}
+                                colour={colourWheel[ix % colourWheel.length]}
+                                value={p.probability * 100}
+                            /></td>
+                        </tr>)}
+                </table>
             </div>
         }
         {!model &&

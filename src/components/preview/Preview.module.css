@@ -1,0 +1,18 @@
+.previewContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 0.5rem;
+}
+
+.table {
+    border-spacing: 0.5rem;
+}
+
+.valueCell {
+    width: 100%;
+}
+
+.labelCell {
+    white-space: nowrap;
+}
