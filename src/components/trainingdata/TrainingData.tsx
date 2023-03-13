@@ -4,6 +4,7 @@ import { Button } from "../button/Button";
 import { IClassification } from "../../state";
 import style from "./trainingdata.module.css";
 import AddBoxIcon from '@mui/icons-material/AddBox';
+import { useTranslation } from 'react-i18next';
 
 interface Props {
     active?: boolean;
@@ -12,6 +13,7 @@ interface Props {
 }
 
 export function TrainingData({active, data, setData}: Props) {
+    const {t} = useTranslation();
     const [activeIndex, setActiveIndex] = useState(-1);
 
     return <div className={style.trainingcontainer}>
@@ -32,9 +34,9 @@ export function TrainingData({active, data, setData}: Props) {
             setActive={(active: boolean) => setActiveIndex((active) ? ix : -1)}
             />)}
         <Button size="large" variant="outlined" startIcon={<AddBoxIcon />} onClick={() => {
-            setData([...data, { label: `Class ${data.length + 1}`, samples: []}]);
+            setData([...data, { label: `${t("trainingdata.labels.class")} ${data.length + 1}`, samples: []}]);
         }}>
-            Add a class
+            {t("trainingdata.actions.addClass")}
         </Button>
     </div>;
 }

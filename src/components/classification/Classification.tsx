@@ -7,6 +7,7 @@ import Sample from "./Sample";
 import WebcamCapture from "./WebcamCapture";
 import VideocamIcon from '@mui/icons-material/Videocam';
 import ClassMenu from "./ClassMenu";
+import { useTranslation } from 'react-i18next';
 
 interface Props {
     name: string;
@@ -19,6 +20,8 @@ interface Props {
 }
 
 export function Classification({name, active, data, setData, onActivate, setActive, onDelete}: Props) {
+    const {t} = useTranslation();
+
     return <Widget title={name} setTitle={(title: string) => {
         setData({
             label: title,
@@ -37,11 +40,17 @@ export function Classification({name, active, data, setData, onActivate, setActi
                 });
             }} onClose={() => setActive(false)}/> : null}
             <div className={style.listContainer}>
-                {data.samples.length === 0 && <div className={style.samplesLabel}>Add image samples:</div>}
-                {data.samples.length > 0 && <div className={style.samplesLabel}>{`${data.samples.length} image samples:`}</div>}
+                {data.samples.length === 0 && <div className={style.samplesLabel}>
+                    {t("trainingdata.labels.addSamples")}:
+                </div>}
+                {data.samples.length > 0 && <div className={style.samplesLabel}>
+                    {t("trainingdata.labels.imageSamples", {count: data.samples.length})}
+                </div>}
                 <ol className={(active) ? style.samplelistLarge : style.samplelistSmall}>
                     {!active && <li className={style.sample}>
-                        <Button sx={{"& .MuiButton-startIcon": { margin: "0px"}, flexDirection: "column"}} variant="outlined" startIcon={<VideocamIcon />} onClick={onActivate}>Webcam</Button>
+                        <Button sx={{"& .MuiButton-startIcon": { margin: "0px"}, flexDirection: "column"}} variant="outlined" startIcon={<VideocamIcon />} onClick={onActivate}>
+                            {t("trainingdata.actions.webcam")}
+                        </Button>
                     </li>}
                     {data.samples.map((s, ix) => <Sample key={ix} image={s} onDelete={() => {
                         setData({

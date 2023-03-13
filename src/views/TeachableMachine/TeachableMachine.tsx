@@ -5,16 +5,18 @@ import { Trainer } from "../../components/trainer/Trainer";
 import { Preview } from "../../components/preview/Preview";
 import { IClassification } from "../../state";
 import style from "./TeachableMachine.module.css";
+import { useTranslation } from "react-i18next";
 
 export function TeachableMachine() {
+    const {t} = useTranslation();
     const [model, setModel] = useState<TeachableMobileNet | undefined>();
     const [data, setData] = useState<IClassification[]>([
         {
-            label: 'Class 1',
+            label: `${t("trainingdata.labels.class")} 1`,
             samples: []
         },
         {
-            label: 'Class 2',
+            label: `${t("trainingdata.labels.class")} 2`,
             samples: []
         }
     ]);

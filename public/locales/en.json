@@ -1,0 +1,54 @@
+{
+    "app": {
+        "title": "GenAI Image Recogniser",
+        "about": "About"
+    },
+    "trainingdata": {
+        "actions": {
+            "addClass": "Add a class",
+            "webcam": "Webcam",
+            "deleteClass": "Delete Class",
+            "removeAll": "Remove all samples",
+            "capture": "Capture in {{seconds}}s"
+        },
+        "labels": {
+            "addSamples": "Add image samples",
+            "imageSamples": "{{count}} image samples",
+            "class": "Class",
+            "wait": "Wait..."
+        }
+    },
+    "training": {
+        "actions": {
+            "train": "Train model"
+        },
+        "labels": {
+            "title": "Training",
+            "addMore": "Add more samples or classes first",
+            "needsTraining": "The model needs training",
+            "advanced": "Advanced",
+            "epochs": "Epochs",
+            "learningRate": "Learning Rate",
+            "batchSize": "Batch Size",
+            "loading": "Loading model",
+            "prepairing": "Prepairing examples...",
+            "training": "Training the model",
+            "complete": "Training complete"
+        },
+        "tooltips": {
+            "epochs": "The number of times each sample is used for training.",
+            "learningRate": "Only make small adjustments to this, it should be less than 0.1.",
+            "batchSize": "Has minimal effect on the training. It is the number of samples used on each iteration of the training."
+        }
+    },
+    "model": {
+        "actions": {
+            "export": "Export"
+        },
+        "labels": {
+            "webcam": "Webcam",
+            "title": "Model",
+            "mustTrain": "You must train your model first"
+        }
+    }
+}

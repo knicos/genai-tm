@@ -1,0 +1,54 @@
+{
+    "app": {
+        "title": "GenAI Kuvantunnistus",
+        "about": "Suhteen"
+    },
+    "trainingdata": {
+        "actions": {
+            "addClass": "Lisää luokka",
+            "webcam": "Web-kamera",
+            "deleteClass": "Poista luokka",
+            "removeAll": "Poista kaikki näytteet",
+            "capture": "Vangita {{seconds}}s"
+        },
+        "labels": {
+            "addSamples": "Lisää kuvanäytteitä",
+            "imageSamples": "{{count}} kuvanäytettä",
+            "class": "Luokka",
+            "wait": "Odota..."
+        }
+    },
+    "training": {
+        "actions": {
+            "train": "Kouluttaa malli"
+        },
+        "labels": {
+            "title": "Koulutusta",
+            "addMore": "Lisää ensin näytteitä tai luokkia",
+            "needsTraining": "Malli vaatii koulutusta",
+            "advanced": "Pitkälle kehittynyt",
+            "epochs": "Aikakausia",
+            "learningRate": "Oppimisaste",
+            "batchSize": "Erän koko",
+            "loading": "Latausmalli",
+            "prepairing": "Esimerkkejä valmistelusta...",
+            "training": "Mallin koulutusta",
+            "complete": "Koulutus suoritettu"
+        },
+        "tooltips": {
+            "epochs": "Kuinka monta kertaa kutakin näytettä käytetään koulutukseen.",
+            "learningRate": "Tee tähän vain pieniä säätöjä, sen tulee olla alle 0,1.",
+            "batchSize": "Vaikuttaa harjoitteluun minimaalisesti. Se on koulutuksen jokaisessa iteraatiossa käytettyjen näytteiden lukumäärä."
+        }
+    },
+    "model": {
+        "actions": {
+            "export": "Viedä"
+        },
+        "labels": {
+            "webcam": "Web-kamera",
+            "title": "Malli",
+            "mustTrain": "Sinun on ensin koulutettava mallisi"
+        }
+    }
+}

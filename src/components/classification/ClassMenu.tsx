@@ -3,6 +3,7 @@ import IconButton from '@mui/material/IconButton';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
+import { useTranslation } from 'react-i18next';
 
 interface Props {
     hasSamples: boolean;
@@ -11,6 +12,7 @@ interface Props {
 }
 
 export default function ClassMenu({hasSamples, onDeleteClass, onRemoveSamples}: Props) {
+    const {t} = useTranslation();
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
     const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -43,11 +45,11 @@ export default function ClassMenu({hasSamples, onDeleteClass, onRemoveSamples}: 
         <MenuItem onClick={() => {
             handleClose();
             onDeleteClass();
-        }}>Delete Class</MenuItem>
+        }}>{t("trainingdata.actions.deleteClass")}</MenuItem>
         <MenuItem disabled={!hasSamples} onClick={() => {
             handleClose();
             onRemoveSamples();
-        }}>Remove all samples</MenuItem>
+        }}>{t("trainingdata.actions.removeAll")}</MenuItem>
       </Menu>
     </div>;
 }

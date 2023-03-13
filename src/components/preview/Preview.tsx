@@ -8,6 +8,7 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
 import { Button } from "../button/Button";
 import DownloadIcon from '@mui/icons-material/Download';
+import { useTranslation } from "react-i18next";
 
 interface IPrediction {
     className: string;
@@ -27,6 +28,7 @@ const colourWheel: Colours[] = [
 ];
 
 export function Preview({model}: Props) {
+    const {t} = useTranslation();
     const [enableInput, setEnableInput] = useState(true);
     const [lastPrediction, setLastPrediction] = useState<IPrediction[]>([])
 
@@ -37,7 +39,7 @@ export function Preview({model}: Props) {
         }
     }
 
-    return <Widget title="Model" className={style.widget}>
+    return <Widget title={t<string>("model.labels.title")} className={style.widget}>
         {model &&
             <div className={style.previewContainer}>
                 <div className={style.inputControls}>
@@ -47,7 +49,7 @@ export function Preview({model}: Props) {
                             onChange={(event: React.ChangeEvent<HTMLInputElement>, checked: boolean) => {
                                 setEnableInput(checked);   
                             }}
-                        />} label="Webcam" />
+                        />} label={t<string>("model.labels.webcam")} />
                 </div>
                 <div className={style.inputContainer}>
                     <Webcam disable={!enableInput} capture={enableInput && !!model} interval={200} onCapture={doPrediction}/>
@@ -66,12 +68,12 @@ export function Preview({model}: Props) {
                 <div className={style.buttonContainer}>
                     <Button sx={{width: "100%"}} startIcon={<DownloadIcon/>} variant="outlined" onClick={() => {
                         model.save("downloads://my-model");
-                    }}>Export</Button>
+                    }}>{t("model.actions.export")}</Button>
                 </div>
             </div>
         }
         {!model &&
-            <p>You must train your model first.</p>
+            <p>{t("model.labels.mustTrain")}</p>
         }
     </Widget>
 }

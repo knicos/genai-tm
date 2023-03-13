@@ -13,6 +13,7 @@ import TextField from '@mui/material/TextField';
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import Tooltip, { TooltipProps, tooltipClasses } from '@mui/material/Tooltip';
 import { styled } from '@mui/material/styles';
+import { useTranslation } from "react-i18next";
 
 interface Props {
     data: IClassification[];
@@ -35,6 +36,7 @@ const HelpTooltip = styled(({ className, ...props }: TooltipProps) => (
 type TrainingStage = 'ready' | 'loading' | 'prepare' | 'training' | 'done' | 'none';
 
 export function Trainer({data, model, setModel}: Props) {
+    const {t} = useTranslation();
     const [training, setTraining] = useState(false);
     const [trainingStage, setTrainingStage] = useState<TrainingStage>('none');
     const [epochs, setEpochs] = useState(0);
@@ -121,32 +123,32 @@ export function Trainer({data, model, setModel}: Props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    return <Widget title="Training" className={style.widget}>
+    return <Widget title={t<string>("training.labels.title")} className={style.widget}>
         <div className={style.buttonContainer}>
             <Button sx={{flexGrow: 1}} variant="contained" size="large" disabled={training || !isTrainable} onClick={() => {
                 setTraining(true);
-            }}>Train model</Button>
+            }}>{t("training.actions.train")}</Button>
         </div>
 
         {<div className={style.statusContainer}>
-            {trainingStage === 'none' && isTrainable && <Alert severity="warning">The model needs training</Alert>}
-            {trainingStage === 'none' && !isTrainable && <Alert severity="info">Add more samples or classes first</Alert>}
-            {trainingStage === 'loading' && <span>Loading model</span>}
-            {trainingStage === 'prepare' && <span>Prepairing examples...</span>}
+            {trainingStage === 'none' && isTrainable && <Alert severity="warning">{t("training.labels.needsTraining")}</Alert>}
+            {trainingStage === 'none' && !isTrainable && <Alert severity="info">{t("training.labels.addMore")}</Alert>}
+            {trainingStage === 'loading' && <span>{t("training.labels.loading")}</span>}
+            {trainingStage === 'prepare' && <span>{t("training.labels.prepairing")}</span>}
             {trainingStage === 'training' && <div>
-                <span>Training the model</span>
+                <span>{t("training.labels.training")}</span>
                 <LinearProgress value={epochs * 100} variant="determinate" />
             </div>}
-            {trainingStage === 'done' && <Alert severity="success">Training complete.</Alert>}
+            {trainingStage === 'done' && <Alert severity="success">{t("training.labels.complete")}</Alert>}
         </div>}
 
         <Accordion>
             <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                <span className={style.advancedTitle}>Advanced</span>
+                <span className={style.advancedTitle}>{t("training.labels.advanced")}</span>
             </AccordionSummary>
             <AccordionDetails>
                 <div className={style.formfield}>
-                    <span>Epochs:</span>
+                    <span>{t("training.labels.epochs")}:</span>
                     <TextField
                         sx={{maxWidth: "6rem"}}
                         hiddenLabel
@@ -159,12 +161,12 @@ export function Trainer({data, model, setModel}: Props) {
                             setSettingEpochs(event.target.valueAsNumber);
                         }}
                     />
-                    <HelpTooltip title="The number of times each sample is used for training" placement="left">
+                    <HelpTooltip title={t<string>("training.tooltips.epochs")} placement="left">
                         <HelpOutlineIcon sx={{marginLeft: "auto"}} color="info" />
                     </HelpTooltip>
                 </div>
                 <div className={style.formfield}>
-                    <span>Learning Rate:</span>
+                    <span>{t("training.labels.learningRate")}:</span>
                     <TextField
                         sx={{maxWidth: "6rem"}}
                         hiddenLabel
@@ -177,12 +179,12 @@ export function Trainer({data, model, setModel}: Props) {
                             setSettingRate(event.target.valueAsNumber);
                         }}
                     />
-                    <HelpTooltip title="Only make small adjustments to this, it should be less than 0.1." placement="left">
+                    <HelpTooltip title={t<string>("training.tooltips.learningRate")} placement="left">
                         <HelpOutlineIcon sx={{marginLeft: "auto"}} color="info" />
                     </HelpTooltip>
                 </div>
                 <div className={style.formfield}>
-                    <span>Batch Size:</span>
+                    <span>{t("training.labels.batchSize")}:</span>
                     <TextField
                         sx={{maxWidth: "6rem"}}
                         hiddenLabel
@@ -195,7 +197,7 @@ export function Trainer({data, model, setModel}: Props) {
                             setSettingBatch(event.target.valueAsNumber);
                         }}
                     />
-                    <HelpTooltip title="Has minimal effect on the training. It is the number of samples used on each iteration of the training." placement="left">
+                    <HelpTooltip title={t<string>("training.tooltips.batchSize")} placement="left">
                         <HelpOutlineIcon sx={{marginLeft: "auto"}} color="info" />
                     </HelpTooltip>
                 </div>

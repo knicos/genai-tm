@@ -6,6 +6,7 @@ import { Button } from "../button/Button";
 import { Webcam } from "../webcam/Webcam";
 import style from "./classification.module.css";
 import WebcamSettings, { IWebcamSettings } from "./WebcamSettings";
+import { useTranslation } from "react-i18next";
 
 interface Props {
     visible?: boolean;
@@ -14,6 +15,7 @@ interface Props {
 }
 
 export default function WebcamCapture({visible, onCapture, onClose}: Props) {
+    const {t} = useTranslation();
     const [capturing, setCapturing] = useState(false);
     const [showSettings, setShowSettings] = useState(false);
     const [settings, setSettings] = useState<IWebcamSettings>({
@@ -34,7 +36,7 @@ export default function WebcamCapture({visible, onCapture, onClose}: Props) {
             </>
             : <>
                 <div className={style.webcamheader}>
-                    <h2>Webcam</h2>
+                    <h2>{t("trainingdata.actions.webcam")}</h2>
                     <IconButton aria-label="close" onClick={onClose} color="primary" size="small">
                         <CloseIcon fontSize="small" />
                     </IconButton>
@@ -47,7 +49,7 @@ export default function WebcamCapture({visible, onCapture, onClose}: Props) {
                 </div>
                 <div className={style.webcambuttoncontainer}>
                     <Button sx={{flexGrow: 1}} variant="contained" disabled={capturing} onClick={() => setCapturing(true)}>
-                        {(capturing) ? "Wait..." : "Capture in 1s"}
+                        {(capturing) ? t("trainingdata.labels.wait") : t("trainingdata.actions.capture", {seconds: "1"})}
                     </Button>
                     {/*<IconButton aria-label="settings" onClick={() => setShowSettings(true)} color="primary">
                         <SettingsIcon />

@@ -6,6 +6,7 @@ import { TeachableMachine } from './views/TeachableMachine/TeachableMachine';
 import AppBar from '@mui/material/AppBar';
 import Button from '@mui/material/Button';
 import Toolbar from '@mui/material/Toolbar';
+import { useTranslation } from 'react-i18next';
 
 
 const theme = createTheme({
@@ -32,21 +33,22 @@ const theme = createTheme({
 });
 
 function App() {
-  return (
+    const {t} = useTranslation();
+    return (
     <RecoilRoot>
         <ThemeProvider theme={theme}>
             <AppBar component="nav" className="AppBar" position="static">
                 <Toolbar>
                     <h1>
-                        GenAI Image Recogniser
+                        {t("app.title")}
                     </h1>
-                <Button color="inherit">About</Button>
+                <Button color="inherit">{t("app.about")}</Button>
                 </Toolbar>
             </AppBar>
             <TeachableMachine />
         </ThemeProvider>
     </RecoilRoot>
-  );
+    );
 }
 
 export default App;
