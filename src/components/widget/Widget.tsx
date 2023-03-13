@@ -9,6 +9,7 @@ interface Props extends React.PropsWithChildren {
     title?: string;
     setTitle?: (title: string) => void;
     menu?: React.ReactNode;
+    className?: string;
 }
 
 const TextField = styled(MTextField)({
@@ -18,10 +19,10 @@ const TextField = styled(MTextField)({
     }
 });
 
-export function Widget({title, setTitle, children, menu}: Props) {
+export function Widget({title, setTitle, children, menu, className}: Props) {
     const [editing, setEditing] = useState(false);
 
-    return <section className={style.widget}>
+    return <section className={style.widget + ((className) ? ` ${className}` : "")}>
         {title !== undefined && <header className={style.widget_header}>
             {!editing && <h1 className={style.widget_title}>
                 {title}

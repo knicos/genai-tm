@@ -5,6 +5,11 @@
     padding: 0.5rem;
 }
 
+.widget {
+    max-width: 300px;
+    width: 100%;
+}
+
 .table {
     border-spacing: 0.5rem;
 }

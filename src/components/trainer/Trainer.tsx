@@ -21,7 +21,7 @@ interface Props {
 }
 
 const HelpTooltip = styled(({ className, ...props }: TooltipProps) => (
-    <Tooltip {...props} classes={{ popper: className }} />
+    <Tooltip {...props} enterTouchDelay={300} classes={{ popper: className }} />
   ))(({ theme }) => ({
     [`& .${tooltipClasses.tooltip}`]: {
       backgroundColor: "rgba(0,0,0,0.8)",
@@ -121,7 +121,7 @@ export function Trainer({data, model, setModel}: Props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    return <Widget title="Training">
+    return <Widget title="Training" className={style.widget}>
         <div className={style.buttonContainer}>
             <Button sx={{flexGrow: 1}} variant="contained" size="large" disabled={training || !isTrainable} onClick={() => {
                 setTraining(true);
@@ -129,7 +129,7 @@ export function Trainer({data, model, setModel}: Props) {
         </div>
 
         {<div className={style.statusContainer}>
-            {trainingStage === 'none' && isTrainable && <Alert severity="warning">The models needs training</Alert>}
+            {trainingStage === 'none' && isTrainable && <Alert severity="warning">The model needs training</Alert>}
             {trainingStage === 'none' && !isTrainable && <Alert severity="info">Add more samples or classes first</Alert>}
             {trainingStage === 'loading' && <span>Loading model</span>}
             {trainingStage === 'prepare' && <span>Prepairing examples...</span>}

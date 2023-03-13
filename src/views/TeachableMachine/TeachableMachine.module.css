@@ -4,5 +4,10 @@
     justify-content: center;
     align-items: center;
     flex-grow: 1;
+    flex-wrap: wrap;
+    overflow: auto;
+    gap: 3rem;
+    padding: 1rem;
+    box-sizing: border-box;
 }
   

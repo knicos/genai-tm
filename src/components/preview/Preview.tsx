@@ -32,7 +32,7 @@ export function Preview({model}: Props) {
         }
     }
 
-    return <Widget title="Machine">
+    return <Widget title="Machine" className={style.widget}>
         {model &&
             <div className={style.previewContainer}>
                 <Webcam capture={!!model} interval={200} onCapture={doPrediction}/>

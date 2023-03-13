@@ -4,6 +4,11 @@
     justify-content: stretch;
 }
 
+.widget {
+    max-width: 280px;
+    width: 100%;
+}
+
 .statusContainer {
     margin: 1rem;
 }
