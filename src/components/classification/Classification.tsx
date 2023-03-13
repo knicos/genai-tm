@@ -43,7 +43,12 @@ export function Classification({name, active, data, setData, onActivate, setActi
                     {!active && <li className={style.sample}>
                         <Button sx={{"& .MuiButton-startIcon": { margin: "0px"}, flexDirection: "column"}} variant="outlined" startIcon={<VideocamIcon />} onClick={onActivate}>Webcam</Button>
                     </li>}
-                    {data.samples.map((s, ix) => <Sample key={ix} image={s} />)}
+                    {data.samples.map((s, ix) => <Sample key={ix} image={s} onDelete={() => {
+                        setData({
+                            label: name,
+                            samples: data.samples.filter((ss, ixx) => ixx !== ix),
+                        });
+                    }} />)}
                 </ol>
             </div>
         </div>

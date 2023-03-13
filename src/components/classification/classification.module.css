@@ -40,6 +40,19 @@
     height: 58px;
     border-radius: 5px;
     flex-shrink: 0;
+    position: relative;
+}
+
+.sampleImage {
+    composes: sample;
+}
+
+.sampleImage > button {
+    display: none;
+}
+
+.sampleImage:hover > button {
+    display: initial;
 }
 
 .container {
