@@ -4,6 +4,10 @@ import { Webcam } from "../webcam/Webcam";
 import { Widget } from "../widget/Widget";
 import PercentageBar, {Colours} from "../PercentageBar/PercentageBar";
 import style from "./Preview.module.css";
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Switch from '@mui/material/Switch';
+import { Button } from "../button/Button";
+import DownloadIcon from '@mui/icons-material/Download';
 
 interface IPrediction {
     className: string;
@@ -23,6 +27,7 @@ const colourWheel: Colours[] = [
 ];
 
 export function Preview({model}: Props) {
+    const [enableInput, setEnableInput] = useState(true);
     const [lastPrediction, setLastPrediction] = useState<IPrediction[]>([])
 
     const doPrediction = async (image: HTMLCanvasElement) => {
@@ -32,10 +37,21 @@ export function Preview({model}: Props) {
         }
     }
 
-    return <Widget title="Machine" className={style.widget}>
+    return <Widget title="Model" className={style.widget}>
         {model &&
             <div className={style.previewContainer}>
-                <Webcam capture={!!model} interval={200} onCapture={doPrediction}/>
+                <div className={style.inputControls}>
+                    <FormControlLabel labelPlacement="start" control={
+                        <Switch
+                            checked={enableInput}
+                            onChange={(event: React.ChangeEvent<HTMLInputElement>, checked: boolean) => {
+                                setEnableInput(checked);   
+                            }}
+                        />} label="Webcam" />
+                </div>
+                <div className={style.inputContainer}>
+                    <Webcam disable={!enableInput} capture={enableInput && !!model} interval={200} onCapture={doPrediction}/>
+                </div>
                 <table className={style.table}>
                     <tbody>
                         {lastPrediction.map((p, ix) => <tr key={ix}>
@@ -47,10 +63,15 @@ export function Preview({model}: Props) {
                         </tr>)}
                     </tbody>
                 </table>
+                <div className={style.buttonContainer}>
+                    <Button sx={{width: "100%"}} startIcon={<DownloadIcon/>} variant="outlined" onClick={() => {
+                        model.save("downloads://my-model");
+                    }}>Export</Button>
+                </div>
             </div>
         }
         {!model &&
-            <p>You must train your machine first.</p>
+            <p>You must train your model first.</p>
         }
     </Widget>
 }

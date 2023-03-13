@@ -5,10 +5,11 @@ import style from "./webcam.module.css";
 interface Props {
     interval?: number;
     capture?: boolean;
+    disable?: boolean;
     onCapture?: (image: HTMLCanvasElement) => void;
 }
 
-export function Webcam({interval, capture, onCapture}: Props) {
+export function Webcam({interval, capture, onCapture, disable}: Props) {
     const [webcam, setWebcam] = useState<TMWebcam | null>(null);
     const webcamRef = useRef<HTMLDivElement>(null);
     const requestRef = useRef(-1);
@@ -57,6 +58,16 @@ export function Webcam({interval, capture, onCapture}: Props) {
         }
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
+
+    useEffect(() => {
+        if (webcam) {
+            if (disable) {
+                webcam.pause();
+            } else {
+                webcam.play();
+            }
+        }
+    }, [webcam, disable]);
 
     useEffect(() => {
         if (webcam && webcamRef.current) {

@@ -2,7 +2,20 @@
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
-    padding: 0.5rem;
+}
+
+.inputContainer {
+    border-radius: 6px;
+    overflow: hidden;
+    align-self: center;
+}
+
+.inputControls {
+    margin-top: 0.5rem;
+}
+
+.buttonContainer {
+    margin: 1rem;
 }
 
 .widget {
@@ -12,6 +25,7 @@
 
 .table {
     border-spacing: 0.5rem;
+    margin: 0 0.5rem;
 }
 
 .valueCell {
