@@ -27,21 +27,25 @@ export function Classification({name, active, data, setData, onActivate, setActi
     }} menu={<ClassMenu hasSamples={data.samples.length > 0} onDeleteClass={onDelete} onRemoveSamples={() => {
         setData({label: data.label, samples: []});
     }} />}>
-        <div className={style.container}>
-        {(active) ? <WebcamCapture visible={true} onCapture={(image) => {
-            image.style.width = "58px";
+        <div className={(active) ? style.containerLarge : style.containerSmall}>
+            {(active) ? <WebcamCapture visible={true} onCapture={(image) => {
+                image.style.width = "58px";
 
-            setData({
-                label: name,
-                samples: [...data.samples, image],
-            });
-        }} onClose={() => setActive(false)}/> : null}
-        {!active && <div className={style.buttoncontainer}>
-            <Button variant="outlined" startIcon={<VideocamIcon />} onClick={onActivate}>Webcam</Button>
-        </div>}
-        <ol className={style.samplelist}>
-            {data.samples.map((s, ix) => <Sample key={ix} image={s} />)}
-        </ol>
+                setData({
+                    label: name,
+                    samples: [...data.samples, image],
+                });
+            }} onClose={() => setActive(false)}/> : null}
+            <div className={style.listContainer}>
+                {data.samples.length === 0 && <div className={style.samplesLabel}>Add image samples:</div>}
+                {data.samples.length > 0 && <div className={style.samplesLabel}>{`${data.samples.length} image samples:`}</div>}
+                <ol className={(active) ? style.samplelistLarge : style.samplelistSmall}>
+                    {!active && <li className={style.sample}>
+                        <Button sx={{"& .MuiButton-startIcon": { margin: "0px"}, flexDirection: "column"}} variant="outlined" startIcon={<VideocamIcon />} onClick={onActivate}>Webcam</Button>
+                    </li>}
+                    {data.samples.map((s, ix) => <Sample key={ix} image={s} />)}
+                </ol>
+            </div>
         </div>
     </Widget>;
 }

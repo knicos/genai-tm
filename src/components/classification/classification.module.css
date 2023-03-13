@@ -1,25 +1,60 @@
+.listContainer {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
 .samplelist {
     list-style-type: none;
     display: flex;
     flex-direction: row;
     gap: 0.3rem;
-    flex-wrap: wrap;
     max-width: 400px;
-    padding: 0.5rem;
+    padding: 1rem;
     justify-content: start;
     align-content: start;
+    margin: 0;
+    overflow: auto;
+    box-sizing: border-box;
+    height: 100%;
+}
+
+.samplelistLarge {
+    composes: samplelist;
+    flex-wrap: wrap;
+}
+
+.samplelistSmall {
+    composes: samplelist;
+    flex-wrap: nowrap;
+}
+
+.samplesLabel {
+    margin-left: 1rem;
+    margin-top: 1rem;
+    color: #444;
 }
 
 .sample {
     overflow: hidden;
     height: 58px;
     border-radius: 5px;
+    flex-shrink: 0;
 }
 
 .container {
     display: flex;
     flex-direction: row;
     gap: 0.2rem;
+}
+
+.containerSmall {
+    composes: container;
+}
+
+.containerLarge {
+    composes: container;
+    height: 400px;
 }
 
 .buttoncontainer {
@@ -32,8 +67,9 @@
     display: flex;
     flex-direction: column;
     gap: 0.6rem;
-    height: 400px;
+    height: 100%;
     width: 224px;
+    box-sizing: border-box;
 }
 
 .webcamcontainer {
