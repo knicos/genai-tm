@@ -18,6 +18,7 @@ import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 export function TeachableMachine() {
     const {t} = useTranslation();
     const [step, setStep] = useState(0);
+    const [seenModel, setSeenModel] = useState(false);
     const [behaviours, setBehaviours] = useState<BehaviourType[]>([]);
     const [pred, setPred] = useState(-1);
     const [model, setModel] = useState<TeachableMobileNet | undefined>();
@@ -38,8 +39,8 @@ export function TeachableMachine() {
                 <TrainingData disabled={step > 0} data={data} setData={setData} active={true} />
                 <Trainer disabled={step > 0} focus={step === 0} data={data} model={model} setModel={setModel} />
                 <Preview model={model} onPrediction={setPred}/>
-                {step > 0 && <Output focus={step === 1} predicted={pred} behaviours={behaviours} />}
-                {step > 0 && <Behaviours classes={model?.getLabels() || []} behaviours={behaviours} setBehaviours={setBehaviours}/>}
+                {seenModel && <Output focus={step === 1} disabled={step !== 1} predicted={pred} behaviours={behaviours} />}
+                {seenModel && <Behaviours disabled={step !== 1} classes={model?.getLabels() || []} behaviours={behaviours} setBehaviours={setBehaviours}/>}
             </div>
         </div>
         <div className={style.fixed}>
@@ -54,7 +55,10 @@ export function TeachableMachine() {
                     <StepLabel>Deploy the model</StepLabel>
                 </Step>
             </Stepper>
-            <IconButton disabled={step >= 1 || !model} size="large" onClick={() => setStep(step + 1)}>
+            <IconButton disabled={step >= 1 || !model} size="large" onClick={() => {
+                setStep(step + 1);
+                setSeenModel(true);
+            }}>
                 <ArrowForwardIosIcon fontSize="large"/>
             </IconButton>
         </div>

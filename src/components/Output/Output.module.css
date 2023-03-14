@@ -5,11 +5,12 @@
 }
 
 .widget {
-    background-color: #E8F0FE;
+    background-color: #E8F0FE !important;
     border: 3px solid primary;
 }
 
 .container img {
     border-radius: 6px;
     overflow: hidden;
+    max-width: 400px;
 }

@@ -32,6 +32,13 @@
     justify-content: start;
     padding-left: 0.5rem;
     border-radius: 6px;
+    border: 1px solid white;
+}
+
+.imageContainerdrop {
+    composes: imageContainer;
+    border: 1px dashed primary;
+    background-color: primaryHover;
 }
 
 .imageContainer:hover {
@@ -40,24 +47,27 @@
 
 .imageContainer > h2 {
     font-size: 12pt;
+    font-weight: bold;
     margin: 0;
     flex-grow: 1;
+    color: #444;
 }
 
 .imageContainer > img {
     flex-shrink: 1;
     border-bottom-right-radius: 6px;
     border-top-right-radius: 6px;
-    border-left: 3px solid primary;
+    max-width: 80px;
+    max-height: 80px;
+    border-left: 1px solid primary;
 }
 
-.imageContainer button {
-    display: none;
+.imageContainer:hover img {
+    filter: brightness(0.5);
 }
 
-.imageContainer:hover button {
-    display: initial;
-    background-color: rgba(0, 0, 0, 0.356);
+.imageContainerdrop img {
+    filter: brightness(0.5);
 }
 
 

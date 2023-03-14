@@ -47,9 +47,10 @@ interface Props {
     classes: string[];
     behaviours: BehaviourType[];
     setBehaviours: (newBehaviours: BehaviourType[]) => void;
+    disabled?: boolean;
 }
 
-export default function Behaviours({classes, behaviours, setBehaviours}: Props) {
+export default function Behaviours({classes, behaviours, setBehaviours, ...props}: Props) {
     const [value, setValue] = useState<BehaviourTypes>("image");
 
     useEffect(() => {
@@ -71,7 +72,7 @@ export default function Behaviours({classes, behaviours, setBehaviours}: Props) 
         };
     
     const {t} = useTranslation();
-    return <Widget title={t<string>("behaviours.labels.title")} className={style.widget}>
+    return <Widget title={t<string>("behaviours.labels.title")} className={style.widget} {...props}>
         <div className={style.container}>
             <ToggleButtonGroup
                 value={value}
