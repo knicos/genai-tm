@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Classification } from "../classification/Classification";
 import { Button } from "../button/Button";
 import { IClassification } from "../../state";
@@ -10,13 +10,18 @@ interface Props {
     active?: boolean;
     data: IClassification[];
     setData: (data: IClassification[]) => void;
+    disabled?: boolean;
 }
 
-export function TrainingData({active, data, setData}: Props) {
+export function TrainingData({active, data, setData, disabled}: Props) {
     const {t} = useTranslation();
     const [activeIndex, setActiveIndex] = useState(-1);
 
-    return <div className={style.trainingcontainer}>
+    useEffect(() => {
+        if (disabled) setActiveIndex(-1);
+    }, [disabled]);
+
+    return <div className={(disabled) ? style.containerDisabled : style.trainingcontainer}>
         {data.map((c, ix) => <Classification
             onDelete={() => {
                 setData(data.filter((v, index) => index !== ix));

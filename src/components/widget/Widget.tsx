@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useState, useRef, useEffect} from "react";
 import style from "./widget.module.css";
 import { IconButton } from "@mui/material";
 import EditIcon from '@mui/icons-material/Edit';
@@ -10,6 +10,8 @@ interface Props extends React.PropsWithChildren {
     setTitle?: (title: string) => void;
     menu?: React.ReactNode;
     className?: string;
+    focus?: boolean;
+    disabled?: boolean;
 }
 
 const TextField = styled(MTextField)({
@@ -19,10 +21,23 @@ const TextField = styled(MTextField)({
     }
 });
 
-export function Widget({title, setTitle, children, menu, className}: Props) {
+export function Widget({disabled, focus, title, setTitle, children, menu, className}: Props) {
+    const ref = useRef<HTMLElement>(null);
     const [editing, setEditing] = useState(false);
 
-    return <section className={style.widget + ((className) ? ` ${className}` : "")}>
+    const classToUse = (disabled) ? style.widgetDisabled : style.widget;
+
+    useEffect(() => {
+        if (focus && ref.current?.scrollIntoView) {
+            ref.current.scrollIntoView({
+                block: 'center',
+                inline: 'center',
+                behavior: 'smooth',
+            });
+        }
+    }, [focus]);
+
+    return <section ref={ref} className={classToUse + ((className) ? ` ${className}` : "")}>
         {title !== undefined && <header className={style.widget_header}>
             {!editing && <h1 className={style.widget_title}>
                 {title}

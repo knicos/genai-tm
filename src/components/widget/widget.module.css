@@ -7,6 +7,12 @@
     box-shadow: 2px 2px 4px #bbb;
 }
 
+.widgetDisabled {
+    composes: widget;
+    pointer-events: none;
+    opacity: 0.5;
+}
+
 .widget_title {
     font-size: 14pt;
     font-weight: bold;

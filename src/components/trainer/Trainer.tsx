@@ -19,6 +19,8 @@ interface Props {
     data: IClassification[];
     model?: tmImage.TeachableMobileNet;
     setModel: (model: tmImage.TeachableMobileNet) => void;
+    focus?: boolean;
+    disabled?: boolean;
 }
 
 const HelpTooltip = styled(({ className, ...props }: TooltipProps) => (
@@ -35,7 +37,7 @@ const HelpTooltip = styled(({ className, ...props }: TooltipProps) => (
 
 type TrainingStage = 'ready' | 'loading' | 'prepare' | 'training' | 'done' | 'none';
 
-export function Trainer({data, model, setModel}: Props) {
+export function Trainer({data, model, setModel, ...props}: Props) {
     const {t} = useTranslation();
     const [training, setTraining] = useState(false);
     const [trainingStage, setTrainingStage] = useState<TrainingStage>('none');
@@ -123,7 +125,7 @@ export function Trainer({data, model, setModel}: Props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    return <Widget title={t<string>("training.labels.title")} className={style.widget}>
+    return <Widget title={t<string>("training.labels.title")} className={style.widget} {...props}>
         <div className={style.buttonContainer}>
             <Button sx={{flexGrow: 1}} variant="contained" size="large" disabled={training || !isTrainable} onClick={() => {
                 setTraining(true);

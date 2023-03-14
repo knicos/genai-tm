@@ -94,6 +94,7 @@ export default function Behaviours({classes, behaviours, setBehaviours}: Props) 
             </ToggleButtonGroup>
             <ol>
                 {value === "image" && classes.map((c, ix) => ((behaviours.length > ix) ? <Image
+                    key={ix}
                     label={c}
                     behaviour={behaviours[ix].image}
                     setBehaviour={(behaviour: ImageBehaviour) => {

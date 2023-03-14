@@ -7,14 +7,16 @@ import { BehaviourType } from "../Behaviours/Behaviours";
 interface Props {
     predicted: number;
     behaviours: BehaviourType[];
+    focus?: boolean;
+    disabled?: boolean;
 }
 
-export default function Output({predicted, behaviours}: Props) {
+export default function Output({predicted, behaviours, ...props}: Props) {
     const {t} = useTranslation();
 
     const behaviour = (predicted >= 0 && predicted < behaviours.length) ? behaviours[predicted] : null;
 
-    return <Widget title={t<string>("output.labels.title")} className={style.widget}>
+    return <Widget title={t<string>("output.labels.title")} className={style.widget} {...props}>
         <div className={style.container}>
             {behaviour && <img src={behaviour.image.uri} alt="" />}
         </div>

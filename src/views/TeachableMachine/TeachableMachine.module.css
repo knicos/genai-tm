@@ -1,5 +1,11 @@
+.workspace {
+    flex-grow: 1;
+    overflow: auto;
+}
+
 .container {
-    width: 100%;
+    width: 300%;
+    height: 200%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -10,4 +16,30 @@
     padding: 1rem;
     box-sizing: border-box;
 }
-  
+
+.fixed {
+    position: fixed;
+    bottom: 5%;
+    background: white;
+    padding: 0.5rem 4rem;
+    left: 15%;
+    right: 15%;
+    box-shadow: 0px 0px 8px #bbb;
+    display: flex;
+    justify-content: space-between;
+}
+
+@media only screen and (max-height: 900px) {
+    .fixed {
+        position: static;
+    }
+}
+
+.fixed :global .MuiStepper-root {
+    max-width: 60%;
+    flex-grow: 1;
+}
+
+.fixed :global .MuiStepLabel-label {
+    font-size: 12pt;
+}
