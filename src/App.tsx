@@ -9,7 +9,7 @@ import Toolbar from '@mui/material/Toolbar';
 import { useTranslation } from 'react-i18next';
 import colours from "./style/colours.module.css";
 
-const isTest = process?.env?.NODE_ENV === "test";
+const isTest = global?.process?.env?.NODE_ENV === "test";
 
 const theme = createTheme({
     palette: {
