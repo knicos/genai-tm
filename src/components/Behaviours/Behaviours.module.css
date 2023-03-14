@@ -1,0 +1,63 @@
+@value primary, primaryHover from "../../style/colours.module.css";
+
+.widget {
+    width: 100%;
+    max-width: 300px;
+}
+
+.container {
+    padding: 0;
+}
+
+.container :global .MuiToggleButtonGroup-root {
+    margin: 1rem;
+    width: calc(100% - 2rem);
+}
+
+.container > ol {
+    margin-top: 0;
+    margin-bottom: 1rem;
+    padding: 0;
+    overflow-y: auto;
+    max-height: 300px;
+}
+
+.imageContainer {
+    position: relative;
+    display: flex;
+    margin: 0.5rem 1rem;
+    align-items: center;
+    flex-direction: row;
+    gap: 0.5rem;
+    justify-content: start;
+    padding-left: 0.5rem;
+    border-radius: 6px;
+}
+
+.imageContainer:hover {
+    background-color: primaryHover;
+}
+
+.imageContainer > h2 {
+    font-size: 12pt;
+    margin: 0;
+    flex-grow: 1;
+}
+
+.imageContainer > img {
+    flex-shrink: 1;
+    border-bottom-right-radius: 6px;
+    border-top-right-radius: 6px;
+    border-left: 3px solid primary;
+}
+
+.imageContainer button {
+    display: none;
+}
+
+.imageContainer:hover button {
+    display: initial;
+    background-color: rgba(0, 0, 0, 0.356);
+}
+
+

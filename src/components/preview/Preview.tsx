@@ -17,6 +17,7 @@ interface IPrediction {
 
 interface Props {
     model?: TeachableMobileNet;
+    onPrediction: (prediction: number) => void;
 }
 
 const colourWheel: Colours[] = [
@@ -27,7 +28,7 @@ const colourWheel: Colours[] = [
     'red',
 ];
 
-export function Preview({model}: Props) {
+export function Preview({model, onPrediction}: Props) {
     const {t} = useTranslation();
     const [enableInput, setEnableInput] = useState(true);
     const [lastPrediction, setLastPrediction] = useState<IPrediction[]>([])
@@ -36,6 +37,9 @@ export function Preview({model}: Props) {
         if (model) {
             const prediction = await model.predict(image);
             setLastPrediction(prediction);
+
+            const nameOfMax = prediction.reduce((prev, val) => ((val.probability > prev.probability) ? val : prev));
+            onPrediction(prediction.indexOf(nameOfMax));
         }
     }
 

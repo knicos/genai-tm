@@ -50,5 +50,18 @@
             "title": "Model",
             "mustTrain": "You must train your model first"
         }
+    },
+    "output": {
+        "labels": {
+            "title": "Output"
+        }
+    },
+    "behaviours": {
+        "labels": {
+            "title": "Behaviours",
+            "imageTab": "Images",
+            "soundsTab": "Sounds",
+            "speechTab": "Speech"
+        }
     }
 }

@@ -1,0 +1,15 @@
+@value primary, primaryHover from "../../style/colours.module.css";
+
+.container {
+    padding: 1rem;
+}
+
+.widget {
+    background-color: #E8F0FE;
+    border: 3px solid primary;
+}
+
+.container img {
+    border-radius: 6px;
+    overflow: hidden;
+}

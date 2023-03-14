@@ -1,3 +1,5 @@
+@value primary from "../../style/colours.module.css";
+
 .listContainer {
     width: 100%;
     display: flex;
@@ -98,7 +100,7 @@
 
 .webcamheader > h2 {
     font-size: 12pt;
-    color: #008297;
+    color: primary;
     font-weight: bold;
     margin: 0.2rem;
 }

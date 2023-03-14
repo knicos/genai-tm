@@ -7,12 +7,14 @@ import AppBar from '@mui/material/AppBar';
 import Button from '@mui/material/Button';
 import Toolbar from '@mui/material/Toolbar';
 import { useTranslation } from 'react-i18next';
+import colours from "./style/colours.module.css";
 
+const isTest = process?.env?.NODE_ENV === "test";
 
 const theme = createTheme({
     palette: {
         primary: {
-            main: "#008297",
+            main: (isTest) ? "#fff" : colours.primary,
         },
     },
     typography: {

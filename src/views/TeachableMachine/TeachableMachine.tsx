@@ -6,9 +6,13 @@ import { Preview } from "../../components/preview/Preview";
 import { IClassification } from "../../state";
 import style from "./TeachableMachine.module.css";
 import { useTranslation } from "react-i18next";
+import Output from "../../components/Output/Output";
+import Behaviours, { BehaviourType } from "../../components/Behaviours/Behaviours";
 
 export function TeachableMachine() {
     const {t} = useTranslation();
+    const [behaviours, setBehaviours] = useState<BehaviourType[]>([]);
+    const [pred, setPred] = useState(-1);
     const [model, setModel] = useState<TeachableMobileNet | undefined>();
     const [data, setData] = useState<IClassification[]>([
         {
@@ -24,6 +28,8 @@ export function TeachableMachine() {
     return <div className={style.container}>
         <TrainingData data={data} setData={setData} active={true} />
         <Trainer data={data} model={model} setModel={setModel} />
-        <Preview model={model} />
+        <Preview model={model} onPrediction={setPred}/>
+        <Output predicted={pred} behaviours={behaviours} />
+        <Behaviours classes={model?.getLabels() || []} behaviours={behaviours} setBehaviours={setBehaviours}/>
     </div>;
 }
