@@ -21,7 +21,7 @@ export default function Output({predicted, behaviours, ...props}: Props) {
 
     const behaviour = (predicted >= 0 && predicted < behaviours.length) ? behaviours[predicted] : null;
 
-    return <Widget title={t<string>("output.labels.title")} className={(expanded) ? style.widgetExpanded : style.widget} {...props} menu={
+    return <Widget dataWidget="output" title={t<string>("output.labels.title")} className={(expanded) ? style.widgetExpanded : style.widget} {...props} menu={
         <IconButton aria-label="expand" size="small" onClick={() => setExpanded(!expanded)}>
             {!expanded && <OpenInFullIcon fontSize="small" />}
             {expanded && <CloseFullscreenIcon fontSize="small" />}

@@ -21,7 +21,7 @@ export function TrainingData({active, data, setData, disabled}: Props) {
         if (disabled) setActiveIndex(-1);
     }, [disabled]);
 
-    return <div className={(disabled) ? style.containerDisabled : style.trainingcontainer}>
+    return <div data-widget="container" className={(disabled) ? style.containerDisabled : style.trainingcontainer}>
         {data.map((c, ix) => <Classification
             onDelete={() => {
                 setData(data.filter((v, index) => index !== ix));

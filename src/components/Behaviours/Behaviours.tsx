@@ -73,7 +73,7 @@ export default function Behaviours({classes, behaviours, setBehaviours, ...props
         };
     
     const {t} = useTranslation();
-    return <Widget title={t<string>("behaviours.labels.title")} className={style.widget} {...props}>
+    return <Widget dataWidget="behaviours" title={t<string>("behaviours.labels.title")} className={style.widget} {...props}>
         <div className={style.container}>
             <ToggleButtonGroup
                 value={value}

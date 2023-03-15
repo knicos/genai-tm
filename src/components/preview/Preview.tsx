@@ -43,7 +43,7 @@ export function Preview({model, onPrediction}: Props) {
         }
     }
 
-    return <Widget title={t<string>("model.labels.title")} className={style.widget}>
+    return <Widget dataWidget="model" title={t<string>("model.labels.title")} className={style.widget}>
         {model &&
             <div className={style.previewContainer}>
                 <div className={style.inputControls}>

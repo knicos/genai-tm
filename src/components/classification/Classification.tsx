@@ -64,7 +64,7 @@ export function Classification({name, active, data, setData, onActivate, setActi
         maxFiles: 30,
     });
 
-    return <Widget title={name} setTitle={(title: string) => {
+    return <Widget title={name} dataWidget="class" setTitle={(title: string) => {
         setData({
             label: title,
             samples: data.samples,

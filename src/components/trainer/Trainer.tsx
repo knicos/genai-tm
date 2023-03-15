@@ -125,7 +125,7 @@ export function Trainer({data, model, setModel, ...props}: Props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    return <Widget title={t<string>("training.labels.title")} className={style.widget} {...props}>
+    return <Widget dataWidget="trainer" title={t<string>("training.labels.title")} className={style.widget} {...props}>
         <div className={style.buttonContainer}>
             <Button sx={{flexGrow: 1}} variant="contained" size="large" disabled={training || !isTrainable} onClick={() => {
                 setTraining(true);
