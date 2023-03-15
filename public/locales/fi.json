@@ -7,6 +7,7 @@
         "actions": {
             "addClass": "Lisää luokka",
             "webcam": "Web-kamera",
+            "upload": "Upload",
             "deleteClass": "Poista luokka",
             "removeAll": "Poista kaikki näytteet",
             "capture": "Vangita {{seconds}}s"
@@ -15,7 +16,8 @@
             "addSamples": "Lisää kuvanäytteitä",
             "imageSamples": "{{count}} kuvanäytettä",
             "class": "Luokka",
-            "wait": "Odota..."
+            "wait": "Odota...",
+            "dropFiles": "Pudota tiedosto(t) tähän"
         }
     },
     "training": {

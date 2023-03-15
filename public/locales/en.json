@@ -7,6 +7,7 @@
         "actions": {
             "addClass": "Add a class",
             "webcam": "Webcam",
+            "upload": "Upload",
             "deleteClass": "Delete Class",
             "removeAll": "Remove all samples",
             "capture": "Capture in {{seconds}}s"
@@ -15,7 +16,8 @@
             "addSamples": "Add image samples",
             "imageSamples": "{{count}} image samples",
             "class": "Class",
-            "wait": "Wait..."
+            "wait": "Wait...",
+            "dropFiles": "Drop file(s) here"
         }
     },
     "training": {
