@@ -1,8 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import { Widget } from "../widget/Widget";
 import { useTranslation } from "react-i18next";
 import style from "./Output.module.css";
 import { BehaviourType } from "../Behaviours/Behaviours";
+import IconButton from '@mui/material/IconButton';
+import OpenInFullIcon from '@mui/icons-material/OpenInFull';
+import CloseFullscreenIcon from '@mui/icons-material/CloseFullscreen';
 
 interface Props {
     predicted: number;
@@ -13,11 +16,17 @@ interface Props {
 }
 
 export default function Output({predicted, behaviours, ...props}: Props) {
+    const [expanded, setExpanded] = useState(false);
     const {t} = useTranslation();
 
     const behaviour = (predicted >= 0 && predicted < behaviours.length) ? behaviours[predicted] : null;
 
-    return <Widget title={t<string>("output.labels.title")} className={style.widget} {...props}>
+    return <Widget title={t<string>("output.labels.title")} className={(expanded) ? style.widgetExpanded : style.widget} {...props} menu={
+        <IconButton aria-label="expand" size="small" onClick={() => setExpanded(!expanded)}>
+            {!expanded && <OpenInFullIcon fontSize="small" />}
+            {expanded && <CloseFullscreenIcon fontSize="small" />}
+        </IconButton>
+    }>
         <div className={style.container}>
             {behaviour && <img src={behaviour.image.uri} alt="" />}
         </div>
