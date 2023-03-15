@@ -9,6 +9,7 @@ interface Props {
     behaviours: BehaviourType[];
     focus?: boolean;
     disabled?: boolean;
+    hidden?: boolean;
 }
 
 export default function Output({predicted, behaviours, ...props}: Props) {

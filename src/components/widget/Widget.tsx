@@ -12,6 +12,7 @@ interface Props extends React.PropsWithChildren {
     className?: string;
     focus?: boolean;
     disabled?: boolean;
+    hidden?: boolean;
 }
 
 const TextField = styled(MTextField)({
@@ -21,7 +22,8 @@ const TextField = styled(MTextField)({
     }
 });
 
-export function Widget({disabled, focus, title, setTitle, children, menu, className}: Props) {
+export function Widget({disabled, focus, title, setTitle, children, menu, className, hidden}: Props) {
+    const firstShow = useRef(true);
     const ref = useRef<HTMLElement>(null);
     const [editing, setEditing] = useState(false);
 
@@ -32,12 +34,13 @@ export function Widget({disabled, focus, title, setTitle, children, menu, classN
             ref.current.scrollIntoView({
                 block: 'center',
                 inline: 'center',
-                behavior: 'smooth',
+                behavior: (firstShow.current) ? "auto" : "smooth",
             });
         }
+        firstShow.current = false;
     }, [focus]);
 
-    return <section ref={ref} className={classToUse + ((className) ? ` ${className}` : "")}>
+    return <section ref={ref} style={{display: (hidden) ? 'none' : 'inherit'}} className={classToUse + ((className) ? ` ${className}` : "")}>
         {title !== undefined && <header className={style.widget_header}>
             {!editing && <h1 className={style.widget_title}>
                 {title}

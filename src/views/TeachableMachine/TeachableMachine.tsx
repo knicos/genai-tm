@@ -39,8 +39,8 @@ export function TeachableMachine() {
                 <TrainingData disabled={step > 0} data={data} setData={setData} active={true} />
                 <Trainer disabled={step > 0} focus={step === 0} data={data} model={model} setModel={setModel} />
                 <Preview model={model} onPrediction={setPred}/>
-                {seenModel && <Output focus={step === 1} disabled={step !== 1} predicted={pred} behaviours={behaviours} />}
-                {seenModel && <Behaviours disabled={step !== 1} classes={model?.getLabels() || []} behaviours={behaviours} setBehaviours={setBehaviours}/>}
+                {<Output hidden={!seenModel} focus={step === 1} disabled={step !== 1} predicted={pred} behaviours={behaviours} />}
+                {<Behaviours hidden={!seenModel} disabled={step !== 1} classes={model?.getLabels() || []} behaviours={behaviours} setBehaviours={setBehaviours}/>}
             </div>
         </div>
         <div className={style.fixed}>

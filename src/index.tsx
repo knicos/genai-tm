@@ -4,6 +4,9 @@ import "./i18n";
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import smoothscroll from "smoothscroll-polyfill";
+
+smoothscroll.polyfill();
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
