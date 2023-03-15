@@ -58,10 +58,13 @@
     },
     "behaviours": {
         "labels": {
-            "title": "Behaviours",
-            "imageTab": "Images",
-            "soundsTab": "Sounds",
-            "speechTab": "Speech"
+            "title": "Behaviours"
+        }
+    },
+    "stepper": {
+        "labels": {
+            "createModel": "Create your model",
+            "deployModel": "Deploy your model"
         }
     }
 }

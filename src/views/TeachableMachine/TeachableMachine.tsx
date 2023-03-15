@@ -49,10 +49,10 @@ export function TeachableMachine() {
             </IconButton>
             <Stepper activeStep={step} >
                 <Step>
-                    <StepLabel>Create your model</StepLabel>
+                    <StepLabel>{t("stepper.labels.createModel")}</StepLabel>
                 </Step>
                 <Step disabled={!model}>
-                    <StepLabel>Deploy the model</StepLabel>
+                    <StepLabel>{t("stepper.labels.deployModel")}</StepLabel>
                 </Step>
             </Stepper>
             <IconButton disabled={step >= 1 || !model} size="large" onClick={() => {

@@ -50,5 +50,21 @@
             "title": "Malli",
             "mustTrain": "Sinun on ensin koulutettava mallisi"
         }
+    },
+    "output": {
+        "labels": {
+            "title": "Lähtö"
+        }
+    },
+    "behaviours": {
+        "labels": {
+            "title": "Käyttäytymiset"
+        }
+    },
+    "stepper": {
+        "labels": {
+            "createModel": "Luo mallisi",
+            "deployModel": "Ota mallisi käyttöön"
+        }
     }
 }
