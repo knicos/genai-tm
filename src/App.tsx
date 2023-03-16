@@ -3,11 +3,9 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import './App.css';
 import { RecoilRoot } from 'recoil';
 import { TeachableMachine } from './views/TeachableMachine/TeachableMachine';
-import AppBar from '@mui/material/AppBar';
-import Button from '@mui/material/Button';
-import Toolbar from '@mui/material/Toolbar';
-import { useTranslation } from 'react-i18next';
+import Home from "./views/Home/Home";
 import colours from "./style/colours.module.css";
+import { Routes, Route, Navigate } from 'react-router-dom';
 
 const isTest = global?.process?.env?.NODE_ENV === "test";
 
@@ -35,19 +33,16 @@ const theme = createTheme({
 });
 
 function App() {
-    const {t} = useTranslation();
     return (
     <RecoilRoot>
         <ThemeProvider theme={theme}>
-            <AppBar component="nav" className="AppBar" position="static">
-                <Toolbar>
-                    <h1>
-                        {t("app.title")}
-                    </h1>
-                <Button color="inherit">{t("app.about")}</Button>
-                </Toolbar>
-            </AppBar>
-            <TeachableMachine />
+            <Routes>
+                <Route path="/">
+                    <Route index element={<Navigate replace to="/image" />} />
+                    <Route path="image?/:variant" element={<TeachableMachine />} />
+                    <Route path="home" element={<Home />} />
+                </Route>
+            </Routes>
         </ThemeProvider>
     </RecoilRoot>
     );
