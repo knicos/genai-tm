@@ -91,12 +91,12 @@ export function Classification({name, active, data, setData, onActivate, setActi
                 </div>}
                 <ol className={(active) ? style.samplelistLarge : style.samplelistSmall}>
                     {!active && <li className={style.sample}>
-                        <Button variant="outlined" startIcon={<VideocamIcon />} onClick={onActivate}>
+                        <Button data-testid="webcambutton" variant="outlined" startIcon={<VideocamIcon />} onClick={onActivate}>
                             {t("trainingdata.actions.webcam")}
                         </Button>
                     </li>}
                     {!active && <li className={style.sample}>
-                        <Button sx={{"& .MuiButton-startIcon": { margin: "0px"}, flexDirection: "column"}} variant="outlined" startIcon={<UploadFileIcon />} onClick={open}>
+                        <Button data-testid="uploadbutton" sx={{"& .MuiButton-startIcon": { margin: "0px"}, flexDirection: "column"}} variant="outlined" startIcon={<UploadFileIcon />} onClick={open}>
                             {t("trainingdata.actions.upload")}
                         </Button>
                     </li>}

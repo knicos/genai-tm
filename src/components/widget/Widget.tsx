@@ -42,7 +42,7 @@ export function Widget({disabled, focus, title, setTitle, children, menu, classN
         firstShow.current = false;
     }, [focus]);
 
-    return <section ref={ref} data-widget={dataWidget} style={{display: (hidden) ? 'none' : 'inherit'}} className={classToUse + ((className) ? ` ${className}` : "")}>
+    return <section data-testid={`widget-${title}`} ref={ref} data-widget={dataWidget} style={{display: (hidden) ? 'none' : 'inherit'}} className={classToUse + ((className) ? ` ${className}` : "")}>
         {title !== undefined && <header className={style.widget_header}>
             {!editing && <h1 className={style.widget_title}>
                 {title}

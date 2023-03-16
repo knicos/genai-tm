@@ -6,6 +6,7 @@ import { TeachableMachine } from './views/TeachableMachine/TeachableMachine';
 import Home from "./views/Home/Home";
 import colours from "./style/colours.module.css";
 import { Routes, Route, Navigate } from 'react-router-dom';
+import gitInfo from "./generatedGitInfo.json";
 
 const isTest = global?.process?.env?.NODE_ENV === "test";
 
@@ -43,6 +44,9 @@ function App() {
                     <Route path="home" element={<Home />} />
                 </Route>
             </Routes>
+            <div className="versionBox">
+                Version: {gitInfo.gitTag}
+            </div>
         </ThemeProvider>
     </RecoilRoot>
     );

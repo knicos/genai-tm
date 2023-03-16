@@ -38,7 +38,7 @@ export function TrainingData({active, data, setData, disabled}: Props) {
             onActivate={() => active && setActiveIndex(ix)}
             setActive={(active: boolean) => setActiveIndex((active) ? ix : -1)}
             />)}
-        <Button size="large" variant="outlined" startIcon={<AddBoxIcon />} onClick={() => {
+        <Button data-testid="addClass" size="large" variant="outlined" startIcon={<AddBoxIcon />} onClick={() => {
             setData([...data, { label: `${t("trainingdata.labels.class")} ${data.length + 1}`, samples: []}]);
         }}>
             {t("trainingdata.actions.addClass")}

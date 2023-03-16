@@ -47,7 +47,7 @@ export function Webcam({interval, capture, onCapture, disable}: Props) {
     }, [capture]);
 
     useEffect(() => {
-        initWebcam();
+        initWebcam().catch(() => console.error("No webcam"));
         return () => {
             if (webcam) {
                 webcam.stop();
@@ -93,5 +93,5 @@ export function Webcam({interval, capture, onCapture, disable}: Props) {
         }
     }, [webcam, loop]);
 
-    return <div className={style.container} ref={webcamRef} />;
+    return <div data-testid="webcam" className={style.container} ref={webcamRef} />;
 }

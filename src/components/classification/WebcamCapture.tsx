@@ -24,7 +24,7 @@ export default function WebcamCapture({visible, onCapture, onClose}: Props) {
         count: 1,
     });
 
-    return (visible) ? <div className={style.webcamwindow}>
+    return (visible) ? <div data-testid="webcamwindow" className={style.webcamwindow}>
         {(showSettings)
             ? <>
                 <WebcamSettings settings={settings} setSettings={setSettings} />
@@ -37,7 +37,7 @@ export default function WebcamCapture({visible, onCapture, onClose}: Props) {
             : <>
                 <div className={style.webcamheader}>
                     <h2>{t("trainingdata.actions.webcam")}</h2>
-                    <IconButton aria-label="close" onClick={onClose} color="primary" size="small">
+                    <IconButton data-testid="webcamclose" aria-label="close" onClick={onClose} color="primary" size="small">
                         <CloseIcon fontSize="small" />
                     </IconButton>
                 </div>
