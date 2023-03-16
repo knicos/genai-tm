@@ -33,7 +33,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "lint": "eslint --max-warnings=0 ./src/**/*.ts ./src/**/*.tsx",
-    "test": "react-scripts test",
+    "test": "react-scripts test --reporters=jest-junit",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -58,6 +58,7 @@
   "devDependencies": {
     "@types/smoothscroll-polyfill": "^0.3.1",
     "eslint-config-prettier": "^8.7.0",
+    "jest-junit": "^15.0.0",
     "prettier": "^2.8.4"
   }
 }
