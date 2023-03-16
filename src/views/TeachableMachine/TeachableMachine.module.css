@@ -22,6 +22,7 @@
     gap: 3rem;
     padding: 1rem;
     box-sizing: border-box;
+    position: relative;
 }
 
 .fixed {
@@ -49,9 +50,16 @@
     color: rgb(174, 37, 174);
 }
 
-@media only screen and (max-height: 900px) {
+@media only screen and (max-height: 900px), (max-width: 700px) {
     .fixed {
         position: static;
+    }
+    .svglayer {
+        display: none;
+    }
+    .container {
+        width: 100% !important;
+        height: auto;
     }
 }
 
