@@ -1,0 +1,37 @@
+@value primary from "../../style/colours.module.css";
+
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.container ol {
+    display: flex;
+    flex-wrap: wrap;
+    background: white;
+    border-radius: 6px;
+    padding: 2rem;
+    max-width: 400px;
+    width: 100%;
+    justify-content: center;
+    box-sizing: border-box;
+}
+
+.container ol li {
+    background: primary;
+    border-radius: 6px;
+    padding: 1rem;
+    margin: 1rem;
+    list-style: none;
+    box-shadow: 2px 2px 6px #aaa;
+}
+
+.container a {
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+    font-size: 16pt;
+}

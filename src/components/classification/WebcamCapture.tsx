@@ -7,6 +7,7 @@ import { Webcam } from "../webcam/Webcam";
 import style from "./classification.module.css";
 import WebcamSettings, { IWebcamSettings } from "./WebcamSettings";
 import { useTranslation } from "react-i18next";
+import { useVariant } from "../../util/variant";
 
 interface Props {
     visible?: boolean;
@@ -15,7 +16,8 @@ interface Props {
 }
 
 export default function WebcamCapture({visible, onCapture, onClose}: Props) {
-    const {t} = useTranslation();
+    const {namespace} = useVariant();
+    const {t} = useTranslation(namespace);
     const [capturing, setCapturing] = useState(false);
     const [showSettings, setShowSettings] = useState(false);
     const [settings, setSettings] = useState<IWebcamSettings>({

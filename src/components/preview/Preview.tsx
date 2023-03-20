@@ -9,6 +9,7 @@ import Switch from '@mui/material/Switch';
 import { Button } from "../button/Button";
 import DownloadIcon from '@mui/icons-material/Download';
 import { useTranslation } from "react-i18next";
+import { useVariant } from "../../util/variant";
 
 interface IPrediction {
     className: string;
@@ -29,7 +30,8 @@ const colourWheel: Colours[] = [
 ];
 
 export function Preview({model, onPrediction}: Props) {
-    const {t} = useTranslation();
+    const {namespace} = useVariant();
+    const {t} = useTranslation(namespace);
     const [enableInput, setEnableInput] = useState(true);
     const [lastPrediction, setLastPrediction] = useState<IPrediction[]>([])
 

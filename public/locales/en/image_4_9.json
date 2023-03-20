@@ -1,0 +1,72 @@
+{
+    "app": {
+        "title": "GenAI Image Recogniser",
+        "about": "About"
+    },
+    "trainingdata": {
+        "actions": {
+            "addClass": "Add a category",
+            "webcam": "Webcam",
+            "upload": "Upload",
+            "deleteClass": "Delete Category",
+            "removeAll": "Remove all examples",
+            "capture": "Capture in {{seconds}}s"
+        },
+        "labels": {
+            "addSamples": "Add image examples",
+            "imageSamples": "{{count}} image examples",
+            "class": "Category",
+            "wait": "Wait...",
+            "dropFiles": "Drop file(s) here"
+        }
+    },
+    "training": {
+        "actions": {
+            "train": "Teach the Machine"
+        },
+        "labels": {
+            "title": "Teaching",
+            "addMore": "Add more examples or categories first",
+            "needsTraining": "The model needs training",
+            "advanced": "Advanced",
+            "epochs": "Epochs",
+            "learningRate": "Learning Rate",
+            "batchSize": "Batch Size",
+            "loading": "Loading model",
+            "prepairing": "Prepairing examples...",
+            "training": "Training the model",
+            "complete": "Training complete"
+        },
+        "tooltips": {
+            "epochs": "The number of times each sample is used for training.",
+            "learningRate": "Only make small adjustments to this, it should be less than 0.1.",
+            "batchSize": "Has minimal effect on the training. It is the number of samples used on each iteration of the training."
+        }
+    },
+    "model": {
+        "actions": {
+            "export": "Save"
+        },
+        "labels": {
+            "webcam": "Webcam",
+            "title": "Model",
+            "mustTrain": "You must teach your model first"
+        }
+    },
+    "output": {
+        "labels": {
+            "title": "Output"
+        }
+    },
+    "behaviours": {
+        "labels": {
+            "title": "Behaviours"
+        }
+    },
+    "stepper": {
+        "labels": {
+            "createModel": "Create your machine",
+            "deployModel": "Deploy your machine"
+        }
+    }
+}

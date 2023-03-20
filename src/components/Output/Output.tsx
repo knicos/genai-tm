@@ -6,6 +6,7 @@ import { BehaviourType } from "../Behaviours/Behaviours";
 import IconButton from '@mui/material/IconButton';
 import OpenInFullIcon from '@mui/icons-material/OpenInFull';
 import CloseFullscreenIcon from '@mui/icons-material/CloseFullscreen';
+import { useVariant } from "../../util/variant";
 
 interface Props {
     predicted: number;
@@ -17,7 +18,8 @@ interface Props {
 
 export default function Output({predicted, behaviours, ...props}: Props) {
     const [expanded, setExpanded] = useState(false);
-    const {t} = useTranslation();
+    const {namespace} = useVariant();
+    const {t} = useTranslation(namespace);
 
     const behaviour = (predicted >= 0 && predicted < behaviours.length) ? behaviours[predicted] : null;
 

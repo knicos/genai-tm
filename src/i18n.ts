@@ -10,7 +10,7 @@ i18n
   .init({
     ns: [],
     backend: {
-        loadPath: '/locales/{{lng}}.json',
+        loadPath: '/locales/{{lng}}/{{ns}}.json',
     },
     interpolation: {
       escapeValue: false // react already safes from xss

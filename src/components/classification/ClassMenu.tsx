@@ -4,6 +4,7 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { useTranslation } from 'react-i18next';
+import { useVariant } from "../../util/variant";
 
 interface Props {
     hasSamples: boolean;
@@ -12,7 +13,8 @@ interface Props {
 }
 
 export default function ClassMenu({hasSamples, onDeleteClass, onRemoveSamples}: Props) {
-    const {t} = useTranslation();
+    const {namespace} = useVariant();
+    const {t} = useTranslation(namespace);
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
     const handleClick = (event: React.MouseEvent<HTMLElement>) => {

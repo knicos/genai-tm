@@ -1,15 +1,16 @@
 import React, { useRef, useEffect, useState } from "react";
 import SvgLayer, {ILine} from "./SvgLayer";
-import { TrainingData } from "../../components/trainingdata/TrainingData";
-import { Trainer } from "../../components/trainer/Trainer";
-import { Preview } from "../../components/preview/Preview";
+import { TrainingData } from "../trainingdata/TrainingData";
+import { Trainer } from "../trainer/Trainer";
+import { Preview } from "../preview/Preview";
 import { IConnection, extractNodesFromElements, generateLines } from "./lines";
-import Output from "../../components/Output/Output";
-import Behaviours, { BehaviourType } from "../../components/Behaviours/Behaviours";
+import Output from "../Output/Output";
+import Behaviours, { BehaviourType } from "../Behaviours/Behaviours";
 import { useTranslation } from "react-i18next";
 import { TeachableMobileNet } from '@teachablemachine/image';
 import { IClassification } from "../../state";
 import style from "./TeachableMachine.module.css";
+import { useVariant } from "../../util/variant";
 
 const connections: IConnection[] = [
     {start: "class", end: "trainer", startPoint: "right", endPoint: "left"},
@@ -25,7 +26,8 @@ interface Props {
 }
 
 export default function Workspace({step, visitedStep, onComplete}: Props) {
-    const {t} = useTranslation();
+    const {namespace} = useVariant();
+    const {t} = useTranslation(namespace);
     const [behaviours, setBehaviours] = useState<BehaviourType[]>([]);
     const [pred, setPred] = useState(-1);
     const [model, setModel] = useState<TeachableMobileNet | undefined>();

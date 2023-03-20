@@ -1,54 +1,33 @@
 import React from 'react';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+
 import './App.css';
-import { RecoilRoot } from 'recoil';
-import { TeachableMachine } from './views/TeachableMachine/TeachableMachine';
 import Home from "./views/Home/Home";
-import colours from "./style/colours.module.css";
-import { Routes, Route, Navigate } from 'react-router-dom';
+import { RouterProvider, Route, Navigate, createBrowserRouter, createRoutesFromElements } from 'react-router-dom';
 import gitInfo from "./generatedGitInfo.json";
+import ImageVariants from './views/ImageVariants/ImageVariants';
 
-const isTest = global?.process?.env?.NODE_ENV === "test";
-
-const theme = createTheme({
-    palette: {
-        primary: {
-            main: (isTest) ? "#fff" : colours.primary,
-        },
-    },
-    typography: {
-        fontFamily: [
-          'Andika',
-          '-apple-system',
-          'BlinkMacSystemFont',
-          '"Segoe UI"',
-          'Roboto',
-          '"Helvetica Neue"',
-          'Arial',
-          'sans-serif',
-          '"Apple Color Emoji"',
-          '"Segoe UI Emoji"',
-          '"Segoe UI Symbol"',
-        ].join(','),
-    },
-});
+const router = createBrowserRouter(
+    createRoutesFromElements(
+        <Route path="/">
+            <Route index element={<Navigate replace to="/image" />} />
+            <Route path="image">
+                <Route index element={<ImageVariants />} />
+                <Route path="age4_9" lazy={() => import("./views/ImageAge4To9/ImageAge4To9")} />
+                <Route path="general" lazy={() => import("./views/ImageGeneral/ImageGeneral")} />
+            </Route>
+            <Route path="home" element={<Home />} />
+        </Route>
+    )
+)
 
 function App() {
     return (
-    <RecoilRoot>
-        <ThemeProvider theme={theme}>
-            <Routes>
-                <Route path="/">
-                    <Route index element={<Navigate replace to="/image" />} />
-                    <Route path="image?/:variant" element={<TeachableMachine />} />
-                    <Route path="home" element={<Home />} />
-                </Route>
-            </Routes>
-            <div className="versionBox">
-                Version: {gitInfo.gitTag}
-            </div>
-        </ThemeProvider>
-    </RecoilRoot>
+    <React.Suspense fallback={<div></div>}>
+        <RouterProvider router={router} />
+        <div className="versionBox">
+            Version: {gitInfo.gitTag}
+        </div>
+    </React.Suspense>
     );
 }
 

@@ -14,6 +14,7 @@ import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import Tooltip, { TooltipProps, tooltipClasses } from '@mui/material/Tooltip';
 import { styled } from '@mui/material/styles';
 import { useTranslation } from "react-i18next";
+import { useVariant } from "../../util/variant";
 
 interface Props {
     data: IClassification[];
@@ -38,7 +39,8 @@ const HelpTooltip = styled(({ className, ...props }: TooltipProps) => (
 type TrainingStage = 'ready' | 'loading' | 'prepare' | 'training' | 'done' | 'none';
 
 export function Trainer({data, model, setModel, ...props}: Props) {
-    const {t} = useTranslation();
+    const {namespace, advancedMenu} = useVariant();
+    const {t} = useTranslation(namespace);
     const [training, setTraining] = useState(false);
     const [trainingStage, setTrainingStage] = useState<TrainingStage>('none');
     const [epochs, setEpochs] = useState(0);
@@ -144,7 +146,7 @@ export function Trainer({data, model, setModel, ...props}: Props) {
             {trainingStage === 'done' && <Alert severity="success">{t("training.labels.complete")}</Alert>}
         </div>}
 
-        <Accordion>
+        {advancedMenu && <Accordion>
             <AccordionSummary expandIcon={<ExpandMoreIcon />}>
                 <span className={style.advancedTitle}>{t("training.labels.advanced")}</span>
             </AccordionSummary>
@@ -204,6 +206,6 @@ export function Trainer({data, model, setModel, ...props}: Props) {
                     </HelpTooltip>
                 </div>
             </AccordionDetails>
-        </Accordion>
+        </Accordion>}
     </Widget>;
 }

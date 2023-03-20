@@ -1,0 +1,36 @@
+.workspace {
+    position: relative;
+    flex-grow: 1;
+    overflow: auto;
+}
+
+.svglayer {
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+
+.container {
+    width: 300%;
+    height: 200%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-grow: 1;
+    flex-wrap: wrap;
+    overflow: auto;
+    gap: 3rem;
+    padding: 1rem;
+    box-sizing: border-box;
+    position: relative;
+}
+
+@media only screen and (max-height: 900px), (max-width: 700px) {
+    .svglayer {
+        display: none;
+    }
+    .container {
+        width: 100% !important;
+        height: auto;
+    }
+}

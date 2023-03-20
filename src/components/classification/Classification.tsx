@@ -10,6 +10,7 @@ import UploadFileIcon from '@mui/icons-material/UploadFile';
 import ClassMenu from "./ClassMenu";
 import { useTranslation } from 'react-i18next';
 import { useDropzone } from "react-dropzone";
+import { useVariant } from "../../util/variant";
 
 interface Props {
     name: string;
@@ -22,7 +23,8 @@ interface Props {
 }
 
 export function Classification({name, active, data, setData, onActivate, setActive, onDelete}: Props) {
-    const {t} = useTranslation();
+    const {namespace} = useVariant();
+    const {t} = useTranslation(namespace);
 
     const onDrop = useCallback((acceptedFiles: File[]) => {
         const promises = acceptedFiles.map((file) => new Promise<HTMLCanvasElement>((resolve, reject) => {

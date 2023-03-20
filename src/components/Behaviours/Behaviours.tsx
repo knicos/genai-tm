@@ -8,6 +8,7 @@ import VideoCameraBackIcon from '@mui/icons-material/VideoCameraBack';
 import MusicNoteIcon from '@mui/icons-material/MusicNote';
 import RecordVoiceOverIcon from '@mui/icons-material/RecordVoiceOver';
 import style from "./Behaviours.module.css";
+import { useVariant } from "../../util/variant";
 
 type BehaviourTypes = "image" | "sound" | "speech";
 
@@ -72,7 +73,8 @@ export default function Behaviours({classes, behaviours, setBehaviours, ...props
             if (newType !== null) setValue(newType);
         };
     
-    const {t} = useTranslation();
+    const {namespace} = useVariant();
+    const {t} = useTranslation(namespace);
     return <Widget dataWidget="behaviours" title={t<string>("behaviours.labels.title")} className={style.widget} {...props}>
         <div className={style.container}>
             <ToggleButtonGroup

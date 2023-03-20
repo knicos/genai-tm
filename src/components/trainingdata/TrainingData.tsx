@@ -5,6 +5,7 @@ import { IClassification } from "../../state";
 import style from "./trainingdata.module.css";
 import AddBoxIcon from '@mui/icons-material/AddBox';
 import { useTranslation } from 'react-i18next';
+import { useVariant } from "../../util/variant";
 
 interface Props {
     active?: boolean;
@@ -14,7 +15,8 @@ interface Props {
 }
 
 export function TrainingData({active, data, setData, disabled}: Props) {
-    const {t} = useTranslation();
+    const {namespace} = useVariant();
+    const {t} = useTranslation(namespace);
     const [activeIndex, setActiveIndex] = useState(-1);
 
     useEffect(() => {
