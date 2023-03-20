@@ -2,6 +2,7 @@
   "name": "genai-teachable-machine",
   "version": "0.1.0",
   "private": true,
+  "license": "MIT",
   "dependencies": {
     "@emotion/react": "^11.10.6",
     "@emotion/styled": "^11.10.6",
