@@ -104,13 +104,14 @@ stages:
                       skip_api_build: true
                       skip_app_build: true
                       azure_static_web_apps_api_token: $(deployment_token)
-          - job: Github
-            displayName: Github Mirror
-            steps:
-                - script: |
-                      git config user.name "Nicolas Pope"
-                      git config user.email "npope@uef.fi"
-                      git push --prune $(git_token) +refs/remotes/origin/*:refs/heads/* +refs/tags/*:refs/tags/*
+          #- job: Github
+          #  displayName: Github Mirror
+          #  steps:
+          #      - script: |
+          #            git config user.name "Nicolas Pope"
+          #            git config user.email "npope@uef.fi"
+          #            git fetch --unshallow origin
+          #            git push --prune $(git_token) +refs/remotes/origin/*:refs/heads/* +refs/tags/*:refs/tags/*
 
     - stage: DeployStaging
       displayName: Deploy Staging

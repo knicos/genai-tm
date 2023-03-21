@@ -2,7 +2,7 @@
     "app": {
         "variantTitle": "Image Recogniser",
         "variantMessage": "Select the variation to use:",
-        "variantAge4_9": "Age 4-9",
+        "variantAge4_9": "Grade 4-9",
         "variantAdvanced": "Advanced"
     }
 }

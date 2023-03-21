@@ -12,7 +12,7 @@ const router = createBrowserRouter(
             <Route index element={<Navigate replace to="/image" />} />
             <Route path="image">
                 <Route index element={<ImageVariants />} />
-                <Route path="age4_9" lazy={() => import("./views/ImageAge4To9/ImageAge4To9")} />
+                <Route path="grade4_9" lazy={() => import("./views/ImageAge4To9/ImageAge4To9")} />
                 <Route path="general" lazy={() => import("./views/ImageGeneral/ImageGeneral")} />
             </Route>
             <Route path="home" element={<Home />} />

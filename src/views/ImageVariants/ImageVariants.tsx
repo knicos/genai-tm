@@ -10,7 +10,7 @@ export default function ImageVariants() {
         <h1>{t("app.variantTitle")}</h1>
         <span>{t("app.variantMessage")}</span>
         <ol>
-            <li><Link to="/image/age4_9">{t("app.variantAge4_9")}</Link></li>
+            <li><Link to="/image/grade4_9">{t("app.variantAge4_9")}</Link></li>
             <li><Link to="/image/general">{t("app.variantAdvanced")}</Link></li>
         </ol>
     </div>
