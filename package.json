@@ -1,6 +1,9 @@
 {
   "name": "genai-teachable-machine",
   "version": "0.1.0",
+  "author": "Nicolas Pope <npope@uef.fi>",
+  "description": "Machine Learning tool for Children",
+  "homepage": "https://www.generation-ai-stn.fi",
   "private": true,
   "license": "MIT",
   "dependencies": {
