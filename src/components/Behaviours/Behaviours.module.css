@@ -1,73 +1,17 @@
 @value primary, primaryHover from "../../style/colours.module.css";
 
-.widget {
-    width: 100%;
-    max-width: 300px;
-}
-
 .container {
-    padding: 0;
-}
-
-.container :global .MuiToggleButtonGroup-root {
-    margin: 1rem;
-    width: calc(100% - 2rem);
-}
-
-.container > ol {
-    margin-top: 0;
-    margin-bottom: 1rem;
-    padding: 0;
-    overflow-y: auto;
-    max-height: 300px;
-}
-
-.imageContainer {
-    position: relative;
     display: flex;
-    margin: 0.5rem 1rem;
+    flex-direction: column;
     align-items: center;
-    flex-direction: row;
-    gap: 0.5rem;
-    justify-content: start;
-    padding-left: 0.5rem;
-    border-radius: 6px;
-    border: 1px solid white;
+    gap: 1rem;
+    width: 100%;
+    max-width: 200px;
 }
 
-.imageContainerdrop {
-    composes: imageContainer;
-    border: 1px dashed primary;
-    background-color: primaryHover;
-}
-
-.imageContainer:hover {
-    background-color: primaryHover;
-}
-
-.imageContainer > h2 {
-    font-size: 12pt;
-    font-weight: bold;
+.container h1 {
+    align-self: flex-start;
     margin: 0;
-    flex-grow: 1;
     color: #444;
 }
-
-.imageContainer > img {
-    flex-shrink: 1;
-    border-bottom-right-radius: 6px;
-    border-top-right-radius: 6px;
-    max-width: 80px;
-    max-height: 80px;
-    border-left: 1px solid primary;
-}
-
-.imageContainer:hover img {
-    filter: brightness(0.5);
-}
-
-.imageContainerdrop img {
-    filter: brightness(0.5);
-}
-
 

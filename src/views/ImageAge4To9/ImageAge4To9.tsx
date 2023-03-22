@@ -5,7 +5,7 @@ import Stepper from '@mui/material/Stepper';
 import Step from '@mui/material/Step';
 import StepLabel from '@mui/material/StepLabel';
 import IconButton from "@mui/material/IconButton";
-import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
+import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import AppBar from "../../components/AppBar/AppBar";
 import Workspace from "../../components/ImageWorkspace/Workspace";
@@ -55,7 +55,7 @@ export function Component() {
             }} />
             <div className={style.fixed}>
                 <IconButton disabled={step <= 0} size="large" onClick={() => setStep(step - 1)}>
-                    <ArrowBackIosIcon fontSize="large" />
+                    <ArrowBackIosNewIcon fontSize="large" />
                 </IconButton>
                 <Stepper activeStep={step} >
                     <Step>

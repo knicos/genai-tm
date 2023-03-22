@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import style from "./stepper.module.css";
 import { useTranslation } from "react-i18next";
 import Stepper from '@mui/material/Stepper';
 import Step from '@mui/material/Step';
 import StepLabel from '@mui/material/StepLabel';
 import IconButton from "@mui/material/IconButton";
-import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
+import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import AppBar from "../../components/AppBar/AppBar";
 import Workspace from "../../components/ImageWorkspace/Workspace";
@@ -46,15 +46,24 @@ export function Component() {
     const [allowedStep, setAllowedStep] = useState(0);
     const [visited, setVisited] = useState(0);
 
+    const doComplete = useCallback((newstep: number) => {
+        setAllowedStep((old: number) => Math.max(old, newstep));
+    }, [setAllowedStep]);
+
+    const nextStep = useCallback(() => {
+        setStep(step + 1);
+        setVisited((oldVisited) => Math.max(oldVisited, step + 1));
+    }, [setStep, setVisited, step]);
+
+    const prevStep = useCallback(() => setStep(step - 1), [setStep, step]);
+
     return <ThemeProvider theme={theme}>
         <VariantContext.Provider value={settings}>
             <AppBar />
-            <Workspace step={step} visitedStep={visited} onComplete={(newstep: number) => {
-                setAllowedStep((old: number) => Math.max(old, newstep));
-            }} />
+            <Workspace step={step} visitedStep={visited} onComplete={doComplete} />
             <div className={style.fixed}>
-                <IconButton disabled={step <= 0} size="large" onClick={() => setStep(step - 1)}>
-                    <ArrowBackIosIcon fontSize="large" />
+                <IconButton disabled={step <= 0} size="large" onClick={prevStep}>
+                    <ArrowBackIosNewIcon fontSize="large" />
                 </IconButton>
                 <Stepper activeStep={step} >
                     <Step>
@@ -64,10 +73,7 @@ export function Component() {
                         <StepLabel>{t("stepper.labels.deployModel")}</StepLabel>
                     </Step>
                 </Stepper>
-                <IconButton disabled={step >= 1 || allowedStep <= step} size="large" onClick={() => {
-                    setStep(step + 1);
-                    setVisited((oldVisited) => Math.max(oldVisited, step + 1));
-                }}>
+                <IconButton disabled={step >= 1 || allowedStep <= step} size="large" onClick={nextStep}>
                     <ArrowForwardIosIcon fontSize="large"/>
                 </IconButton>
             </div>

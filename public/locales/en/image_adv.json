@@ -13,6 +13,7 @@
             "capture": "Hold to capture"
         },
         "labels": {
+            "title": "Training Data",
             "addSamples": "Add image samples",
             "imageSamples": "{{count}} image samples",
             "class": "Class",
@@ -60,7 +61,7 @@
     },
     "behaviours": {
         "labels": {
-            "title": "Behaviours"
+            "title": "Behaviors"
         }
     },
     "stepper": {

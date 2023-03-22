@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { Classification } from "../classification/Classification";
 import { Button } from "../button/Button";
 import { IClassification } from "../../state";
@@ -23,27 +23,37 @@ export function TrainingData({active, data, setData, disabled}: Props) {
         if (disabled) setActiveIndex(-1);
     }, [disabled]);
 
-    return <div data-widget="container" className={(disabled) ? style.containerDisabled : style.trainingcontainer}>
+    const setDataIx = useCallback((samples: IClassification, ix: number) => {
+        const newdata = [...data];
+        newdata[ix] = samples;
+        setData(newdata);
+    }, [data, setData]);
+
+    const doActivate = useCallback((ix: number) => active && setActiveIndex(ix), [active, setActiveIndex]);
+
+    const doDelete = useCallback((ix: number) => setData(data.filter((v, index) => index !== ix)), [setData, data]);
+
+    const doSetActive = useCallback((a: boolean, ix: number) => setActiveIndex((active) ? ix : -1), [setActiveIndex, active]);
+
+    const addClass = useCallback(() => {
+        setData([...data, { label: `${t("trainingdata.labels.class")} ${data.length + 1}`, samples: []}]);
+    }, [setData, data, t]);
+
+    return <section data-widget="container" className={(disabled) ? style.containerDisabled : style.trainingcontainer}>
+        <h1>{t("trainingdata.labels.title")}</h1>
         {data.map((c, ix) => <Classification
-            onDelete={() => {
-                setData(data.filter((v, index) => index !== ix));
-            }}
+            onDelete={doDelete}
             key={ix}
+            index={ix}
             name={c.label}
             active={ix === activeIndex}
             data={data[ix]}
-            setData={(samples: IClassification) => {
-                const newdata = [...data];
-                newdata[ix] = samples;
-                setData(newdata);
-            }}
-            onActivate={() => active && setActiveIndex(ix)}
-            setActive={(active: boolean) => setActiveIndex((active) ? ix : -1)}
+            setData={setDataIx}
+            onActivate={doActivate}
+            setActive={doSetActive}
             />)}
-        <Button data-testid="addClass" size="large" variant="outlined" startIcon={<AddBoxIcon />} onClick={() => {
-            setData([...data, { label: `${t("trainingdata.labels.class")} ${data.length + 1}`, samples: []}]);
-        }}>
+        <Button data-testid="addClass" size="large" variant="outlined" startIcon={<AddBoxIcon />} onClick={addClass}>
             {t("trainingdata.actions.addClass")}
         </Button>
-    </div>;
+    </section>;
 }

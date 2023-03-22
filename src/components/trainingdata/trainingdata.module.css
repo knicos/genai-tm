@@ -12,3 +12,13 @@
     pointer-events: none;
     opacity: 0.5;
 }
+
+.trainingcontainer h1 {
+    color: #444;
+    margin: 0;
+}
+
+.containerDisabled h1 {
+    color: #444;
+    margin: 0;
+}

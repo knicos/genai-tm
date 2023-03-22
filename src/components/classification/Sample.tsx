@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useCallback } from "react";
 import style from "./classification.module.css";
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import MIconButton from "@mui/material/IconButton";
@@ -13,10 +13,11 @@ const IconButton = styled(MIconButton)({
 
 interface Props {
     image: HTMLCanvasElement;
-    onDelete: () => void;
+    onDelete: (index: number) => void;
+    index: number;
 }
 
-export default function Sample({image, onDelete}: Props) {
+export default function Sample({image, index, onDelete}: Props) {
     const ref = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
@@ -28,8 +29,10 @@ export default function Sample({image, onDelete}: Props) {
         }
     }, [image]);
 
+    const doClick = useCallback(() => onDelete(index), [onDelete, index]);
+
     return <li className={style.sampleImage}>
-        <IconButton aria-label="delete" onClick={onDelete}>
+        <IconButton aria-label="delete" onClick={doClick}>
             <DeleteForeverIcon />
         </IconButton>
         <div ref={ref} />

@@ -1,14 +1,9 @@
-import React, { useEffect, useState } from "react";
-import { Widget } from "../widget/Widget";
+import React, { useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import ToggleButton from '@mui/material/ToggleButton';
-import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
-import Image, { ImageBehaviour } from "./Image";
-import VideoCameraBackIcon from '@mui/icons-material/VideoCameraBack';
-import MusicNoteIcon from '@mui/icons-material/MusicNote';
-import RecordVoiceOverIcon from '@mui/icons-material/RecordVoiceOver';
+import { ImageBehaviour } from "../Behaviour/Image";
 import style from "./Behaviours.module.css";
 import { useVariant } from "../../util/variant";
+import Behaviour from "../Behaviour/Behaviour";
 
 type BehaviourTypes = "image" | "sound" | "speech";
 
@@ -54,8 +49,6 @@ interface Props {
 }
 
 export default function Behaviours({classes, behaviours, setBehaviours, ...props}: Props) {
-    const [value, setValue] = useState<BehaviourTypes>("image");
-
     useEffect(() => {
         if (classes.length < behaviours.length) {
             setBehaviours(behaviours.slice(0, classes.length));
@@ -64,53 +57,15 @@ export default function Behaviours({classes, behaviours, setBehaviours, ...props
         }
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [classes.length]);
-
-    
-
-    const handleChange = (
-            event: React.MouseEvent<HTMLElement>,
-            newType: BehaviourTypes | null,
-        ) => {
-            if (newType !== null) setValue(newType);
-        };
     
     const {namespace} = useVariant();
     const {t} = useTranslation(namespace);
-    return <Widget dataWidget="behaviours" title={t<string>("behaviours.labels.title")} className={style.widget} {...props}>
-        <div className={style.container}>
-            <ToggleButtonGroup
-                value={value}
-                onChange={handleChange}
-                exclusive
-                color="primary"
-                fullWidth
-                size="large"
-                sx={{margin: "1rem 0"}}
-            >
-                <ToggleButton value="image">
-                    <VideoCameraBackIcon />
-                </ToggleButton>
-                <ToggleButton value="sound" disabled>
-                    <MusicNoteIcon />
-                </ToggleButton>
-                <ToggleButton value="speech" disabled>
-                    <RecordVoiceOverIcon />
-                </ToggleButton>
-            </ToggleButtonGroup>
-            <ol>
-                {value === "image" && classes.map((c, ix) => ((behaviours.length > ix) ? <Image
-                    key={ix}
-                    label={c}
-                    behaviour={behaviours[ix].image}
-                    setBehaviour={(behaviour: ImageBehaviour) => {
-                        const newBehaviours = [...behaviours];
-                        newBehaviours[ix].image = behaviour;
-                        setBehaviours(newBehaviours);
-                    }}
-                    /> : null))}
-                {value === "sound" && classes.map((c, ix) => `Sound for ${c}`)}
-                {value === "speech" && classes.map((c, ix) => `Speech for ${c}`)}
-            </ol>
-        </div>
-    </Widget>
+    return <section data-widget="container" style={{display: (props.hidden) ? "none" : "flex"}} className={style.container}>
+        <h1>{t("behaviours.labels.title")}</h1>
+        {classes.map((c, ix) => ((ix < behaviours.length) ? <Behaviour disabled={props.disabled} focus={props.focus && ix === Math.floor(classes.length / 2)} key={ix} classLabel={c} behaviour={behaviours[ix]} setBehaviour={(nb: BehaviourType) => {
+            const newBehaviours = [...behaviours];
+            newBehaviours[ix] = nb;
+            setBehaviours(newBehaviours);    
+        }} /> : null))}
+    </section>
 }

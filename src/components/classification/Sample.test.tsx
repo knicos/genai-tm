@@ -9,7 +9,7 @@ function TestWrapper() {
     const [image, setImage] = useState(iCanvas);
 
     return <div>
-        <Sample image={image} onDelete={() => {}} />
+        <Sample index={0} image={image} onDelete={() => {}} />
         <button data-testid="newimage" onClick={() => {
             const nCanvas = document.createElement("canvas");
             nCanvas.setAttribute("data-testid", "sample");

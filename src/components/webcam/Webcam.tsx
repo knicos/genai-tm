@@ -18,9 +18,9 @@ export function Webcam({interval, capture, onCapture, disable}: Props) {
 
     const loop = useCallback((timestamp: number) => {
         if (webcam) {
-            if (previousTimeRef.current === 0) {
-                previousTimeRef.current = timestamp;
-            }
+            //if (previousTimeRef.current === 0) {
+            //    previousTimeRef.current = timestamp;
+            //}
             webcam.update();
             const actualInterval = (interval !== undefined) ? interval : 1000.0;
             if (capture && onCapture && (timestamp - previousTimeRef.current) >= actualInterval) {

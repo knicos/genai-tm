@@ -16,8 +16,8 @@ import Input from "../Input/Input";
 const connections: IConnection[] = [
     {start: "class", end: "trainer", startPoint: "right", endPoint: "left"},
     {start: "trainer", end: "model", startPoint: "right", endPoint: "left"},
-    {start: "model", end: "behaviours", startPoint: "right", endPoint: "left"},
-    {start: "behaviours", end: "output", startPoint: "right", endPoint: "left"},
+    {start: "model", end: "behaviour", startPoint: "right", endPoint: "left"},
+    {start: "behaviour", end: "output", startPoint: "right", endPoint: "left"},
     {start: "input", end: "model", startPoint: "bottom", endPoint: "top"},
 ];
 

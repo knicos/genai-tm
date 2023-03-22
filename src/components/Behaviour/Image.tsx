@@ -1,5 +1,5 @@
 import React, { useCallback } from "react";
-import style from "./Behaviours.module.css";
+import style from "./Behaviour.module.css";
 import EditIcon from '@mui/icons-material/Edit';
 import { useDropzone } from "react-dropzone";
 import IconButton from "@mui/material/IconButton";
@@ -9,12 +9,11 @@ export interface ImageBehaviour {
 };
 
 interface Props {
-    label: string;
     behaviour: ImageBehaviour;
     setBehaviour: (behaviour: ImageBehaviour) => void;
 }
 
-export default function Image({label, behaviour, setBehaviour}: Props) {
+export default function Image({behaviour, setBehaviour}: Props) {
     const onDrop = useCallback((acceptedFiles: File[]) => {
         if (acceptedFiles.length === 1) {
             const reader = new FileReader();
@@ -40,12 +39,11 @@ export default function Image({label, behaviour, setBehaviour}: Props) {
         maxFiles: 1,
     });
 
-    return <li className={(isDragActive) ? style.imageContainerdrop : style.imageContainer} {...getRootProps()}>
-        <h2>{label}</h2>
+    return <div className={(isDragActive) ? style.imageContainerdrop : style.imageContainer} {...getRootProps()}>
         <IconButton color="default" onClick={open}>
             <EditIcon />
         </IconButton>
         <input {...getInputProps()} />
         <img className={style.image} src={behaviour.uri} width={80} alt={""}/>
-    </li>;
+    </div>;
 }
