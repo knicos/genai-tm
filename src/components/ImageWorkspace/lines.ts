@@ -49,6 +49,7 @@ export function generateLines(data: Map<string, INode[]>, connections: IConnecti
                     x2: (connection.endPoint === "left") ? output.x : (connection.endPoint === "right") ? output.x + output.width : output.x + output.width / 2,
                     y1: (connection.startPoint === "top") ? input.y : (connection.startPoint === "bottom") ? input.y + input.height : input.y + input.height / 2,
                     y2: (connection.endPoint === "top") ? output.y : (connection.endPoint === "bottom") ? output.y + output.height : output.y + output.height / 2,
+                    direction: (connection.startPoint === "top" || connection.startPoint === "bottom") ? "vertical" : "horizontal",
                 });
             }
         }

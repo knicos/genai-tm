@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import { Webcam as TMWebcam } from "@teachablemachine/image";
 import style from "./webcam.module.css";
+import { Skeleton } from "@mui/material";
 
 interface Props {
     interval?: number;
@@ -93,5 +94,8 @@ export function Webcam({interval, capture, onCapture, disable}: Props) {
         }
     }, [webcam, loop]);
 
-    return <div data-testid="webcam" className={style.container} ref={webcamRef} />;
+    return <>
+        {!webcam && <Skeleton variant="rounded" width={224} height={224} />}
+        <div data-testid="webcam" className={style.container} ref={webcamRef} />
+    </>;
 }

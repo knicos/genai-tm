@@ -1,0 +1,11 @@
+.container {
+    display: flex;
+    flex-direction: column;
+}
+
+.inputContainer {
+    border-radius: 6px;
+    overflow: hidden;
+    align-self: center;
+    margin: 1rem;
+}

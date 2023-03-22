@@ -50,6 +50,7 @@ interface Props {
     setBehaviours: (newBehaviours: BehaviourType[]) => void;
     disabled?: boolean;
     hidden?: boolean;
+    focus?: boolean;
 }
 
 export default function Behaviours({classes, behaviours, setBehaviours, ...props}: Props) {

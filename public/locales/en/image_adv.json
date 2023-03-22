@@ -1,6 +1,6 @@
 {
     "app": {
-        "title": "GenAI Image Recogniser",
+        "title": "GenAI Image Classifier",
         "about": "About"
     },
     "trainingdata": {
@@ -22,19 +22,19 @@
     },
     "training": {
         "actions": {
-            "train": "Train model"
+            "train": "Train classifier"
         },
         "labels": {
             "title": "Training",
             "addMore": "Add more samples or classes first",
-            "needsTraining": "The model needs training",
+            "needsTraining": "The classifier needs training",
             "advanced": "Advanced",
             "epochs": "Epochs",
             "learningRate": "Learning Rate",
             "batchSize": "Batch Size",
-            "loading": "Loading model",
+            "loading": "Loading classifier",
             "prepairing": "Prepairing examples...",
-            "training": "Training the model",
+            "training": "Training the classifier",
             "complete": "Training complete"
         },
         "tooltips": {
@@ -49,8 +49,8 @@
         },
         "labels": {
             "webcam": "Webcam",
-            "title": "Model",
-            "mustTrain": "You must train your model first"
+            "title": "Classifier",
+            "mustTrain": "You must train your classifier first"
         }
     },
     "output": {
@@ -65,8 +65,8 @@
     },
     "stepper": {
         "labels": {
-            "createModel": "Create your model",
-            "deployModel": "Deploy your model"
+            "createModel": "Create your classifier",
+            "deployModel": "Use your classifier"
         }
     }
 }

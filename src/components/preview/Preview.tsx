@@ -1,24 +1,22 @@
 import { TeachableMobileNet } from "@teachablemachine/image";
-import React, { useState } from "react";
-import { Webcam } from "../webcam/Webcam";
+import React from "react";
 import { Widget } from "../widget/Widget";
 import PercentageBar, {Colours} from "../PercentageBar/PercentageBar";
 import style from "./Preview.module.css";
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Switch from '@mui/material/Switch';
 import { Button } from "../button/Button";
 import DownloadIcon from '@mui/icons-material/Download';
 import { useTranslation } from "react-i18next";
 import { useVariant } from "../../util/variant";
+import Alert from "@mui/material/Alert";
 
-interface IPrediction {
+export interface IPrediction {
     className: string;
     probability: number;
 }
 
 interface Props {
     model?: TeachableMobileNet;
-    onPrediction: (prediction: number) => void;
+    prediction: IPrediction[];
 }
 
 const colourWheel: Colours[] = [
@@ -29,40 +27,16 @@ const colourWheel: Colours[] = [
     'red',
 ];
 
-export function Preview({model, onPrediction}: Props) {
+export function Preview({model, prediction}: Props) {
     const {namespace} = useVariant();
     const {t} = useTranslation(namespace);
-    const [enableInput, setEnableInput] = useState(true);
-    const [lastPrediction, setLastPrediction] = useState<IPrediction[]>([])
-
-    const doPrediction = async (image: HTMLCanvasElement) => {
-        if (model) {
-            const prediction = await model.predict(image);
-            setLastPrediction(prediction);
-
-            const nameOfMax = prediction.reduce((prev, val) => ((val.probability > prev.probability) ? val : prev));
-            onPrediction(prediction.indexOf(nameOfMax));
-        }
-    }
 
     return <Widget dataWidget="model" title={t<string>("model.labels.title")} className={style.widget}>
         {model &&
             <div className={style.previewContainer}>
-                <div className={style.inputControls}>
-                    <FormControlLabel labelPlacement="start" control={
-                        <Switch
-                            checked={enableInput}
-                            onChange={(event: React.ChangeEvent<HTMLInputElement>, checked: boolean) => {
-                                setEnableInput(checked);   
-                            }}
-                        />} label={t<string>("model.labels.webcam")} />
-                </div>
-                <div className={style.inputContainer}>
-                    <Webcam disable={!enableInput} capture={enableInput && !!model} interval={200} onCapture={doPrediction}/>
-                </div>
                 <table className={style.table}>
                     <tbody>
-                        {lastPrediction.map((p, ix) => <tr key={ix}>
+                        {prediction.map((p, ix) => <tr key={ix}>
                             <td className={style.labelCell}>{p.className}</td>
                             <td className={style.valueCell}><PercentageBar
                                 colour={colourWheel[ix % colourWheel.length]}
@@ -79,7 +53,9 @@ export function Preview({model, onPrediction}: Props) {
             </div>
         }
         {!model &&
-            <p>{t("model.labels.mustTrain")}</p>
+            <div className={style.buttonContainer}>
+                <Alert severity="info">{t("model.labels.mustTrain")}</Alert>
+            </div>
         }
     </Widget>
 }

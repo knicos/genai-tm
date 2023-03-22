@@ -34,3 +34,10 @@
         height: auto;
     }
 }
+
+.column {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    align-items: center;
+}

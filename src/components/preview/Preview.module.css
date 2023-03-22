@@ -4,16 +4,6 @@
     gap: 0.5rem;
 }
 
-.inputContainer {
-    border-radius: 6px;
-    overflow: hidden;
-    align-self: center;
-}
-
-.inputControls {
-    margin-top: 0.5rem;
-}
-
 .buttonContainer {
     margin: 1rem;
 }
