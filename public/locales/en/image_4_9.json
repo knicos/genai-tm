@@ -1,40 +1,41 @@
 {
     "app": {
-        "title": "GenAI Image Recogniser",
+        "title": "GenAI Image Classifier",
         "about": "About"
     },
     "trainingdata": {
         "actions": {
-            "addClass": "Add a category",
+            "addClass": "Add a class",
             "webcam": "Webcam",
             "upload": "Upload",
-            "deleteClass": "Delete Category",
-            "removeAll": "Remove all examples",
-            "capture": "Capture in {{seconds}}s"
+            "deleteClass": "Delete Class",
+            "removeAll": "Remove all samples",
+            "capture": "Hold to capture"
         },
         "labels": {
-            "addSamples": "Add image examples",
-            "imageSamples": "{{count}} image examples",
-            "class": "Category",
-            "wait": "Wait...",
+            "title": "Training Data",
+            "addSamples": "Add image samples",
+            "imageSamples": "{{count}} image samples",
+            "class": "Class",
+            "wait": "Capturing...",
             "dropFiles": "Drop file(s) here"
         }
     },
     "training": {
         "actions": {
-            "train": "Teach the Machine"
+            "train": "Train classifier"
         },
         "labels": {
-            "title": "Teaching",
-            "addMore": "Add more examples or categories first",
-            "needsTraining": "The model needs training",
+            "title": "Training",
+            "addMore": "Add more samples or classes first",
+            "needsTraining": "The classifier needs training",
             "advanced": "Advanced",
             "epochs": "Epochs",
             "learningRate": "Learning Rate",
             "batchSize": "Batch Size",
-            "loading": "Loading model",
+            "loading": "Loading classifier",
             "prepairing": "Prepairing examples...",
-            "training": "Training the model",
+            "training": "Training the classifier",
             "complete": "Training complete"
         },
         "tooltips": {
@@ -45,12 +46,12 @@
     },
     "model": {
         "actions": {
-            "export": "Save"
+            "export": "Export"
         },
         "labels": {
             "webcam": "Webcam",
-            "title": "Model",
-            "mustTrain": "You must teach your model first"
+            "title": "Classifier",
+            "mustTrain": "You must train your classifier first"
         }
     },
     "output": {
@@ -60,13 +61,13 @@
     },
     "behaviours": {
         "labels": {
-            "title": "Behaviours"
+            "title": "Behaviors"
         }
     },
     "stepper": {
         "labels": {
-            "createModel": "Create your machine",
-            "deployModel": "Deploy your machine"
+            "createModel": "Create your classifier",
+            "deployModel": "Use your classifier"
         }
     }
 }

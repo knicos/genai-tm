@@ -14,6 +14,6 @@ describe("Classification component", () => {
             onActivate={() => {}}
             onDelete={() => {}} />);
         expect(screen.getByTestId("widget-TestClass")).toBeInTheDocument();
-        expect(screen.getByTestId("uploadbutton")).toBeInTheDocument();
+        expect(screen.getByTestId("webcambutton")).toBeInTheDocument();
     });
 });

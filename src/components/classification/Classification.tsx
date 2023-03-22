@@ -24,7 +24,7 @@ interface Props {
 }
 
 export function Classification({name, active, data, index, setData, onActivate, setActive, onDelete}: Props) {
-    const {namespace} = useVariant();
+    const {namespace, sampleUploadFile, disableClassNameEdit} = useVariant();
     const {t} = useTranslation(namespace);
 
     const onDrop = useCallback((acceptedFiles: File[]) => {
@@ -100,7 +100,7 @@ export function Classification({name, active, data, index, setData, onActivate, 
 
     const doActivate = useCallback(() => onActivate(index), [onActivate, index]);
 
-    return <Widget title={name} dataWidget="class" setTitle={setTitle} menu={<ClassMenu hasSamples={data.samples.length > 0} onDeleteClass={doDeleteClass} onRemoveSamples={removeSamples} />}>
+    return <Widget title={name} dataWidget="class" setTitle={(disableClassNameEdit) ? undefined : setTitle} menu={<ClassMenu hasSamples={data.samples.length > 0} onDeleteClass={doDeleteClass} onRemoveSamples={removeSamples} />}>
         <div className={(active) ? style.containerLarge : style.containerSmall}>
             {(active) ? <WebcamCapture visible={true} onCapture={onCapture} onClose={doCloseWebcam}/> : null}
             <div className={style.listContainer} {...getRootProps()}>
@@ -117,7 +117,7 @@ export function Classification({name, active, data, index, setData, onActivate, 
                             {t("trainingdata.actions.webcam")}
                         </Button>
                     </li>}
-                    {!active && <li className={style.sample}>
+                    {!active && sampleUploadFile && <li className={style.sample}>
                         <Button data-testid="uploadbutton" sx={{"& .MuiButton-startIcon": { margin: "0px"}, flexDirection: "column"}} variant="outlined" startIcon={<UploadFileIcon />} onClick={open}>
                             {t("trainingdata.actions.upload")}
                         </Button>

@@ -15,7 +15,7 @@ interface Props {
 }
 
 export function TrainingData({active, data, setData, disabled}: Props) {
-    const {namespace} = useVariant();
+    const {namespace, disableAddClass} = useVariant();
     const {t} = useTranslation(namespace);
     const [activeIndex, setActiveIndex] = useState(-1);
 
@@ -33,7 +33,7 @@ export function TrainingData({active, data, setData, disabled}: Props) {
 
     const doDelete = useCallback((ix: number) => setData(data.filter((v, index) => index !== ix)), [setData, data]);
 
-    const doSetActive = useCallback((a: boolean, ix: number) => setActiveIndex((active) ? ix : -1), [setActiveIndex, active]);
+    const doSetActive = useCallback((a: boolean, ix: number) => setActiveIndex((a) ? ix : -1), [setActiveIndex]);
 
     const addClass = useCallback(() => {
         setData([...data, { label: `${t("trainingdata.labels.class")} ${data.length + 1}`, samples: []}]);
@@ -52,8 +52,8 @@ export function TrainingData({active, data, setData, disabled}: Props) {
             onActivate={doActivate}
             setActive={doSetActive}
             />)}
-        <Button data-testid="addClass" size="large" variant="outlined" startIcon={<AddBoxIcon />} onClick={addClass}>
+        {!disableAddClass && <Button data-testid="addClass" size="large" variant="outlined" startIcon={<AddBoxIcon />} onClick={addClass}>
             {t("trainingdata.actions.addClass")}
-        </Button>
+        </Button>}
     </section>;
 }

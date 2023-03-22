@@ -28,7 +28,7 @@ const colourWheel: Colours[] = [
 ];
 
 export function Preview({model, prediction}: Props) {
-    const {namespace} = useVariant();
+    const {namespace, showModelExport} = useVariant();
     const {t} = useTranslation(namespace);
 
     return <Widget dataWidget="model" title={t<string>("model.labels.title")} className={style.widget}>
@@ -46,9 +46,9 @@ export function Preview({model, prediction}: Props) {
                     </tbody>
                 </table>
                 <div className={style.buttonContainer}>
-                    <Button sx={{width: "100%"}} startIcon={<DownloadIcon/>} variant="outlined" onClick={() => {
+                    {showModelExport && <Button sx={{width: "100%"}} startIcon={<DownloadIcon/>} variant="outlined" onClick={() => {
                         model.save("downloads://my-model");
-                    }}>{t("model.actions.export")}</Button>
+                    }}>{t("model.actions.export")}</Button>}
                 </div>
             </div>
         }

@@ -1,3 +1,17 @@
 {
-    "namespace": "image_4_9"
+    "namespace": "image_4_9",
+    "showModelExport": true,
+    "sampleUploadFile": true,
+    "imageBehaviours": true,
+    "soundBehaviours": true,
+    "speechBehaviours": true,
+    "textBehaviours": true,
+    "trainingStep": true,
+    "behavioursStep": true,
+    "disableAddClass": false,
+    "disableClassNameEdit": false,
+    "disabledClassRemove": false,
+    "modelSelect": false,
+    "modelThreshold": false,
+    "advancedMenu": false
 }

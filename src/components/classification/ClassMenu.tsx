@@ -13,7 +13,7 @@ interface Props {
 }
 
 export default function ClassMenu({hasSamples, onDeleteClass, onRemoveSamples}: Props) {
-    const {namespace} = useVariant();
+    const {namespace, disabledClassRemove} = useVariant();
     const {t} = useTranslation(namespace);
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
@@ -44,10 +44,10 @@ export default function ClassMenu({hasSamples, onDeleteClass, onRemoveSamples}: 
         open={open}
         onClose={handleClose}
       >
-        <MenuItem onClick={() => {
+        {!disabledClassRemove && <MenuItem onClick={() => {
             handleClose();
             onDeleteClass();
-        }}>{t("trainingdata.actions.deleteClass")}</MenuItem>
+        }}>{t("trainingdata.actions.deleteClass")}</MenuItem>}
         <MenuItem disabled={!hasSamples} onClick={() => {
             handleClose();
             onRemoveSamples();

@@ -5,6 +5,7 @@ import Home from "./views/Home/Home";
 import { RouterProvider, Route, Navigate, createBrowserRouter, createRoutesFromElements } from 'react-router-dom';
 import gitInfo from "./generatedGitInfo.json";
 import ImageVariants from './views/ImageVariants/ImageVariants';
+import GenerateCustom from './views/GenerateCustom/GenerateCustom';
 
 const router = createBrowserRouter(
     createRoutesFromElements(
@@ -14,6 +15,7 @@ const router = createBrowserRouter(
                 <Route index element={<ImageVariants />} />
                 <Route path="grade4_9" lazy={() => import("./views/ImageAge4To9/ImageAge4To9")} />
                 <Route path="general" lazy={() => import("./views/ImageGeneral/ImageGeneral")} />
+                <Route path="generate" element={<GenerateCustom />} />
             </Route>
             <Route path="home" element={<Home />} />
         </Route>

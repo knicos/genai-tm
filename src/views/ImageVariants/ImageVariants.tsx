@@ -12,6 +12,7 @@ export default function ImageVariants() {
         <ol>
             <li><Link to="/image/grade4_9">{t("app.variantAge4_9")}</Link></li>
             <li><Link to="/image/general">{t("app.variantAdvanced")}</Link></li>
+            <li><Link to="/image/generate">{t("app.variantCustom")}</Link></li>
         </ol>
     </div>
 }

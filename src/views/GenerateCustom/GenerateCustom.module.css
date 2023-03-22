@@ -1,0 +1,27 @@
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 2rem 0;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.container h1 {
+    color: #444;
+    font-size: 16pt;
+}
+
+.container form {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    width: 100%;
+    max-width: 400px;
+    box-sizing: border-box;
+    background: white;
+    border-radius: 6px;
+    padding: 2rem;
+    gap: 1rem;
+}
