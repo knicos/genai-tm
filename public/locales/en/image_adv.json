@@ -10,13 +10,13 @@
             "upload": "Upload",
             "deleteClass": "Delete Class",
             "removeAll": "Remove all samples",
-            "capture": "Capture in {{seconds}}s"
+            "capture": "Hold to capture"
         },
         "labels": {
             "addSamples": "Add image samples",
             "imageSamples": "{{count}} image samples",
             "class": "Class",
-            "wait": "Wait...",
+            "wait": "Capturing...",
             "dropFiles": "Drop file(s) here"
         }
     },

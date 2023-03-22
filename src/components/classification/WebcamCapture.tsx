@@ -44,13 +44,17 @@ export default function WebcamCapture({visible, onCapture, onClose}: Props) {
                     </IconButton>
                 </div>
                 <div className={style.webcamcontainer}>
-                    <Webcam capture={capturing} onCapture={(image: HTMLCanvasElement) => {
-                        setCapturing(false);
-                        onCapture(image);
-                    }} interval={1000} />
+                    <Webcam capture={capturing} onCapture={onCapture} interval={200} />
                 </div>
                 <div className={style.webcambuttoncontainer}>
-                    <Button sx={{flexGrow: 1}} variant="contained" disabled={capturing} onClick={() => setCapturing(true)}>
+                    <Button
+                        sx={{flexGrow: 1}}
+                        variant="contained"
+                        onMouseDown={() => setCapturing(true)}
+                        onMouseUp={() => setCapturing(false)}
+                        onBlur={() => setCapturing(false)}
+                        onMouseLeave={() => setCapturing(false)}
+                    >
                         {(capturing) ? t("trainingdata.labels.wait") : t("trainingdata.actions.capture", {seconds: "1"})}
                     </Button>
                     {/*<IconButton aria-label="settings" onClick={() => setShowSettings(true)} color="primary">
