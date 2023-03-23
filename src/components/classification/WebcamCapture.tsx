@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useState, useCallback, useRef, useEffect} from "react";
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 // import SettingsIcon from '@mui/icons-material/Settings';
@@ -25,6 +25,23 @@ export default function WebcamCapture({visible, onCapture, onClose}: Props) {
         delay: 6,
         count: 1,
     });
+    const buttonRef = useRef<HTMLButtonElement>(null);
+
+    const startCapture = useCallback(() => setCapturing(true), [setCapturing]);
+    const startTouchCapture = useCallback((e: TouchEvent) => {
+        if (e.cancelable) {
+            e.preventDefault();
+            e.stopImmediatePropagation();
+            setCapturing(true);
+        }
+    }, [setCapturing]);
+    const stopCapture = useCallback(() => setCapturing(false), [setCapturing]);
+
+    useEffect(() => {
+        if (buttonRef.current) {
+            buttonRef.current.addEventListener("touchstart", startTouchCapture, { passive: false });
+        }
+    }, [buttonRef, startTouchCapture]);
 
     return (visible) ? <div data-testid="webcamwindow" className={style.webcamwindow}>
         {(showSettings)
@@ -48,12 +65,15 @@ export default function WebcamCapture({visible, onCapture, onClose}: Props) {
                 </div>
                 <div className={style.webcambuttoncontainer}>
                     <Button
+                        ref={buttonRef}
                         sx={{flexGrow: 1}}
                         variant="contained"
-                        onMouseDown={() => setCapturing(true)}
-                        onMouseUp={() => setCapturing(false)}
-                        onBlur={() => setCapturing(false)}
-                        onMouseLeave={() => setCapturing(false)}
+                        onMouseDown={startCapture}
+                        onMouseUp={stopCapture}
+                        onBlur={stopCapture}
+                        onMouseLeave={stopCapture}
+                        onTouchEnd={stopCapture}
+                        onTouchCancel={stopCapture}
                     >
                         {(capturing) ? t("trainingdata.labels.wait") : t("trainingdata.actions.capture", {seconds: "1"})}
                     </Button>
