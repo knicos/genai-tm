@@ -104,6 +104,10 @@ export default function GenerateCustom() {
                 control={<Checkbox checked={state.behavioursStep} name="behavioursStep" onChange={doCheckChange} />}
                 label="Include behaviors step"
             />
+            <FormControlLabel
+                control={<Checkbox checked={state.multipleBehaviours} name="multipleBehaviours" onChange={doCheckChange} />}
+                label="Allow multiple behaviours"
+            />
             <Button variant="contained" type="submit">
                 Generate
             </Button>

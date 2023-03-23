@@ -16,8 +16,8 @@
 
 .versionBox {
     position: absolute;
-    bottom: 20px;
-    right: 30px;
+    bottom: 2px;
+    right: 20px;
     color: #666;
-    font-size: 8pt;
+    font-size: 6pt;
 }

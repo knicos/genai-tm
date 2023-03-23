@@ -1,6 +1,6 @@
 {
     "app": {
-        "variantTitle": "Image Recogniser",
+        "variantTitle": "Image Classifier",
         "variantMessage": "Select the variation to use:",
         "variantAge4_9": "Grade 4-9",
         "variantAdvanced": "Default",

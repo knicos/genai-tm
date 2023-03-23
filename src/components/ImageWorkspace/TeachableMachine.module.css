@@ -25,7 +25,7 @@
     position: relative;
 }
 
-@media only screen and (max-height: 900px), (max-width: 700px) {
+@media only screen and (max-height: 800px), (max-width: 700px) {
     .svglayer {
         display: none;
     }

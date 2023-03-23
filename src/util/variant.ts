@@ -20,6 +20,7 @@ export interface IVariantContext {
     disableAddClass?: boolean;
     initialClasses?: string[];
     disableClassNameEdit?: boolean;
+    multipleBehaviours?: boolean;
 }
 
 export const VariantContext = React.createContext<IVariantContext>({

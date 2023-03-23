@@ -13,5 +13,6 @@
     "disabledClassRemove": false,
     "modelSelect": false,
     "modelThreshold": false,
-    "advancedMenu": false
+    "advancedMenu": false,
+    "multipleBehaviours": true
 }

@@ -1,15 +1,12 @@
 .container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 2rem 0;
-    flex-direction: column;
-    gap: 2rem;
+    overflow-y: auto;
+    height: 100%;
 }
 
 .container h1 {
     color: #444;
     font-size: 16pt;
+    text-align: center;
 }
 
 .container form {
@@ -24,4 +21,5 @@
     border-radius: 6px;
     padding: 2rem;
     gap: 1rem;
+    margin: 1rem auto;
 }

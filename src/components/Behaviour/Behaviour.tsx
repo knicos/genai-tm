@@ -7,12 +7,14 @@ import VideoCameraBackIcon from '@mui/icons-material/VideoCameraBack';
 import MusicNoteIcon from '@mui/icons-material/MusicNote';
 import RecordVoiceOverIcon from '@mui/icons-material/RecordVoiceOver';
 import style from "./Behaviour.module.css";
+import Sound, { AudioBehaviour } from "./Audio";
+import { useVariant } from "../../util/variant";
 
 type BehaviourTypes = "image" | "sound" | "speech";
 
 export interface BehaviourType {
-    type: BehaviourTypes;
-    image: ImageBehaviour;
+    image?: ImageBehaviour;
+    audio?: AudioBehaviour
 }
 
 interface Props {
@@ -25,7 +27,8 @@ interface Props {
 }
 
 export default function Behaviour({classLabel, behaviour, setBehaviour, ...props}: Props) {
-    const [value, setValue] = useState<BehaviourTypes>("image");
+    const {soundBehaviours, imageBehaviours, multipleBehaviours} = useVariant();
+    const [value, setValue] = useState<BehaviourTypes>((imageBehaviours) ? "image" : "sound");
 
     const handleChange = useCallback((
             event: React.MouseEvent<HTMLElement>,
@@ -34,9 +37,13 @@ export default function Behaviour({classLabel, behaviour, setBehaviour, ...props
             if (newType !== null) setValue(newType);
         }, [setValue]);
 
-    const doSetBehaviour = useCallback((image: ImageBehaviour) => {
-        setBehaviour({...behaviour, image});
-    }, [setBehaviour, behaviour]);
+    const doSetBehaviour = useCallback((image: ImageBehaviour | undefined) => {
+        setBehaviour((multipleBehaviours) ? {...behaviour, image} : {image});
+    }, [setBehaviour, behaviour, multipleBehaviours]);
+
+    const doSetAudioBehaviour = useCallback((audio: AudioBehaviour | undefined) => {
+        setBehaviour((multipleBehaviours) ? {...behaviour, audio} : {audio});
+    }, [setBehaviour, behaviour, multipleBehaviours]);
 
     return <Widget dataWidget="behaviour" title={classLabel} className={style.widget} {...props}>
         <div className={style.container}>
@@ -49,12 +56,12 @@ export default function Behaviour({classLabel, behaviour, setBehaviour, ...props
                 size="small"
                 sx={{margin: "1rem 0"}}
             >
-                <ToggleButton value="image">
+                {imageBehaviours && <ToggleButton value="image">
                     <VideoCameraBackIcon />
-                </ToggleButton>
-                <ToggleButton value="sound" disabled>
+                </ToggleButton>}
+                {soundBehaviours && <ToggleButton value="sound">
                     <MusicNoteIcon />
-                </ToggleButton>
+                </ToggleButton>}
                 <ToggleButton value="speech" disabled>
                     <RecordVoiceOverIcon />
                 </ToggleButton>
@@ -62,6 +69,10 @@ export default function Behaviour({classLabel, behaviour, setBehaviour, ...props
                 {value === "image" && <Image
                     behaviour={behaviour.image}
                     setBehaviour={doSetBehaviour}
+                    />}
+                {value === "sound" && <Sound
+                    behaviour={behaviour.audio}
+                    setBehaviour={doSetAudioBehaviour}
                     />}
         </div>
     </Widget>

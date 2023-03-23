@@ -1,38 +1,28 @@
 import React, { useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import { ImageBehaviour } from "../Behaviour/Image";
 import style from "./Behaviours.module.css";
 import { useVariant } from "../../util/variant";
-import Behaviour from "../Behaviour/Behaviour";
+import Behaviour, { BehaviourType } from "../Behaviour/Behaviour";
 
-type BehaviourTypes = "image" | "sound" | "speech";
-
-export interface BehaviourType {
-    type: BehaviourTypes;
-    image: ImageBehaviour;
-}
+export type { BehaviourType };
 
 const defaultBehaviours: BehaviourType[] = [
     {
-        type: "image",
         image: {
             uri: "https://media.giphy.com/media/nR4L10XlJcSeQ/giphy.gif",
         },
     },
     {
-        type: "image",
         image: {
             uri: "https://media.giphy.com/media/fvmz3gCAip1M4/giphy.gif",
         },
     },
     {
-        type: "image",
         image: {
             uri: "https://media.giphy.com/media/d1E2IByItLUuONMc/giphy.gif",
         },
     },
     {
-        type: "image",
         image: {
             uri: "https://media.giphy.com/media/N6QMlgXmovw40/giphy.gif",
         },
@@ -62,7 +52,7 @@ export default function Behaviours({classes, behaviours, setBehaviours, ...props
     const {t} = useTranslation(namespace);
     return <section data-widget="container" style={{display: (props.hidden) ? "none" : "flex"}} className={style.container}>
         <h1>{t("behaviours.labels.title")}</h1>
-        {classes.map((c, ix) => ((ix < behaviours.length) ? <Behaviour disabled={props.disabled} focus={props.focus && ix === Math.floor(classes.length / 2)} key={ix} classLabel={c} behaviour={behaviours[ix]} setBehaviour={(nb: BehaviourType) => {
+        {classes.map((c, ix) => ((ix < behaviours.length) ? <Behaviour disabled={props.disabled} focus={props.focus && ix === Math.floor(classes.length / 2 - 1)} key={ix} classLabel={c} behaviour={behaviours[ix]} setBehaviour={(nb: BehaviourType) => {
             const newBehaviours = [...behaviours];
             newBehaviours[ix] = nb;
             setBehaviours(newBehaviours);    
