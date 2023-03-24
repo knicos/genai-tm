@@ -5,6 +5,7 @@ import style from "./style.module.css";
 
 export default function ImageVariants() {
     const {t} = useTranslation();
+    
 
     return <div className={style.container}>
         <h1>{t("app.variantTitle")}</h1>

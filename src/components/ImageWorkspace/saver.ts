@@ -31,7 +31,10 @@ export function saveProject(name: string, model?: TeachableMobileNet, behaviours
         model.save({save: async (artifact: tfjs.io.ModelArtifacts) => {
             if (artifact.weightData) zip.file("weights.bin", artifact.weightData);
             if (typeof artifact.modelTopology) {
-                zip.file("model.json", JSON.stringify(artifact.modelTopology));
+                zip.file("model.json", JSON.stringify({
+                    modelTopology: artifact.modelTopology,
+                    weightsManifest: [{paths: ["./weights.bin"], weights: artifact.weightSpecs}],
+                }));
             }
 
             const zipData = await zip.generateAsync({type: "blob"});

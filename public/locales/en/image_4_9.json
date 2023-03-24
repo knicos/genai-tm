@@ -2,7 +2,8 @@
     "app": {
         "title": "GenAI Image Classifier",
         "about": "About",
-        "save": "Save"
+        "save": "Save",
+        "load": "Open"
     },
     "save": {
         "title": "Save Classifier",

@@ -37,7 +37,11 @@ const theme = createTheme({
     },
 });
 
-export default function ImageClassifier() {
+interface Props {
+    open?: boolean;
+}
+
+export default function ImageClassifier({open}: Props) {
     const {namespace} = useVariant();
     const {t} = useTranslation(namespace);
     const [step, setStep] = useState(0);
@@ -48,6 +52,12 @@ export default function ImageClassifier() {
     const doComplete = useCallback((newstep: number) => {
         setAllowedStep((old: number) => Math.max(old, newstep));
     }, [setAllowedStep]);
+
+    const doSkip = useCallback((newstep: number) => {
+        setAllowedStep((old: number) => Math.max(old, newstep));
+        setStep(newstep);
+        setVisited(newstep);
+    }, [setAllowedStep, setStep]);
 
     const nextStep = useCallback(() => {
         setStep(step + 1);
@@ -65,6 +75,7 @@ export default function ImageClassifier() {
             visitedStep={visited}
             onComplete={doComplete}
             saveTrigger={saveTrigger}
+            onSkip={doSkip}
         />
         <div className={style.fixed}>
             <IconButton disabled={step <= 0} size="large" onClick={prevStep}>

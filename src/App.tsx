@@ -6,6 +6,7 @@ import { RouterProvider, Route, Navigate, createBrowserRouter, createRoutesFromE
 import gitInfo from "./generatedGitInfo.json";
 import ImageVariants from './views/ImageVariants/ImageVariants';
 import GenerateCustom from './views/GenerateCustom/GenerateCustom';
+import { RecoilRoot } from 'recoil';
 
 const router = createBrowserRouter(
     createRoutesFromElements(
@@ -25,10 +26,12 @@ const router = createBrowserRouter(
 function App() {
     return (
     <React.Suspense fallback={<div></div>}>
-        <RouterProvider router={router} />
-        <div className="versionBox">
-            Version: {gitInfo.gitTag}
-        </div>
+        <RecoilRoot>
+            <RouterProvider router={router} />
+            <div className="versionBox">
+                Version: {gitInfo.gitTag}
+            </div>
+        </RecoilRoot>
     </React.Suspense>
     );
 }

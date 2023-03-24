@@ -8,12 +8,15 @@ import Output from "../Output/Output";
 import Behaviours, { BehaviourType } from "../Behaviours/Behaviours";
 import { useTranslation } from "react-i18next";
 import { TeachableMobileNet } from '@teachablemachine/image';
-import { IClassification } from "../../state";
+import { fileData, IClassification } from "../../state";
 import style from "./TeachableMachine.module.css";
 import { useVariant } from "../../util/variant";
 import Input from "../Input/Input";
 import SaveDialog, { SaveProperties } from "./SaveDialog";
 import { saveProject } from "./saver";
+import { useRecoilValue } from "recoil";
+import { loadProject } from "./loader";
+import { Alert, Snackbar } from "@mui/material";
 
 const connections: IConnection[] = [
     {start: "class", end: "trainer", startPoint: "right", endPoint: "left"},
@@ -28,11 +31,13 @@ interface Props {
     visitedStep: number;
     onComplete: (step: number) => void;
     saveTrigger?: () => void;
+    onSkip: (step: number) => void;
 }
 
-export default function Workspace({step, visitedStep, onComplete, saveTrigger}: Props) {
+export default function Workspace({step, visitedStep, onComplete, saveTrigger, onSkip}: Props) {
     const {namespace} = useVariant();
     const {t} = useTranslation(namespace);
+    const projectFile = useRecoilValue(fileData);
     const [behaviours, setBehaviours] = useState<BehaviourType[]>([]);
     const [pred, setPred] = useState(-1);
     const [model, setModel] = useState<TeachableMobileNet | undefined>();
@@ -48,9 +53,28 @@ export default function Workspace({step, visitedStep, onComplete, saveTrigger}: 
         }
     ]);
     const [lines, setLines] = useState<ILine[]>([]);
+    const [errMsg, setErrMsg] = useState<string | null>(null);
 
     const observer = useRef<ResizeObserver>();
     const wkspaceRef = useRef<HTMLDivElement>(null);
+
+    const closeError = useCallback(() => setErrMsg(null), [setErrMsg]);
+
+    useEffect(() => {
+        if (projectFile) {
+            loadProject(projectFile).then((project) => {
+                setModel(project.model);
+                if (project.behaviours) setBehaviours(project.behaviours);
+                if (project.samples) setData(project.samples);
+                if (project.behaviours) {
+                    onSkip(1);
+                }
+            }).catch((e) => {
+                setErrMsg("Could not load model file");
+                console.error(e);
+            });
+        }
+    }, [projectFile, onSkip]);
 
     useEffect(() => {
         if (wkspaceRef.current) {
@@ -118,5 +142,8 @@ export default function Workspace({step, visitedStep, onComplete, saveTrigger}: 
         </div>
 
         <SaveDialog trigger={saveTrigger} onSave={doSave} hasModel={!!model} />
+        <Snackbar anchorOrigin={{ vertical: "top", horizontal: "center" }} open={!!errMsg} autoHideDuration={6000} onClose={closeError}>
+            <Alert onClose={closeError} severity="error">{errMsg}</Alert>
+        </Snackbar>
     </div>;
 }
