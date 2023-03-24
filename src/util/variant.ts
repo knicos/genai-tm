@@ -21,6 +21,7 @@ export interface IVariantContext {
     initialClasses?: string[];
     disableClassNameEdit?: boolean;
     multipleBehaviours?: boolean;
+    disableSaveSamples?: boolean;
 }
 
 export const VariantContext = React.createContext<IVariantContext>({

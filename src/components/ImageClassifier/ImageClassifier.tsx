@@ -43,6 +43,7 @@ export default function ImageClassifier() {
     const [step, setStep] = useState(0);
     const [allowedStep, setAllowedStep] = useState(0);
     const [visited, setVisited] = useState(0);
+    const [saveTrigger, setSaveTrigger] = useState<(() => void) | undefined>(undefined);
 
     const doComplete = useCallback((newstep: number) => {
         setAllowedStep((old: number) => Math.max(old, newstep));
@@ -55,9 +56,16 @@ export default function ImageClassifier() {
 
     const prevStep = useCallback(() => setStep(step - 1), [setStep, step]);
 
+    const doSave = useCallback(() => setSaveTrigger(() => () => setSaveTrigger(undefined)), [setSaveTrigger]);
+
     return <ThemeProvider theme={theme}>
-        <AppBar />
-        <Workspace step={step} visitedStep={visited} onComplete={doComplete} />
+        <AppBar onSave={doSave} />
+        <Workspace
+            step={step}
+            visitedStep={visited}
+            onComplete={doComplete}
+            saveTrigger={saveTrigger}
+        />
         <div className={style.fixed}>
             <IconButton disabled={step <= 0} size="large" onClick={prevStep}>
                 <ArrowBackIosNewIcon fontSize="large" />

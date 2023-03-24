@@ -1,0 +1,9 @@
+.buttonBar {
+    display: flex;
+    flex-grow: 1;
+    margin: 0 4rem;
+}
+
+.buttonBar :global .MuiButton-root {
+    text-transform: none;
+}

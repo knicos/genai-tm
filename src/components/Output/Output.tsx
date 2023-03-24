@@ -41,10 +41,10 @@ export default function Output({predicted, behaviours, ...props}: Props) {
         </IconButton>
     }>
         <div className={style.container}>
-            {behaviours.map((behaviour, ix) => <>
-                {behaviour?.image && <img key={`img-${ix}`} src={behaviour.image.uri} alt="" style={{display: (ix === predicted) ? "initial" : "none"}} />}
-                {behaviour?.audio && <AudioPlayer key={`audio-${ix}`} showIcon={!hasImage} volume={volume / 100} uri={behaviour.audio.uri} play={ix === predicted} />}
-            </>)}
+            {behaviours.map((behaviour, ix) => <React.Fragment key={ix}>
+                {behaviour?.image && <img src={behaviour.image.uri} alt="" style={{display: (ix === predicted) ? "initial" : "none"}} />}
+                {behaviour?.audio && <AudioPlayer showIcon={!hasImage} volume={volume / 100} uri={behaviour.audio.uri} play={ix === predicted} />}
+            </React.Fragment>)}
         </div>
         <div className={style.volumeContainer}>
             <VolumeDown />

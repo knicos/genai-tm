@@ -108,6 +108,10 @@ export default function GenerateCustom() {
                 control={<Checkbox checked={state.multipleBehaviours} name="multipleBehaviours" onChange={doCheckChange} />}
                 label="Allow multiple behaviours"
             />
+            <FormControlLabel
+                control={<Checkbox checked={state.disableSaveSamples} name="disableSaveSamples" onChange={doCheckChange} />}
+                label="Disable sample saving option"
+            />
             <Button variant="contained" type="submit">
                 Generate
             </Button>

@@ -14,5 +14,6 @@
     "modelSelect": false,
     "modelThreshold": false,
     "advancedMenu": false,
-    "multipleBehaviours": true
+    "multipleBehaviours": true,
+    "disableSaveSamples": false
 }

@@ -17,6 +17,7 @@ export interface IPrediction {
 interface Props {
     model?: TeachableMobileNet;
     prediction: IPrediction[];
+    onExport?: () => void;
 }
 
 const colourWheel: Colours[] = [
@@ -27,7 +28,7 @@ const colourWheel: Colours[] = [
     'red',
 ];
 
-export function Preview({model, prediction}: Props) {
+export function Preview({model, prediction, onExport}: Props) {
     const {namespace, showModelExport} = useVariant();
     const {t} = useTranslation(namespace);
 
@@ -46,9 +47,9 @@ export function Preview({model, prediction}: Props) {
                     </tbody>
                 </table>
                 <div className={style.buttonContainer}>
-                    {showModelExport && <Button sx={{width: "100%"}} startIcon={<DownloadIcon/>} variant="outlined" onClick={() => {
-                        model.save("downloads://my-model");
-                    }}>{t("model.actions.export")}</Button>}
+                    {showModelExport && <Button sx={{width: "100%"}} startIcon={<DownloadIcon/>} variant="outlined" onClick={onExport}>
+                        {t("model.actions.export")}
+                    </Button>}
                 </div>
             </div>
         }
