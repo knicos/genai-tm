@@ -15,9 +15,14 @@ interface Props {
     onSave: () => void;
 }
 
+const LANGS = [
+    {name: "en-GB", label: "English"}, 
+    {name: "fi-FI", label: "Suomi"},
+];
+
 export default function ApplicationBar({onSave}: Props) {
     const {namespace} = useVariant();
-    const {t} = useTranslation(namespace);
+    const {t, i18n} = useTranslation(namespace);
     const navigate = useNavigate();
     const [, setProject] = useRecoilState(fileData);
 
@@ -31,6 +36,12 @@ export default function ApplicationBar({onSave}: Props) {
         }
         navigate("/image/general");
     }, [setProject, navigate]);
+
+    const doChangeLanguage = useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
+        i18n.changeLanguage(e.currentTarget.getAttribute("data-lng") || "en");
+    }, [i18n]);
+
+    console.log("LANG", i18n.language);
 
     return <AppBar component="nav" className="AppBar" position="static">
         <Toolbar>
@@ -52,7 +63,14 @@ export default function ApplicationBar({onSave}: Props) {
                     {t("app.save")}
                 </Button>
             </div>
-            <Button color="inherit">{t("app.about")}</Button>
+            <div className={style.langBar}>
+                {LANGS.map((lng) => <button key={lng.name} data-lng={lng.name} onClick={doChangeLanguage}>
+                    <img
+                        className={(i18n.language === lng.name) ? style.selected : ""}
+                        width={24}
+                        src={`/icons/${lng.name}.svg`} alt={lng.label}/>
+                    </button>)}
+            </div>
         </Toolbar>
     </AppBar>;
 }

@@ -8,3 +8,29 @@
 .buttonBar :global .MuiButton-root {
     text-transform: none;
 }
+
+.langBar {
+    display: flex;
+    gap: 0.5rem;
+    height: 100%;
+    align-items: center;
+}
+
+.langBar button {
+    display: flex;
+    border: none;
+    background: none;
+    outline: none;
+    padding: 0;
+    cursor: pointer;
+}
+
+.langBar img {
+    border-radius: 50%;
+    overflow: hidden;
+    box-sizing: content-box;
+}
+
+.langBar img.selected {
+    border: 2px solid white;
+}
