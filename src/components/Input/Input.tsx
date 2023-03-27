@@ -19,7 +19,7 @@ export default function Input({enabled, onCapture, ...props}: Props) {
     const {namespace} = useVariant();
     const {t} = useTranslation(namespace);
     const [enableInput, setEnableInput] = useState(true);
-    return <Widget dataWidget="input" title="Input" {...props}>
+    return <Widget dataWidget="input" title={t<string>("input.labels.title")} {...props}>
         <div className={style.container}>
             <div className={style.inputControls}>
                 <FormControlLabel labelPlacement="start" control={
@@ -29,7 +29,7 @@ export default function Input({enabled, onCapture, ...props}: Props) {
                         onChange={(event: React.ChangeEvent<HTMLInputElement>, checked: boolean) => {
                             setEnableInput(checked);   
                         }}
-                    />} label={t<string>("model.labels.webcam")} />
+                    />} label={t<string>("input.labels.webcam")} />
             </div>
             <div className={style.inputContainer}>
                 {enabled && <Webcam disable={!enableInput} capture={enableInput && enabled} interval={200} onCapture={onCapture}/>}

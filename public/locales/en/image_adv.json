@@ -58,12 +58,17 @@
             "batchSize": "Has minimal effect on the training. It is the number of samples used on each iteration of the training."
         }
     },
+    "input": {
+        "labels": {
+            "title": "Input",
+            "webcam": "Webcam"
+        }
+    },
     "model": {
         "actions": {
             "export": "Export"
         },
         "labels": {
-            "webcam": "Webcam",
             "title": "Classifier",
             "mustTrain": "You must train your classifier first"
         }
@@ -74,6 +79,10 @@
         }
     },
     "behaviours": {
+        "actions": {
+            "upload": "Upload",
+            "delete": "Delete"
+        },
         "labels": {
             "title": "Behaviors"
         }

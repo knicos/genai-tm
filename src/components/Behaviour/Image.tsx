@@ -6,6 +6,8 @@ import { Skeleton } from "@mui/material";
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { VerticalButton } from "../button/Button";
 import IconImage from "../IconImage/IconImage";
+import { useTranslation } from "react-i18next";
+import { useVariant } from "../../util/variant";
 
 export interface ImageBehaviour {
     uri: string;
@@ -17,6 +19,9 @@ interface Props {
 }
 
 export default function Image({behaviour, setBehaviour}: Props) {
+    const {namespace} = useVariant();
+    const {t} = useTranslation(namespace);
+
     const onDrop = useCallback((acceptedFiles: File[]) => {
         if (acceptedFiles.length === 1) {
             const reader = new FileReader();
@@ -48,10 +53,10 @@ export default function Image({behaviour, setBehaviour}: Props) {
 
     return <div className={(isDragActive) ? style.imageContainerdrop : style.imageContainer} {...getRootProps()}>
         <VerticalButton variant="outlined" startIcon={<UploadFileIcon />} onClick={open}>
-            Upload
+            {t("behaviours.actions.upload")}
         </VerticalButton>
         <VerticalButton variant="outlined" startIcon={<DeleteForeverIcon />} onClick={doDelete} disabled={!behaviour}>
-            Delete
+            {t("behaviours.actions.delete")}
         </VerticalButton>
         <input {...getInputProps()} />
         {behaviour && <IconImage src={behaviour.uri} onDelete={doDelete} />}

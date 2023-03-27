@@ -1,55 +1,56 @@
 {
     "app": {
-        "title": "GenAI Kuvantunnistus",
-        "about": "Suhteen",
-        "save": "Save",
-        "load": "Open"
+        "title": "GenAI kuvien luokittelija",
+        "about": "Tietoa sovelluksesta",
+        "save": "Tallenna",
+        "load": "Avaa"
     },
     "save": {
-        "title": "Save Classifier",
-        "noModel": "You need to create a classifier first.",
+        "title": "Tallenna luokittelija",
+        "noModel": "Opeta luokittelija ensiksi.",
         "message": "Download the contents of your classifier to a file. If you wish to share your classifier or app with others then you will need to upload it to another file sharing service.",
-        "saveSamples": "Save Samples",
-        "saveClassifier": "Save Classifier",
-        "saveBehaviours": "Save Behaviors",
+        "saveSamples": "Tallenna esimerkit",
+        "saveClassifier": "Tallenna luokittelija",
+        "saveBehaviours": "Tallenna toiminnot",
         "actions": {
-            "save": "Save",
-            "cancel": "Cancel"
+            "save": "Tallenna",
+            "cancel": "Peruuta"
         }
     },
     "trainingdata": {
         "actions": {
             "addClass": "Lisää luokka",
-            "webcam": "Web-kamera",
-            "upload": "Upload",
+            "webcam": "Webkamera",
+            "upload": "Lataa",
             "deleteClass": "Poista luokka",
-            "removeAll": "Poista kaikki näytteet",
-            "capture": "Vangita {{seconds}}s"
+            "removeAll": "Poista kaikki tiedot",
+            "capture": "Pidä nappi pohjassa"
         },
         "labels": {
-            "addSamples": "Lisää kuvanäytteitä",
-            "imageSamples": "{{count}} kuvanäytettä",
+            "title": "Opetusdata",
+            "addSamples": "Lisää kuvia",
+            "imageSamples": "{{count}} kuvaa",
             "class": "Luokka",
-            "wait": "Odota...",
-            "dropFiles": "Pudota tiedosto(t) tähän"
+            "wait": "Otetaan kuvia...",
+            "dropFiles": "Lisää tiedstot tähän"
         }
     },
     "training": {
         "actions": {
-            "train": "Kouluttaa malli"
+            "train": "Opeta luokittelija"
         },
         "labels": {
-            "title": "Koulutusta",
-            "addMore": "Lisää ensin näytteitä tai luokkia",
-            "needsTraining": "Malli vaatii koulutusta",
-            "advanced": "Pitkälle kehittynyt",
-            "epochs": "Aikakausia",
-            "learningRate": "Oppimisaste",
-            "batchSize": "Erän koko",
-            "loading": "Latausmalli",
-            "prepairing": "Esimerkkejä valmistelusta...",
-            "training": "Mallin koulutusta",
-            "complete": "Koulutus suoritettu"
+            "title": "Opettaminen",
+            "addMore": "Lisää opetusdataa tai uusia luokkia",
+            "needsTraining": "Luokittelija tulee opettaa ensin",
+            "advanced": "Lisäasetukset",
+            "epochs": "Epochs",
+            "learningRate": "Learning Rate",
+            "batchSize": "Batch Size",
+            "loading": "Luokittelijaa ladataan",
+            "prepairing": "Valmistellaan esimerkkejä...",
+            "training": "Opetetaan luokittelijaa",
+            "complete": "Luokittelija opetettu"
         },
         "tooltips": {
             "epochs": "Kuinka monta kertaa kutakin näytettä käytetään koulutukseen.",
@@ -57,30 +58,39 @@
             "batchSize": "Vaikuttaa harjoitteluun minimaalisesti. Se on koulutuksen jokaisessa iteraatiossa käytettyjen näytteiden lukumäärä."
         }
     },
+    "input": {
+        "labels": {
+            "title": "Syöte",
+            "webcam": "Webkamera"
+        }
+    },
     "model": {
         "actions": {
-            "export": "Viedä"
+            "export": "Vie"
         },
         "labels": {
-            "webcam": "Web-kamera",
-            "title": "Malli",
-            "mustTrain": "Sinun on ensin koulutettava mallisi"
+            "title": "Luokittelija",
+            "mustTrain": "Sinun pitää opettaa luokittelija ensin"
         }
     },
     "output": {
         "labels": {
-            "title": "Lähtö"
+            "title": "Tulos"
         }
     },
     "behaviours": {
+        "actions": {
+            "upload": "Lataa",
+            "delete": "Poista"
+        },
         "labels": {
-            "title": "Käyttäytymiset"
+            "title": "Toiminta:"
         }
     },
     "stepper": {
         "labels": {
-            "createModel": "Luo mallisi",
-            "deployModel": "Ota mallisi käyttöön"
+            "createModel": "Tee luokittelija",
+            "deployModel": "Käytä luokittelijaa"
         }
     }
 }
