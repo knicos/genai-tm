@@ -60,14 +60,14 @@
     position: relative;
 }
 
-.sample button {
+/*.sample button {
     padding: 5px 8px;
     flex-direction: column;
 }
 
 .sample button :global .MuiButton-startIcon {
     margin: 0;
-}
+}*/
 
 .sampleImage {
     composes: sample;

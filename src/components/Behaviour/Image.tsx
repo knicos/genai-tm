@@ -1,10 +1,11 @@
 import React, { useCallback } from "react";
 import style from "./Behaviour.module.css";
-import EditIcon from '@mui/icons-material/Edit';
 import { useDropzone } from "react-dropzone";
-import IconButton from "@mui/material/IconButton";
+import UploadFileIcon from '@mui/icons-material/UploadFile';
 import { Skeleton } from "@mui/material";
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import { VerticalButton } from "../button/Button";
+import IconImage from "../IconImage/IconImage";
 
 export interface ImageBehaviour {
     uri: string;
@@ -46,14 +47,14 @@ export default function Image({behaviour, setBehaviour}: Props) {
     }, [setBehaviour]);
 
     return <div className={(isDragActive) ? style.imageContainerdrop : style.imageContainer} {...getRootProps()}>
-        <IconButton color="default" onClick={open}>
-            <EditIcon />
-        </IconButton>
-        <IconButton color="default" onClick={doDelete} disabled={!behaviour}>
-            <DeleteForeverIcon />
-        </IconButton>
+        <VerticalButton variant="outlined" startIcon={<UploadFileIcon />} onClick={open}>
+            Upload
+        </VerticalButton>
+        <VerticalButton variant="outlined" startIcon={<DeleteForeverIcon />} onClick={doDelete} disabled={!behaviour}>
+            Delete
+        </VerticalButton>
         <input {...getInputProps()} />
-        {behaviour && <img className={style.image} src={behaviour.uri} width={80} alt={""}/>}
-        {!behaviour && <Skeleton variant="rounded" width={80} height={80} />}
+        {behaviour && <IconImage src={behaviour.uri} onDelete={doDelete} />}
+        {!behaviour && <Skeleton variant="rounded" width={58} height={58} />}
     </div>;
 }

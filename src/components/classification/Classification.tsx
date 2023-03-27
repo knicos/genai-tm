@@ -1,7 +1,7 @@
 import React, { useCallback } from "react";
 import style from "./classification.module.css";
 import { IClassification } from "../../state";
-import { Button } from "../button/Button";
+import { VerticalButton } from "../button/Button";
 import { Widget } from "../widget/Widget";
 import Sample from "./Sample";
 import WebcamCapture from "./WebcamCapture";
@@ -113,14 +113,14 @@ export function Classification({name, active, data, index, setData, onActivate, 
                 </div>}
                 <ol className={(active) ? style.samplelistLarge : style.samplelistSmall}>
                     {!active && <li className={style.sample}>
-                        <Button data-testid="webcambutton" variant="outlined" startIcon={<VideocamIcon />} onClick={doActivate}>
+                        <VerticalButton data-testid="webcambutton" variant="outlined" startIcon={<VideocamIcon />} onClick={doActivate}>
                             {t("trainingdata.actions.webcam")}
-                        </Button>
+                        </VerticalButton>
                     </li>}
                     {!active && sampleUploadFile && <li className={style.sample}>
-                        <Button data-testid="uploadbutton" sx={{"& .MuiButton-startIcon": { margin: "0px"}, flexDirection: "column"}} variant="outlined" startIcon={<UploadFileIcon />} onClick={open}>
+                        <VerticalButton data-testid="uploadbutton" variant="outlined" startIcon={<UploadFileIcon />} onClick={open}>
                             {t("trainingdata.actions.upload")}
-                        </Button>
+                        </VerticalButton>
                     </li>}
                     {data.samples.map((s, ix) => <Sample key={ix} index={ix} image={s} onDelete={doDelete} />)}
                 </ol>

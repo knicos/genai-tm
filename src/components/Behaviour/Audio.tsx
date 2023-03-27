@@ -1,11 +1,12 @@
 import React, { useCallback, useState, useEffect } from "react";
 import style from "./Behaviour.module.css";
-import EditIcon from '@mui/icons-material/Edit';
+import UploadFileIcon from '@mui/icons-material/UploadFile';
 import { useDropzone } from "react-dropzone";
 import IconButton from "@mui/material/IconButton";
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import StopIcon from '@mui/icons-material/Stop';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import { VerticalButton } from "../button/Button";
 
 export interface AudioBehaviour {
     uri: string;
@@ -77,12 +78,8 @@ export default function Sound({behaviour, setBehaviour}: Props) {
     return <>
         <h3>{behaviour?.name}</h3>
         <div className={(isDragActive) ? style.imageContainerdrop : style.imageContainer} {...getRootProps()}>
-            <IconButton color="default" onClick={open}>
-                <EditIcon />
-            </IconButton>
-            <IconButton color="default" onClick={doDelete} disabled={!behaviour}>
-                <DeleteForeverIcon />
-            </IconButton>
+            <VerticalButton variant="outlined" onClick={open} startIcon={<UploadFileIcon/>}>Upload</VerticalButton>
+            <VerticalButton variant="outlined" disabled={!behaviour} onClick={doDelete} startIcon={<DeleteForeverIcon />}>Delete</VerticalButton>
             <input {...getInputProps()} />
             {!audio && <IconButton disabled={!behaviour} color="primary" onClick={doPlay} size="large">
                 <PlayArrowIcon fontSize="large" />

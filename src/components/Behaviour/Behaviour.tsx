@@ -3,7 +3,7 @@ import { Widget } from "../widget/Widget";
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import Image, { ImageBehaviour } from "../Behaviour/Image";
-import VideoCameraBackIcon from '@mui/icons-material/VideoCameraBack';
+import ImageIcon from '@mui/icons-material/Image';
 import MusicNoteIcon from '@mui/icons-material/MusicNote';
 import RecordVoiceOverIcon from '@mui/icons-material/RecordVoiceOver';
 import style from "./Behaviour.module.css";
@@ -57,7 +57,7 @@ export default function Behaviour({classLabel, behaviour, setBehaviour, ...props
                 sx={{margin: "1rem 0"}}
             >
                 {imageBehaviours && <ToggleButton value="image">
-                    <VideoCameraBackIcon />
+                    <ImageIcon />
                 </ToggleButton>}
                 {soundBehaviours && <ToggleButton value="sound">
                     <MusicNoteIcon />

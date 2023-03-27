@@ -1,0 +1,22 @@
+.container {
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    height: 58px;
+    border-radius: 5px;
+    flex-shrink: 0;
+    position: relative;
+}
+
+.container img {
+    max-width: 58px;
+    max-height: 58px;
+}
+
+.container > button {
+    display: none;
+}
+
+.container:hover > button {
+    display: initial;
+}

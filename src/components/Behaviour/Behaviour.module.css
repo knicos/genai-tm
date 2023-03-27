@@ -17,6 +17,7 @@
 .container h3 {
     font-size: 12pt;
     margin: 0 1rem;
+    margin-bottom: 0.5rem;
 }
 
 .imageContainer {
@@ -27,7 +28,7 @@
     align-items: center;
     flex-direction: row;
     gap: 0.5rem;
-    justify-content: space-between;
+    justify-content: flex-start;
     padding-left: 0.5rem;
     border-radius: 6px;
     border: 1px solid white;
@@ -39,19 +40,11 @@
     background-color: primaryHover;
 }
 
-.imageContainer:hover {
-    background-color: primaryHover;
-}
-
 .imageContainer > img {
     flex-shrink: 1;
     border-radius: 6px;
-    max-width: 80px;
-    max-height: 80px;
-}
-
-.imageContainer:hover img {
-    filter: brightness(0.5);
+    max-width: 58px;
+    max-height: 58px;
 }
 
 .imageContainerdrop img {
