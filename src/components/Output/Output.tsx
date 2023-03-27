@@ -11,9 +11,10 @@ import AudioPlayer from "./AudioPlayer";
 import Slider from '@mui/material/Slider';
 import VolumeDown from '@mui/icons-material/VolumeDown';
 import VolumeUp from '@mui/icons-material/VolumeUp';
+import { useRecoilValue } from "recoil";
+import { predictedIndex } from "../../state";
 
 interface Props {
-    predicted: number;
     behaviours: BehaviourType[];
     focus?: boolean;
     disabled?: boolean;
@@ -29,11 +30,12 @@ function calculateFontSize(str: string): number {
     return Math.floor(MAXSIZE * (1.0 - ratio) + ratio * MINSIZE);
 }
 
-export default function Output({predicted, behaviours, ...props}: Props) {
+export default function Output({behaviours, ...props}: Props) {
     const [expanded, setExpanded] = useState(false);
     const [volume, setVolume] = useState(100);
     const {namespace} = useVariant();
     const {t} = useTranslation(namespace);
+    const predicted = useRecoilValue(predictedIndex);
 
     const changeVolume = useCallback((event: Event, newValue: number | number[]) => {
         setVolume(newValue as number);
@@ -55,6 +57,7 @@ export default function Output({predicted, behaviours, ...props}: Props) {
                 {behaviour?.audio && <AudioPlayer showIcon={!hasImage} volume={volume / 100} uri={behaviour.audio.uri} play={ix === predicted} />}
                 {behaviour?.text && <div className={style.textOverlay} style={{
                     fontSize: `${calculateFontSize(behaviour.text.text)}pt`,
+                    display: (ix === predicted) ? "initial" : "none",
                 }}>{behaviour.text.text}</div>}
             </React.Fragment>)}
         </div>

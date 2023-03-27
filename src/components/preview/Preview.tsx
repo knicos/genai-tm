@@ -6,15 +6,11 @@ import style from "./Preview.module.css";
 import { useTranslation } from "react-i18next";
 import { useVariant } from "../../util/variant";
 import Alert from "@mui/material/Alert";
-
-export interface IPrediction {
-    className: string;
-    probability: number;
-}
+import { useRecoilValue } from "recoil";
+import { prediction } from "../../state";
 
 interface Props {
     model?: TeachableMobileNet;
-    prediction: IPrediction[];
 }
 
 const colourWheel: Colours[] = [
@@ -25,16 +21,17 @@ const colourWheel: Colours[] = [
     'red',
 ];
 
-export function Preview({model, prediction}: Props) {
+export function Preview({model}: Props) {
     const {namespace} = useVariant();
     const {t} = useTranslation(namespace);
+    const preds = useRecoilValue(prediction)
 
     return <Widget dataWidget="model" title={t<string>("model.labels.title")} className={style.widget}>
         {model &&
             <div className={style.previewContainer}>
                 <table className={style.table}>
                     <tbody>
-                        {prediction.map((p, ix) => <tr key={ix}>
+                        {preds.map((p, ix) => <tr key={ix}>
                             <td className={style.labelCell}>{p.className}</td>
                             <td className={style.valueCell}><PercentageBar
                                 colour={colourWheel[ix % colourWheel.length]}

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import * as tf from '@tensorflow/tfjs';
 import * as tmImage from '@teachablemachine/image';
 import Accordion from '@mui/material/Accordion';
@@ -105,7 +105,8 @@ export function Trainer({data, model, setModel, ...props}: Props) {
         });
         console.log('Trained');
 
-        if (model) model.dispose();
+        if (model && model.isTrained) model.dispose();
+        else if (model) model.model.dispose();
         setModel(tm);
         setTrainingStage('done');
         setTraining(false);
@@ -127,11 +128,23 @@ export function Trainer({data, model, setModel, ...props}: Props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
+    const doStartTraining = useCallback(() => setTraining(true), [setTraining]);
+
+    const changeEpochs = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
+        setSettingEpochs(event.target.valueAsNumber);
+    }, [setSettingEpochs]);
+
+    const changeLRate = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
+        setSettingRate(event.target.valueAsNumber);
+    }, [setSettingRate]);
+
+    const changeBatch = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
+        setSettingBatch(event.target.valueAsNumber);
+    }, [setSettingBatch]);
+
     return <Widget dataWidget="trainer" title={t<string>("training.labels.title")} className={style.widget} {...props}>
         <div className={style.buttonContainer}>
-            <Button sx={{flexGrow: 1}} variant="contained" size="large" disabled={training || !isTrainable} onClick={() => {
-                setTraining(true);
-            }}>{t("training.actions.train")}</Button>
+            <Button sx={{flexGrow: 1}} variant="contained" size="large" disabled={training || !isTrainable} onClick={doStartTraining}>{t("training.actions.train")}</Button>
         </div>
 
         {<div className={style.statusContainer}>
@@ -161,9 +174,7 @@ export function Trainer({data, model, setModel, ...props}: Props) {
                         type="number"
                         size="small"
                         value={settingEpochs}
-                        onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                            setSettingEpochs(event.target.valueAsNumber);
-                        }}
+                        onChange={changeEpochs}
                     />
                     <HelpTooltip title={t<string>("training.tooltips.epochs")} placement="left">
                         <HelpOutlineIcon sx={{marginLeft: "auto"}} color="info" />
@@ -179,9 +190,7 @@ export function Trainer({data, model, setModel, ...props}: Props) {
                         type="number"
                         size="small"
                         value={settingRate}
-                        onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                            setSettingRate(event.target.valueAsNumber);
-                        }}
+                        onChange={changeLRate}
                     />
                     <HelpTooltip title={t<string>("training.tooltips.learningRate")} placement="left">
                         <HelpOutlineIcon sx={{marginLeft: "auto"}} color="info" />
@@ -197,9 +206,7 @@ export function Trainer({data, model, setModel, ...props}: Props) {
                         type="number"
                         size="small"
                         value={settingBatch}
-                        onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                            setSettingBatch(event.target.valueAsNumber);
-                        }}
+                        onChange={changeBatch}
                     />
                     <HelpTooltip title={t<string>("training.tooltips.batchSize")} placement="left">
                         <HelpOutlineIcon sx={{marginLeft: "auto"}} color="info" />

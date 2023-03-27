@@ -1,4 +1,4 @@
-import React, {useState, useRef, useEffect} from "react";
+import React, {useState, useRef, useEffect, useCallback} from "react";
 import style from "./widget.module.css";
 import { IconButton } from "@mui/material";
 import EditIcon from '@mui/icons-material/Edit';
@@ -31,6 +31,12 @@ export function Widget({disabled, focus, title, setTitle, children, menu, classN
 
     const classToUse = (disabled) ? style.widgetDisabled : style.widget;
 
+    const doEndEdit = useCallback(() => setEditing(false), [setEditing]);
+    const doStartEdit = useCallback(() => setEditing(true), [setEditing]);
+    const doChangeTitle = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
+        if (setTitle) setTitle(event.target.value);
+    }, [setTitle]);
+
     useEffect(() => {
         if (focus && ref.current?.scrollIntoView) {
             ref.current.scrollIntoView({
@@ -52,13 +58,11 @@ export function Widget({disabled, focus, title, setTitle, children, menu, classN
                 id="title"
                 size="small"
                 variant="outlined"
-                onBlur={() => setEditing(false)}
+                onBlur={doEndEdit}
                 value={title}
-                onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                    setTitle(event.target.value);
-                }}
+                onChange={doChangeTitle}
             />}
-            {setTitle && !editing && <IconButton aria-label="edit" size="small" onClick={() => setEditing(true)}>
+            {setTitle && !editing && <IconButton aria-label="edit" size="small" onClick={doStartEdit}>
                 <EditIcon fontSize="small"/>
             </IconButton>}
             {menu && <div className={style.widget_menu}>{menu}</div>}
