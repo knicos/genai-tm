@@ -34,6 +34,19 @@ interface Props {
     onSkip: (step: number) => void;
 }
 
+function alertMessage(e: Event) {
+    e.returnValue = true;
+    return "";
+}
+
+let hasAlert = false;
+function addCloseAlert() {
+    if (!hasAlert) {
+        hasAlert = true;
+        window.addEventListener("beforeunload", alertMessage);
+    }
+}
+
 export default function Workspace({step, visitedStep, onComplete, saveTrigger, onSkip}: Props) {
     const {namespace} = useVariant();
     const {t} = useTranslation(namespace);
@@ -75,6 +88,21 @@ export default function Workspace({step, visitedStep, onComplete, saveTrigger, o
             });
         }
     }, [projectFile, onSkip]);
+
+    const doSetModel = useCallback((model: TeachableMobileNet | undefined) => {
+        addCloseAlert();
+        setModel(model);
+    }, [setModel]);
+
+    const doSetData = useCallback((d: IClassification[]) => {
+        addCloseAlert();
+        setData(d);
+    }, [setData]);
+
+    const doSetBehaviours = useCallback((b: BehaviourType[]) => {
+        addCloseAlert();
+        setBehaviours(b);
+    }, [setBehaviours]);
 
     useEffect(() => {
         if (wkspaceRef.current) {
@@ -118,19 +146,22 @@ export default function Workspace({step, visitedStep, onComplete, saveTrigger, o
             model,
             (props.behaviours) ? behaviours : undefined,
             (props.samples) ? data : undefined,
-        );
+        ).then(() => {
+            window.removeEventListener("beforeunload", alertMessage);
+            hasAlert = false;
+        });
     }, [behaviours, model, data]);
 
     return <div className={style.workspace} ref={wkspaceRef}>
         <SvgLayer lines={lines} />
         <div className={style.container}>
-            <TrainingData disabled={step > 0} data={data} setData={setData} active={true} />
-            <Trainer disabled={step > 0} focus={step === 0} data={data} model={model} setModel={setModel} />
+            <TrainingData disabled={step > 0} data={data} setData={doSetData} active={true} />
+            <Trainer disabled={step > 0} focus={step === 0} data={data} model={model} setModel={doSetModel} />
             <div className={style.column} data-widget="container">
                 <Input onCapture={doPrediction} enabled={!!model} />
                 <Preview model={model} prediction={lastPrediction} />
             </div>
-            <Behaviours hidden={visitedStep < 1} focus={step === 1} disabled={step !== 1} classes={model?.getLabels() || []} behaviours={behaviours} setBehaviours={setBehaviours}/>
+            <Behaviours hidden={visitedStep < 1} focus={step === 1} disabled={step !== 1} classes={model?.getLabels() || []} behaviours={behaviours} setBehaviours={doSetBehaviours}/>
             <Output hidden={visitedStep < 1} disabled={step !== 1} predicted={pred} behaviours={behaviours} />
         </div>
 

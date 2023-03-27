@@ -5,7 +5,7 @@ import { BehaviourType } from "../Behaviours/Behaviours";
 import { TeachableMobileNet } from '@teachablemachine/image';
 import { IClassification } from "../../state";
 
-export function saveProject(name: string, model?: TeachableMobileNet, behaviours?: BehaviourType[], samples?: IClassification[]) {
+export async function saveProject(name: string, model?: TeachableMobileNet, behaviours?: BehaviourType[], samples?: IClassification[]) {
     const zip = new JSZip();
     if (samples) {
         const folder = zip.folder("samples");
@@ -28,7 +28,7 @@ export function saveProject(name: string, model?: TeachableMobileNet, behaviours
     if (model) {
         zip.file("metadata.json", JSON.stringify(model.getMetadata()));
 
-        model.save({save: async (artifact: tfjs.io.ModelArtifacts) => {
+        await model.save({save: async (artifact: tfjs.io.ModelArtifacts) => {
             if (artifact.weightData) zip.file("weights.bin", artifact.weightData);
             if (typeof artifact.modelTopology) {
                 zip.file("model.json", JSON.stringify({
