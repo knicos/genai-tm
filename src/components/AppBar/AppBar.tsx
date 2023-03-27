@@ -41,8 +41,6 @@ export default function ApplicationBar({onSave}: Props) {
         i18n.changeLanguage(e.currentTarget.getAttribute("data-lng") || "en");
     }, [i18n]);
 
-    console.log("LANG", i18n.language);
-
     return <AppBar component="nav" className="AppBar" position="static">
         <Toolbar>
             <h1>

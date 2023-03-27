@@ -15,7 +15,6 @@ export interface IVariantContext {
     speechBehaviours?: boolean;
     sampleUploadFile?: boolean;
     classLimit?: number;
-    showModelExport?: boolean;
     disabledClassRemove?: boolean;
     disableAddClass?: boolean;
     initialClasses?: string[];

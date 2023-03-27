@@ -121,13 +121,6 @@ export default function Workspace({step, visitedStep, onComplete, saveTrigger, o
         );
     }, [behaviours, model, data]);
 
-    const doModelSave = useCallback(() => {
-        saveProject(
-            "my-model.zip",
-            model
-        );
-    }, [model]);
-
     return <div className={style.workspace} ref={wkspaceRef}>
         <SvgLayer lines={lines} />
         <div className={style.container}>
@@ -135,7 +128,7 @@ export default function Workspace({step, visitedStep, onComplete, saveTrigger, o
             <Trainer disabled={step > 0} focus={step === 0} data={data} model={model} setModel={setModel} />
             <div className={style.column} data-widget="container">
                 <Input onCapture={doPrediction} enabled={!!model} />
-                <Preview model={model} prediction={lastPrediction} onExport={doModelSave} />
+                <Preview model={model} prediction={lastPrediction} />
             </div>
             <Behaviours hidden={visitedStep < 1} focus={step === 1} disabled={step !== 1} classes={model?.getLabels() || []} behaviours={behaviours} setBehaviours={setBehaviours}/>
             <Output hidden={visitedStep < 1} disabled={step !== 1} predicted={pred} behaviours={behaviours} />

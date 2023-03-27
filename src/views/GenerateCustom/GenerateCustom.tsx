@@ -61,10 +61,6 @@ export default function GenerateCustom() {
                 label="Enable threshold output"
             />
             <FormControlLabel
-                control={<Checkbox checked={state.showModelExport} name="showModelExport" onChange={doCheckChange} />}
-                label="Allow model export"
-            />
-            <FormControlLabel
                 control={<Checkbox checked={state.sampleUploadFile} name="sampleUploadFile" onChange={doCheckChange} />}
                 label="Enable file upload for samples"
             />
@@ -94,7 +90,7 @@ export default function GenerateCustom() {
             />
             <FormControlLabel
                 control={<Checkbox checked={state.textBehaviours} name="textBehaviours" onChange={doCheckChange} />}
-                label="Text behaviours"
+                label="Text behaviours                  "
             />
             <FormControlLabel
                 control={<Checkbox checked={state.trainingStep} name="trainingStep" onChange={doCheckChange} />}

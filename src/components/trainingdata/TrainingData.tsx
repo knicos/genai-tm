@@ -35,11 +35,19 @@ export function TrainingData({active, data, setData, disabled}: Props) {
 
     const doSetActive = useCallback((a: boolean, ix: number) => setActiveIndex((a) ? ix : -1), [setActiveIndex]);
 
+    const doDeactivate = useCallback((e: React.FocusEvent<HTMLElement>) => {
+        if (e.relatedTarget && !e.currentTarget.contains(e.relatedTarget)) {
+            setActiveIndex(-1);
+        } else if (!e.relatedTarget) {
+            setActiveIndex(-1);
+        }
+    }, [setActiveIndex]);
+
     const addClass = useCallback(() => {
         setData([...data, { label: `${t("trainingdata.labels.class")} ${data.length + 1}`, samples: []}]);
     }, [setData, data, t]);
 
-    return <section data-widget="container" className={(disabled) ? style.containerDisabled : style.trainingcontainer}>
+    return <section tabIndex={-1} data-widget="container" className={(disabled) ? style.containerDisabled : style.trainingcontainer} onBlur={doDeactivate}>
         <h1>{t("trainingdata.labels.title")}</h1>
         {data.map((c, ix) => <Classification
             onDelete={doDelete}

@@ -39,6 +39,7 @@ export default function WebcamCapture({visible, onCapture, onClose}: Props) {
 
     useEffect(() => {
         if (buttonRef.current) {
+            buttonRef.current.focus();
             buttonRef.current.addEventListener("touchstart", startTouchCapture, { passive: false });
         }
     }, [buttonRef, startTouchCapture]);

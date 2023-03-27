@@ -1,6 +1,5 @@
 {
     "namespace": "image_4_9",
-    "showModelExport": true,
     "sampleUploadFile": true,
     "imageBehaviours": true,
     "soundBehaviours": true,
