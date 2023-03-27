@@ -5,16 +5,18 @@ import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import Image, { ImageBehaviour } from "../Behaviour/Image";
 import ImageIcon from '@mui/icons-material/Image';
 import MusicNoteIcon from '@mui/icons-material/MusicNote';
-import RecordVoiceOverIcon from '@mui/icons-material/RecordVoiceOver';
+import TextSnippetIcon from '@mui/icons-material/TextSnippet';
 import style from "./Behaviour.module.css";
 import Sound, { AudioBehaviour } from "./Audio";
 import { useVariant } from "../../util/variant";
+import Text, { TextBehaviour } from "./Text";
 
-type BehaviourTypes = "image" | "sound" | "speech";
+type BehaviourTypes = "image" | "sound" | "speech" | "text";
 
 export interface BehaviourType {
     image?: ImageBehaviour;
-    audio?: AudioBehaviour
+    audio?: AudioBehaviour;
+    text?: TextBehaviour;
 }
 
 interface Props {
@@ -45,6 +47,10 @@ export default function Behaviour({classLabel, behaviour, setBehaviour, ...props
         setBehaviour((multipleBehaviours) ? {...behaviour, audio} : {audio});
     }, [setBehaviour, behaviour, multipleBehaviours]);
 
+    const doSetTextBehaviour = useCallback((text: TextBehaviour | undefined) => {
+        setBehaviour((multipleBehaviours) ? {...behaviour, text} : {text});
+    }, [setBehaviour, behaviour, multipleBehaviours]);
+
     return <Widget dataWidget="behaviour" title={classLabel} className={style.widget} {...props}>
         <div className={style.container}>
             <ToggleButtonGroup
@@ -62,8 +68,8 @@ export default function Behaviour({classLabel, behaviour, setBehaviour, ...props
                 {soundBehaviours && <ToggleButton value="sound">
                     <MusicNoteIcon />
                 </ToggleButton>}
-                <ToggleButton value="speech" disabled>
-                    <RecordVoiceOverIcon />
+                <ToggleButton value="text">
+                    <TextSnippetIcon />
                 </ToggleButton>
             </ToggleButtonGroup>
                 {value === "image" && <Image
@@ -73,6 +79,10 @@ export default function Behaviour({classLabel, behaviour, setBehaviour, ...props
                 {value === "sound" && <Sound
                     behaviour={behaviour.audio}
                     setBehaviour={doSetAudioBehaviour}
+                    />}
+                {value === "text" && <Text
+                    behaviour={behaviour.text}
+                    setBehaviour={doSetTextBehaviour}
                     />}
         </div>
     </Widget>

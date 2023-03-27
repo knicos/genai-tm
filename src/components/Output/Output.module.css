@@ -7,6 +7,16 @@
     height: 350px;
     width: 100%;
     flex-grow: 1;
+    position: relative;
+}
+
+.textOverlay {
+    position: absolute;
+    color: white;
+    text-shadow: 2px 2px 5px #666;
+    padding: 1rem;
+    text-align: center;
+    overflow: hidden;
 }
 
 .widget {

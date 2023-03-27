@@ -20,6 +20,15 @@ interface Props {
     hidden?: boolean;
 }
 
+function calculateFontSize(str: string): number {
+    const len = str.length;
+
+    const MAXSIZE = 50;
+    const MINSIZE = 12;
+    const ratio = Math.min(1.0, len / 150);
+    return Math.floor(MAXSIZE * (1.0 - ratio) + ratio * MINSIZE);
+}
+
 export default function Output({predicted, behaviours, ...props}: Props) {
     const [expanded, setExpanded] = useState(false);
     const [volume, setVolume] = useState(100);
@@ -44,6 +53,9 @@ export default function Output({predicted, behaviours, ...props}: Props) {
             {behaviours.map((behaviour, ix) => <React.Fragment key={ix}>
                 {behaviour?.image && <img src={behaviour.image.uri} alt="" style={{display: (ix === predicted) ? "initial" : "none"}} />}
                 {behaviour?.audio && <AudioPlayer showIcon={!hasImage} volume={volume / 100} uri={behaviour.audio.uri} play={ix === predicted} />}
+                {behaviour?.text && <div className={style.textOverlay} style={{
+                    fontSize: `${calculateFontSize(behaviour.text.text)}pt`,
+                }}>{behaviour.text.text}</div>}
             </React.Fragment>)}
         </div>
         <div className={style.volumeContainer}>
