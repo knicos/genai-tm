@@ -1,12 +1,12 @@
 .App {
-  /*position: absolute;
+    /*position: absolute;
   top: 0px;
   bottom: 0px;*/
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: #dee4e8;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #dee4e8;
 }
 
 .AppBar h1 {

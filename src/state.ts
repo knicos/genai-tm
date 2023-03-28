@@ -1,9 +1,9 @@
-import { atom } from "recoil";
+import { atom } from 'recoil';
 
 export interface IClassification {
     label: string;
     samples: HTMLCanvasElement[];
-};
+}
 
 export const fileData = atom<File | null>({
     key: 'fileData',

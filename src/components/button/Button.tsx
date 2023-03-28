@@ -1,4 +1,4 @@
-import MButton from "@mui/material/Button";
+import MButton from '@mui/material/Button';
 import { styled } from '@mui/material/styles';
 
 export const Button = styled(MButton)({
@@ -6,10 +6,10 @@ export const Button = styled(MButton)({
 });
 
 export const VerticalButton = styled(MButton)({
-    flexDirection: "column",
-    padding: "5px 8px",
-    "& .MuiButton-startIcon": {
-        margin: "0",
+    flexDirection: 'column',
+    padding: '5px 8px',
+    '& .MuiButton-startIcon': {
+        margin: '0',
     },
-    textTransform: "none",
+    textTransform: 'none',
 });

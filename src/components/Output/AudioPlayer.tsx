@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from 'react';
 import MusicNoteIcon from '@mui/icons-material/MusicNote';
 
 interface Props {
@@ -8,17 +8,21 @@ interface Props {
     showIcon?: boolean;
 }
 
-export default function AudioPlayer({uri, play, volume, showIcon}: Props) {
+export default function AudioPlayer({ uri, play, volume, showIcon }: Props) {
     const [audio, setAudio] = useState<HTMLAudioElement | null>(null);
 
-    useEffect(() => setAudio((old: HTMLAudioElement | null) => {
-        if (old) old.pause();
-        return new Audio(uri);
-    }), [uri]);
+    useEffect(
+        () =>
+            setAudio((old: HTMLAudioElement | null) => {
+                if (old) old.pause();
+                return new Audio(uri);
+            }),
+        [uri]
+    );
 
     useEffect(() => {
         if (audio) {
-            audio.volume = (volume === undefined) ? 1.0 : volume;
+            audio.volume = volume === undefined ? 1.0 : volume;
         }
     }, [volume, audio]);
 
@@ -33,10 +37,13 @@ export default function AudioPlayer({uri, play, volume, showIcon}: Props) {
         }
     }, [play, audio]);
 
-    useEffect(() => () => {
-        if (audio) audio.pause();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [audio]);
+    useEffect(
+        () => () => {
+            if (audio) audio.pause();
+            // eslint-disable-next-line react-hooks/exhaustive-deps
+        },
+        [audio]
+    );
 
-    return (showIcon && play) ? <MusicNoteIcon sx={{color: "white", fontSize: 128}} /> : <div></div>;
+    return showIcon && play ? <MusicNoteIcon sx={{ color: 'white', fontSize: 128 }} /> : <div></div>;
 }

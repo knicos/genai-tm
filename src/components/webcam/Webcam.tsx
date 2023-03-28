@@ -1,7 +1,7 @@
-import React, { useState, useEffect, useRef, useCallback } from "react";
-import { Webcam as TMWebcam } from "@teachablemachine/image";
-import style from "./webcam.module.css";
-import { Skeleton } from "@mui/material";
+import React, { useState, useEffect, useRef, useCallback } from 'react';
+import { Webcam as TMWebcam } from '@teachablemachine/image';
+import style from './webcam.module.css';
+import { Skeleton } from '@mui/material';
 
 interface Props {
     interval?: number;
@@ -10,32 +10,35 @@ interface Props {
     onCapture?: (image: HTMLCanvasElement) => void;
 }
 
-export function Webcam({interval, capture, onCapture, disable}: Props) {
+export function Webcam({ interval, capture, onCapture, disable }: Props) {
     const [webcam, setWebcam] = useState<TMWebcam | null>(null);
     const webcamRef = useRef<HTMLDivElement>(null);
     const requestRef = useRef(-1);
     const previousTimeRef = useRef(0);
 
-    const loop = useCallback((timestamp: number) => {
-        if (webcam) {
-            //if (previousTimeRef.current === 0) {
-            //    previousTimeRef.current = timestamp;
-            //}
-            webcam.update();
-            const actualInterval = (interval !== undefined) ? interval : 1000.0;
-            if (capture && onCapture && (timestamp - previousTimeRef.current) >= actualInterval) {
-                const newImage = document.createElement('canvas');
-                newImage.width = webcam.canvas.width;
-                newImage.height = webcam.canvas.height;
-                const context = newImage.getContext('2d');
-                if (!context) console.error('Failed to get context');
-                context?.drawImage(webcam.canvas, 0, 0);
-                onCapture(newImage);
-                previousTimeRef.current = timestamp;
+    const loop = useCallback(
+        (timestamp: number) => {
+            if (webcam) {
+                //if (previousTimeRef.current === 0) {
+                //    previousTimeRef.current = timestamp;
+                //}
+                webcam.update();
+                const actualInterval = interval !== undefined ? interval : 1000.0;
+                if (capture && onCapture && timestamp - previousTimeRef.current >= actualInterval) {
+                    const newImage = document.createElement('canvas');
+                    newImage.width = webcam.canvas.width;
+                    newImage.height = webcam.canvas.height;
+                    const context = newImage.getContext('2d');
+                    if (!context) console.error('Failed to get context');
+                    context?.drawImage(webcam.canvas, 0, 0);
+                    onCapture(newImage);
+                    previousTimeRef.current = timestamp;
+                }
             }
-        }
-        requestRef.current = window.requestAnimationFrame(loop);
-    }, [webcam, interval, capture, onCapture]);
+            requestRef.current = window.requestAnimationFrame(loop);
+        },
+        [webcam, interval, capture, onCapture]
+    );
 
     async function initWebcam() {
         const newWebcam = new TMWebcam(224, 224, true);
@@ -48,7 +51,7 @@ export function Webcam({interval, capture, onCapture, disable}: Props) {
     }, [capture]);
 
     useEffect(() => {
-        initWebcam().catch(() => console.error("No webcam"));
+        initWebcam().catch(() => console.error('No webcam'));
         return () => {
             if (webcam) {
                 webcam.stop();
@@ -56,8 +59,8 @@ export function Webcam({interval, capture, onCapture, disable}: Props) {
             if (requestRef.current >= 0) {
                 window.cancelAnimationFrame(requestRef.current);
             }
-        }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     useEffect(() => {
@@ -94,8 +97,20 @@ export function Webcam({interval, capture, onCapture, disable}: Props) {
         }
     }, [webcam, loop]);
 
-    return <>
-        {!webcam && <Skeleton variant="rounded" width={224} height={224} />}
-        <div data-testid="webcam" className={style.container} ref={webcamRef} />
-    </>;
+    return (
+        <>
+            {!webcam && (
+                <Skeleton
+                    variant="rounded"
+                    width={224}
+                    height={224}
+                />
+            )}
+            <div
+                data-testid="webcam"
+                className={style.container}
+                ref={webcamRef}
+            />
+        </>
+    );
 }

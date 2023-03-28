@@ -40,17 +40,17 @@
 
 @keyframes grow {
     0% {
-        transform: scale( 1 );
-        background-color: rgba(174, 37, 174,0);
-     }
-     
-     50% {
-        transform: scale( 2 );
+        transform: scale(1);
+        background-color: rgba(174, 37, 174, 0);
+    }
+
+    50% {
+        transform: scale(2);
         background-color: rgba(174, 37, 174, 0.2);
-     }
-     
-     100% {
-        transform: scale( 1 );
-        background-color: rgba(174, 37, 174,0);
-     }
+    }
+
+    100% {
+        transform: scale(1);
+        background-color: rgba(174, 37, 174, 0);
+    }
 }

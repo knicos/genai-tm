@@ -1,9 +1,9 @@
-import React, { useContext } from "react";
+import React, { useContext } from 'react';
 
-export type Features = "advancedMenu";
+export type Features = 'advancedMenu';
 
 export interface IVariantContext {
-    namespace: "translation" | "image_4_9" | "image_adv";
+    namespace: 'translation' | 'image_4_9' | 'image_adv';
     advancedMenu?: boolean;
     modelSelect?: boolean;
     modelThreshold?: boolean;
@@ -24,7 +24,7 @@ export interface IVariantContext {
 }
 
 export const VariantContext = React.createContext<IVariantContext>({
-    namespace: "translation",
+    namespace: 'translation',
 });
 
 export function useVariant() {
