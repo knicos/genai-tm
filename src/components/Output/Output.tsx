@@ -88,6 +88,8 @@ export default function Output({ behaviours, ...props }: Props) {
                                 style={{
                                     fontSize: `${calculateFontSize(behaviour.text.text)}pt`,
                                     display: ix === predicted ? 'initial' : 'none',
+                                    color: behaviour.text.color || '#000000',
+                                    textAlign: behaviour.text.align || 'center',
                                 }}
                             >
                                 {behaviour.text.text}

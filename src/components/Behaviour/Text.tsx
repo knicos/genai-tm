@@ -3,10 +3,12 @@ import TextField from '@mui/material/TextField';
 import style from './Behaviour.module.css';
 import { useTranslation } from 'react-i18next';
 import { useVariant } from '../../util/variant';
+import Alignment, { Align } from '../Alignment/Alignment';
+import TextColour from '../TextColour/TextColour';
 
 export interface TextBehaviour {
     text: string;
-    align?: 'left' | 'right' | 'center';
+    align?: Align;
     color?: string;
 }
 
@@ -39,6 +41,24 @@ export default function Text({ behaviour, setBehaviour }: Props) {
         }
     }, [setBehaviour, behaviour, content]);
 
+    const doSetAlignment = useCallback(
+        (align: Align) => {
+            if (behaviour) {
+                setBehaviour({ ...behaviour, align });
+            }
+        },
+        [setBehaviour, behaviour]
+    );
+
+    const doSetColour = useCallback(
+        (col: string) => {
+            if (behaviour) {
+                setBehaviour({ ...behaviour, color: col });
+            }
+        },
+        [setBehaviour, behaviour]
+    );
+
     return (
         <div className={style.textContainer}>
             <TextField
@@ -54,6 +74,18 @@ export default function Text({ behaviour, setBehaviour }: Props) {
                 multiline
                 maxRows={4}
             />
+            <div className={style.row}>
+                <Alignment
+                    disabled={!behaviour}
+                    alignment={behaviour?.align || 'center'}
+                    setAlignment={doSetAlignment}
+                />
+                <TextColour
+                    disabled={!behaviour}
+                    colour={behaviour?.color || '#000000'}
+                    setColour={doSetColour}
+                />
+            </div>
         </div>
     );
 }

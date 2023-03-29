@@ -56,7 +56,7 @@ export function Widget({ disabled, focus, title, setTitle, children, menu, class
             data-testid={`widget-${title}`}
             ref={ref}
             data-widget={dataWidget}
-            style={{ display: hidden ? 'none' : 'inherit' }}
+            style={{ display: hidden ? 'none' : 'initial' }}
             className={classToUse + (className ? ` ${className}` : '')}
         >
             {title !== undefined && (

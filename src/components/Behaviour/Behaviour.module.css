@@ -57,3 +57,12 @@
     flex-direction: column;
     gap: 0.5rem;
 }
+
+.row {
+    display: flex;
+    margin: 0.5rem 0;
+}
+
+.textContainer :global .MuiToggleButtonGroup-root {
+    margin: 0;
+}

@@ -8,6 +8,7 @@
     width: 100%;
     flex-grow: 1;
     position: relative;
+    background: white;
 }
 
 .textOverlay {
@@ -17,6 +18,11 @@
     padding: 1rem;
     text-align: center;
     overflow: hidden;
+    width: 100%;
+    box-sizing: border-box;
+    top: 0;
+    bottom: 0;
+    white-space: pre-wrap;
 }
 
 .widget {
@@ -64,4 +70,5 @@
     gap: 1rem;
     padding: 1rem;
     align-items: center;
+    border-top: 1px solid #ddd;
 }
