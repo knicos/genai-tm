@@ -1,6 +1,8 @@
 import React, { useCallback, useState, useEffect } from 'react';
 import TextField from '@mui/material/TextField';
 import style from './Behaviour.module.css';
+import { useTranslation } from 'react-i18next';
+import { useVariant } from '../../util/variant';
 
 export interface TextBehaviour {
     text: string;
@@ -14,6 +16,8 @@ interface Props {
 }
 
 export default function Text({ behaviour, setBehaviour }: Props) {
+    const { namespace } = useVariant();
+    const { t } = useTranslation(namespace);
     const [content, setContent] = useState('');
 
     const doChange = useCallback(
@@ -38,9 +42,10 @@ export default function Text({ behaviour, setBehaviour }: Props) {
     return (
         <div className={style.textContainer}>
             <TextField
-                label="Message"
+                data-testid="text-message"
+                label={t('behaviours.labels.message')}
                 fullWidth
-                id="title"
+                id="message"
                 size="small"
                 variant="outlined"
                 value={content}

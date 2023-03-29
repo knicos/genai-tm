@@ -64,6 +64,7 @@ export default function ApplicationBar({ onSave }: Props) {
                 />
                 <div className={style.buttonBar}>
                     <Button
+                        data-testid="open-project"
                         color="inherit"
                         variant="outlined"
                         startIcon={<FileOpenIcon />}
@@ -72,6 +73,7 @@ export default function ApplicationBar({ onSave }: Props) {
                         {t('app.load')}
                     </Button>
                     <Button
+                        data-testid="save-project"
                         color="inherit"
                         variant="outlined"
                         startIcon={<SaveAltIcon />}
@@ -84,8 +86,10 @@ export default function ApplicationBar({ onSave }: Props) {
                     {LANGS.map((lng) => (
                         <button
                             key={lng.name}
+                            data-testid={`lang-${lng.name}`}
                             data-lng={lng.name}
                             onClick={doChangeLanguage}
+                            aria-label={lng.label}
                         >
                             <img
                                 className={i18n.language === lng.name ? style.selected : ''}

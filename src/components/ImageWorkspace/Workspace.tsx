@@ -1,8 +1,8 @@
 import React, { useRef, useEffect, useState, useCallback } from 'react';
 import SvgLayer, { ILine } from './SvgLayer';
 import { TrainingData } from '../trainingdata/TrainingData';
-import { Trainer } from '../trainer/Trainer';
-import { Preview } from '../preview/Preview';
+import Trainer from '../trainer/Trainer';
+import Preview from '../preview/Preview';
 import { IConnection, extractNodesFromElements, generateLines } from './lines';
 import Output from '../Output/Output';
 import Behaviours, { BehaviourType } from '../Behaviours/Behaviours';
@@ -182,7 +182,7 @@ export default function Workspace({ step, visitedStep, onComplete, saveTrigger, 
                         enabled={!!model}
                         model={model}
                     />
-                    <Preview model={model} />
+                    <Preview model={!!model} />
                 </div>
                 <Behaviours
                     hidden={visitedStep < 1}

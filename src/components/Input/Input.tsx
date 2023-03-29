@@ -60,6 +60,8 @@ export default function Input({ enabled, model, ...props }: Props) {
                                 disabled={!enabled}
                                 checked={enableInput}
                                 onChange={changeWebcamToggle}
+                                aria-label="toggle webcam"
+                                data-testid="webcam-switch"
                             />
                         }
                         label={t<string>('input.labels.webcam')}

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import style from './Behaviours.module.css';
 import { useVariant } from '../../util/variant';
@@ -52,6 +52,15 @@ export default function Behaviours({ classes, behaviours, setBehaviours, ...prop
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [classes.length]);
 
+    const doSetBehaviours = useCallback(
+        (nb: BehaviourType, ix: number) => {
+            const newBehaviours = [...behaviours];
+            newBehaviours[ix] = nb;
+            setBehaviours(newBehaviours);
+        },
+        [behaviours, setBehaviours]
+    );
+
     const { namespace } = useVariant();
     const { t } = useTranslation(namespace);
     return (
@@ -64,16 +73,14 @@ export default function Behaviours({ classes, behaviours, setBehaviours, ...prop
             {classes.map((c, ix) =>
                 ix < behaviours.length ? (
                     <Behaviour
+                        data-testid={`behaviour-${c}`}
                         disabled={props.disabled}
                         focus={props.focus && ix === Math.floor(classes.length / 2 - 1)}
                         key={ix}
+                        index={ix}
                         classLabel={c}
                         behaviour={behaviours[ix]}
-                        setBehaviour={(nb: BehaviourType) => {
-                            const newBehaviours = [...behaviours];
-                            newBehaviours[ix] = nb;
-                            setBehaviours(newBehaviours);
-                        }}
+                        setBehaviour={doSetBehaviours}
                     />
                 ) : null
             )}

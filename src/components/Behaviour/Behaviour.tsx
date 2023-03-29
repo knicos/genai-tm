@@ -22,13 +22,15 @@ export interface BehaviourType {
 interface Props {
     classLabel: string;
     behaviour: BehaviourType;
-    setBehaviour: (newBehaviour: BehaviourType) => void;
+    setBehaviour: (newBehaviour: BehaviourType, ix: number) => void;
     disabled?: boolean;
     hidden?: boolean;
     focus?: boolean;
+    'data-testid'?: string;
+    index: number;
 }
 
-export default function Behaviour({ classLabel, behaviour, setBehaviour, ...props }: Props) {
+export default function Behaviour({ classLabel, behaviour, setBehaviour, index, ...props }: Props) {
     const { soundBehaviours, imageBehaviours, multipleBehaviours } = useVariant();
     const [value, setValue] = useState<BehaviourTypes>(imageBehaviours ? 'image' : 'sound');
 
@@ -41,23 +43,23 @@ export default function Behaviour({ classLabel, behaviour, setBehaviour, ...prop
 
     const doSetBehaviour = useCallback(
         (image: ImageBehaviour | undefined) => {
-            setBehaviour(multipleBehaviours ? { ...behaviour, image } : { image });
+            setBehaviour(multipleBehaviours ? { ...behaviour, image } : { image }, index);
         },
-        [setBehaviour, behaviour, multipleBehaviours]
+        [setBehaviour, behaviour, multipleBehaviours, index]
     );
 
     const doSetAudioBehaviour = useCallback(
         (audio: AudioBehaviour | undefined) => {
-            setBehaviour(multipleBehaviours ? { ...behaviour, audio } : { audio });
+            setBehaviour(multipleBehaviours ? { ...behaviour, audio } : { audio }, index);
         },
-        [setBehaviour, behaviour, multipleBehaviours]
+        [setBehaviour, behaviour, multipleBehaviours, index]
     );
 
     const doSetTextBehaviour = useCallback(
         (text: TextBehaviour | undefined) => {
-            setBehaviour(multipleBehaviours ? { ...behaviour, text } : { text });
+            setBehaviour(multipleBehaviours ? { ...behaviour, text } : { text }, index);
         },
-        [setBehaviour, behaviour, multipleBehaviours]
+        [setBehaviour, behaviour, multipleBehaviours, index]
     );
 
     return (
@@ -78,16 +80,28 @@ export default function Behaviour({ classLabel, behaviour, setBehaviour, ...prop
                     sx={{ margin: '1rem 0' }}
                 >
                     {imageBehaviours && (
-                        <ToggleButton value="image">
+                        <ToggleButton
+                            value="image"
+                            aria-label="Image behaviour"
+                            data-testid="image-option"
+                        >
                             <ImageIcon />
                         </ToggleButton>
                     )}
                     {soundBehaviours && (
-                        <ToggleButton value="sound">
+                        <ToggleButton
+                            value="sound"
+                            aria-label="Sound behaviour"
+                            data-testid="audio-option"
+                        >
                             <MusicNoteIcon />
                         </ToggleButton>
                     )}
-                    <ToggleButton value="text">
+                    <ToggleButton
+                        value="text"
+                        aria-label="Text behaviour"
+                        data-testid="text-option"
+                    >
                         <TextSnippetIcon />
                     </ToggleButton>
                 </ToggleButtonGroup>

@@ -84,7 +84,8 @@
             "delete": "Poista"
         },
         "labels": {
-            "title": "Toiminta:"
+            "title": "Toiminta:",
+            "message": "Message"
         }
     },
     "stepper": {

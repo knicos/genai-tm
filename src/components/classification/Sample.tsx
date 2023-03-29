@@ -32,7 +32,10 @@ export default function Sample({ image, index, onDelete }: Props) {
     const doClick = useCallback(() => onDelete(index), [onDelete, index]);
 
     return (
-        <li className={style.sampleImage}>
+        <li
+            className={style.sampleImage}
+            data-testid={`sample-${index}`}
+        >
             <IconButton
                 aria-label="delete"
                 onClick={doClick}

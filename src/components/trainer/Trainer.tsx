@@ -42,7 +42,7 @@ const HelpTooltip = styled(({ className, ...props }: TooltipProps) => (
 
 type TrainingStage = 'ready' | 'loading' | 'prepare' | 'training' | 'done' | 'none';
 
-export function Trainer({ data, model, setModel, ...props }: Props) {
+export default function Trainer({ data, model, setModel, ...props }: Props) {
     const { namespace, advancedMenu } = useVariant();
     const { t } = useTranslation(namespace);
     const [training, setTraining] = useState(false);
@@ -163,6 +163,7 @@ export function Trainer({ data, model, setModel, ...props }: Props) {
         >
             <div className={style.buttonContainer}>
                 <Button
+                    data-testid="train-button"
                     sx={{ flexGrow: 1 }}
                     variant="contained"
                     size="large"
@@ -176,10 +177,20 @@ export function Trainer({ data, model, setModel, ...props }: Props) {
             {
                 <div className={style.statusContainer}>
                     {trainingStage === 'none' && isTrainable && (
-                        <Alert severity="warning">{t('training.labels.needsTraining')}</Alert>
+                        <Alert
+                            data-testid="alert-needstraining"
+                            severity="warning"
+                        >
+                            {t('training.labels.needsTraining')}
+                        </Alert>
                     )}
                     {trainingStage === 'none' && !isTrainable && (
-                        <Alert severity="info">{t('training.labels.addMore')}</Alert>
+                        <Alert
+                            data-testid="alert-addmore"
+                            severity="info"
+                        >
+                            {t('training.labels.addMore')}
+                        </Alert>
                     )}
                     {trainingStage === 'loading' && <span>{t('training.labels.loading')}</span>}
                     {trainingStage === 'prepare' && <span>{t('training.labels.prepairing')}</span>}
@@ -187,12 +198,20 @@ export function Trainer({ data, model, setModel, ...props }: Props) {
                         <div>
                             <span>{t('training.labels.training')}</span>
                             <LinearProgress
+                                data-testid="training-progress"
                                 value={epochs * 100}
                                 variant="determinate"
                             />
                         </div>
                     )}
-                    {trainingStage === 'done' && <Alert severity="success">{t('training.labels.complete')}</Alert>}
+                    {trainingStage === 'done' && (
+                        <Alert
+                            data-testid="alert-complete"
+                            severity="success"
+                        >
+                            {t('training.labels.complete')}
+                        </Alert>
+                    )}
                 </div>
             }
 

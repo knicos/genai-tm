@@ -10,12 +10,12 @@ import { useRecoilValue } from 'recoil';
 import { prediction } from '../../state';
 
 interface Props {
-    model?: TeachableMobileNet;
+    model?: boolean;
 }
 
 const colourWheel: Colours[] = ['orange', 'purple', 'blue', 'green', 'red'];
 
-export function Preview({ model }: Props) {
+export default function Preview({ model }: Props) {
     const { namespace } = useVariant();
     const { t } = useTranslation(namespace);
     const preds = useRecoilValue(prediction);
@@ -31,7 +31,10 @@ export function Preview({ model }: Props) {
                     <table className={style.table}>
                         <tbody>
                             {preds.map((p, ix) => (
-                                <tr key={ix}>
+                                <tr
+                                    key={ix}
+                                    data-testid={`prediction-${ix}`}
+                                >
                                     <td className={style.labelCell}>{p.className}</td>
                                     <td className={style.valueCell}>
                                         <PercentageBar

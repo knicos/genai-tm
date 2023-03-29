@@ -37,11 +37,7 @@ const theme = createTheme({
     },
 });
 
-interface Props {
-    open?: boolean;
-}
-
-export default function ImageClassifier({ open }: Props) {
+export default function ImageClassifier() {
     const { namespace } = useVariant();
     const { t } = useTranslation(namespace);
     const [step, setStep] = useState(0);
@@ -89,6 +85,8 @@ export default function ImageClassifier({ open }: Props) {
                     disabled={step <= 0}
                     size="large"
                     onClick={prevStep}
+                    aria-label="previous"
+                    data-testid="previous-step"
                 >
                     <ArrowBackIosNewIcon fontSize="large" />
                 </IconButton>
@@ -104,6 +102,8 @@ export default function ImageClassifier({ open }: Props) {
                     disabled={step >= 1 || allowedStep <= step}
                     size="large"
                     onClick={nextStep}
+                    aria-label="next"
+                    data-testid="next-step"
                 >
                     <ArrowForwardIosIcon fontSize="large" />
                 </IconButton>

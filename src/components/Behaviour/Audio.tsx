@@ -93,6 +93,7 @@ export default function Sound({ behaviour, setBehaviour }: Props) {
                 {...getRootProps()}
             >
                 <VerticalButton
+                    data-testid="audio-upload"
                     variant="outlined"
                     onClick={open}
                     startIcon={<UploadFileIcon />}
@@ -100,6 +101,7 @@ export default function Sound({ behaviour, setBehaviour }: Props) {
                     Upload
                 </VerticalButton>
                 <VerticalButton
+                    data-testid="audio-delete"
                     variant="outlined"
                     disabled={!behaviour}
                     onClick={doDelete}
@@ -110,6 +112,8 @@ export default function Sound({ behaviour, setBehaviour }: Props) {
                 <input {...getInputProps()} />
                 {!audio && (
                     <IconButton
+                        aria-label="play"
+                        data-testid="audio-play"
                         disabled={!behaviour}
                         color="primary"
                         onClick={doPlay}
@@ -120,6 +124,8 @@ export default function Sound({ behaviour, setBehaviour }: Props) {
                 )}
                 {audio && (
                     <IconButton
+                        aria-label="stop"
+                        data-testid="audio-stop"
                         color="primary"
                         onClick={doStop}
                         size="large"

@@ -84,7 +84,8 @@
             "delete": "Delete"
         },
         "labels": {
-            "title": "Behaviors"
+            "title": "Behaviors",
+            "message": "Message"
         }
     },
     "stepper": {

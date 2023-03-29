@@ -51,7 +51,7 @@ export function Webcam({ interval, capture, onCapture, disable }: Props) {
     }, [capture]);
 
     useEffect(() => {
-        initWebcam().catch(() => console.error('No webcam'));
+        initWebcam().catch((e) => console.error('No webcam', e));
         return () => {
             if (webcam) {
                 webcam.stop();

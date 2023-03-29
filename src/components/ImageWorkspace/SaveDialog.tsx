@@ -62,6 +62,7 @@ export default function SaveDialog({ trigger, onSave, hasModel }: Props) {
                     <FormControlLabel
                         control={
                             <Checkbox
+                                data-testid="check-save-samples"
                                 checked={saveSamples}
                                 onChange={changeSamples}
                             />
@@ -81,6 +82,7 @@ export default function SaveDialog({ trigger, onSave, hasModel }: Props) {
                 <FormControlLabel
                     control={
                         <Checkbox
+                            data-testid="check-save-behaviours"
                             disabled={!hasModel}
                             checked={saveBehaviours}
                             onChange={changeBehaviours}
@@ -94,12 +96,14 @@ export default function SaveDialog({ trigger, onSave, hasModel }: Props) {
                     variant="contained"
                     disabled={!hasModel}
                     onClick={doSave}
+                    data-testid="save-save"
                 >
                     {t('save.actions.save')}
                 </Button>
                 <Button
                     variant="outlined"
                     onClick={trigger}
+                    data-testid="save-cancel"
                 >
                     {t('save.actions.cancel')}
                 </Button>

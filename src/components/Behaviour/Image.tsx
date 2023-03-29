@@ -60,6 +60,7 @@ export default function Image({ behaviour, setBehaviour }: Props) {
             {...getRootProps()}
         >
             <VerticalButton
+                data-testid="image-upload"
                 variant="outlined"
                 startIcon={<UploadFileIcon />}
                 onClick={open}
@@ -67,6 +68,7 @@ export default function Image({ behaviour, setBehaviour }: Props) {
                 {t('behaviours.actions.upload')}
             </VerticalButton>
             <VerticalButton
+                data-testid="image-delete"
                 variant="outlined"
                 startIcon={<DeleteForeverIcon />}
                 onClick={doDelete}
@@ -83,6 +85,7 @@ export default function Image({ behaviour, setBehaviour }: Props) {
             )}
             {!behaviour && (
                 <Skeleton
+                    data-testid="image-skeleton"
                     variant="rounded"
                     width={58}
                     height={58}

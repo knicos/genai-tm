@@ -67,6 +67,7 @@ export default function Output({ behaviours, ...props }: Props) {
                     <React.Fragment key={ix}>
                         {behaviour?.image && (
                             <img
+                                data-testid="image-output"
                                 src={behaviour.image.uri}
                                 alt=""
                                 style={{ display: ix === predicted ? 'initial' : 'none' }}
@@ -83,6 +84,7 @@ export default function Output({ behaviours, ...props }: Props) {
                         {behaviour?.text && (
                             <div
                                 className={style.textOverlay}
+                                data-testid="text-output"
                                 style={{
                                     fontSize: `${calculateFontSize(behaviour.text.text)}pt`,
                                     display: ix === predicted ? 'initial' : 'none',

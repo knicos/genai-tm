@@ -46,21 +46,29 @@ export function Classification({ name, active, data, index, setData, onActivate,
                                 ctx?.drawImage(img, 0, 0, 224, 224);
                                 resolve(newCanvas);
                             };
+                            img.onerror = () => {
+                                resolve(newCanvas);
+                            };
                             img.src = reader.result as string;
+
+                            // Note: Here to integration tests. "onload" is not called in jest.
+                            if (global?.process?.env?.NODE_ENV === 'test') img.onload(new Event('onload'));
                         };
                         reader.readAsDataURL(file);
                     })
             );
 
-            Promise.all(promises).then((results: HTMLCanvasElement[]) => {
-                setData(
-                    {
-                        label: data.label,
-                        samples: [...data.samples, ...results],
-                    },
-                    index
-                );
-            });
+            Promise.all(promises)
+                .then((results: HTMLCanvasElement[]) => {
+                    setData(
+                        {
+                            label: data.label,
+                            samples: [...data.samples, ...results],
+                        },
+                        index
+                    );
+                })
+                .catch((e) => console.error(e));
         },
         [setData, data, index]
     );
@@ -152,7 +160,10 @@ export function Classification({ name, active, data, index, setData, onActivate,
                     className={style.listContainer}
                     {...getRootProps()}
                 >
-                    <input {...getInputProps()} />
+                    <input
+                        data-testid={`file-${data.label}`}
+                        {...getInputProps()}
+                    />
                     {data.samples.length === 0 && (
                         <div className={style.samplesLabel}>{t('trainingdata.labels.addSamples')}:</div>
                     )}

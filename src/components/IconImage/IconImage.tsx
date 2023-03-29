@@ -46,6 +46,7 @@ export default function IconImage({ src, onDelete }: Props) {
             )}
             {isUrl ? (
                 <img
+                    data-testid="icon-image"
                     src={src}
                     alt=""
                 />
