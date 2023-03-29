@@ -11,18 +11,29 @@
 }
 
 .container {
-    width: 300%;
-    height: 200%;
-    display: flex;
+    min-width: 100%;
+    min-height: 100%;
+    display: grid;
     justify-content: center;
     align-items: center;
     flex-grow: 1;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     overflow: auto;
     gap: 3rem;
     padding: 1rem;
     box-sizing: border-box;
     position: relative;
+    width: max-content;
+}
+
+.container3 {
+    composes: container;
+    grid-template-columns: repeat(3, max-content);
+}
+
+.container5 {
+    composes: container;
+    grid-template-columns: repeat(5, max-content);
 }
 
 @media only screen and (max-height: 800px), (max-width: 700px) {
@@ -30,8 +41,8 @@
         display: none;
     }
     .container {
-        width: 100% !important;
-        height: auto;
+        display: flex;
+        flex-direction: column;
     }
 }
 

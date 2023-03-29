@@ -21,8 +21,7 @@
 
 .widget {
     background-color: primary !important;
-    width: 100%;
-    max-width: 400px;
+    width: 400px;
 }
 
 .widget header {

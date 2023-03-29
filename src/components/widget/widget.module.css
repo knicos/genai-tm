@@ -6,6 +6,7 @@
     flex-direction: column;
     box-shadow: 2px 2px 4px #bbb;
     overflow: hidden;
+    flex-shrink: 0;
 }
 
 .widgetDisabled {

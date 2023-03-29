@@ -1,6 +1,5 @@
 .trainingcontainer {
-    max-width: 390px;
-    width: 100%;
+    width: 390px;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;

@@ -20,8 +20,8 @@ export default function SvgLayer({ lines }: Props) {
         <svg
             className={style.svglayer}
             xmlns="http://www.w3.org/2000/svg"
-            width="300%"
-            height="200%"
+            width="100%"
+            height="100%"
         >
             {lines.map((line, ix) => {
                 const dx = line.direction === 'horizontal' ? CURVE : 0;

@@ -1,5 +1,5 @@
 .fixed {
-    position: fixed;
+    position: static;
     bottom: 5%;
     background: white;
     padding: 0.5rem 4rem;
@@ -7,7 +7,9 @@
     right: 15%;
     box-shadow: 0px 0px 8px #bbb;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
+    border-top: 1px solid #bbb;
+    gap: 1rem;
 }
 
 .fixed button {
@@ -23,9 +25,9 @@
     color: rgb(174, 37, 174);
 }
 
-@media only screen and (max-height: 900px), (max-width: 700px) {
-    .fixed {
-        position: static;
+@media only screen and (max-width: 700px) {
+    .fixed :global .MuiStepLabel-label {
+        display: none;
     }
 }
 

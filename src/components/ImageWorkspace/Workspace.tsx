@@ -117,12 +117,12 @@ export default function Workspace({ step, visitedStep, onComplete, saveTrigger, 
         if (wkspaceRef.current) {
             observer.current = new ResizeObserver(() => {
                 if (wkspaceRef.current) {
-                    const nodes = extractNodesFromElements(wkspaceRef.current.children[1] as HTMLElement);
+                    const nodes = extractNodesFromElements(wkspaceRef.current.children[0] as HTMLElement);
                     setLines(generateLines(nodes, connections));
                 }
             });
             observer.current.observe(wkspaceRef.current);
-            const children = wkspaceRef.current.children[1]?.children;
+            const children = wkspaceRef.current.children[0]?.children;
             if (children) {
                 for (let i = 0; i < children.length; ++i) {
                     const child = children[i];
@@ -159,8 +159,8 @@ export default function Workspace({ step, visitedStep, onComplete, saveTrigger, 
             className={style.workspace}
             ref={wkspaceRef}
         >
-            <SvgLayer lines={lines} />
-            <div className={style.container}>
+            <div className={visitedStep < 1 ? style.container3 : style.container5}>
+                <SvgLayer lines={lines} />
                 <TrainingData
                     disabled={step > 0}
                     data={data}
