@@ -12,6 +12,10 @@
     margin: 1rem;
 }
 
+.trainingProgress :global .MuiLinearProgress-bar {
+    transition: none;
+}
+
 .formfield {
     display: flex;
     align-items: center;

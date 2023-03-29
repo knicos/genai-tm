@@ -60,12 +60,9 @@ export default function Trainer({ data, model, setModel, ...props }: Props) {
 
         try {
             const model = await tmImage.createTeachable({ tfjsVersion: tf.version.tfjs }, { version: 2, alpha: 0.35 });
-
-            console.log('set loaded Model');
             return model;
         } catch (err) {
             console.log(err);
-            console.log('failed load model');
         }
     }
 
@@ -75,21 +72,22 @@ export default function Trainer({ data, model, setModel, ...props }: Props) {
         const tm = await loadModel();
 
         if (!tm) {
-            console.error('Could not load model');
             return;
         }
 
-        console.log('Start training', training);
-        tm.setLabels(training.map((t) => t.label));
-        tm.setSeed('something');
-
         setTrainingStage('prepare');
-        for (let ix = 0; ix < training.length; ++ix) {
-            const { label, samples } = training[ix];
-            console.log('Adding class', ix, label);
-            await Promise.all(samples.map((s) => (s ? tm.addExample(ix, s) : null)));
-        }
-        console.log('Samples added');
+
+        await new Promise((resolve) => {
+            setTimeout(() => {
+                tm.setLabels(training.map((t) => t.label));
+                tm.setSeed('something');
+                const promises = training.reduce<Promise<void>[]>(
+                    (p, v, ix) => [...p, ...v.samples.map((s) => tm.addExample(ix, s))],
+                    []
+                );
+                Promise.all(promises).then(resolve);
+            }, 10);
+        });
 
         setTrainingStage('training');
         await tm.train(
@@ -101,12 +99,10 @@ export default function Trainer({ data, model, setModel, ...props }: Props) {
             },
             {
                 onEpochEnd: (epoch, logs) => {
-                    console.log('Epoch', epoch, logs);
                     setEpochs(epoch / 50);
                 },
             }
         );
-        console.log('Trained');
 
         if (model && model.isTrained) model.dispose();
         else if (model) model.model.dispose();
@@ -192,10 +188,20 @@ export default function Trainer({ data, model, setModel, ...props }: Props) {
                             {t('training.labels.addMore')}
                         </Alert>
                     )}
-                    {trainingStage === 'loading' && <span>{t('training.labels.loading')}</span>}
-                    {trainingStage === 'prepare' && <span>{t('training.labels.prepairing')}</span>}
-                    {trainingStage === 'training' && (
+                    {trainingStage === 'loading' && (
                         <div>
+                            <span>{t('training.labels.loading')}</span>
+                            <LinearProgress />
+                        </div>
+                    )}
+                    {trainingStage === 'prepare' && (
+                        <div>
+                            <span>{t('training.labels.prepairing')}</span>
+                            <LinearProgress />
+                        </div>
+                    )}
+                    {trainingStage === 'training' && (
+                        <div className={style.trainingProgress}>
                             <span>{t('training.labels.training')}</span>
                             <LinearProgress
                                 data-testid="training-progress"
