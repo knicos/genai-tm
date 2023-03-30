@@ -39,6 +39,15 @@ export function Widget({ disabled, focus, title, setTitle, children, menu, class
         },
         [setTitle]
     );
+    const doKeyDown = useCallback(
+        (event: React.KeyboardEvent<HTMLInputElement>) => {
+            if (event.key === 'Enter') {
+                event.preventDefault();
+                setEditing(false);
+            }
+        },
+        [setEditing]
+    );
 
     useEffect(() => {
         if (focus && ref.current?.scrollIntoView) {
@@ -70,6 +79,7 @@ export function Widget({ disabled, focus, title, setTitle, children, menu, class
                             variant="outlined"
                             onBlur={doEndEdit}
                             value={title}
+                            onKeyDown={doKeyDown}
                             onChange={doChangeTitle}
                         />
                     )}
