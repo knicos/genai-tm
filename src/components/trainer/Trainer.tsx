@@ -104,6 +104,8 @@ export default function Trainer({ data, model, setModel, ...props }: Props) {
             }
         );
 
+        // If a model is loaded from file, it isn't trained and cannot be disposed in the same way
+        // This is a slight bug or limitation in the GTM code.
         if (model && model.isTrained) model.dispose();
         else if (model) model.model.dispose();
         setModel(tm);
@@ -119,13 +121,6 @@ export default function Trainer({ data, model, setModel, ...props }: Props) {
         if (training) startTraining(data);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [training]);
-
-    useEffect(() => {
-        return () => {
-            if (model) model.dispose();
-        };
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
 
     const doStartTraining = useCallback(() => setTraining(true), [setTraining]);
 

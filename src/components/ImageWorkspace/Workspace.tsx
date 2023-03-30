@@ -8,13 +8,13 @@ import Output from '../Output/Output';
 import Behaviours, { BehaviourType } from '../Behaviours/Behaviours';
 import { useTranslation } from 'react-i18next';
 import { TeachableMobileNet } from '@teachablemachine/image';
-import { fileData, IClassification } from '../../state';
+import { behaviourState, classState, fileData, IClassification, modelState } from '../../state';
 import style from './TeachableMachine.module.css';
 import { useVariant } from '../../util/variant';
 import Input from '../Input/Input';
 import SaveDialog, { SaveProperties } from './SaveDialog';
 import { saveProject } from './saver';
-import { useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import { loadProject } from './loader';
 import { Alert, Snackbar } from '@mui/material';
 
@@ -51,18 +51,9 @@ export default function Workspace({ step, visitedStep, onComplete, saveTrigger, 
     const { namespace } = useVariant();
     const { t } = useTranslation(namespace);
     const projectFile = useRecoilValue(fileData);
-    const [behaviours, setBehaviours] = useState<BehaviourType[]>([]);
-    const [model, setModel] = useState<TeachableMobileNet | undefined>();
-    const [data, setData] = useState<IClassification[]>([
-        {
-            label: `${t('trainingdata.labels.class')} 1`,
-            samples: [],
-        },
-        {
-            label: `${t('trainingdata.labels.class')} 2`,
-            samples: [],
-        },
-    ]);
+    const [behaviours, setBehaviours] = useRecoilState(behaviourState);
+    const [model, setModel] = useRecoilState(modelState);
+    const [data, setData] = useRecoilState(classState);
     const [lines, setLines] = useState<ILine[]>([]);
     const [errMsg, setErrMsg] = useState<string | null>(null);
 
@@ -87,7 +78,7 @@ export default function Workspace({ step, visitedStep, onComplete, saveTrigger, 
                     console.error(e);
                 });
         }
-    }, [projectFile, onSkip]);
+    }, [projectFile, onSkip, setBehaviours, setData, setModel]);
 
     const doSetModel = useCallback(
         (model: TeachableMobileNet | undefined) => {
@@ -114,6 +105,18 @@ export default function Workspace({ step, visitedStep, onComplete, saveTrigger, 
     );
 
     useEffect(() => {
+        if (data.length === 0) {
+            setData([
+                {
+                    label: `${t('trainingdata.labels.class')} 1`,
+                    samples: [],
+                },
+                {
+                    label: `${t('trainingdata.labels.class')} 2`,
+                    samples: [],
+                },
+            ]);
+        }
         if (wkspaceRef.current) {
             observer.current = new ResizeObserver(() => {
                 if (wkspaceRef.current) {
