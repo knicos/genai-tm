@@ -48,7 +48,8 @@ export default function AudioPlayer({ uri, play, volume, showIcon }: Props) {
     return showIcon && play ? (
         <MusicNoteIcon
             data-testid="audio-output-icon"
-            sx={{ color: 'white', fontSize: 128 }}
+            color="primary"
+            sx={{ fontSize: 128 }}
         />
     ) : (
         <div data-testid="audio-output"></div>

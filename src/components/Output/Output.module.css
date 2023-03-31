@@ -5,10 +5,11 @@
     justify-content: center;
     align-items: center;
     height: 350px;
-    width: 100%;
+    width: 400px;
     flex-grow: 1;
     position: relative;
     background: white;
+    transform-origin: top left;
 }
 
 .textOverlay {
@@ -27,7 +28,6 @@
 
 .widget {
     background-color: primary !important;
-    width: 400px;
 }
 
 .widget header {
@@ -48,13 +48,15 @@
     composes: widget;
     position: fixed;
     z-index: 2;
-    left: 10%;
-    top: 10%;
-    height: 80%;
-    right: 10%;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
     max-width: initial;
     max-height: initial;
-    width: initial;
+    width: fit-content;
+    height: fit-content;
+    margin: auto;
 }
 
 .container img {

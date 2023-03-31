@@ -14,6 +14,11 @@ import VolumeUp from '@mui/icons-material/VolumeUp';
 import { useRecoilValue } from 'recoil';
 import { predictedIndex } from '../../state';
 
+const WIDTH = 400;
+const HEIGHT = 350;
+const FULLSCREEN = 0.75;
+const MENUSPACE = 150;
+
 interface Props {
     behaviours: BehaviourType[];
     focus?: boolean;
@@ -42,8 +47,11 @@ export default function Output({ behaviours, ...props }: Props) {
     }, []);
 
     const currentBehaviour = predicted < behaviours.length ? behaviours[predicted] : null;
-    const hasAudio = !!currentBehaviour?.audio;
-    const hasImage = !!currentBehaviour?.image;
+    const hasImage = !!currentBehaviour?.image || !!currentBehaviour?.text;
+
+    const scaleFactor = expanded
+        ? Math.min(((window.innerHeight - MENUSPACE) * FULLSCREEN) / HEIGHT, (window.innerWidth * FULLSCREEN) / WIDTH)
+        : 1.0;
 
     return (
         <Widget
@@ -62,48 +70,59 @@ export default function Output({ behaviours, ...props }: Props) {
                 </IconButton>
             }
         >
-            <div className={style.container}>
-                {behaviours.map((behaviour, ix) => (
-                    <React.Fragment key={ix}>
-                        {behaviour?.image && (
-                            <img
-                                data-testid="image-output"
-                                src={behaviour.image.uri}
-                                alt=""
-                                style={{ display: ix === predicted ? 'initial' : 'none' }}
-                            />
-                        )}
-                        {behaviour?.audio && (
-                            <AudioPlayer
-                                showIcon={!hasImage}
-                                volume={volume / 100}
-                                uri={behaviour.audio.uri}
-                                play={ix === predicted}
-                            />
-                        )}
-                        {behaviour?.text && (
-                            <div
-                                className={style.textOverlay}
-                                data-testid="text-output"
-                                style={{
-                                    fontSize: `${calculateFontSize(behaviour.text.text)}pt`,
-                                    display: ix === predicted ? 'initial' : 'none',
-                                    color: behaviour.text.color || '#000000',
-                                    textAlign: behaviour.text.align || 'center',
-                                }}
-                            >
-                                {behaviour.text.text}
-                            </div>
-                        )}
-                    </React.Fragment>
-                ))}
+            <div
+                style={{
+                    width: `${Math.floor(400 * scaleFactor)}px`,
+                    height: `${Math.floor(350 * scaleFactor)}px`,
+                }}
+            >
+                <div
+                    className={style.container}
+                    style={{
+                        transform: `scale(${scaleFactor})`,
+                    }}
+                >
+                    {behaviours.map((behaviour, ix) => (
+                        <React.Fragment key={ix}>
+                            {behaviour?.image && (
+                                <img
+                                    data-testid="image-output"
+                                    src={behaviour.image.uri}
+                                    alt=""
+                                    style={{ display: ix === predicted ? 'initial' : 'none' }}
+                                />
+                            )}
+                            {behaviour?.audio && (
+                                <AudioPlayer
+                                    showIcon={!hasImage}
+                                    volume={volume / 100}
+                                    uri={behaviour.audio.uri}
+                                    play={ix === predicted}
+                                />
+                            )}
+                            {behaviour?.text && (
+                                <div
+                                    className={style.textOverlay}
+                                    data-testid="text-output"
+                                    style={{
+                                        fontSize: `${calculateFontSize(behaviour.text.text)}pt`,
+                                        display: ix === predicted ? 'initial' : 'none',
+                                        color: behaviour.text.color || '#000000',
+                                        textAlign: behaviour.text.align || 'center',
+                                    }}
+                                >
+                                    {behaviour.text.text}
+                                </div>
+                            )}
+                        </React.Fragment>
+                    ))}
+                </div>
             </div>
             <div className={style.volumeContainer}>
                 <VolumeDown />
                 <Slider
                     aria-label="Volume"
                     value={volume}
-                    disabled={!hasAudio}
                     onChange={changeVolume}
                 />
                 <VolumeUp />
