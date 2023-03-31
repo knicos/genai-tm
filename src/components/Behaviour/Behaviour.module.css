@@ -61,8 +61,11 @@
 .row {
     display: flex;
     margin: 0.5rem 0;
+    flex-wrap: wrap;
+    gap: 0.2rem;
 }
 
 .textContainer :global .MuiToggleButtonGroup-root {
     margin: 0;
+    width: initial;
 }

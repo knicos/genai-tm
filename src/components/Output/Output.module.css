@@ -21,9 +21,8 @@
     overflow: hidden;
     width: 100%;
     box-sizing: border-box;
-    top: 0;
-    bottom: 0;
     white-space: pre-wrap;
+    max-height: 100%;
 }
 
 .widget {

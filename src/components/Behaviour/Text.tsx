@@ -5,11 +5,13 @@ import { useTranslation } from 'react-i18next';
 import { useVariant } from '../../util/variant';
 import Alignment, { Align } from '../Alignment/Alignment';
 import TextColour from '../TextColour/TextColour';
+import FontSize from '../FontSize/FontSize';
 
 export interface TextBehaviour {
     text: string;
     align?: Align;
     color?: string;
+    size?: number;
 }
 
 interface Props {
@@ -59,6 +61,15 @@ export default function Text({ behaviour, setBehaviour }: Props) {
         [setBehaviour, behaviour]
     );
 
+    const doSetSize = useCallback(
+        (size: number) => {
+            if (behaviour) {
+                setBehaviour({ ...behaviour, size });
+            }
+        },
+        [behaviour, setBehaviour]
+    );
+
     return (
         <div className={style.textContainer}>
             <TextField
@@ -84,6 +95,10 @@ export default function Text({ behaviour, setBehaviour }: Props) {
                     disabled={!behaviour}
                     colour={behaviour?.color || '#000000'}
                     setColour={doSetColour}
+                />
+                <FontSize
+                    size={behaviour?.size || 30}
+                    setSize={doSetSize}
                 />
             </div>
         </div>

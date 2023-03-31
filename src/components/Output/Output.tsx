@@ -26,15 +26,6 @@ interface Props {
     hidden?: boolean;
 }
 
-function calculateFontSize(str: string): number {
-    const len = str.length;
-
-    const MAXSIZE = 50;
-    const MINSIZE = 12;
-    const ratio = Math.min(1.0, len / 150);
-    return Math.floor(MAXSIZE * (1.0 - ratio) + ratio * MINSIZE);
-}
-
 export default function Output({ behaviours, ...props }: Props) {
     const [expanded, setExpanded] = useState(false);
     const [volume, setVolume] = useState(100);
@@ -105,7 +96,7 @@ export default function Output({ behaviours, ...props }: Props) {
                                     className={style.textOverlay}
                                     data-testid="text-output"
                                     style={{
-                                        fontSize: `${calculateFontSize(behaviour.text.text)}pt`,
+                                        fontSize: `${behaviour.text.size || 30}pt`,
                                         display: ix === predicted ? 'initial' : 'none',
                                         color: behaviour.text.color || '#000000',
                                         textAlign: behaviour.text.align || 'center',
