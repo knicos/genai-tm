@@ -165,12 +165,12 @@ export default function GenerateCustom() {
                 <FormControlLabel
                     control={
                         <Checkbox
-                            checked={state.speechBehaviours}
-                            name="speechBehaviours"
+                            checked={state.embedBehaviours}
+                            name="embedBehaviours"
                             onChange={doCheckChange}
                         />
                     }
-                    label="Speech behaviours"
+                    label="Embedding behaviours"
                 />
                 <FormControlLabel
                     control={

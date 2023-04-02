@@ -10,13 +10,16 @@ import style from './Behaviour.module.css';
 import Sound, { AudioBehaviour } from './Audio';
 import { useVariant } from '../../util/variant';
 import Text, { TextBehaviour } from './Text';
+import Embed, { EmbedBehaviour } from './Embed';
+import LinkIcon from '@mui/icons-material/Link';
 
-type BehaviourTypes = 'image' | 'sound' | 'speech' | 'text';
+type BehaviourTypes = 'image' | 'sound' | 'speech' | 'text' | 'embed';
 
 export interface BehaviourType {
     image?: ImageBehaviour;
     audio?: AudioBehaviour;
     text?: TextBehaviour;
+    embed?: EmbedBehaviour;
 }
 
 interface Props {
@@ -31,7 +34,7 @@ interface Props {
 }
 
 export default function Behaviour({ classLabel, behaviour, setBehaviour, index, ...props }: Props) {
-    const { soundBehaviours, imageBehaviours, multipleBehaviours } = useVariant();
+    const { soundBehaviours, imageBehaviours, multipleBehaviours, embedBehaviours } = useVariant();
     const [value, setValue] = useState<BehaviourTypes>(imageBehaviours ? 'image' : 'sound');
 
     const handleChange = useCallback(
@@ -60,6 +63,13 @@ export default function Behaviour({ classLabel, behaviour, setBehaviour, index, 
             setBehaviour(multipleBehaviours ? { ...behaviour, text } : { text }, index);
         },
         [setBehaviour, behaviour, multipleBehaviours, index]
+    );
+
+    const doSetEmbedBehaviour = useCallback(
+        (embed: EmbedBehaviour | undefined) => {
+            setBehaviour({ ...behaviour, image: undefined, audio: undefined, embed }, index);
+        },
+        [setBehaviour, index, behaviour]
     );
 
     return (
@@ -104,6 +114,15 @@ export default function Behaviour({ classLabel, behaviour, setBehaviour, index, 
                     >
                         <TextSnippetIcon />
                     </ToggleButton>
+                    {embedBehaviours && (
+                        <ToggleButton
+                            value="embed"
+                            aria-label="Embed behaviour"
+                            data-testid="embed-option"
+                        >
+                            <LinkIcon />
+                        </ToggleButton>
+                    )}
                 </ToggleButtonGroup>
                 {value === 'image' && (
                     <Image
@@ -121,6 +140,13 @@ export default function Behaviour({ classLabel, behaviour, setBehaviour, index, 
                     <Text
                         behaviour={behaviour.text}
                         setBehaviour={doSetTextBehaviour}
+                    />
+                )}
+                {value === 'embed' && (
+                    <Embed
+                        behaviour={behaviour.embed}
+                        setBehaviour={doSetEmbedBehaviour}
+                        firstBehaviour={index === 0}
                     />
                 )}
             </div>

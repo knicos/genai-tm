@@ -99,6 +99,7 @@ export default function Text({ behaviour, setBehaviour }: Props) {
                 <FontSize
                     size={behaviour?.size || 30}
                     setSize={doSetSize}
+                    disabled={!behaviour}
                 />
             </div>
         </div>

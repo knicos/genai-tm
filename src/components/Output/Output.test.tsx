@@ -139,4 +139,29 @@ describe('Output component', () => {
         );
         expect(screen.getByTestId('audio-output-icon')).toBeVisible();
     });
+
+    it('renders an embed image behaviour', async () => {
+        function PredWrapper({ children }: React.PropsWithChildren) {
+            return (
+                <TestWrapper
+                    initializeState={(snap: MutableSnapshot) => {
+                        snap.set(predictedIndex, 0);
+                    }}
+                >
+                    {children}
+                </TestWrapper>
+            );
+        }
+        render(
+            <Output
+                behaviours={[
+                    {
+                        embed: { url: 'https://upload.wikimedia.org/wikipedia/commons/b/bd/Test.svg' },
+                    },
+                ]}
+            />,
+            { wrapper: PredWrapper }
+        );
+        expect(screen.getByTestId('embed-image')).toBeInTheDocument();
+    });
 });

@@ -20,6 +20,9 @@ const theme = createTheme({
         primary: {
             main: isTest ? '#fff' : colours.primary,
         },
+        success: {
+            main: '#00972e',
+        },
     },
     typography: {
         fontFamily: [

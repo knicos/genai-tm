@@ -13,6 +13,7 @@ export interface IVariantContext {
     soundBehaviours?: boolean;
     textBehaviours?: boolean;
     speechBehaviours?: boolean;
+    embedBehaviours?: boolean;
     sampleUploadFile?: boolean;
     classLimit?: number;
     disabledClassRemove?: boolean;

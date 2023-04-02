@@ -13,6 +13,7 @@ import VolumeDown from '@mui/icons-material/VolumeDown';
 import VolumeUp from '@mui/icons-material/VolumeUp';
 import { useRecoilValue } from 'recoil';
 import { predictedIndex } from '../../state';
+import Embedding from './Embedding';
 
 const WIDTH = 400;
 const HEIGHT = 350;
@@ -89,6 +90,13 @@ export default function Output({ behaviours, ...props }: Props) {
                                     volume={volume / 100}
                                     uri={behaviour.audio.uri}
                                     play={ix === predicted}
+                                />
+                            )}
+                            {behaviour?.embed && (
+                                <Embedding
+                                    show={ix === predicted}
+                                    volume={volume / 100}
+                                    url={behaviour.embed.url}
                                 />
                             )}
                             {behaviour?.text && (

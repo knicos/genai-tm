@@ -8,7 +8,6 @@ import SaveAltIcon from '@mui/icons-material/SaveAlt';
 import FileOpenIcon from '@mui/icons-material/FileOpen';
 import style from './AppBar.module.css';
 import { useRecoilState } from 'recoil';
-import { useNavigate } from 'react-router-dom';
 import { fileData } from '../../state';
 
 interface Props {
@@ -23,7 +22,6 @@ const LANGS = [
 export default function ApplicationBar({ onSave }: Props) {
     const { namespace } = useVariant();
     const { t, i18n } = useTranslation(namespace);
-    const navigate = useNavigate();
     const [, setProject] = useRecoilState(fileData);
 
     const openFile = useCallback(() => {
@@ -35,9 +33,8 @@ export default function ApplicationBar({ onSave }: Props) {
             if (e.currentTarget.files) {
                 setProject(e.currentTarget.files[0]);
             }
-            navigate('/image/general');
         },
-        [setProject, navigate]
+        [setProject]
     );
 
     const doChangeLanguage = useCallback(

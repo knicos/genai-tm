@@ -85,7 +85,9 @@
         },
         "labels": {
             "title": "Toiminta:",
-            "message": "Message"
+            "message": "Message",
+            "link": "Link",
+            "embedInfo": "Show videos and images from a link. Only some links will work, for example: YouTube, Vimeo, SoundCloud, video files or images."
         }
     },
     "stepper": {
