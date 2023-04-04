@@ -22,6 +22,7 @@ export interface IVariantContext {
     disableClassNameEdit?: boolean;
     multipleBehaviours?: boolean;
     disableSaveSamples?: boolean;
+    showTrainingAnimation?: boolean;
 }
 
 export const VariantContext = React.createContext<IVariantContext>({

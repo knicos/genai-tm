@@ -15,5 +15,6 @@
     "modelThreshold": false,
     "advancedMenu": false,
     "multipleBehaviours": true,
-    "disableSaveSamples": true
+    "disableSaveSamples": true,
+    "showTrainingAnimation": true
 }

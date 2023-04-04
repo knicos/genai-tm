@@ -1,0 +1,55 @@
+@value primary from "../../style/colours.module.css";
+
+.layer {
+    stroke: primary;
+    stroke-width: 1px;
+}
+
+.lines line {
+    stroke: #ddd;
+    stroke-width: 1px;
+}
+
+.layers circle {
+    fill: white;
+    stroke: #bbb;
+    stroke-width: 1px;
+    animation: none;
+}
+
+.layersActive circle {
+    fill: white;
+    stroke: primary;
+    stroke-width: 1px;
+    animation: pulse 1s infinite;
+}
+
+.layer1 circle {
+    animation-delay: 0s;
+}
+
+.layer2 circle {
+    animation-delay: 0.33s;
+}
+
+.layer3 circle {
+    animation-delay: 0.66s;
+}
+
+@keyframes pulse {
+    0% {
+        fill: primary;
+    }
+
+    25% {
+        fill: white;
+    }
+
+    75% {
+        fill: white;
+    }
+
+    100% {
+        fill: primary;
+    }
+}

@@ -15,6 +15,7 @@ import Tooltip, { TooltipProps, tooltipClasses } from '@mui/material/Tooltip';
 import { styled } from '@mui/material/styles';
 import { useTranslation } from 'react-i18next';
 import { useVariant } from '../../util/variant';
+import TrainingAnimation from '../TrainingAnimation/TrainingAnimation';
 
 interface Props {
     data: IClassification[];
@@ -43,7 +44,7 @@ const HelpTooltip = styled(({ className, ...props }: TooltipProps) => (
 type TrainingStage = 'ready' | 'loading' | 'prepare' | 'training' | 'done' | 'none';
 
 export default function Trainer({ data, model, setModel, ...props }: Props) {
-    const { namespace, advancedMenu } = useVariant();
+    const { namespace, advancedMenu, showTrainingAnimation } = useVariant();
     const { t } = useTranslation(namespace);
     const [training, setTraining] = useState(false);
     const [trainingStage, setTrainingStage] = useState<TrainingStage>('none');
@@ -152,6 +153,7 @@ export default function Trainer({ data, model, setModel, ...props }: Props) {
             className={style.widget}
             {...props}
         >
+            {showTrainingAnimation && <TrainingAnimation active={trainingStage === 'training'} />}
             <div className={style.buttonContainer}>
                 <BusyButton
                     data-testid="train-button"

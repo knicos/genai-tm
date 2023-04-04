@@ -222,6 +222,16 @@ export default function GenerateCustom() {
                     }
                     label="Disable sample saving option"
                 />
+                <FormControlLabel
+                    control={
+                        <Checkbox
+                            checked={state.showTrainingAnimation}
+                            name="showTrainingAnimation"
+                            onChange={doCheckChange}
+                        />
+                    }
+                    label="Show Training Animation"
+                />
                 <Button
                     variant="contained"
                     type="submit"
