@@ -232,6 +232,16 @@ export default function GenerateCustom() {
                     }
                     label="Show Training Animation"
                 />
+                <FormControlLabel
+                    control={
+                        <Checkbox
+                            checked={state.resetOnLoad}
+                            name="resetOnLoad"
+                            onChange={doCheckChange}
+                        />
+                    }
+                    label="Hide Behaviours on Load"
+                />
                 <Button
                     variant="contained"
                     type="submit"

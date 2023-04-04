@@ -16,5 +16,6 @@
     "advancedMenu": false,
     "multipleBehaviours": true,
     "disableSaveSamples": true,
-    "showTrainingAnimation": true
+    "showTrainingAnimation": true,
+    "resetOnLoad": false
 }

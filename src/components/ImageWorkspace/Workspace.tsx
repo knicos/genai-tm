@@ -48,7 +48,7 @@ function addCloseAlert() {
 }
 
 export default function Workspace({ step, visitedStep, onComplete, saveTrigger, onSkip }: Props) {
-    const { namespace } = useVariant();
+    const { namespace, resetOnLoad } = useVariant();
     const { t } = useTranslation(namespace);
     const [projectFile, setProjectFile] = useRecoilState(fileData);
     const [behaviours, setBehaviours] = useRecoilState(behaviourState);
@@ -70,7 +70,7 @@ export default function Workspace({ step, visitedStep, onComplete, saveTrigger, 
                     setModel(project.model);
                     if (project.behaviours) setBehaviours(project.behaviours);
                     if (project.samples) setData(project.samples);
-                    if (project.behaviours) {
+                    if (project.behaviours && !resetOnLoad) {
                         onSkip(1);
                     }
                     setProjectFile(null);
@@ -81,7 +81,7 @@ export default function Workspace({ step, visitedStep, onComplete, saveTrigger, 
                     setProjectFile(null);
                 });
         }
-    }, [projectFile, onSkip, setBehaviours, setData, setModel, setProjectFile]);
+    }, [projectFile, onSkip, setBehaviours, setData, setModel, setProjectFile, resetOnLoad]);
 
     const doSetModel = useCallback(
         (model: TeachableMobileNet | undefined) => {
