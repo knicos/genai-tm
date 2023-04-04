@@ -1,14 +1,14 @@
 import React, { useCallback } from 'react';
 import AppBar from '@mui/material/AppBar';
-import Button from '@mui/material/Button';
+import BusyButton from '../BusyButton/BusyButton';
 import Toolbar from '@mui/material/Toolbar';
 import { useTranslation } from 'react-i18next';
 import { useVariant } from '../../util/variant';
 import SaveAltIcon from '@mui/icons-material/SaveAlt';
 import FileOpenIcon from '@mui/icons-material/FileOpen';
 import style from './AppBar.module.css';
-import { useRecoilState } from 'recoil';
-import { fileData } from '../../state';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { fileData, saveState } from '../../state';
 
 interface Props {
     onSave: () => void;
@@ -22,7 +22,8 @@ const LANGS = [
 export default function ApplicationBar({ onSave }: Props) {
     const { namespace } = useVariant();
     const { t, i18n } = useTranslation(namespace);
-    const [, setProject] = useRecoilState(fileData);
+    const [projectFile, setProject] = useRecoilState(fileData);
+    const saving = useRecoilValue(saveState);
 
     const openFile = useCallback(() => {
         document.getElementById('openfile')?.click();
@@ -60,7 +61,8 @@ export default function ApplicationBar({ onSave }: Props) {
                     accept=".zip,application/zip"
                 />
                 <div className={style.buttonBar}>
-                    <Button
+                    <BusyButton
+                        busy={!!projectFile}
                         data-testid="open-project"
                         color="inherit"
                         variant="outlined"
@@ -68,8 +70,9 @@ export default function ApplicationBar({ onSave }: Props) {
                         onClick={openFile}
                     >
                         {t('app.load')}
-                    </Button>
-                    <Button
+                    </BusyButton>
+                    <BusyButton
+                        busy={!!saving}
                         data-testid="save-project"
                         color="inherit"
                         variant="outlined"
@@ -77,7 +80,7 @@ export default function ApplicationBar({ onSave }: Props) {
                         onClick={onSave}
                     >
                         {t('app.save')}
-                    </Button>
+                    </BusyButton>
                 </div>
                 <div className={style.langBar}>
                     {LANGS.map((lng) => (

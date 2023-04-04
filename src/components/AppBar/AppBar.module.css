@@ -9,6 +9,10 @@
     text-transform: none;
 }
 
+.buttonBar :global .MuiCircularProgress-root {
+    color: white;
+}
+
 .langBar {
     display: flex;
     gap: 0.5rem;

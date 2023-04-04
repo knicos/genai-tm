@@ -3,7 +3,7 @@ import * as tf from '@tensorflow/tfjs';
 import * as tmImage from '@teachablemachine/image';
 import Accordion from '@mui/material/Accordion';
 import { IClassification } from '../../state';
-import { Button } from '../button/Button';
+import BusyButton from '../BusyButton/BusyButton';
 import { Widget } from '../widget/Widget';
 import style from './trainer.module.css';
 import { AccordionDetails, AccordionSummary, LinearProgress } from '@mui/material';
@@ -153,16 +153,17 @@ export default function Trainer({ data, model, setModel, ...props }: Props) {
             {...props}
         >
             <div className={style.buttonContainer}>
-                <Button
+                <BusyButton
                     data-testid="train-button"
                     sx={{ flexGrow: 1 }}
                     variant="contained"
                     size="large"
                     disabled={training || !isTrainable}
                     onClick={doStartTraining}
+                    busy={training}
                 >
                     {t('training.actions.train')}
-                </Button>
+                </BusyButton>
             </div>
 
             {

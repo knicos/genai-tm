@@ -1,6 +1,7 @@
 import { TeachableMobileNet } from '@teachablemachine/image';
 import { atom } from 'recoil';
 import { BehaviourType } from './components/Behaviour/Behaviour';
+import { SaveProperties } from './components/ImageWorkspace/SaveDialog';
 
 export interface IClassification {
     label: string;
@@ -41,4 +42,9 @@ export const modelState = atom<TeachableMobileNet | undefined>({
     key: 'model',
     default: undefined,
     dangerouslyAllowMutability: true,
+});
+
+export const saveState = atom<SaveProperties | null>({
+    key: 'saving',
+    default: null,
 });

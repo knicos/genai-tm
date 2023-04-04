@@ -8,7 +8,7 @@ import Output from '../Output/Output';
 import Behaviours, { BehaviourType } from '../Behaviours/Behaviours';
 import { useTranslation } from 'react-i18next';
 import { TeachableMobileNet } from '@teachablemachine/image';
-import { behaviourState, classState, fileData, IClassification, modelState } from '../../state';
+import { behaviourState, classState, fileData, IClassification, modelState, saveState } from '../../state';
 import style from './TeachableMachine.module.css';
 import { useVariant } from '../../util/variant';
 import Input from '../Input/Input';
@@ -50,12 +50,13 @@ function addCloseAlert() {
 export default function Workspace({ step, visitedStep, onComplete, saveTrigger, onSkip }: Props) {
     const { namespace } = useVariant();
     const { t } = useTranslation(namespace);
-    const projectFile = useRecoilValue(fileData);
+    const [projectFile, setProjectFile] = useRecoilState(fileData);
     const [behaviours, setBehaviours] = useRecoilState(behaviourState);
     const [model, setModel] = useRecoilState(modelState);
     const [data, setData] = useRecoilState(classState);
     const [lines, setLines] = useState<ILine[]>([]);
     const [errMsg, setErrMsg] = useState<string | null>(null);
+    const [saving, setSaving] = useRecoilState(saveState);
 
     const observer = useRef<ResizeObserver>();
     const wkspaceRef = useRef<HTMLDivElement>(null);
@@ -72,13 +73,15 @@ export default function Workspace({ step, visitedStep, onComplete, saveTrigger, 
                     if (project.behaviours) {
                         onSkip(1);
                     }
+                    setProjectFile(null);
                 })
                 .catch((e) => {
                     setErrMsg('Could not load model file');
                     console.error(e);
+                    setProjectFile(null);
                 });
         }
-    }, [projectFile, onSkip, setBehaviours, setData, setModel]);
+    }, [projectFile, onSkip, setBehaviours, setData, setModel, setProjectFile]);
 
     const doSetModel = useCallback(
         (model: TeachableMobileNet | undefined) => {
@@ -142,19 +145,26 @@ export default function Workspace({ step, visitedStep, onComplete, saveTrigger, 
         if (model) onComplete(1);
     }, [model, onComplete]);
 
-    const doSave = useCallback(
-        (props: SaveProperties) => {
+    useEffect(() => {
+        if (saving) {
             saveProject(
                 'my-classifier.zip',
                 model,
-                props.behaviours ? behaviours : undefined,
-                props.samples ? data : undefined
+                saving.behaviours ? behaviours : undefined,
+                saving.samples ? data : undefined
             ).then(() => {
                 window.removeEventListener('beforeunload', alertMessage);
                 hasAlert = false;
+                setSaving(null);
             });
+        }
+    }, [saving, model, behaviours, data, setSaving]);
+
+    const doSave = useCallback(
+        (props: SaveProperties) => {
+            setSaving(props);
         },
-        [behaviours, model, data]
+        [setSaving]
     );
 
     return (
