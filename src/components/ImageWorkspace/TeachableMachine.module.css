@@ -36,7 +36,7 @@
     grid-template-columns: repeat(5, max-content);
 }
 
-@media only screen and (max-height: 700px), (max-width: 700px) {
+@media only screen and (max-height: 500px), (max-width: 700px) {
     .svglayer {
         display: none;
     }

@@ -5,7 +5,7 @@
     "soundBehaviours": true,
     "speechBehaviours": true,
     "textBehaviours": true,
-    "embedBehaviours": false,
+    "embedBehaviours": true,
     "trainingStep": true,
     "behavioursStep": true,
     "disableAddClass": false,
