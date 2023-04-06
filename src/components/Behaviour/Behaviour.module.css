@@ -23,21 +23,14 @@
 .imageContainer {
     position: relative;
     display: flex;
-    margin: 1rem 1rem;
-    margin-top: 0;
+    padding: 1rem 1rem;
+    padding-top: 0;
     align-items: center;
     flex-direction: row;
     gap: 0.5rem;
     justify-content: flex-start;
-    padding-left: 0.5rem;
     border-radius: 6px;
     border: 1px solid white;
-}
-
-.imageContainerdrop {
-    composes: imageContainer;
-    border: 1px dashed primary;
-    background-color: primaryHover;
 }
 
 .imageContainer > img {
@@ -47,8 +40,37 @@
     max-height: 58px;
 }
 
-.imageContainerdrop img {
-    filter: brightness(0.5);
+.image {
+    position: relative;
+}
+
+.dropImage {
+    position: absolute;
+    left: 0;
+    top: 0;
+    color: primary;
+    width: 58px;
+    height: 58px;
+    border-radius: 5px;
+    flex-shrink: 0;
+    border: 1px dashed primary;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    overflow: hidden;
+    animation: fade 0.2s ease-in-out;
+    background: #e8f0fe;
+}
+
+@keyframes fade {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 100%;
+    }
 }
 
 .textContainer {

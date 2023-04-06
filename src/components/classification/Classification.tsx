@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useRef, useEffect, useState } from 'react';
 import style from './classification.module.css';
 import { IClassification } from '../../state';
 import { VerticalButton } from '../button/Button';
@@ -9,8 +9,10 @@ import VideocamIcon from '@mui/icons-material/Videocam';
 import UploadFileIcon from '@mui/icons-material/UploadFile';
 import ClassMenu from './ClassMenu';
 import { useTranslation } from 'react-i18next';
-import { useDropzone } from 'react-dropzone';
+import { useDrop } from 'react-dnd';
 import { useVariant } from '../../util/variant';
+import { NativeTypes } from 'react-dnd-html5-backend';
+import UploadIcon from '@mui/icons-material/Upload';
 
 interface Props {
     name: string;
@@ -26,9 +28,13 @@ interface Props {
 export function Classification({ name, active, data, index, setData, onActivate, setActive, onDelete }: Props) {
     const { namespace, sampleUploadFile, disableClassNameEdit } = useVariant();
     const { t } = useTranslation(namespace);
+    const fileRef = useRef<HTMLInputElement>(null);
+    const scrollRef = useRef<HTMLOListElement>(null);
+    const [loading, setLoading] = useState(false);
 
     const onDrop = useCallback(
         (acceptedFiles: File[]) => {
+            setLoading(true);
             const promises = acceptedFiles.map(
                 (file) =>
                     new Promise<HTMLCanvasElement>((resolve, reject) => {
@@ -63,26 +69,51 @@ export function Classification({ name, active, data, index, setData, onActivate,
                     setData(
                         {
                             label: data.label,
-                            samples: [...data.samples, ...results],
+                            samples: [...results, ...data.samples],
                         },
                         index
                     );
+                    setLoading(false);
                 })
                 .catch((e) => console.error(e));
         },
         [setData, data, index]
     );
 
-    const { getRootProps, getInputProps, isDragActive, open } = useDropzone({
-        noClick: true,
-        onDrop,
-        accept: {
-            'image/png': ['.png'],
-            'image/jpeg': ['.jpg', '.jpeg'],
-            'image/gif': ['.gif'],
+    const onFileChange = useCallback(
+        (e: React.ChangeEvent<HTMLInputElement>) => {
+            onDrop(Array.from(e.target.files || []));
         },
-        maxFiles: 30,
+        [onDrop]
+    );
+
+    const [dropProps, drop] = useDrop({
+        accept: [NativeTypes.FILE, NativeTypes.URL],
+        drop(items: any) {
+            onDrop(items.files);
+        },
+        canDrop(item: any) {
+            for (const i of item?.files) {
+                if (!i.type.startsWith('image/')) {
+                    return false;
+                }
+            }
+            return true;
+        },
+        collect(monitor) {
+            const can = monitor.canDrop();
+            return {
+                highlighted: can,
+                hovered: monitor.isOver(),
+            };
+        },
     });
+
+    /*useEffect(() => {
+        if (scrollRef.current && dropProps.hovered) {
+            scrollRef.current.scrollLeft = scrollRef.current.scrollWidth;
+        }
+    }, [dropProps.hovered]);*/
 
     const setTitle = useCallback(
         (title: string) => {
@@ -135,6 +166,8 @@ export function Classification({ name, active, data, index, setData, onActivate,
 
     const doActivate = useCallback(() => onActivate(index), [onActivate, index]);
 
+    const doUploadClick = useCallback(() => fileRef.current?.click(), []);
+
     return (
         <Widget
             title={name}
@@ -158,11 +191,15 @@ export function Classification({ name, active, data, index, setData, onActivate,
                 ) : null}
                 <div
                     className={style.listContainer}
-                    {...getRootProps()}
+                    ref={drop}
                 >
                     <input
                         data-testid={`file-${data.label}`}
-                        {...getInputProps()}
+                        hidden
+                        type="file"
+                        ref={fileRef}
+                        accept="image/*"
+                        onChange={onFileChange}
                     />
                     {data.samples.length === 0 && (
                         <div className={style.samplesLabel}>{t('trainingdata.labels.addSamples')}:</div>
@@ -172,7 +209,10 @@ export function Classification({ name, active, data, index, setData, onActivate,
                             {t('trainingdata.labels.imageSamples', { count: data.samples.length })}
                         </div>
                     )}
-                    <ol className={active ? style.samplelistLarge : style.samplelistSmall}>
+                    <ol
+                        ref={scrollRef}
+                        className={active ? style.samplelistLarge : style.samplelistSmall}
+                    >
                         {!active && (
                             <li className={style.sample}>
                                 <VerticalButton
@@ -191,10 +231,20 @@ export function Classification({ name, active, data, index, setData, onActivate,
                                     data-testid="uploadbutton"
                                     variant="outlined"
                                     startIcon={<UploadFileIcon />}
-                                    onClick={open}
+                                    onClick={doUploadClick}
                                 >
                                     {t('trainingdata.actions.upload')}
                                 </VerticalButton>
+                            </li>
+                        )}
+                        {data.samples.length === 0 && !dropProps.hovered && !loading && (
+                            <li>
+                                <div className={style.dropSuggest}>{t('trainingdata.labels.dropFiles')}</div>
+                            </li>
+                        )}
+                        {dropProps.highlighted && dropProps.hovered && (
+                            <li className={style.dropSample}>
+                                <UploadIcon />
                             </li>
                         )}
                         {data.samples.map((s, ix) => (
@@ -206,9 +256,10 @@ export function Classification({ name, active, data, index, setData, onActivate,
                             />
                         ))}
                     </ol>
-                    {isDragActive && <div className={style.dropOverlay}>{t('trainingdata.labels.dropFiles')}</div>}
                 </div>
             </div>
         </Widget>
     );
 }
+
+// {isDragActive && <div className={style.dropOverlay}>{t('trainingdata.labels.dropFiles')}</div>}

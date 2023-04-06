@@ -7,18 +7,44 @@
     position: relative;
 }
 
-.dropOverlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0, 0, 0, 0.6);
-    color: white;
-    font-size: 14pt;
+.dropSuggest {
+    color: #555;
+    border: 1px dashed #ddd;
+    border-radius: 6px;
     display: flex;
-    justify-content: center;
     align-items: center;
+    height: 58px;
+    box-sizing: border-box;
+    padding: 0rem 1rem;
+    font-size: 12pt;
+}
+
+.dropSample {
+    color: primary;
+    width: 58px;
+    height: 58px;
+    border-radius: 5px;
+    flex-shrink: 0;
+    border: 1px dashed primary;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    overflow: hidden;
+    animation: grow 0.2s ease-in-out;
+    background: #e8f0fe;
+}
+
+@keyframes grow {
+    0% {
+        width: 0px;
+        opacity: 0;
+    }
+
+    100% {
+        width: 58px;
+        opacity: 100%;
+    }
 }
 
 .samplelist {
@@ -58,6 +84,7 @@
     border-radius: 5px;
     flex-shrink: 0;
     position: relative;
+    display: flex;
 }
 
 /*.sample button {

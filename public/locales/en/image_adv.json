@@ -32,7 +32,7 @@
             "imageSamples": "{{count}} image samples",
             "class": "Class",
             "wait": "Capturing...",
-            "dropFiles": "Drop file(s) here"
+            "dropFiles": "drop images here..."
         }
     },
     "training": {

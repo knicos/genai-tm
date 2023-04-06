@@ -1,77 +1,78 @@
 {
-  "name": "genai-teachable-machine",
-  "version": "0.1.0",
-  "author": "Nicolas Pope <npope@uef.fi>",
-  "description": "Machine Learning tool for Children",
-  "homepage": "https://www.generation-ai-stn.fi",
-  "private": true,
-  "license": "MIT",
-  "dependencies": {
-    "@emotion/react": "^11.10.6",
-    "@emotion/styled": "^11.10.6",
-    "@mui/icons-material": "^5.11.11",
-    "@mui/material": "^5.11.12",
-    "@teachablemachine/image": "^0.8.5",
-    "@tensorflow/tfjs": "1.3.1",
-    "@testing-library/jest-dom": "^5.14.1",
-    "@testing-library/react": "^13.0.0",
-    "@types/jest": "^27.0.1",
-    "@types/node": "^16.7.13",
-    "@types/react": "^18.0.0",
-    "@types/react-dom": "^18.0.0",
-    "file-saver": "^2.0.5",
-    "i18next": "^22.4.11",
-    "i18next-browser-languagedetector": "^7.0.1",
-    "i18next-http-backend": "^2.1.1",
-    "jszip": "^3.10.1",
-    "lz-string": "^1.5.0",
-    "react": "^18.2.0",
-    "react-color": "^2.19.3",
-    "react-dom": "^18.2.0",
-    "react-dropzone": "^14.2.3",
-    "react-i18next": "^12.2.0",
-    "react-player": "^2.12.0",
-    "react-router-dom": "^6.9.0",
-    "react-scripts": "5.0.1",
-    "recoil": "^0.7.7",
-    "smoothscroll-polyfill": "^0.4.4",
-    "typescript": "^4.4.2",
-    "web-vitals": "^2.1.0"
-  },
-  "scripts": {
-    "git-info": "node scripts/gitInfo.js",
-    "start": "react-scripts start",
-    "build": "npm run git-info && react-scripts build",
-    "lint": "eslint --max-warnings=0 ./src/**/*.ts ./src/**/*.tsx",
-    "test": "react-scripts test --reporters=jest-junit --reporters=default",
-    "eject": "react-scripts eject"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest",
-      "prettier"
-    ]
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  },
-  "devDependencies": {
-    "@testing-library/user-event": "^14.4.3",
-    "@types/file-saver": "^2.0.5",
-    "@types/react-color": "^3.0.6",
-    "@types/smoothscroll-polyfill": "^0.3.1",
-    "eslint-config-prettier": "^8.7.0",
-    "jest-junit": "^15.0.0",
-    "prettier": "^2.8.4"
-  }
+    "name": "genai-teachable-machine",
+    "version": "0.1.0",
+    "author": "Nicolas Pope <npope@uef.fi>",
+    "description": "Machine Learning tool for Children",
+    "homepage": "https://www.generation-ai-stn.fi",
+    "private": true,
+    "license": "MIT",
+    "dependencies": {
+        "@emotion/react": "^11.10.6",
+        "@emotion/styled": "^11.10.6",
+        "@mui/icons-material": "^5.11.11",
+        "@mui/material": "^5.11.12",
+        "@teachablemachine/image": "^0.8.5",
+        "@tensorflow/tfjs": "1.3.1",
+        "@testing-library/jest-dom": "^5.14.1",
+        "@testing-library/react": "^13.0.0",
+        "@types/jest": "^27.0.1",
+        "@types/node": "^16.7.13",
+        "@types/react": "^18.0.0",
+        "@types/react-dom": "^18.0.0",
+        "file-saver": "^2.0.5",
+        "i18next": "^22.4.11",
+        "i18next-browser-languagedetector": "^7.0.1",
+        "i18next-http-backend": "^2.1.1",
+        "jszip": "^3.10.1",
+        "lz-string": "^1.5.0",
+        "react": "^18.2.0",
+        "react-color": "^2.19.3",
+        "react-dnd": "^16.0.1",
+        "react-dnd-html5-backend": "^16.0.1",
+        "react-dom": "^18.2.0",
+        "react-i18next": "^12.2.0",
+        "react-player": "^2.12.0",
+        "react-router-dom": "^6.9.0",
+        "react-scripts": "5.0.1",
+        "recoil": "^0.7.7",
+        "smoothscroll-polyfill": "^0.4.4",
+        "typescript": "^4.4.2",
+        "web-vitals": "^2.1.0"
+    },
+    "scripts": {
+        "git-info": "node scripts/gitInfo.js",
+        "start": "react-scripts start",
+        "build": "npm run git-info && react-scripts build",
+        "lint": "eslint --max-warnings=0 ./src/**/*.ts ./src/**/*.tsx",
+        "test": "react-scripts test --reporters=jest-junit --reporters=default",
+        "eject": "react-scripts eject"
+    },
+    "eslintConfig": {
+        "extends": [
+            "react-app",
+            "react-app/jest",
+            "prettier"
+        ]
+    },
+    "browserslist": {
+        "production": [
+            ">0.2%",
+            "not dead",
+            "not op_mini all"
+        ],
+        "development": [
+            "last 1 chrome version",
+            "last 1 firefox version",
+            "last 1 safari version"
+        ]
+    },
+    "devDependencies": {
+        "@testing-library/user-event": "^14.4.3",
+        "@types/file-saver": "^2.0.5",
+        "@types/react-color": "^3.0.6",
+        "@types/smoothscroll-polyfill": "^0.3.1",
+        "eslint-config-prettier": "^8.7.0",
+        "jest-junit": "^15.0.0",
+        "prettier": "^2.8.4"
+    }
 }

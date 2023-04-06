@@ -7,6 +7,8 @@ import gitInfo from './generatedGitInfo.json';
 import ImageVariants from './views/ImageVariants/ImageVariants';
 import GenerateCustom from './views/GenerateCustom/GenerateCustom';
 import { RecoilRoot } from 'recoil';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
 
 const router = createBrowserRouter(
     createRoutesFromElements(
@@ -50,8 +52,10 @@ function App() {
     return (
         <React.Suspense fallback={<div></div>}>
             <RecoilRoot>
-                <RouterProvider router={router} />
-                <div className="versionBox">Version: {gitInfo.gitTag}</div>
+                <DndProvider backend={HTML5Backend}>
+                    <RouterProvider router={router} />
+                    <div className="versionBox">Version: {gitInfo.gitTag}</div>
+                </DndProvider>
             </RecoilRoot>
         </React.Suspense>
     );

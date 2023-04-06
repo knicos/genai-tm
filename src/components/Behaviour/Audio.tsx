@@ -1,12 +1,14 @@
-import React, { useCallback, useState, useEffect } from 'react';
+import React, { useCallback, useState, useEffect, useRef } from 'react';
 import style from './Behaviour.module.css';
 import UploadFileIcon from '@mui/icons-material/UploadFile';
-import { useDropzone } from 'react-dropzone';
 import IconButton from '@mui/material/IconButton';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import StopIcon from '@mui/icons-material/Stop';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { VerticalButton } from '../button/Button';
+import { useDrop } from 'react-dnd';
+import { NativeTypes } from 'react-dnd-html5-backend';
+import UploadIcon from '@mui/icons-material/Upload';
 
 export interface AudioBehaviour {
     uri: string;
@@ -20,6 +22,7 @@ interface Props {
 
 export default function Sound({ behaviour, setBehaviour }: Props) {
     const [audio, setAudio] = useState<HTMLAudioElement | null>(null);
+    const fileRef = useRef<HTMLInputElement>(null);
 
     const onDrop = useCallback(
         (acceptedFiles: File[]) => {
@@ -39,7 +42,27 @@ export default function Sound({ behaviour, setBehaviour }: Props) {
         [setBehaviour]
     );
 
-    const { getRootProps, getInputProps, isDragActive, open } = useDropzone({
+    const [dropProps, drop] = useDrop({
+        accept: [NativeTypes.FILE, NativeTypes.URL],
+        drop(items: any) {
+            onDrop(items.files);
+        },
+        canDrop(item: any) {
+            for (const i of item?.files) {
+                if (!i.type.startsWith('audio/')) return false;
+            }
+            return true;
+        },
+        collect(monitor) {
+            const can = monitor.canDrop();
+            return {
+                highlighted: can,
+                hovered: monitor.isOver() && can,
+            };
+        },
+    });
+
+    /*const { getRootProps, getInputProps, isDragActive, open } = useDropzone({
         noClick: true,
         onDrop,
         accept: {
@@ -50,7 +73,7 @@ export default function Sound({ behaviour, setBehaviour }: Props) {
             'audio/aac': ['.aac'],
         },
         maxFiles: 1,
-    });
+    });*/
 
     const doPlay = useCallback(
         () =>
@@ -85,18 +108,35 @@ export default function Sound({ behaviour, setBehaviour }: Props) {
         setBehaviour(undefined);
     }, [setBehaviour]);
 
+    const doUploadClick = useCallback(() => fileRef.current?.click(), []);
+
+    const onFileChange = useCallback(
+        (e: React.ChangeEvent<HTMLInputElement>) => {
+            onDrop(Array.from(e.target.files || []));
+        },
+        [onDrop]
+    );
+
     return (
         <>
             <h3>{behaviour?.name}</h3>
             <div
-                className={isDragActive ? style.imageContainerdrop : style.imageContainer}
-                {...getRootProps()}
+                className={style.imageContainer}
+                ref={drop}
             >
+                <input
+                    data-testid={`audio-file-upload}`}
+                    hidden
+                    type="file"
+                    ref={fileRef}
+                    accept="audio/*"
+                    onChange={onFileChange}
+                />
                 <VerticalButton
                     data-testid="audio-upload"
                     variant="outlined"
-                    onClick={open}
                     startIcon={<UploadFileIcon />}
+                    onClick={doUploadClick}
                 >
                     Upload
                 </VerticalButton>
@@ -109,30 +149,36 @@ export default function Sound({ behaviour, setBehaviour }: Props) {
                 >
                     Delete
                 </VerticalButton>
-                <input {...getInputProps()} />
-                {!audio && (
-                    <IconButton
-                        aria-label="play"
-                        data-testid="audio-play"
-                        disabled={!behaviour}
-                        color="primary"
-                        onClick={doPlay}
-                        size="large"
-                    >
-                        <PlayArrowIcon fontSize="large" />
-                    </IconButton>
-                )}
-                {audio && (
-                    <IconButton
-                        aria-label="stop"
-                        data-testid="audio-stop"
-                        color="primary"
-                        onClick={doStop}
-                        size="large"
-                    >
-                        <StopIcon fontSize="large" />
-                    </IconButton>
-                )}
+                <div className={style.image}>
+                    {!audio && (
+                        <IconButton
+                            aria-label="play"
+                            data-testid="audio-play"
+                            disabled={!behaviour}
+                            color="primary"
+                            onClick={doPlay}
+                            size="large"
+                        >
+                            <PlayArrowIcon fontSize="large" />
+                        </IconButton>
+                    )}
+                    {audio && (
+                        <IconButton
+                            aria-label="stop"
+                            data-testid="audio-stop"
+                            color="primary"
+                            onClick={doStop}
+                            size="large"
+                        >
+                            <StopIcon fontSize="large" />
+                        </IconButton>
+                    )}
+                    {dropProps.hovered && (
+                        <div className={style.dropImage}>
+                            <UploadIcon />
+                        </div>
+                    )}
+                </div>
             </div>
         </>
     );

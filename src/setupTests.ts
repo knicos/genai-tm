@@ -4,6 +4,18 @@
 // learn more: https://github.com/testing-library/jest-dom
 import '@testing-library/jest-dom';
 
+jest.mock('react-dnd', () => ({
+    useDrop: () => [{}, {}],
+    DndProvider: ({ children }: { children: unknown }) => children,
+}));
+jest.mock('react-dnd-html5-backend', () => ({
+    NativeTypes: {
+        FILE: Symbol(0),
+        URL: Symbol(1),
+    },
+    HTML5Backend: jest.fn(),
+}));
+
 class ResizeObserver {
     observe() {}
     unobserve() {}
