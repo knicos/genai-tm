@@ -9,11 +9,11 @@
 
 .dropSuggest {
     color: #555;
-    border: 1px dashed #ddd;
+    border: 1px dashed #8c929b;
     border-radius: 6px;
     display: flex;
     align-items: center;
-    height: 58px;
+    min-height: 58px;
     box-sizing: border-box;
     padding: 0rem 1rem;
     font-size: 12pt;
@@ -101,11 +101,15 @@
 }
 
 .sampleImage > button {
-    display: none;
+    opacity: 0;
 }
 
 .sampleImage:hover > button {
-    display: initial;
+    opacity: 1;
+}
+
+.sampleImage > button:focus {
+    opacity: 1;
 }
 
 .container {

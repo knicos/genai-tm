@@ -1,24 +1,12 @@
-import React, { useEffect, useRef, useCallback } from 'react';
-import MIconButton from '@mui/material/IconButton';
-import { styled } from '@mui/material/styles';
-import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import React, { useEffect, useRef } from 'react';
 import style from './IconImage.module.css';
 
-const IconButton = styled(MIconButton)({
-    position: 'absolute',
-    top: '0px',
-    left: '0px',
-    color: 'white',
-});
-
-interface Props {
+interface Props extends React.HTMLAttributes<HTMLDivElement> {
     src: string | HTMLCanvasElement;
     onDelete?: () => void;
-    width?: number;
-    height?: number;
 }
 
-export default function IconImage({ src, onDelete }: Props) {
+export default function IconImage({ src, onDelete, ...props }: Props) {
     const ref = useRef<HTMLDivElement>(null);
 
     const isUrl = typeof src === 'string';
@@ -32,18 +20,11 @@ export default function IconImage({ src, onDelete }: Props) {
         }
     }, [src, isUrl]);
 
-    const doClick = useCallback(() => (onDelete ? onDelete() : null), [onDelete]);
-
     return (
-        <div className={style.container}>
-            {!!onDelete && (
-                <IconButton
-                    aria-label="delete"
-                    onClick={doClick}
-                >
-                    <DeleteForeverIcon />
-                </IconButton>
-            )}
+        <div
+            className={style.container}
+            {...props}
+        >
             {isUrl ? (
                 <img
                     data-testid="icon-image"

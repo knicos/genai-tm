@@ -68,8 +68,9 @@ export default function Behaviours({ classes, behaviours, setBehaviours, ...prop
             data-widget="container"
             style={{ display: props.hidden ? 'none' : 'flex' }}
             className={style.container}
+            aria-labelledby="behaviours-title"
         >
-            <h1>{t('behaviours.labels.title')}</h1>
+            <h1 id="behaviours-title">{t('behaviours.labels.title')}</h1>
             {classes.map((c, ix) =>
                 ix < behaviours.length ? (
                     <Behaviour

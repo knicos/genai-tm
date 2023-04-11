@@ -1,3 +1,5 @@
+@value primary, primaryHover from "../../style/colours.module.css";
+
 .widget {
     background: white;
     border-radius: 6px;
@@ -26,6 +28,25 @@
     justify-content: left;
     border-bottom: 1px solid #bbb;
     padding: 0.6rem 1rem;
+}
+
+.widget_header input {
+    padding: 0.2rem;
+    height: initial;
+    box-sizing: border-box;
+    border: 2px solid transparent;
+    cursor: pointer;
+    margin-right: 1rem;
+}
+
+.widget_header input:focus {
+    border: 2px solid primary;
+    border-radius: 5px;
+    cursor: initial;
+}
+
+.widget_header fieldset {
+    border: none;
 }
 
 .widget_menu {

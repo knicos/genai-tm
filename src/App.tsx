@@ -54,7 +54,12 @@ function App() {
             <RecoilRoot>
                 <DndProvider backend={HTML5Backend}>
                     <RouterProvider router={router} />
-                    <div className="versionBox">Version: {gitInfo.gitTag}</div>
+                    <div
+                        aria-hidden
+                        className="versionBox"
+                    >
+                        Version: {gitInfo.gitTag}
+                    </div>
                 </DndProvider>
             </RecoilRoot>
         </React.Suspense>

@@ -87,7 +87,16 @@ export default function Embed({ behaviour, setBehaviour, firstBehaviour }: Props
                     onBlur={doBlur}
                 />
             </div>
-            {firstBehaviour && <Alert severity="info">{t('behaviours.labels.embedInfo')}</Alert>}
+            {details.type === 'plain' && (
+                <Alert severity="error">
+                    <p>{t('behaviours.labels.linkError')}</p>
+                </Alert>
+            )}
+            {firstBehaviour && (
+                <Alert severity="info">
+                    <p>{t('behaviours.labels.embedInfo')}</p>
+                </Alert>
+            )}
         </div>
     );
 }

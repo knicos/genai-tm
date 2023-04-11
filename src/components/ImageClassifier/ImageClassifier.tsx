@@ -83,12 +83,15 @@ export default function ImageClassifier() {
                 saveTrigger={saveTrigger}
                 onSkip={doSkip}
             />
-            <div className={style.fixed}>
+            <nav
+                className={style.fixed}
+                aria-label={t<string>('stepper.aria.title')}
+            >
                 <IconButton
                     disabled={step <= 0}
                     size="large"
                     onClick={prevStep}
-                    aria-label="previous"
+                    aria-label={t<string>('stepper.aria.previous')}
                     data-testid="previous-step"
                 >
                     <ArrowBackIosNewIcon fontSize="large" />
@@ -105,12 +108,12 @@ export default function ImageClassifier() {
                     disabled={step >= 1 || allowedStep <= step}
                     size="large"
                     onClick={nextStep}
-                    aria-label="next"
+                    aria-label={t<string>('stepper.aria.next')}
                     data-testid="next-step"
                 >
                     <ArrowForwardIosIcon fontSize="large" />
                 </IconButton>
-            </div>
+            </nav>
         </ThemeProvider>
     );
 }

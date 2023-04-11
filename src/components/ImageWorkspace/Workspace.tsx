@@ -168,7 +168,7 @@ export default function Workspace({ step, visitedStep, onComplete, saveTrigger, 
     );
 
     return (
-        <div
+        <main
             className={style.workspace}
             ref={wkspaceRef}
         >
@@ -230,6 +230,6 @@ export default function Workspace({ step, visitedStep, onComplete, saveTrigger, 
                     {errMsg}
                 </Alert>
             </Snackbar>
-        </div>
+        </main>
     );
 }

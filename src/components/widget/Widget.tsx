@@ -4,6 +4,8 @@ import { IconButton } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import MTextField from '@mui/material/TextField';
 import { styled } from '@mui/material/styles';
+import { useTranslation } from 'react-i18next';
+import { useVariant } from '../../util/variant';
 
 interface Props extends React.PropsWithChildren {
     title?: string;
@@ -24,15 +26,26 @@ const TextField = styled(MTextField)({
 });
 
 export function Widget({ disabled, focus, title, setTitle, children, menu, className, hidden, dataWidget }: Props) {
+    const { namespace } = useVariant();
+    const { t } = useTranslation(namespace);
     const firstShow = useRef(true);
     const ref = useRef<HTMLElement>(null);
-
-    const [editing, setEditing] = useState(false);
+    const editRef = useRef<HTMLDivElement>(null);
 
     const classToUse = disabled ? style.widgetDisabled : style.widget;
 
-    const doEndEdit = useCallback(() => setEditing(false), [setEditing]);
-    const doStartEdit = useCallback(() => setEditing(true), [setEditing]);
+    const doEndEdit = useCallback(() => {
+        if (editRef.current) {
+            const input = editRef.current.firstElementChild?.firstElementChild as HTMLInputElement;
+            input.blur();
+        }
+    }, [editRef]);
+    const doStartEdit = useCallback(() => {
+        if (editRef.current) {
+            const input = editRef.current.firstElementChild?.firstElementChild as HTMLInputElement;
+            input.select();
+        }
+    }, [editRef]);
     const doChangeTitle = useCallback(
         (event: React.ChangeEvent<HTMLInputElement>) => {
             if (setTitle) setTitle(event.target.value);
@@ -43,10 +56,13 @@ export function Widget({ disabled, focus, title, setTitle, children, menu, class
         (event: React.KeyboardEvent<HTMLInputElement>) => {
             if (event.key === 'Enter') {
                 event.preventDefault();
-                setEditing(false);
+                if (editRef.current) {
+                    const input = editRef.current.firstElementChild?.firstElementChild as HTMLInputElement;
+                    input.blur();
+                }
             }
         },
-        [setEditing]
+        [editRef]
     );
 
     useEffect(() => {
@@ -60,32 +76,45 @@ export function Widget({ disabled, focus, title, setTitle, children, menu, class
         firstShow.current = false;
     }, [focus]);
 
+    useEffect(() => {
+        if (setTitle && editRef.current) {
+            const input = editRef.current.firstElementChild?.firstElementChild as HTMLInputElement;
+            input?.setAttribute('size', `${Math.max(5, input.value.length)}`);
+        }
+    }, [title, setTitle]);
+
     return (
         <section
             data-testid={`widget-${title}`}
             ref={ref}
             data-widget={dataWidget}
             style={{ display: hidden ? 'none' : 'initial' }}
+            aria-hidden={!!hidden}
             className={classToUse + (className ? ` ${className}` : '')}
+            aria-label={title}
         >
             {title !== undefined && (
                 <header className={style.widget_header}>
-                    {!editing && <h1 className={style.widget_title}>{title}</h1>}
-                    {editing && setTitle && (
-                        <TextField
-                            hiddenLabel
-                            id="title"
-                            size="small"
-                            variant="outlined"
-                            onBlur={doEndEdit}
-                            value={title}
-                            onKeyDown={doKeyDown}
-                            onChange={doChangeTitle}
-                        />
-                    )}
-                    {setTitle && !editing && (
+                    <h1 className={style.widget_title}>
+                        {!setTitle && title}
+                        {setTitle && (
+                            <TextField
+                                ref={editRef}
+                                hiddenLabel
+                                name={t<string>('widget.aria.editTitleInput', { value: title })}
+                                placeholder={t<string>('widget.labels.titlePlaceholder')}
+                                size="small"
+                                variant="outlined"
+                                onBlur={doEndEdit}
+                                value={title}
+                                onKeyDown={doKeyDown}
+                                onChange={doChangeTitle}
+                            />
+                        )}
+                    </h1>
+                    {setTitle && (
                         <IconButton
-                            aria-label="edit"
+                            aria-label={t<string>('widget.aria.editTitle')}
                             size="small"
                             onClick={doStartEdit}
                         >

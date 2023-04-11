@@ -3,6 +3,9 @@ import { render, screen, waitFor } from '@testing-library/react';
 import ImageClassifier from './ImageClassifier';
 import TestWrapper from '../../util/TestWrapper';
 import userEvent from '@testing-library/user-event';
+import { axe, toHaveNoViolations } from 'jest-axe';
+
+expect.extend(toHaveNoViolations);
 
 jest.mock('@tensorflow/tfjs');
 jest.mock('@teachablemachine/image', () => ({
@@ -38,6 +41,11 @@ describe('ImageClassifier component', () => {
         expect(screen.getByTestId('widget-trainingdata.labels.class 1')).toBeInTheDocument();
         expect(screen.getByTestId('previous-step')).toBeDisabled();
         expect(screen.getByTestId('next-step')).toBeDisabled();
+    });
+
+    it('has no axe violations', async () => {
+        const { container } = render(<ImageClassifier />, { wrapper: TestWrapper });
+        expect(await axe(container)).toHaveNoViolations();
     });
 });
 

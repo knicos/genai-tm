@@ -3,6 +3,8 @@ import style from './classification.module.css';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import MIconButton from '@mui/material/IconButton';
 import { styled } from '@mui/material/styles';
+import { useTranslation } from 'react-i18next';
+import { useVariant } from '../../util/variant';
 
 const IconButton = styled(MIconButton)({
     position: 'absolute',
@@ -18,6 +20,8 @@ interface Props {
 }
 
 export default function Sample({ image, index, onDelete }: Props) {
+    const { namespace } = useVariant();
+    const { t } = useTranslation(namespace);
     const ref = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
@@ -37,12 +41,16 @@ export default function Sample({ image, index, onDelete }: Props) {
             data-testid={`sample-${index}`}
         >
             <IconButton
-                aria-label="delete"
+                aria-label={t<string>('trainingdata.aria.delete')}
                 onClick={doClick}
             >
                 <DeleteForeverIcon />
             </IconButton>
-            <div ref={ref} />
+            <div
+                ref={ref}
+                role="img"
+                aria-label={t<string>('trainingdata.aria.sample')}
+            />
         </li>
     );
 }

@@ -175,6 +175,7 @@ export function Classification({ name, active, data, index, setData, onActivate,
             setTitle={disableClassNameEdit ? undefined : setTitle}
             menu={
                 <ClassMenu
+                    index={index}
                     hasSamples={data.samples.length > 0}
                     onDeleteClass={doDeleteClass}
                     onRemoveSamples={removeSamples}
@@ -202,12 +203,12 @@ export function Classification({ name, active, data, index, setData, onActivate,
                         onChange={onFileChange}
                     />
                     {data.samples.length === 0 && (
-                        <div className={style.samplesLabel}>{t('trainingdata.labels.addSamples')}:</div>
+                        <p className={style.samplesLabel}>{t('trainingdata.labels.addSamples')}:</p>
                     )}
                     {data.samples.length > 0 && (
-                        <div className={style.samplesLabel}>
+                        <p className={style.samplesLabel}>
                             {t('trainingdata.labels.imageSamples', { count: data.samples.length })}
-                        </div>
+                        </p>
                     )}
                     <ol
                         ref={scrollRef}
@@ -237,7 +238,7 @@ export function Classification({ name, active, data, index, setData, onActivate,
                                 </VerticalButton>
                             </li>
                         )}
-                        {data.samples.length === 0 && !dropProps.hovered && !loading && (
+                        {data.samples.length === 0 && !active && !dropProps.hovered && !loading && (
                             <li>
                                 <div className={style.dropSuggest}>{t('trainingdata.labels.dropFiles')}</div>
                             </li>

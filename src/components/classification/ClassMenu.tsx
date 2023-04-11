@@ -7,12 +7,13 @@ import { useTranslation } from 'react-i18next';
 import { useVariant } from '../../util/variant';
 
 interface Props {
+    index: number;
     hasSamples: boolean;
     onDeleteClass: () => void;
     onRemoveSamples: () => void;
 }
 
-export default function ClassMenu({ hasSamples, onDeleteClass, onRemoveSamples }: Props) {
+export default function ClassMenu({ hasSamples, index, onDeleteClass, onRemoveSamples }: Props) {
     const { namespace, disabledClassRemove } = useVariant();
     const { t } = useTranslation(namespace);
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -27,9 +28,9 @@ export default function ClassMenu({ hasSamples, onDeleteClass, onRemoveSamples }
     return (
         <div>
             <IconButton
-                aria-label="more"
-                id="class-menu"
-                aria-controls={open ? 'long-menu' : undefined}
+                aria-label={t<string>('trainingdata.aria.more')}
+                id={`class-menu-button-${index}`}
+                aria-controls={open ? `class-menu-${index}` : undefined}
                 aria-expanded={open ? 'true' : undefined}
                 aria-haspopup="true"
                 onClick={handleClick}
@@ -38,10 +39,10 @@ export default function ClassMenu({ hasSamples, onDeleteClass, onRemoveSamples }
                 <MoreVertIcon fontSize="small" />
             </IconButton>
             <Menu
-                id="class-menu"
                 MenuListProps={{
-                    'aria-labelledby': 'long-button',
+                    'aria-labelledby': `class-menu-button-${index}`,
                 }}
+                id={`class-menu-${index}`}
                 anchorEl={anchorEl}
                 open={open}
                 onClose={handleClose}

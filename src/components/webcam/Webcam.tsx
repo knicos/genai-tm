@@ -2,6 +2,8 @@ import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { Webcam as TMWebcam } from '@teachablemachine/image';
 import style from './webcam.module.css';
 import { Skeleton } from '@mui/material';
+import { useTranslation } from 'react-i18next';
+import { useVariant } from '../../util/variant';
 
 interface Props {
     interval?: number;
@@ -11,6 +13,8 @@ interface Props {
 }
 
 export function Webcam({ interval, capture, onCapture, disable }: Props) {
+    const { namespace } = useVariant();
+    const { t } = useTranslation(namespace);
     const [webcam, setWebcam] = useState<TMWebcam | null>(null);
     const webcamRef = useRef<HTMLDivElement>(null);
     const requestRef = useRef(-1);
@@ -110,6 +114,8 @@ export function Webcam({ interval, capture, onCapture, disable }: Props) {
                 data-testid="webcam"
                 className={style.container}
                 ref={webcamRef}
+                role="img"
+                aria-label={t<string>('webcam.aria.video')}
             />
         </>
     );

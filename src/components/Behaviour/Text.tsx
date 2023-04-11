@@ -75,6 +75,7 @@ export default function Text({ behaviour, setBehaviour }: Props) {
             <TextField
                 data-testid="text-message"
                 label={t('behaviours.labels.message')}
+                aria-label={t<string>('behaviours.aria.message')}
                 fullWidth
                 id="message"
                 size="small"

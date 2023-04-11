@@ -73,7 +73,7 @@ export default function WebcamCapture({ visible, onCapture, onClose }: Props) {
                         <h2>{t('trainingdata.actions.webcam')}</h2>
                         <IconButton
                             data-testid="webcamclose"
-                            aria-label="close"
+                            aria-label={t<string>('trainingdata.aria.close')}
                             onClick={onClose}
                             color="primary"
                             size="small"

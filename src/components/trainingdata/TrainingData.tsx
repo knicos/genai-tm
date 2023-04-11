@@ -59,8 +59,9 @@ export function TrainingData({ active, data, setData, disabled }: Props) {
             data-widget="container"
             className={disabled ? style.containerDisabled : style.trainingcontainer}
             onBlur={doDeactivate}
+            aria-labelledby="training-data-header"
         >
-            <h1>{t('trainingdata.labels.title')}</h1>
+            <h1 id="training-data-header">{t('trainingdata.labels.title')}</h1>
             {data.map((c, ix) => (
                 <Classification
                     onDelete={doDelete}

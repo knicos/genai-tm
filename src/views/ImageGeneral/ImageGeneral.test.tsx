@@ -4,7 +4,7 @@ import { Component } from './ImageGeneral';
 import { BrowserRouter } from 'react-router-dom';
 import { RecoilRoot } from 'recoil';
 
-test('renders learn react link', () => {
+test('renders general view', () => {
     render(
         <RecoilRoot>
             <Component />

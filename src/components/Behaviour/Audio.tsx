@@ -9,6 +9,8 @@ import { VerticalButton } from '../button/Button';
 import { useDrop } from 'react-dnd';
 import { NativeTypes } from 'react-dnd-html5-backend';
 import UploadIcon from '@mui/icons-material/Upload';
+import { useTranslation } from 'react-i18next';
+import { useVariant } from '../../util/variant';
 
 export interface AudioBehaviour {
     uri: string;
@@ -21,6 +23,8 @@ interface Props {
 }
 
 export default function Sound({ behaviour, setBehaviour }: Props) {
+    const { namespace } = useVariant();
+    const { t } = useTranslation(namespace);
     const [audio, setAudio] = useState<HTMLAudioElement | null>(null);
     const fileRef = useRef<HTMLInputElement>(null);
 
@@ -138,7 +142,7 @@ export default function Sound({ behaviour, setBehaviour }: Props) {
                     startIcon={<UploadFileIcon />}
                     onClick={doUploadClick}
                 >
-                    Upload
+                    {t('behaviours.actions.upload')}
                 </VerticalButton>
                 <VerticalButton
                     data-testid="audio-delete"
@@ -147,12 +151,12 @@ export default function Sound({ behaviour, setBehaviour }: Props) {
                     onClick={doDelete}
                     startIcon={<DeleteForeverIcon />}
                 >
-                    Delete
+                    {t('behaviours.actions.delete')}
                 </VerticalButton>
                 <div className={style.image}>
                     {!audio && (
                         <IconButton
-                            aria-label="play"
+                            aria-label={t<string>('behaviours.aria.stop')}
                             data-testid="audio-play"
                             disabled={!behaviour}
                             color="primary"
@@ -164,7 +168,7 @@ export default function Sound({ behaviour, setBehaviour }: Props) {
                     )}
                     {audio && (
                         <IconButton
-                            aria-label="stop"
+                            aria-label={t<string>('behaviours.aria.stop')}
                             data-testid="audio-stop"
                             color="primary"
                             onClick={doStop}

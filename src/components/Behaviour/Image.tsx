@@ -108,6 +108,8 @@ export default function Image({ behaviour, setBehaviour }: Props) {
             <div className={style.image}>
                 {behaviour && (
                     <IconImage
+                        role="img"
+                        aria-label={t<string>('behaviours.aria.imageOutput')}
                         src={behaviour.uri}
                         onDelete={doDelete}
                     />
@@ -118,6 +120,8 @@ export default function Image({ behaviour, setBehaviour }: Props) {
                         variant="rounded"
                         width={58}
                         height={58}
+                        role="img"
+                        aria-label={t<string>('behaviours.aria.noImage')}
                     />
                 )}
                 {dropProps.hovered && (

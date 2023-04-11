@@ -90,10 +90,12 @@ export default function ApplicationBar({ onSave }: Props) {
                             data-lng={lng.name}
                             onClick={doChangeLanguage}
                             aria-label={lng.label}
+                            className={i18n.language === lng.name ? style.selected : ''}
+                            aria-pressed={i18n.language === lng.name}
                         >
                             <img
-                                className={i18n.language === lng.name ? style.selected : ''}
                                 width={24}
+                                height={24}
                                 src={`/icons/${lng.name}.svg`}
                                 alt={lng.label}
                             />

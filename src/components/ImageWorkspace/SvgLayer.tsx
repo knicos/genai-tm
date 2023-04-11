@@ -22,6 +22,7 @@ export default function SvgLayer({ lines }: Props) {
             xmlns="http://www.w3.org/2000/svg"
             width="100%"
             height="100%"
+            aria-hidden
         >
             {lines.map((line, ix) => {
                 const dx = line.direction === 'horizontal' ? CURVE : 0;
@@ -33,7 +34,7 @@ export default function SvgLayer({ lines }: Props) {
                             line.y2 - dy
                         }, ${line.x2} ${line.y2}`}
                         fill="none"
-                        stroke="#bdc1c6"
+                        stroke="#7C828D"
                         strokeWidth="2"
                     />
                 );

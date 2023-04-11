@@ -17,6 +17,21 @@
             "cancel": "Peruuta"
         }
     },
+    "alignment": {
+        "aria": {
+            "left": "left align",
+            "center": "center align",
+            "right": "right align",
+            "align": "text alignment"
+        }
+    },
+    "fontsize": {
+        "aria": {
+            "title": "change text size",
+            "increase": "increase",
+            "decrease": "decrease"
+        }
+    },
     "trainingdata": {
         "actions": {
             "addClass": "Lisää luokka",
@@ -33,6 +48,12 @@
             "class": "Luokka",
             "wait": "Otetaan kuvia...",
             "dropFiles": "Lisää tiedstot tähän"
+        },
+        "aria": {
+            "sample": "uploaded sample",
+            "delete": "delete sample",
+            "more": "more options",
+            "close": "Close"
         }
     },
     "training": {
@@ -76,6 +97,12 @@
     "output": {
         "labels": {
             "title": "Tulos"
+        },
+        "aria": {
+            "volume": "Volume",
+            "image": "class {{index}} output",
+            "display": "output for class {{index}}",
+            "expand": "expand window size"
         }
     },
     "behaviours": {
@@ -87,13 +114,49 @@
             "title": "Toiminta:",
             "message": "Message",
             "link": "Link",
+            "linkError": "That link is not supported",
             "embedInfo": "Show videos and images from a link. Only some links will work, for example: YouTube, Vimeo, SoundCloud, video files or images."
+        },
+        "aria": {
+            "message": "Text for output",
+            "image": "image behaviour",
+            "sound": "sound behaviour",
+            "text": "text behaviour",
+            "embed": "embed link behaviour",
+            "imageOutput": "Uploaded image",
+            "noImage": "Image placeholder",
+            "stop": "stop",
+            "play": "play"
         }
     },
     "stepper": {
         "labels": {
             "createModel": "Tee luokittelija",
             "deployModel": "Käytä luokittelijaa"
+        },
+        "aria": {
+            "next": "next",
+            "previous": "previous",
+            "title": "Steps"
+        }
+    },
+    "webcam": {
+        "aria": {
+            "video": "live webcam video"
+        }
+    },
+    "widget": {
+        "aria": {
+            "editTitle": "edit title",
+            "editTitleInput": "{{value}} edit box"
+        },
+        "labels": {
+            "titlePlaceholder": "Name"
+        }
+    },
+    "fontcolor": {
+        "aria": {
+            "title": "select font colour"
         }
     }
 }

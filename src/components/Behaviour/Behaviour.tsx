@@ -12,6 +12,7 @@ import { useVariant } from '../../util/variant';
 import Text, { TextBehaviour } from './Text';
 import Embed, { EmbedBehaviour } from './Embed';
 import LinkIcon from '@mui/icons-material/Link';
+import { useTranslation } from 'react-i18next';
 
 type BehaviourTypes = 'image' | 'sound' | 'speech' | 'text' | 'embed';
 
@@ -34,7 +35,8 @@ interface Props {
 }
 
 export default function Behaviour({ classLabel, behaviour, setBehaviour, index, ...props }: Props) {
-    const { soundBehaviours, imageBehaviours, multipleBehaviours, embedBehaviours } = useVariant();
+    const { soundBehaviours, imageBehaviours, multipleBehaviours, embedBehaviours, namespace } = useVariant();
+    const { t } = useTranslation(namespace);
     const [value, setValue] = useState<BehaviourTypes>(imageBehaviours ? 'image' : 'sound');
 
     const handleChange = useCallback(
@@ -92,7 +94,7 @@ export default function Behaviour({ classLabel, behaviour, setBehaviour, index, 
                     {imageBehaviours && (
                         <ToggleButton
                             value="image"
-                            aria-label="Image behaviour"
+                            aria-label={t<string>('behaviours.aria.image')}
                             data-testid="image-option"
                         >
                             <ImageIcon />
@@ -101,7 +103,7 @@ export default function Behaviour({ classLabel, behaviour, setBehaviour, index, 
                     {soundBehaviours && (
                         <ToggleButton
                             value="sound"
-                            aria-label="Sound behaviour"
+                            aria-label={t<string>('behaviours.aria.sound')}
                             data-testid="audio-option"
                         >
                             <MusicNoteIcon />
@@ -109,7 +111,7 @@ export default function Behaviour({ classLabel, behaviour, setBehaviour, index, 
                     )}
                     <ToggleButton
                         value="text"
-                        aria-label="Text behaviour"
+                        aria-label={t<string>('behaviours.aria.text')}
                         data-testid="text-option"
                     >
                         <TextSnippetIcon />
@@ -117,7 +119,7 @@ export default function Behaviour({ classLabel, behaviour, setBehaviour, index, 
                     {embedBehaviours && (
                         <ToggleButton
                             value="embed"
-                            aria-label="Embed behaviour"
+                            aria-label={t<string>('behaviours.aria.embed')}
                             data-testid="embed-option"
                         >
                             <LinkIcon />

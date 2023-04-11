@@ -81,11 +81,6 @@
     gap: 0.5rem;
 }
 
-.textContainer p {
-    margin-block-start: 0.5rem;
-    margin-block-end: 0.5rem;
-}
-
 .row {
     display: flex;
     margin: 0.5rem 0;

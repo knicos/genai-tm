@@ -53,7 +53,7 @@ export default function Output({ behaviours, ...props }: Props) {
             {...props}
             menu={
                 <IconButton
-                    aria-label="expand"
+                    aria-label={t<string>('output.aria.expand')}
                     size="small"
                     onClick={() => setExpanded(!expanded)}
                 >
@@ -68,7 +68,8 @@ export default function Output({ behaviours, ...props }: Props) {
                     height: `${Math.floor(350 * scaleFactor)}px`,
                 }}
             >
-                <div
+                <p
+                    aria-label={t<string>('output.aria.display', { index: predicted + 1 })}
                     className={style.container}
                     style={{
                         transform: `scale(${scaleFactor})`,
@@ -78,9 +79,10 @@ export default function Output({ behaviours, ...props }: Props) {
                         <React.Fragment key={ix}>
                             {behaviour?.image && (
                                 <img
+                                    aria-hidden={ix !== predicted}
                                     data-testid="image-output"
                                     src={behaviour.image.uri}
-                                    alt=""
+                                    alt={t<string>('output.aria.image', { index: predicted + 1 })}
                                     style={{ display: ix === predicted ? 'initial' : 'none' }}
                                 />
                             )}
@@ -100,7 +102,7 @@ export default function Output({ behaviours, ...props }: Props) {
                                 />
                             )}
                             {behaviour?.text && (
-                                <div
+                                <p
                                     className={style.textOverlay}
                                     data-testid="text-output"
                                     style={{
@@ -109,18 +111,19 @@ export default function Output({ behaviours, ...props }: Props) {
                                         color: behaviour.text.color || '#000000',
                                         textAlign: behaviour.text.align || 'center',
                                     }}
+                                    aria-hidden={ix !== predicted}
                                 >
                                     {behaviour.text.text}
-                                </div>
+                                </p>
                             )}
                         </React.Fragment>
                     ))}
-                </div>
+                </p>
             </div>
             <div className={style.volumeContainer}>
                 <VolumeDown />
                 <Slider
-                    aria-label="Volume"
+                    aria-label={t<string>('output.aria.volume')}
                     value={volume}
                     onChange={changeVolume}
                 />

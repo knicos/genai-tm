@@ -4,6 +4,8 @@ import FormatAlignCenterIcon from '@mui/icons-material/FormatAlignCenter';
 import FormatAlignRightIcon from '@mui/icons-material/FormatAlignRight';
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
+import { useTranslation } from 'react-i18next';
+import { useVariant } from '../../util/variant';
 
 export type Align = 'left' | 'right' | 'center';
 
@@ -14,6 +16,9 @@ interface Props {
 }
 
 export default function Alignment({ disabled, alignment, setAlignment }: Props) {
+    const { namespace } = useVariant();
+    const { t } = useTranslation(namespace);
+
     const handleAlignment = useCallback(
         (event: React.MouseEvent<HTMLElement>, newAlignment: Align | null) => {
             setAlignment(newAlignment || alignment);
@@ -26,25 +31,25 @@ export default function Alignment({ disabled, alignment, setAlignment }: Props) 
             value={alignment}
             exclusive
             onChange={handleAlignment}
-            aria-label="text alignment"
+            aria-label={t<string>('alignment.aria.align')}
             disabled={disabled}
             size="small"
         >
             <ToggleButton
                 value="left"
-                aria-label="left aligned"
+                aria-label={t<string>('alignment.aria.left')}
             >
                 <FormatAlignLeftIcon />
             </ToggleButton>
             <ToggleButton
                 value="center"
-                aria-label="centered"
+                aria-label={t<string>('alignment.aria.center')}
             >
                 <FormatAlignCenterIcon />
             </ToggleButton>
             <ToggleButton
                 value="right"
-                aria-label="right aligned"
+                aria-label={t<string>('alignment.aria.right')}
             >
                 <FormatAlignRightIcon />
             </ToggleButton>

@@ -14,9 +14,9 @@
 }
 
 .container > button {
-    display: none;
+    opacity: 0;
 }
 
 .container:hover > button {
-    display: initial;
+    opacity: 1;
 }

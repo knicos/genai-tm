@@ -175,7 +175,7 @@ export default function Trainer({ data, model, setModel, ...props }: Props) {
                             data-testid="alert-needstraining"
                             severity="warning"
                         >
-                            {t('training.labels.needsTraining')}
+                            <p>{t('training.labels.needsTraining')}</p>
                         </Alert>
                     )}
                     {trainingStage === 'none' && !isTrainable && (
@@ -183,20 +183,20 @@ export default function Trainer({ data, model, setModel, ...props }: Props) {
                             data-testid="alert-addmore"
                             severity="info"
                         >
-                            {t('training.labels.addMore')}
+                            <p>{t('training.labels.addMore')}</p>
                         </Alert>
                     )}
                     {trainingStage === 'loading' && (
-                        <div>
+                        <p>
                             <span>{t('training.labels.loading')}</span>
                             <LinearProgress />
-                        </div>
+                        </p>
                     )}
                     {trainingStage === 'prepare' && (
-                        <div>
+                        <p>
                             <span>{t('training.labels.prepairing')}</span>
                             <LinearProgress />
-                        </div>
+                        </p>
                     )}
                     {trainingStage === 'training' && (
                         <div className={style.trainingProgress}>
@@ -213,7 +213,7 @@ export default function Trainer({ data, model, setModel, ...props }: Props) {
                             data-testid="alert-complete"
                             severity="success"
                         >
-                            {t('training.labels.complete')}
+                            <p>{t('training.labels.complete')}</p>
                         </Alert>
                     )}
                 </div>

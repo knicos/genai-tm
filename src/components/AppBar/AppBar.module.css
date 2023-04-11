@@ -29,14 +29,20 @@
     cursor: pointer;
 }
 
+.langBar button:focus {
+    border: 2px solid white;
+    border-radius: 50%;
+}
+
+.langBar button.selected {
+    border: 2px solid white;
+    border-radius: 50%;
+}
+
 .langBar img {
     border-radius: 50%;
     overflow: hidden;
     box-sizing: content-box;
-}
-
-.langBar img.selected {
-    border: 2px solid white;
 }
 
 @media only screen and (max-height: 500px), (max-width: 700px) {
