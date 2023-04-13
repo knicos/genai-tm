@@ -24,6 +24,7 @@ export interface IVariantContext {
     disableSaveSamples?: boolean;
     showTrainingAnimation?: boolean;
     resetOnLoad?: boolean;
+    enableFileInput?: boolean;
 }
 
 export const VariantContext = React.createContext<IVariantContext>({

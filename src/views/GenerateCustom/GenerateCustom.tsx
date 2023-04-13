@@ -242,6 +242,16 @@ export default function GenerateCustom() {
                     }
                     label="Hide Behaviours on Load"
                 />
+                <FormControlLabel
+                    control={
+                        <Checkbox
+                            checked={state.enableFileInput}
+                            name="enableFileInput"
+                            onChange={doCheckChange}
+                        />
+                    }
+                    label="Enable input from files"
+                />
                 <Button
                     variant="contained"
                     type="submit"

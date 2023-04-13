@@ -82,7 +82,14 @@
     "input": {
         "labels": {
             "title": "Syöte",
-            "webcam": "Webkamera"
+            "webcam": "Webkamera",
+            "file": "File",
+            "switchOn": "On",
+            "switchOff": "Off",
+            "upload": "Upload or drop file here"
+        },
+        "aria": {
+            "switch": "Enable input source"
         }
     },
     "model": {

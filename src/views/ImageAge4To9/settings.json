@@ -17,5 +17,6 @@
     "multipleBehaviours": true,
     "disableSaveSamples": true,
     "showTrainingAnimation": false,
-    "resetOnLoad": false
+    "resetOnLoad": false,
+    "enableFileInput": true
 }

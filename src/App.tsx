@@ -9,6 +9,7 @@ import GenerateCustom from './views/GenerateCustom/GenerateCustom';
 import { RecoilRoot } from 'recoil';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
+import { StyledEngineProvider } from '@mui/material/styles';
 
 const router = createBrowserRouter(
     createRoutesFromElements(
@@ -53,13 +54,15 @@ function App() {
         <React.Suspense fallback={<div></div>}>
             <RecoilRoot>
                 <DndProvider backend={HTML5Backend}>
-                    <RouterProvider router={router} />
-                    <div
-                        aria-hidden
-                        className="versionBox"
-                    >
-                        Version: {gitInfo.gitTag}
-                    </div>
+                    <StyledEngineProvider injectFirst>
+                        <RouterProvider router={router} />
+                        <div
+                            aria-hidden
+                            className="versionBox"
+                        >
+                            Version: {gitInfo.gitTag}
+                        </div>
+                    </StyledEngineProvider>
                 </DndProvider>
             </RecoilRoot>
         </React.Suspense>

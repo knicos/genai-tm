@@ -82,7 +82,14 @@
     "input": {
         "labels": {
             "title": "Input",
-            "webcam": "Webcam"
+            "webcam": "Webcam",
+            "file": "File",
+            "switchOn": "On",
+            "switchOff": "Off",
+            "upload": "Upload or drop file here"
+        },
+        "aria": {
+            "switch": "Enable input source"
         }
     },
     "model": {

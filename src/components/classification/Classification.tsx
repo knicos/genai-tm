@@ -13,6 +13,7 @@ import { useDrop } from 'react-dnd';
 import { useVariant } from '../../util/variant';
 import { NativeTypes } from 'react-dnd-html5-backend';
 import UploadIcon from '@mui/icons-material/Upload';
+import { canvasFromFile } from '../../util/canvas';
 
 interface Props {
     name: string;
@@ -25,31 +26,6 @@ interface Props {
     index: number;
 }
 
-function cropTo(image: HTMLImageElement, size: number, flipped: boolean, canvas: HTMLCanvasElement) {
-    const width = image.width;
-    const height = image.height;
-
-    const min = Math.min(width, height);
-    const scale = size / min;
-    const scaledW = Math.ceil(width * scale);
-    const scaledH = Math.ceil(height * scale);
-    const dx = scaledW - size;
-    const dy = scaledH - size;
-    canvas.width = canvas.height = size;
-    const ctx = canvas.getContext('2d');
-    if (ctx) {
-        ctx.drawImage(image, ~~(dx / 2) * -1, ~~(dy / 2) * -1, scaledW, scaledH);
-
-        // canvas is already sized and cropped to center correctly
-        if (flipped) {
-            ctx.scale(-1, 1);
-            ctx.drawImage(canvas, size * -1, 0);
-        }
-    }
-
-    return canvas;
-}
-
 export function Classification({ name, active, data, index, setData, onActivate, setActive, onDelete }: Props) {
     const { namespace, sampleUploadFile, disableClassNameEdit } = useVariant();
     const { t } = useTranslation(namespace);
@@ -60,36 +36,13 @@ export function Classification({ name, active, data, index, setData, onActivate,
     const onDrop = useCallback(
         (acceptedFiles: File[]) => {
             setLoading(true);
-            const promises = acceptedFiles.map(
-                (file) =>
-                    new Promise<HTMLCanvasElement>((resolve, reject) => {
-                        const reader = new FileReader();
-                        reader.onabort = () => reject();
-                        reader.onerror = () => reject();
-                        reader.onload = () => {
-                            const newCanvas = document.createElement('canvas');
-                            newCanvas.width = 224;
-                            newCanvas.height = 224;
-                            newCanvas.style.width = '58px';
-                            const img = new Image();
-                            img.onload = () => {
-                                cropTo(img, 224, false, newCanvas);
-                                resolve(newCanvas);
-                            };
-                            img.onerror = () => {
-                                resolve(newCanvas);
-                            };
-                            img.src = reader.result as string;
-
-                            // Note: Here to integration tests. "onload" is not called in jest.
-                            if (global?.process?.env?.NODE_ENV === 'test') img.onload(new Event('onload'));
-                        };
-                        reader.readAsDataURL(file);
-                    })
-            );
+            const promises = acceptedFiles.map((file) => canvasFromFile(file));
 
             Promise.all(promises)
                 .then((results: HTMLCanvasElement[]) => {
+                    results.forEach((v) => {
+                        v.style.width = '58px';
+                    });
                     setData(
                         {
                             label: data.label,

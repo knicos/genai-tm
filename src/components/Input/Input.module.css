@@ -1,6 +1,11 @@
 .container {
     display: flex;
     flex-direction: column;
+    transition: height 0.5s;
+}
+
+.container :global .MuiTabs-root button {
+    text-transform: none;
 }
 
 .inputContainer {
@@ -8,4 +13,30 @@
     overflow: hidden;
     align-self: center;
     margin: 1rem;
+    transition: filter 0.5s;
+    display: flex;
+    flex-direction: column;
+}
+
+.inputContainerDisable {
+    composes: inputContainer;
+    filter: grayscale(0.8);
+}
+
+.filesButton {
+    width: 224px;
+    padding: 1rem;
+    border-radius: 6px;
+    border-style: dashed;
+}
+
+.filesButtonHighlight {
+    composes: filesButton;
+    background: #e8f0fe;
+}
+
+.fileImage canvas {
+    margin-top: 1rem;
+    border-radius: 6px;
+    overflow: hidden;
 }
