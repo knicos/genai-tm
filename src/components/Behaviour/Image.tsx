@@ -48,10 +48,14 @@ export default function Image({ behaviour, setBehaviour }: Props) {
             onDrop(items.files);
         },
         canDrop(item: any) {
-            for (const i of item?.files) {
-                if (!i.type.startsWith('image/')) return false;
+            if (item?.files) {
+                for (const i of item?.files) {
+                    if (!i.type.startsWith('image/')) return false;
+                }
+                return true;
+            } else {
+                return false;
             }
-            return true;
         },
         collect(monitor) {
             const can = monitor.canDrop();
