@@ -152,6 +152,7 @@ export function Classification({ name, active, data, index, setData, onActivate,
     return (
         <Widget
             title={name}
+            aria-label={t<string>('trainingdata.aria.classCard', { name })}
             dataWidget="class"
             setTitle={disableClassNameEdit ? undefined : setTitle}
             menu={

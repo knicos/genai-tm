@@ -79,6 +79,7 @@ export default function Behaviour({ classLabel, behaviour, setBehaviour, index, 
             dataWidget="behaviour"
             title={classLabel}
             className={style.widget}
+            aria-label={t<string>('behaviours.aria.behaviourCard', { name: classLabel })}
             {...props}
         >
             <div className={style.container}>

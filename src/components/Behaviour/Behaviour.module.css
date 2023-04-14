@@ -100,3 +100,9 @@
     margin: 0;
     width: initial;
 }
+
+.audioTitle {
+    margin: 1rem;
+    margin-top: 0;
+    font-style: italic;
+}

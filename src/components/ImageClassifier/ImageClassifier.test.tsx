@@ -4,6 +4,25 @@ import ImageClassifier from './ImageClassifier';
 import TestWrapper from '../../util/TestWrapper';
 import userEvent from '@testing-library/user-event';
 import { axe, toHaveNoViolations } from 'jest-axe';
+import i18n from 'i18next';
+import { initReactI18next } from 'react-i18next';
+
+i18n.use(initReactI18next).init({
+    lng: 'en',
+    fallbackLng: 'en',
+
+    // have a common namespace used around the full app
+    ns: ['translations'],
+    defaultNS: 'translations',
+
+    debug: true,
+
+    interpolation: {
+        escapeValue: false, // not needed for react!!
+    },
+
+    resources: { en: { image_adv: { trainingdata: { aria: { classCard: 'training for {{name}}' } } } } },
+});
 
 expect.extend(toHaveNoViolations);
 

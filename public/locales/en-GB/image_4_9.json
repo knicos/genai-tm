@@ -53,7 +53,8 @@
             "sample": "uploaded sample",
             "delete": "delete sample",
             "more": "more options",
-            "close": "Close"
+            "close": "Close",
+            "classCard": "Training data for {{name}}"
         }
     },
     "training": {
@@ -133,7 +134,8 @@
             "imageOutput": "Uploaded image",
             "noImage": "Image placeholder",
             "stop": "stop",
-            "play": "play"
+            "play": "play",
+            "behaviourCard": "Behaviour for {{name}}"
         }
     },
     "stepper": {

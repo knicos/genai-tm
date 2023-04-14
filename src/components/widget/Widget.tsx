@@ -16,6 +16,7 @@ interface Props extends React.PropsWithChildren {
     disabled?: boolean;
     hidden?: boolean;
     dataWidget?: string;
+    'aria-label'?: string;
 }
 
 const TextField = styled(MTextField)({
@@ -25,7 +26,18 @@ const TextField = styled(MTextField)({
     },
 });
 
-export function Widget({ disabled, focus, title, setTitle, children, menu, className, hidden, dataWidget }: Props) {
+export function Widget({
+    disabled,
+    focus,
+    title,
+    setTitle,
+    children,
+    menu,
+    className,
+    hidden,
+    dataWidget,
+    ...props
+}: Props) {
     const { namespace } = useVariant();
     const { t } = useTranslation(namespace);
     const firstShow = useRef(true);
@@ -91,7 +103,7 @@ export function Widget({ disabled, focus, title, setTitle, children, menu, class
             style={{ display: hidden ? 'none' : 'initial' }}
             aria-hidden={!!hidden}
             className={classToUse + (className ? ` ${className}` : '')}
-            aria-label={title}
+            aria-label={props['aria-label'] || title}
         >
             {title !== undefined && (
                 <header className={style.widget_header}>

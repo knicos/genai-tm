@@ -127,7 +127,7 @@ export default function Sound({ behaviour, setBehaviour }: Props) {
 
     return (
         <>
-            <h3>{behaviour?.name}</h3>
+            <p className={style.audioTitle}>{behaviour?.name}</p>
             <div
                 className={style.imageContainer}
                 ref={drop}
