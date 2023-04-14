@@ -8,7 +8,7 @@
     "save": {
         "title": "Tallenna luokittelija",
         "noModel": "Opeta luokittelija ensiksi.",
-        "message": "Download the contents of your classifier to a file. If you wish to share your classifier or app with others then you will need to upload it to another file sharing service.",
+        "message": "Lataa luokittelija tiedostoksi. Jos haluat jakaa luokittelijan tai sovelluksen, niin lataa se erilliseen pavleluun",
         "saveSamples": "Tallenna esimerkit",
         "saveClassifier": "Tallenna luokittelija",
         "saveBehaviours": "Tallenna toiminnot",
@@ -19,17 +19,17 @@
     },
     "alignment": {
         "aria": {
-            "left": "left align",
-            "center": "center align",
-            "right": "right align",
-            "align": "text alignment"
+            "left": "tasaa vasemmalle",
+            "center": "tasaa keskelle",
+            "right": "tasaa oikealle",
+            "align": "tekstin tasaus"
         }
     },
     "fontsize": {
         "aria": {
-            "title": "change text size",
-            "increase": "increase",
-            "decrease": "decrease"
+            "title": "muuta tekstin kokoa",
+            "increase": "suurenna",
+            "decrease": "pienennä"
         }
     },
     "trainingdata": {
@@ -52,8 +52,8 @@
         "aria": {
             "sample": "uploaded sample",
             "delete": "delete sample",
-            "more": "more options",
-            "close": "Close"
+            "more": "Lisää asetuksia",
+            "close": "Sulje"
         }
     },
     "training": {
@@ -83,10 +83,10 @@
         "labels": {
             "title": "Syöte",
             "webcam": "Webkamera",
-            "file": "File",
-            "switchOn": "On",
-            "switchOff": "Off",
-            "upload": "Upload or drop file here"
+            "file": "TIedosto",
+            "switchOn": "Päällä",
+            "switchOff": "Pois päältä",
+            "upload": "lataa tai pudota tiedosto tähän"
         },
         "aria": {
             "switch": "Enable input source"
@@ -119,10 +119,10 @@
         },
         "labels": {
             "title": "Toiminta:",
-            "message": "Message",
-            "link": "Link",
-            "linkError": "That link is not supported",
-            "embedInfo": "Show videos and images from a link. Only some links will work, for example: YouTube, Vimeo, SoundCloud, video files or images."
+            "message": "Teksti",
+            "link": "Linkki",
+            "linkError": "Linkkiä ei tueta",
+            "embedInfo": "Näytä kuvia tai videoita linkistä. (Esimerksi YouTube, Vimeo, SoundCloud)"
         },
         "aria": {
             "message": "Text for output",
@@ -158,7 +158,7 @@
             "editTitleInput": "{{value}} edit box"
         },
         "labels": {
-            "titlePlaceholder": "Name"
+            "titlePlaceholder": "Nimi"
         }
     },
     "fontcolor": {
