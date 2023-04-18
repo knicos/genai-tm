@@ -5,7 +5,7 @@
     "soundBehaviours": true,
     "speechBehaviours": true,
     "textBehaviours": true,
-    "embedBehaviours": true,
+    "embedBehaviours": false,
     "trainingStep": true,
     "behavioursStep": true,
     "disableAddClass": false,
@@ -18,5 +18,6 @@
     "disableSaveSamples": true,
     "showTrainingAnimation": false,
     "resetOnLoad": false,
-    "enableFileInput": true
+    "enableFileInput": true,
+    "allowDeploy": true
 }

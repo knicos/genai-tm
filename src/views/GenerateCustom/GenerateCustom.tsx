@@ -252,6 +252,16 @@ export default function GenerateCustom() {
                     }
                     label="Enable input from files"
                 />
+                <FormControlLabel
+                    control={
+                        <Checkbox
+                            checked={state.allowDeploy}
+                            name="allowDeploy"
+                            onChange={doCheckChange}
+                        />
+                    }
+                    label="Allow deployment link"
+                />
                 <Button
                     variant="contained"
                     type="submit"

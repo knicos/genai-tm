@@ -18,5 +18,6 @@
     "disableSaveSamples": false,
     "showTrainingAnimation": false,
     "resetOnLoad": false,
-    "enableFileInput": true
+    "enableFileInput": true,
+    "allowDeploy": true
 }

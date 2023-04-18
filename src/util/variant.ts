@@ -25,6 +25,7 @@ export interface IVariantContext {
     showTrainingAnimation?: boolean;
     resetOnLoad?: boolean;
     enableFileInput?: boolean;
+    allowDeploy?: boolean;
 }
 
 export const VariantContext = React.createContext<IVariantContext>({

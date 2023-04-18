@@ -25,44 +25,41 @@ interface Props {
 }
 
 export default function Output({ behaviours, ...props }: Props) {
-    const [expanded, setExpanded] = useState(false);
     const code = useRecoilValue(sessionCode);
     const [volume, setVolume] = useState(100);
     const changeVolume = useCallback((event: Event, newValue: number | number[]) => {
         setVolume(newValue as number);
     }, []);
 
-    const { namespace } = useVariant();
+    const { namespace, allowDeploy } = useVariant();
     const { t } = useTranslation(namespace);
     const predicted = useRecoilValue(predictedIndex);
 
-    const scaleFactor = expanded
-        ? Math.min(((window.innerHeight - MENUSPACE) * FULLSCREEN) / HEIGHT, (window.innerWidth * FULLSCREEN) / WIDTH)
-        : 1.0;
-
     return (
         <Widget
-            dataWidget={expanded ? '' : 'output'}
+            dataWidget={'output'}
             title={t<string>('output.labels.title')}
-            className={expanded ? style.widgetExpanded : style.widget}
+            className={style.widget}
             {...props}
             menu={
-                <a
-                    className={style.deployLink}
-                    href={`/deploy/${code}`}
-                    target="_blank"
-                    aria-label={t<string>('output.aria.expand')}
-                    rel="noreferrer"
-                >
-                    <OpenInNewIcon />
-                    {t('output.labels.deploy')}
-                </a>
+                allowDeploy && (
+                    <a
+                        className={style.deployLink}
+                        href={`/deploy/${code}`}
+                        target="_blank"
+                        aria-label={t<string>('output.aria.expand')}
+                        rel="noreferrer"
+                    >
+                        <OpenInNewIcon />
+                        {t('output.labels.deploy')}
+                    </a>
+                )
             }
         >
             <RawOutput
                 behaviours={behaviours}
                 predicted={predicted}
-                scaleFactor={scaleFactor}
+                scaleFactor={1.0}
                 volume={volume}
             />
             <div className={style.volumeContainer}>
