@@ -3,6 +3,10 @@
         {
             "route": "/image*",
             "rewrite": "index.html"
+        },
+        {
+            "route": "/deploy*",
+            "rewrite": "index.html"
         }
     ]
 }
