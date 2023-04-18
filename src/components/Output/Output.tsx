@@ -55,6 +55,7 @@ export default function Output({ behaviours, ...props }: Props) {
                     rel="noreferrer"
                 >
                     <OpenInNewIcon />
+                    {t('output.labels.deploy')}
                 </a>
             }
         >

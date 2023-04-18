@@ -13,6 +13,16 @@
     overflow: hidden;
 }
 
+.controls {
+    position: absolute;
+    bottom: 1rem;
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    gap: 1rem;
+    color: white;
+}
+
 .volumeContainer {
     display: flex;
     color: white;
@@ -23,4 +33,11 @@
     gap: 1rem;
     align-items: center;
     justify-content: center;
+}
+
+.inputContainer canvas {
+    width: 58px;
+    height: 58px;
+    border-radius: 5px;
+    overflow: hidden;
 }

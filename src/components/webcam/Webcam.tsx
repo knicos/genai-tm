@@ -10,9 +10,11 @@ interface Props {
     capture?: boolean;
     disable?: boolean;
     onCapture?: (image: HTMLCanvasElement) => void;
+    direct?: boolean;
+    hidden?: boolean;
 }
 
-export function Webcam({ interval, capture, onCapture, disable }: Props) {
+export function Webcam({ interval, capture, onCapture, disable, direct, hidden }: Props) {
     const { namespace } = useVariant();
     const { t } = useTranslation(namespace);
     const [webcam, setWebcam] = useState<TMWebcam | null>(null);
@@ -22,6 +24,7 @@ export function Webcam({ interval, capture, onCapture, disable }: Props) {
 
     const loop = useCallback(
         (timestamp: number) => {
+            if (disable) return;
             if (webcam) {
                 //if (previousTimeRef.current === 0) {
                 //    previousTimeRef.current = timestamp;
@@ -29,19 +32,23 @@ export function Webcam({ interval, capture, onCapture, disable }: Props) {
                 webcam.update();
                 const actualInterval = interval !== undefined ? interval : 1000.0;
                 if (capture && onCapture && timestamp - previousTimeRef.current >= actualInterval) {
-                    const newImage = document.createElement('canvas');
-                    newImage.width = webcam.canvas.width;
-                    newImage.height = webcam.canvas.height;
-                    const context = newImage.getContext('2d');
-                    if (!context) console.error('Failed to get context');
-                    context?.drawImage(webcam.canvas, 0, 0);
-                    onCapture(newImage);
+                    if (direct) {
+                        onCapture(webcam.canvas);
+                    } else {
+                        const newImage = document.createElement('canvas');
+                        newImage.width = webcam.canvas.width;
+                        newImage.height = webcam.canvas.height;
+                        const context = newImage.getContext('2d');
+                        if (!context) console.error('Failed to get context');
+                        context?.drawImage(webcam.canvas, 0, 0);
+                        onCapture(newImage);
+                    }
                     previousTimeRef.current = timestamp;
                 }
             }
             requestRef.current = window.requestAnimationFrame(loop);
         },
-        [webcam, interval, capture, onCapture]
+        [webcam, interval, capture, onCapture, direct, disable]
     );
 
     async function initWebcam() {
@@ -71,11 +78,19 @@ export function Webcam({ interval, capture, onCapture, disable }: Props) {
         if (webcam) {
             if (disable) {
                 webcam.pause();
+                if (requestRef.current >= 0) {
+                    window.cancelAnimationFrame(requestRef.current);
+                }
+                requestRef.current = -1;
             } else {
                 webcam.play();
+                if (requestRef.current >= 0) {
+                    window.cancelAnimationFrame(requestRef.current);
+                }
+                requestRef.current = window.requestAnimationFrame(loop);
             }
         }
-    }, [webcam, disable]);
+    }, [webcam, disable, loop]);
 
     useEffect(() => {
         if (webcam && webcamRef.current) {
@@ -84,24 +99,10 @@ export function Webcam({ interval, capture, onCapture, disable }: Props) {
             }
             webcamRef.current.appendChild(webcam.canvas);
             webcam.play();
-            /*if (requestRef.current >= 0) {
-                console.log('Cancel animation', requestRef.current);
-                window.cancelAnimationFrame(requestRef.current);
-            }
-            requestRef.current = window.requestAnimationFrame(loop);*/
         }
     }, [webcamRef, webcam]);
 
-    useEffect(() => {
-        if (webcam) {
-            if (requestRef.current >= 0) {
-                window.cancelAnimationFrame(requestRef.current);
-            }
-            requestRef.current = window.requestAnimationFrame(loop);
-        }
-    }, [webcam, loop]);
-
-    return (
+    return hidden ? null : (
         <>
             {!webcam && (
                 <Skeleton

@@ -104,7 +104,8 @@
     },
     "output": {
         "labels": {
-            "title": "Tulos"
+            "title": "Tulos",
+            "deploy": "Deploy"
         },
         "aria": {
             "volume": "Volume",
