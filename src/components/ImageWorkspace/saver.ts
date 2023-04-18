@@ -5,8 +5,7 @@ import { BehaviourType } from '../Behaviours/Behaviours';
 import { TeachableMobileNet } from '@teachablemachine/image';
 import { IClassification } from '../../state';
 
-export async function saveProject(
-    name: string,
+export async function generateBlob(
     model?: TeachableMobileNet,
     behaviours?: BehaviourType[],
     samples?: IClassification[]
@@ -33,6 +32,8 @@ export async function saveProject(
             })
         );
     }
+
+    let zipData: Blob = new Blob();
     if (model) {
         zip.file('metadata.json', JSON.stringify(model.getMetadata()));
 
@@ -49,9 +50,7 @@ export async function saveProject(
                     );
                 }
 
-                const zipData = await zip.generateAsync({ type: 'blob' });
-                saveAs(zipData, name);
-
+                zipData = await zip.generateAsync({ type: 'blob' });
                 return {
                     modelArtifactsInfo: {
                         dateSaved: new Date(),
@@ -60,5 +59,18 @@ export async function saveProject(
                 } as tfjs.io.SaveResult;
             },
         });
+    } else {
+        console.warn('No model to save');
     }
+    return zipData;
+}
+
+export async function saveProject(
+    name: string,
+    model?: TeachableMobileNet,
+    behaviours?: BehaviourType[],
+    samples?: IClassification[]
+) {
+    const zipData = await generateBlob(model, behaviours, samples);
+    saveAs(zipData, name);
 }

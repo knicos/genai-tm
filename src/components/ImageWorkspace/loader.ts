@@ -18,7 +18,7 @@ interface Project {
     samples?: IClassification[];
 }
 
-export async function loadProject(file: File): Promise<Project> {
+export async function loadProject(file: File | Blob): Promise<Project> {
     const project: ProjectTemp = {
         samples: [],
     };

@@ -73,3 +73,15 @@
     align-items: center;
     border-top: 1px solid #ddd;
 }
+
+.deployLink {
+    color: white;
+}
+
+.deployLink:visited {
+    color: white;
+}
+
+.deployLink:active {
+    color: white;
+}

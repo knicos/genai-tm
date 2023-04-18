@@ -2,7 +2,6 @@ import React, { useState, useCallback, useRef, useEffect } from 'react';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
 import { Widget } from '../widget/Widget';
-import { Webcam } from '../webcam/Webcam';
 import style from './Input.module.css';
 import { useTranslation } from 'react-i18next';
 import { useVariant } from '../../util/variant';

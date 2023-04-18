@@ -3,17 +3,14 @@ import { Widget } from '../widget/Widget';
 import { useTranslation } from 'react-i18next';
 import style from './Output.module.css';
 import { BehaviourType } from '../Behaviours/Behaviours';
-import IconButton from '@mui/material/IconButton';
-import OpenInFullIcon from '@mui/icons-material/OpenInFull';
-import CloseFullscreenIcon from '@mui/icons-material/CloseFullscreen';
+import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import { useVariant } from '../../util/variant';
-import AudioPlayer from './AudioPlayer';
+import { useRecoilValue } from 'recoil';
+import { predictedIndex, sessionCode } from '../../state';
+import RawOutput from './RawOutput';
 import Slider from '@mui/material/Slider';
 import VolumeDown from '@mui/icons-material/VolumeDown';
 import VolumeUp from '@mui/icons-material/VolumeUp';
-import { useRecoilValue } from 'recoil';
-import { predictedIndex } from '../../state';
-import Embedding from './Embedding';
 
 const WIDTH = 400;
 const HEIGHT = 350;
@@ -29,17 +26,15 @@ interface Props {
 
 export default function Output({ behaviours, ...props }: Props) {
     const [expanded, setExpanded] = useState(false);
+    const code = useRecoilValue(sessionCode);
     const [volume, setVolume] = useState(100);
-    const { namespace } = useVariant();
-    const { t } = useTranslation(namespace);
-    const predicted = useRecoilValue(predictedIndex);
-
     const changeVolume = useCallback((event: Event, newValue: number | number[]) => {
         setVolume(newValue as number);
     }, []);
 
-    const currentBehaviour = predicted < behaviours.length ? behaviours[predicted] : null;
-    const hasImage = !!currentBehaviour?.image || !!currentBehaviour?.text;
+    const { namespace } = useVariant();
+    const { t } = useTranslation(namespace);
+    const predicted = useRecoilValue(predictedIndex);
 
     const scaleFactor = expanded
         ? Math.min(((window.innerHeight - MENUSPACE) * FULLSCREEN) / HEIGHT, (window.innerWidth * FULLSCREEN) / WIDTH)
@@ -52,74 +47,23 @@ export default function Output({ behaviours, ...props }: Props) {
             className={expanded ? style.widgetExpanded : style.widget}
             {...props}
             menu={
-                <IconButton
+                <a
+                    className={style.deployLink}
+                    href={`/deploy/${code}`}
+                    target="_blank"
                     aria-label={t<string>('output.aria.expand')}
-                    size="small"
-                    onClick={() => setExpanded(!expanded)}
+                    rel="noreferrer"
                 >
-                    {!expanded && <OpenInFullIcon fontSize="small" />}
-                    {expanded && <CloseFullscreenIcon fontSize="small" />}
-                </IconButton>
+                    <OpenInNewIcon />
+                </a>
             }
         >
-            <div
-                style={{
-                    width: `${Math.floor(400 * scaleFactor)}px`,
-                    height: `${Math.floor(350 * scaleFactor)}px`,
-                }}
-            >
-                <p
-                    aria-label={t<string>('output.aria.display', { index: predicted + 1 })}
-                    className={style.container}
-                    style={{
-                        transform: `scale(${scaleFactor})`,
-                    }}
-                >
-                    {behaviours.map((behaviour, ix) => (
-                        <React.Fragment key={ix}>
-                            {behaviour?.image && (
-                                <img
-                                    aria-hidden={ix !== predicted}
-                                    data-testid="image-output"
-                                    src={behaviour.image.uri}
-                                    alt={t<string>('output.aria.image', { index: predicted + 1 })}
-                                    style={{ display: ix === predicted ? 'initial' : 'none' }}
-                                />
-                            )}
-                            {behaviour?.audio && (
-                                <AudioPlayer
-                                    showIcon={!hasImage}
-                                    volume={volume / 100}
-                                    uri={behaviour.audio.uri}
-                                    play={ix === predicted}
-                                />
-                            )}
-                            {behaviour?.embed && (
-                                <Embedding
-                                    show={ix === predicted}
-                                    volume={volume / 100}
-                                    url={behaviour.embed.url}
-                                />
-                            )}
-                            {behaviour?.text && (
-                                <p
-                                    className={style.textOverlay}
-                                    data-testid="text-output"
-                                    style={{
-                                        fontSize: `${behaviour.text.size || 30}pt`,
-                                        display: ix === predicted ? 'initial' : 'none',
-                                        color: behaviour.text.color || '#000000',
-                                        textAlign: behaviour.text.align || 'center',
-                                    }}
-                                    aria-hidden={ix !== predicted}
-                                >
-                                    {behaviour.text.text}
-                                </p>
-                            )}
-                        </React.Fragment>
-                    ))}
-                </p>
-            </div>
+            <RawOutput
+                behaviours={behaviours}
+                predicted={predicted}
+                scaleFactor={scaleFactor}
+                volume={volume}
+            />
             <div className={style.volumeContainer}>
                 <VolumeDown />
                 <Slider

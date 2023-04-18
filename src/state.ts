@@ -2,6 +2,7 @@ import { TeachableMobileNet } from '@teachablemachine/image';
 import { atom } from 'recoil';
 import { BehaviourType } from './components/Behaviour/Behaviour';
 import { SaveProperties } from './components/ImageWorkspace/SaveDialog';
+import randomId from './util/randomId';
 
 export interface IClassification {
     label: string;
@@ -47,4 +48,9 @@ export const modelState = atom<TeachableMobileNet | undefined>({
 export const saveState = atom<SaveProperties | null>({
     key: 'saving',
     default: null,
+});
+
+export const sessionCode = atom<string>({
+    key: 'sessionCode',
+    default: randomId(8),
 });

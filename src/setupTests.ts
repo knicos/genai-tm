@@ -3,6 +3,22 @@
 // expect(element).toHaveTextContent(/react/i)
 // learn more: https://github.com/testing-library/jest-dom
 import '@testing-library/jest-dom';
+import crypto from 'crypto';
+
+global.crypto = crypto.webcrypto as Crypto;
+
+class BC {
+    onmessage: ((ev: MessageEvent<any>) => any) | null = null;
+    postMessage = jest.fn();
+    close = jest.fn();
+    onmessageerror: ((ev: MessageEvent<any>) => any) | null = null;
+    name = 'noname';
+    addEventListener = jest.fn();
+    removeEventListener = jest.fn();
+    dispatchEvent = jest.fn();
+}
+
+global.BroadcastChannel = BC;
 
 jest.mock('react-dnd', () => ({
     useDrop: () => [{}, {}],

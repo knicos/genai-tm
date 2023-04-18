@@ -17,6 +17,7 @@ import { saveProject } from './saver';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { loadProject } from './loader';
 import { Alert, Snackbar } from '@mui/material';
+import Deployer from '../Deployer/Deployer';
 
 const connections: IConnection[] = [
     { start: 'class', end: 'trainer', startPoint: 'right', endPoint: 'left' },
@@ -172,6 +173,10 @@ export default function Workspace({ step, visitedStep, onComplete, saveTrigger, 
             className={style.workspace}
             ref={wkspaceRef}
         >
+            <Deployer
+                model={model}
+                behaviours={behaviours}
+            />
             <div className={visitedStep < 1 ? style.container3 : style.container5}>
                 <SvgLayer lines={lines} />
                 <TrainingData
