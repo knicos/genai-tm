@@ -15,6 +15,7 @@ jest.mock('@teachablemachine/image', () => ({
             stop: jest.fn(),
             update: jest.fn(),
             canvas: global.document.createElement('canvas'),
+            webcam: { paused: false },
         };
     },
 }));
