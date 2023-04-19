@@ -11,6 +11,7 @@ import { NativeTypes } from 'react-dnd-html5-backend';
 import UploadIcon from '@mui/icons-material/Upload';
 import { useTranslation } from 'react-i18next';
 import { useVariant } from '../../util/variant';
+import AudioRecorder from '../AudioRecorder/AudioRecorder';
 
 export interface AudioBehaviour {
     uri: string;
@@ -70,19 +71,6 @@ export default function Sound({ behaviour, setBehaviour }: Props) {
         },
     });
 
-    /*const { getRootProps, getInputProps, isDragActive, open } = useDropzone({
-        noClick: true,
-        onDrop,
-        accept: {
-            'audio/mpeg': ['.mp3'],
-            'audio/ogg': ['.oga'],
-            'audio/opus': ['.opus'],
-            'audio/wav': ['.wav'],
-            'audio/aac': ['.aac'],
-        },
-        maxFiles: 1,
-    });*/
-
     const doPlay = useCallback(
         () =>
             setAudio((old: HTMLAudioElement | null) => {
@@ -125,6 +113,16 @@ export default function Sound({ behaviour, setBehaviour }: Props) {
         [onDrop]
     );
 
+    const onAudioData = useCallback(
+        (data: string) => {
+            setBehaviour({
+                uri: data,
+                name: t<string>('behaviours.labels.voiceRecording'),
+            });
+        },
+        [setBehaviour, t]
+    );
+
     return (
         <>
             <p className={style.audioTitle}>{behaviour?.name}</p>
@@ -140,6 +138,7 @@ export default function Sound({ behaviour, setBehaviour }: Props) {
                     accept="audio/*"
                     onChange={onFileChange}
                 />
+                <AudioRecorder onData={onAudioData} />
                 <VerticalButton
                     data-testid="audio-upload"
                     variant="outlined"

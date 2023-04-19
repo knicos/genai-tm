@@ -117,14 +117,17 @@
     "behaviours": {
         "actions": {
             "upload": "Lataa",
-            "delete": "Poista"
+            "delete": "Poista",
+            "record": "Record",
+            "stop": "Stop"
         },
         "labels": {
             "title": "Toiminta:",
             "message": "Teksti",
             "link": "Linkki",
             "linkError": "Linkkiä ei tueta",
-            "embedInfo": "Näytä kuvia tai videoita linkistä. (Esimerksi YouTube, Vimeo, SoundCloud)"
+            "embedInfo": "Näytä kuvia tai videoita linkistä. (Esimerksi YouTube, Vimeo, SoundCloud)",
+            "voiceRecording": "Voice Recording"
         },
         "aria": {
             "message": "Text for output",
