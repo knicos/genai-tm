@@ -5,5 +5,10 @@
         "variantAge4_9": "Luokka 4-9",
         "variantAdvanced": "Pitkälle kehittynyt",
         "variantCustom": "Custom"
+    },
+    "deploy": {
+        "labels": {
+            "notFound": "Could not find classifier."
+        }
     }
 }

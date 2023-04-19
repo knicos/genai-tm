@@ -14,7 +14,7 @@ import { useVariant } from '../../util/variant';
 import Input from '../Input/Input';
 import SaveDialog, { SaveProperties } from './SaveDialog';
 import { saveProject } from './saver';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilState } from 'recoil';
 import { loadProject } from './loader';
 import { Alert, Snackbar } from '@mui/material';
 import Deployer from '../Deployer/Deployer';

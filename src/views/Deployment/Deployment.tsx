@@ -1,15 +1,5 @@
 import React, { useRef, useEffect, useState, useCallback } from 'react';
-import { useParams } from 'react-router-dom';
-import { DeployEventData } from '../../components/Deployer/Deployer';
-import { loadProject } from '../../components/ImageWorkspace/loader';
-import { TeachableMobileNet } from '@teachablemachine/image';
-import { BehaviourType } from '../../components/Behaviour/Behaviour';
-import RawOutput from '../../components/Output/RawOutput';
-import { useRecoilState } from 'recoil';
-import { predictedIndex } from '../../state';
 import style from './style.module.css';
-import randomId from '../../util/randomId';
-import { sendData } from '../../util/comms';
 import Slider from '@mui/material/Slider';
 import VolumeDown from '@mui/icons-material/VolumeDown';
 import VolumeUp from '@mui/icons-material/VolumeUp';
@@ -23,22 +13,15 @@ import { canvasFromFile } from '../../util/canvas';
 import { useDrop } from 'react-dnd';
 import { NativeTypes } from 'react-dnd-html5-backend';
 import { Webcam } from '../../components/webcam/Webcam';
+import Display, { WrappedInput } from './Display';
+import useRemoteModel from './useRemoteModel';
+import { useParams } from 'react-router-dom';
+import { Alert, Snackbar } from '@mui/material';
 
 const WIDTH = 400;
 const HEIGHT = 350;
 
-interface Predictions {
-    className: string;
-    probability: number;
-}
-
 export default function Deployment() {
-    const channel = useRef<BroadcastChannel>();
-    const { code } = useParams();
-    const [model, setModel] = useState<TeachableMobileNet | null>(null);
-    const [behaviours, setBehaviours] = useState<BehaviourType[]>([]);
-    const [predicted, setPredictionIndex] = useRecoilState(predictedIndex);
-    const [myCode] = useState(() => randomId(8));
     const [volume, setVolume] = useState(100);
     const changeVolume = useCallback((event: Event, newValue: number | number[]) => {
         setVolume(newValue as number);
@@ -48,53 +31,20 @@ export default function Deployment() {
     const [paused, setPaused] = useState(false);
     const fileRef = useRef<HTMLInputElement>(null);
     const inputRef = useRef<HTMLDivElement>(null);
-    const [input, setInput] = useState<HTMLCanvasElement | null>(null);
-
-    useEffect(() => {
-        async function update() {
-            let predictions: Predictions[] = [];
-
-            if (model && input) {
-                predictions = await model.predict(input);
-            }
-
-            if (predictions.length > 0) {
-                const nameOfMax = predictions.reduce((prev, val) => (val.probability > prev.probability ? val : prev));
-                setPredictionIndex(predictions.indexOf(nameOfMax));
-            } else {
-                setPredictionIndex(-1);
-            }
-        }
-        update();
-
-        if (input && inputRef.current) {
-            while (inputRef.current.lastChild) {
-                inputRef.current.removeChild(inputRef.current.lastChild);
-            }
-            inputRef.current.appendChild(input);
-        }
-    }, [input, model, setPredictionIndex]);
+    const [input, setInput] = useState<WrappedInput | null>(null);
+    const { code } = useParams();
+    const [hadError, setHadError] = useState(false);
+    const onError = useCallback(() => setHadError(true), [setHadError]);
+    const [model, behaviours] = useRemoteModel(code || '', onError);
 
     const scaleFactor = Math.min((window.innerHeight - 200) / HEIGHT, window.innerWidth / WIDTH);
-
-    useEffect(() => {
-        channel.current = new BroadcastChannel(`deployment:${myCode}`);
-        channel.current.onmessage = async (ev: MessageEvent<DeployEventData>) => {
-            if (ev.data.event === 'data') {
-                const project = await loadProject(ev.data.project);
-                if (project.model) setModel(project.model);
-                if (project.behaviours) setBehaviours(project.behaviours);
-            }
-        };
-        sendData(`model:${code}`, { event: 'request', channel: `deployment:${myCode}` });
-    }, []);
 
     const onDrop = useCallback(
         async (acceptedFiles: File[]) => {
             if (acceptedFiles.length === 1) {
                 const newCanvas = await canvasFromFile(acceptedFiles[0]);
                 setPaused(true);
-                setTimeout(() => setInput(newCanvas), 200);
+                setTimeout(() => setInput({ element: newCanvas }), 200);
             }
         },
         [setPaused, setInput]
@@ -135,10 +85,22 @@ export default function Deployment() {
 
     const doCapture = useCallback(
         (image: HTMLCanvasElement) => {
-            setInput(image);
+            setInput({ element: image });
         },
         [setInput]
     );
+
+    const closeError = useCallback(() => setHadError(false), [setHadError]);
+
+    useEffect(() => {
+        if (input?.element && inputRef.current) {
+            if (inputRef.current.firstChild === input.element) return;
+            while (inputRef.current.lastChild) {
+                inputRef.current.removeChild(inputRef.current.lastChild);
+            }
+            inputRef.current.appendChild(input.element);
+        }
+    }, [input?.element]);
 
     const doPause = useCallback(() => {
         setPaused(!paused);
@@ -156,12 +118,14 @@ export default function Deployment() {
                 capture
                 interval={100}
                 disable={paused}
+                direct
             />
-            <RawOutput
+            <Display
                 behaviours={behaviours}
-                predicted={predicted}
                 scaleFactor={scaleFactor}
                 volume={volume}
+                model={model}
+                input={input}
             />
             <input
                 type="file"
@@ -201,6 +165,19 @@ export default function Deployment() {
                 />
                 <VolumeUp />
             </div>
+            <Snackbar
+                anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+                open={hadError}
+                autoHideDuration={null}
+                onClose={closeError}
+            >
+                <Alert
+                    onClose={closeError}
+                    severity="error"
+                >
+                    {t('deploy.labels.notFound')}
+                </Alert>
+            </Snackbar>
         </div>
     );
 }

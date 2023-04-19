@@ -5,5 +5,10 @@
         "variantAge4_9": "Grade 4-9",
         "variantAdvanced": "Default",
         "variantCustom": "Custom"
+    },
+    "deploy": {
+        "labels": {
+            "notFound": "Could not find classifier."
+        }
     }
 }
