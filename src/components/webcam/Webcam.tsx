@@ -26,12 +26,6 @@ export function Webcam({ interval, capture, onCapture, disable, direct, hidden }
         (timestamp: number) => {
             if (disable) return;
             if (webcam) {
-                //if (previousTimeRef.current === 0) {
-                //    previousTimeRef.current = timestamp;
-                //}
-                if (webcam.webcam.paused) {
-                    webcam.play();
-                }
                 webcam.update();
                 const actualInterval = interval !== undefined ? interval : 1000.0;
                 if (capture && onCapture && timestamp - previousTimeRef.current >= actualInterval) {
@@ -57,13 +51,7 @@ export function Webcam({ interval, capture, onCapture, disable, direct, hidden }
     async function initWebcam() {
         const newWebcam = new TMWebcam(224, 224, true);
         await newWebcam.setup();
-        newWebcam.webcam.onplay = () => console.log('Play webcam');
-        newWebcam.webcam.onpause = () => console.log('Pause webcam');
-        newWebcam.webcam.onplaying = () => console.log('Playing webcam');
-        newWebcam.webcam.onsuspend = () => console.log('Suspend webcam');
-        newWebcam.webcam.oncanplay = () => console.log('Can play webcam');
-        newWebcam.webcam.onreset = () => console.log('Reset webcam');
-        newWebcam.webcam.onerror = () => console.log('Error webcam');
+        newWebcam.webcam.onsuspend = () => newWebcam.play();
         setWebcam(newWebcam);
     }
 
