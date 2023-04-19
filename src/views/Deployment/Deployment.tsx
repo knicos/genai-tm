@@ -16,7 +16,8 @@ import { Webcam } from '../../components/webcam/Webcam';
 import Display, { WrappedInput } from './Display';
 import useRemoteModel from './useRemoteModel';
 import { useParams } from 'react-router-dom';
-import { Alert, Snackbar } from '@mui/material';
+import Alert from '@mui/material/Alert';
+import Snackbar from '@mui/material/Snackbar';
 
 const WIDTH = 400;
 const HEIGHT = 350;

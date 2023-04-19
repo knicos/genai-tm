@@ -16,7 +16,8 @@ import SaveDialog, { SaveProperties } from './SaveDialog';
 import { saveProject } from './saver';
 import { useRecoilState } from 'recoil';
 import { loadProject } from './loader';
-import { Alert, Snackbar } from '@mui/material';
+import Alert from '@mui/material/Alert';
+import Snackbar from '@mui/material/Snackbar';
 import Deployer from '../Deployer/Deployer';
 
 const connections: IConnection[] = [

@@ -10,7 +10,6 @@ import { RecoilRoot } from 'recoil';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { StyledEngineProvider } from '@mui/material/styles';
-import Deployment from './views/Deployment/Deployment';
 
 const router = createBrowserRouter(
     createRoutesFromElements(
@@ -26,7 +25,7 @@ const router = createBrowserRouter(
             />
             <Route
                 path="deploy/:code"
-                element={<Deployment />}
+                lazy={() => import('./views/Deployment')}
             />
             <Route path="image">
                 <Route

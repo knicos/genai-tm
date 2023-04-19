@@ -41,6 +41,7 @@
     },
     "scripts": {
         "git-info": "node scripts/gitInfo.js",
+        "analyze": "source-map-explorer 'build/static/js/*.js'",
         "start": "react-scripts start",
         "build": "npm run git-info && react-scripts build",
         "lint": "eslint --max-warnings=0 ./src/**/*.ts ./src/**/*.tsx",
@@ -75,6 +76,7 @@
         "eslint-config-prettier": "^8.7.0",
         "jest-axe": "^7.0.1",
         "jest-junit": "^15.0.0",
-        "prettier": "^2.8.4"
+        "prettier": "^2.8.4",
+        "source-map-explorer": "^2.5.3"
     }
 }

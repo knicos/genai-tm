@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { Webcam as TMWebcam } from '@teachablemachine/image';
 import style from './webcam.module.css';
-import { Skeleton } from '@mui/material';
+import Skeleton from '@mui/material/Skeleton';
 import { useTranslation } from 'react-i18next';
 import { useVariant } from '../../util/variant';
 

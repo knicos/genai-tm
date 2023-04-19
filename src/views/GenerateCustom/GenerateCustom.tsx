@@ -1,14 +1,11 @@
 import React, { useState, useCallback, FormEvent } from 'react';
 import { IVariantContext } from '../../util/variant';
-import {
-    FormControl,
-    InputLabel,
-    Select,
-    MenuItem,
-    SelectChangeEvent,
-    Checkbox,
-    FormControlLabel,
-} from '@mui/material';
+import FormControl from '@mui/material/FormControl';
+import InputLabel from '@mui/material/InputLabel';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
+import MenuItem from '@mui/material/MenuItem';
+import Checkbox from '@mui/material/Checkbox';
+import FormControlLabel from '@mui/material/FormControlLabel';
 import style from './GenerateCustom.module.css';
 import { Button } from '../../components/button/Button';
 import { compressToEncodedURIComponent } from 'lz-string';

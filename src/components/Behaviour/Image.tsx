@@ -1,7 +1,7 @@
 import React, { useCallback, useRef } from 'react';
 import style from './Behaviour.module.css';
 import UploadFileIcon from '@mui/icons-material/UploadFile';
-import { Skeleton } from '@mui/material';
+import Skeleton from '@mui/material/Skeleton';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { VerticalButton } from '../button/Button';
 import IconImage from '../IconImage/IconImage';

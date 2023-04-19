@@ -5,7 +5,7 @@ import { Widget } from '../widget/Widget';
 import style from './Input.module.css';
 import { useTranslation } from 'react-i18next';
 import { useVariant } from '../../util/variant';
-import { Skeleton } from '@mui/material';
+import Skeleton from '@mui/material/Skeleton';
 import { useRecoilState } from 'recoil';
 import { predictedIndex, prediction } from '../../state';
 import { TeachableMobileNet } from '@teachablemachine/image';

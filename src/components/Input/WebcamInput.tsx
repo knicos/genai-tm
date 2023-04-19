@@ -1,6 +1,6 @@
 import React from 'react';
 import { Webcam } from '../webcam/Webcam';
-import { Skeleton } from '@mui/material';
+import Skeleton from '@mui/material/Skeleton';
 
 interface Props {
     enabled?: boolean;

@@ -4,7 +4,8 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import { Button } from '../button/Button';
-import { Checkbox, FormControlLabel } from '@mui/material';
+import Checkbox from '@mui/material/Checkbox';
+import FormControlLabel from '@mui/material/FormControlLabel';
 import { useVariant } from '../../util/variant';
 import { useTranslation } from 'react-i18next';
 
