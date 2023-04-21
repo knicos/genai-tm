@@ -71,30 +71,24 @@ export default function Input({ enabled, model, ...props }: Props) {
     const onDrop = useCallback(
         async (acceptedFiles: File[]) => {
             if (acceptedFiles.length === 1) {
+                if (!acceptedFiles[0].type.startsWith('image/')) return;
                 const newCanvas = await canvasFromFile(acceptedFiles[0]);
-                doPrediction(newCanvas);
                 setFile(newCanvas);
             }
         },
-        [doPrediction]
+        [setFile]
     );
+
+    useEffect(() => {
+        if (file) {
+            doPrediction(file);
+        }
+    }, [file, doPrediction]);
 
     const [dropProps, drop] = useDrop({
         accept: [NativeTypes.FILE, NativeTypes.URL],
         drop(items: any) {
             onDrop(items.files);
-        },
-        canDrop(item: any) {
-            if (item?.files) {
-                for (const i of item?.files) {
-                    if (!i.type.startsWith('image/')) {
-                        return false;
-                    }
-                }
-                return true;
-            } else {
-                return false;
-            }
         },
         collect(monitor) {
             const can = monitor.canDrop();

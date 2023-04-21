@@ -8,15 +8,41 @@
 }
 
 .dropSuggest {
-    color: #555;
-    border: 1px dashed #8c929b;
+    color: primary;
+    border: 1px dashed primary;
     border-radius: 6px;
     display: flex;
     align-items: center;
     min-height: 58px;
     box-sizing: border-box;
     padding: 0rem 1rem;
-    font-size: 12pt;
+    font-size: 11pt;
+    text-align: center;
+    position: relative;
+    background: transparent;
+}
+
+.dropSuggestAnimated {
+    composes: dropSuggest;
+    animation: drop 2s 1;
+}
+
+@keyframes drop {
+    0% {
+        background: transparent;
+    }
+
+    60% {
+        background: transparent;
+    }
+
+    65% {
+        background: #e8f0fe;
+    }
+
+    95% {
+        background: #e8f0fe;
+    }
 }
 
 .dropSample {

@@ -32,6 +32,7 @@ export default function Sound({ behaviour, setBehaviour }: Props) {
     const onDrop = useCallback(
         (acceptedFiles: File[]) => {
             if (acceptedFiles.length === 1) {
+                if (!acceptedFiles[0].type.startsWith('audio/')) return;
                 const reader = new FileReader();
                 reader.onabort = () => console.warn('file reading aborted');
                 reader.onerror = () => console.error('file reading error');
@@ -50,16 +51,11 @@ export default function Sound({ behaviour, setBehaviour }: Props) {
     const [dropProps, drop] = useDrop({
         accept: [NativeTypes.FILE, NativeTypes.URL],
         drop(items: any) {
-            onDrop(items.files);
-        },
-        canDrop(item: any) {
-            if (item?.files) {
-                for (const i of item?.files) {
-                    if (!i.type.startsWith('audio/')) return false;
-                }
-                return true;
-            } else {
-                return false;
+            const types = Array.from<DataTransferItem>(items.items).map((i) => i.type);
+            const img = types.findIndex((i) => i.startsWith('audio/'));
+
+            if (img >= 0) {
+                onDrop(items.files);
             }
         },
         collect(monitor) {

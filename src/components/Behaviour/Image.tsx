@@ -28,6 +28,7 @@ export default function Image({ behaviour, setBehaviour }: Props) {
     const onDrop = useCallback(
         (acceptedFiles: File[]) => {
             if (acceptedFiles.length === 1) {
+                if (!acceptedFiles[0].type.startsWith('image/')) return;
                 const reader = new FileReader();
                 reader.onabort = () => console.warn('file reading aborted');
                 reader.onerror = () => console.error('file reading error');
@@ -45,16 +46,20 @@ export default function Image({ behaviour, setBehaviour }: Props) {
     const [dropProps, drop] = useDrop({
         accept: [NativeTypes.FILE, NativeTypes.URL],
         drop(items: any) {
-            onDrop(items.files);
-        },
-        canDrop(item: any) {
-            if (item?.files) {
-                for (const i of item?.files) {
-                    if (!i.type.startsWith('image/')) return false;
-                }
-                return true;
+            const types = Array.from<DataTransferItem>(items.items).map((i) => i.type);
+            const img = types.findIndex((i) => i.startsWith('image/'));
+
+            if (img >= 0) {
+                onDrop(items.files);
             } else {
-                return false;
+                const uri = types.findIndex((i) => i === 'text/uri-list');
+                if (uri >= 0) {
+                    items.items[uri].getAsString((data: string) => {
+                        setBehaviour({
+                            uri: data,
+                        });
+                    });
+                }
             }
         },
         collect(monitor) {

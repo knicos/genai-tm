@@ -1,3 +1,5 @@
+@value primary from "../../style/colours.module.css";
+
 .container {
     display: flex;
     align-items: center;

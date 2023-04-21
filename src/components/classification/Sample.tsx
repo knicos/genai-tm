@@ -22,14 +22,14 @@ interface Props {
 export default function Sample({ image, index, onDelete }: Props) {
     const { namespace } = useVariant();
     const { t } = useTranslation(namespace);
-    const ref = useRef<HTMLDivElement>(null);
+    const ref = useRef<HTMLImageElement>(null);
 
     useEffect(() => {
         if (ref.current && image) {
-            while (ref.current.firstChild) {
-                ref.current.removeChild(ref.current.firstChild);
+            ref.current.src = image.toDataURL();
+            if (image.hasAttribute('data-testid')) {
+                ref.current.setAttribute('data-testid', image.getAttribute('data-testid') || '');
             }
-            ref.current.appendChild(image);
         }
     }, [image]);
 
@@ -46,10 +46,9 @@ export default function Sample({ image, index, onDelete }: Props) {
             >
                 <DeleteForeverIcon />
             </IconButton>
-            <div
+            <img
                 ref={ref}
-                role="img"
-                aria-label={t<string>('trainingdata.aria.sample')}
+                alt={t<string>('trainingdata.aria.sample')}
             />
         </li>
     );

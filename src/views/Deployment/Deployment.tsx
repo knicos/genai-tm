@@ -43,6 +43,7 @@ export default function Deployment() {
     const onDrop = useCallback(
         async (acceptedFiles: File[]) => {
             if (acceptedFiles.length === 1) {
+                if (!acceptedFiles[0].type.startsWith('image/')) return;
                 const newCanvas = await canvasFromFile(acceptedFiles[0]);
                 setPaused(true);
                 setTimeout(() => setInput({ element: newCanvas }), 200);
@@ -55,18 +56,6 @@ export default function Deployment() {
         accept: [NativeTypes.FILE, NativeTypes.URL],
         drop(items: any) {
             onDrop(items.files);
-        },
-        canDrop(item: any) {
-            if (item?.files) {
-                for (const i of item?.files) {
-                    if (!i.type.startsWith('image/')) {
-                        return false;
-                    }
-                }
-                return true;
-            } else {
-                return false;
-            }
         },
         collect(monitor) {
             const can = monitor.canDrop();
@@ -110,7 +99,7 @@ export default function Deployment() {
 
     return (
         <div
-            className={style.container}
+            className={dropProps.hovered ? style.dropContainer : style.container}
             ref={drop}
         >
             <Webcam
@@ -128,6 +117,7 @@ export default function Deployment() {
                 model={model}
                 input={input}
             />
+            {dropProps.hovered && <div className={style.dropInfo}>{t('deploy.labels.dropHere')}</div>}
             <input
                 type="file"
                 accept="image/*"

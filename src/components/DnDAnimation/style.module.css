@@ -1,0 +1,42 @@
+.dnd {
+    position: absolute;
+    animation: dndanim 2s ease-in-out 1;
+    z-index: 100;
+    width: 58px;
+    height: 58px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+    background: url(./flower.jpg);
+    color: #222;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.dnd svg {
+    position: relative;
+    top: 30px;
+    left: 30px;
+}
+
+@keyframes dndanim {
+    0% {
+        right: -100px;
+        top: -100px;
+        opacity: 0;
+    }
+
+    20% {
+        opacity: 1;
+    }
+
+    95% {
+        opacity: 1;
+    }
+
+    100% {
+        right: 80px;
+        top: 40px;
+    }
+}

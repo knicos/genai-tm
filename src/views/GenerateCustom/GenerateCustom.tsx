@@ -259,6 +259,16 @@ export default function GenerateCustom() {
                     }
                     label="Allow deployment link"
                 />
+                <FormControlLabel
+                    control={
+                        <Checkbox
+                            checked={state.showDragTip}
+                            name="showDragTip"
+                            onChange={doCheckChange}
+                        />
+                    }
+                    label="Show Drag & Drop animation tip"
+                />
                 <Button
                     variant="contained"
                     type="submit"

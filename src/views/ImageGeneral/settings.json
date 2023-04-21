@@ -19,5 +19,6 @@
     "showTrainingAnimation": false,
     "resetOnLoad": false,
     "enableFileInput": true,
-    "allowDeploy": true
+    "allowDeploy": true,
+    "showDragTip": false
 }

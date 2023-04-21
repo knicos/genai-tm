@@ -90,30 +90,48 @@ export async function loadProject(file: File | Blob): Promise<Project> {
             },
         });
 
+        let samplePromises: Promise<HTMLCanvasElement>[] = [];
+
+        for (const item of project.samples) {
+            for (const s of item) {
+                samplePromises.push(
+                    new Promise((resolve) => {
+                        const canvas = document.createElement('canvas');
+                        canvas.width = 224;
+                        canvas.height = 224;
+                        canvas.style.width = '58px';
+                        const ctx = canvas.getContext('2d');
+                        const img = new Image();
+                        img.onload = (ev: Event) => {
+                            ctx?.drawImage(img, 0, 0);
+                            resolve(canvas);
+                        };
+                        img.src = s;
+                    })
+                );
+            }
+        }
+
+        const canvases = await Promise.all(samplePromises);
+
+        const samples: IClassification[] = [];
+
+        let base = 0;
+        for (let i = 0; i < project.samples.length; ++i) {
+            const newImage: HTMLCanvasElement[] = [];
+            for (let j = 0; j < project.samples[i].length; ++j) {
+                newImage.push(canvases[base++]);
+            }
+            samples.push({
+                label: model.getLabel(i),
+                samples: newImage,
+            });
+        }
+
         return {
             model,
             behaviours: project.behaviours ? JSON.parse(project.behaviours).behaviours : [],
-            samples:
-                project.samples.length > 0
-                    ? project.samples.map((sample, ix) => {
-                          return {
-                              label: model.getLabel(ix),
-                              samples: sample.map((s) => {
-                                  const canvas = document.createElement('canvas');
-                                  canvas.width = 224;
-                                  canvas.height = 224;
-                                  canvas.style.width = '58px';
-                                  const ctx = canvas.getContext('2d');
-                                  const img = new Image();
-                                  img.onload = (ev: Event) => {
-                                      ctx?.drawImage(img, 0, 0);
-                                  };
-                                  img.src = s;
-                                  return canvas;
-                              }),
-                          };
-                      })
-                    : undefined,
+            samples: samples.length > 0 ? samples : undefined,
         };
     }
 

@@ -27,6 +27,7 @@
 
 .widget {
     background-color: primary !important;
+    overflow: hidden;
 }
 
 .widget header {

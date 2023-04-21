@@ -4,6 +4,7 @@
 // learn more: https://github.com/testing-library/jest-dom
 import '@testing-library/jest-dom';
 import crypto from 'crypto';
+import mockReact from 'react';
 
 global.crypto = crypto.webcrypto as Crypto;
 
@@ -21,7 +22,7 @@ class BC {
 global.BroadcastChannel = BC;
 
 jest.mock('react-dnd', () => ({
-    useDrop: () => [{}, {}],
+    useDrop: () => [{}, mockReact.createRef()],
     DndProvider: ({ children }: { children: unknown }) => children,
 }));
 jest.mock('react-dnd-html5-backend', () => ({

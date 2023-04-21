@@ -47,7 +47,7 @@
             "imageSamples": "{{count}} kuvaa",
             "class": "Luokka",
             "wait": "Otetaan kuvia...",
-            "dropFiles": "Lisää tiedstot tähän"
+            "dropFiles": "or drag images here from a website or file"
         },
         "aria": {
             "sample": "uploaded sample",
