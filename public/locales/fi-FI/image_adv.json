@@ -143,14 +143,11 @@
         }
     },
     "stepper": {
-        "labels": {
-            "createModel": "Tee luokittelija",
-            "deployModel": "Käytä luokittelijaa"
+        "actions": {
+            "next": "Next"
         },
         "aria": {
-            "next": "next",
-            "previous": "previous",
-            "title": "Steps"
+            "step": "task steps"
         }
     },
     "webcam": {

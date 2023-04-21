@@ -59,7 +59,6 @@ describe('ImageClassifier component', () => {
         render(<ImageClassifier />, { wrapper: TestWrapper });
         expect(screen.getByText('behaviours.labels.title')).not.toBeVisible();
         expect(screen.getByTestId('widget-trainingdata.labels.class 1')).toBeInTheDocument();
-        expect(screen.getByTestId('previous-step')).toBeDisabled();
         expect(screen.getByTestId('next-step')).toBeDisabled();
     });
 

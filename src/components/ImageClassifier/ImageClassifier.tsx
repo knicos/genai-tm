@@ -12,6 +12,7 @@ import Workspace from '../../components/ImageWorkspace/Workspace';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import colours from '../../style/colours.module.css';
 import { useVariant } from '../../util/variant';
+import Fab from '@mui/material/Fab';
 
 const isTest = global?.process?.env?.NODE_ENV === 'test';
 
@@ -69,8 +70,6 @@ export default function ImageClassifier() {
         setVisited((oldVisited) => Math.max(oldVisited, step + 1));
     }, [setStep, setVisited, step]);
 
-    const prevStep = useCallback(() => setStep(step - 1), [setStep, step]);
-
     const doSave = useCallback(() => setSaveTrigger(() => () => setSaveTrigger(undefined)), [setSaveTrigger]);
 
     return (
@@ -84,35 +83,20 @@ export default function ImageClassifier() {
                 onSkip={doSkip}
             />
             <nav
-                className={style.fixed}
-                aria-label={t<string>('stepper.aria.title')}
+                className={visited < 1 ? style.stepButton : style.stepButtonHidden}
+                aria-label={t<string>('stepper.aria.step')}
             >
-                <IconButton
-                    disabled={step <= 0}
-                    size="large"
-                    onClick={prevStep}
-                    aria-label={t<string>('stepper.aria.previous')}
-                    data-testid="previous-step"
-                >
-                    <ArrowBackIosNewIcon fontSize="large" />
-                </IconButton>
-                <Stepper activeStep={step}>
-                    <Step>
-                        <StepLabel>{t('stepper.labels.createModel')}</StepLabel>
-                    </Step>
-                    <Step disabled={allowedStep < 1}>
-                        <StepLabel>{t('stepper.labels.deployModel')}</StepLabel>
-                    </Step>
-                </Stepper>
-                <IconButton
-                    disabled={step >= 1 || allowedStep <= step}
-                    size="large"
+                <Fab
+                    variant="extended"
+                    color="secondary"
+                    disabled={allowedStep < 1}
                     onClick={nextStep}
-                    aria-label={t<string>('stepper.aria.next')}
+                    aria-hidden={visited >= 1}
                     data-testid="next-step"
                 >
-                    <ArrowForwardIosIcon fontSize="large" />
-                </IconButton>
+                    {t('stepper.actions.next')}
+                    <ArrowForwardIosIcon />
+                </Fab>
             </nav>
         </ThemeProvider>
     );

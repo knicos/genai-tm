@@ -1,58 +1,51 @@
-.fixed {
-    position: static;
-    bottom: 5%;
-    background: white;
-    padding: 0.5rem 4rem;
-    left: 15%;
-    right: 15%;
-    box-shadow: 0px 0px 8px #bbb;
-    display: flex;
-    justify-content: center;
-    border-top: 1px solid #bbb;
-    gap: 1rem;
+.stepButton {
+    position: absolute;
+    right: 2rem;
+    bottom: 2rem;
 }
 
-.fixed button {
-    color: rgb(174, 37, 174);
-    animation: grow 1s 1;
-}
-
-.fixed button:global.Mui-disabled {
-    animation: none;
-}
-
-.fixed :global .MuiStepIcon-root.Mui-active {
-    color: rgb(174, 37, 174);
-}
-
-@media only screen and (max-width: 700px) {
-    .fixed :global .MuiStepLabel-label {
+@media only screen and (max-width: 700px), (max-height: 500px) {
+    .stepButton {
+        position: initial;
+        width: 100%;
+        box-sizing: border-box;
+        padding: 1rem 0;
+        background: white;
+        display: flex;
+        justify-content: center;
+    }
+    .stepButtonHidden {
         display: none;
     }
 }
 
-.fixed :global .MuiStepper-root {
-    max-width: 60%;
-    flex-grow: 1;
+.stepButton button {
+    text-transform: none;
+    font-weight: bold;
+    padding: 0.5rem 2rem;
+    gap: 0.5rem;
+    animation: grow 1s 2;
 }
 
-.fixed :global .MuiStepLabel-label {
-    font-size: 12pt;
+.stepButton button:disabled {
+    animation: none;
 }
 
 @keyframes grow {
     0% {
         transform: scale(1);
-        background-color: rgba(174, 37, 174, 0);
     }
-
     50% {
-        transform: scale(2);
-        background-color: rgba(174, 37, 174, 0.2);
+        transform: scale(1.3);
     }
-
     100% {
         transform: scale(1);
-        background-color: rgba(174, 37, 174, 0);
     }
+}
+
+.stepButtonHidden {
+    composes: stepButton;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.5s;
 }

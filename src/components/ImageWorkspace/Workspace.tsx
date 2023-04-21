@@ -181,13 +181,11 @@ export default function Workspace({ step, visitedStep, onComplete, saveTrigger, 
             <div className={visitedStep < 1 ? style.container3 : style.container5}>
                 <SvgLayer lines={lines} />
                 <TrainingData
-                    disabled={step > 0}
                     data={data}
                     setData={doSetData}
                     active={true}
                 />
                 <Trainer
-                    disabled={step > 0}
                     focus={step === 0}
                     data={data}
                     model={model}
@@ -206,14 +204,12 @@ export default function Workspace({ step, visitedStep, onComplete, saveTrigger, 
                 <Behaviours
                     hidden={visitedStep < 1}
                     focus={step === 1}
-                    disabled={step !== 1}
                     classes={model?.getLabels() || []}
                     behaviours={behaviours}
                     setBehaviours={doSetBehaviours}
                 />
                 <Output
                     hidden={visitedStep < 1}
-                    disabled={step !== 1}
                     behaviours={behaviours}
                 />
             </div>

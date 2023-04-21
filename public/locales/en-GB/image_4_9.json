@@ -143,14 +143,11 @@
         }
     },
     "stepper": {
-        "labels": {
-            "createModel": "Create your classifier",
-            "deployModel": "Use your classifier"
+        "actions": {
+            "next": "Next"
         },
         "aria": {
-            "next": "next",
-            "previous": "previous",
-            "title": "Steps"
+            "step": "task steps"
         }
     },
     "webcam": {
