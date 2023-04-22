@@ -1,18 +1,19 @@
 .stepButton {
     position: absolute;
-    right: 2rem;
-    bottom: 2rem;
+    right: 5%;
+    bottom: 5%;
 }
 
-@media only screen and (max-width: 700px), (max-height: 500px) {
+@media only screen and (max-width: 700px), (max-height: 770px) {
     .stepButton {
         position: initial;
         width: 100%;
         box-sizing: border-box;
-        padding: 1rem 0;
+        padding: 1rem 2rem;
         background: white;
         display: flex;
-        justify-content: center;
+        justify-content: right;
+        border-top: 1px solid #ddd;
     }
     .stepButtonHidden {
         display: none;
@@ -25,6 +26,7 @@
     padding: 0.5rem 2rem;
     gap: 0.5rem;
     animation: grow 1s 2;
+    font-size: 14pt;
 }
 
 .stepButton button:disabled {
