@@ -47,7 +47,8 @@
             "imageSamples": "{{count}} image samples",
             "class": "Class",
             "wait": "Capturing...",
-            "dropFiles": "or drag images here from a website or file"
+            "dropFiles": "or drag images here from a website or file",
+            "needsMore": "More samples are needed"
         },
         "aria": {
             "sample": "uploaded sample",

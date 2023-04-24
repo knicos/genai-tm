@@ -56,7 +56,7 @@ export default function Trainer({ data, model, setModel, ...props }: Props) {
     const [settingBatch, setSettingBatch] = useState(16);
 
     const sampleMin = Math.min(...data.map((v) => v.samples.length));
-    const isTrainable = data.length >= 2 && sampleMin >= 1;
+    const isTrainable = data.length >= 2 && sampleMin >= 2;
 
     async function loadModel() {
         await tf.ready();

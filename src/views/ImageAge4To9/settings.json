@@ -20,5 +20,5 @@
     "resetOnLoad": false,
     "enableFileInput": true,
     "allowDeploy": true,
-    "showDragTip": true
+    "showDragTip": false
 }

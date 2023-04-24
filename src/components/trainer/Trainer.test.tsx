@@ -16,7 +16,7 @@ jest.mock('@teachablemachine/image', () => ({
     },
 }));
 
-describe('Input component', () => {
+describe('Trainer component', () => {
     it('shows add more message', async () => {
         const setModel = jest.fn();
         render(
@@ -34,8 +34,8 @@ describe('Input component', () => {
         render(
             <Trainer
                 data={[
-                    { label: 'Class 1', samples: [document.createElement('canvas')] },
-                    { label: 'Class 2', samples: [document.createElement('canvas')] },
+                    { label: 'Class 1', samples: [document.createElement('canvas'), document.createElement('canvas')] },
+                    { label: 'Class 2', samples: [document.createElement('canvas'), document.createElement('canvas')] },
                 ]}
                 setModel={setModel}
             />,
@@ -47,14 +47,14 @@ describe('Input component', () => {
     it('can perform training', async () => {
         const user = userEvent.setup();
         const setModel = jest.fn((model: any) => {
-            expect(model.addExample).toHaveBeenCalledTimes(2);
+            expect(model.addExample).toHaveBeenCalledTimes(4);
             expect(model.train).toHaveBeenCalled();
         });
         render(
             <Trainer
                 data={[
-                    { label: 'Class 1', samples: [document.createElement('canvas')] },
-                    { label: 'Class 2', samples: [document.createElement('canvas')] },
+                    { label: 'Class 1', samples: [document.createElement('canvas'), document.createElement('canvas')] },
+                    { label: 'Class 2', samples: [document.createElement('canvas'), document.createElement('canvas')] },
                 ]}
                 setModel={setModel}
             />,
@@ -63,6 +63,6 @@ describe('Input component', () => {
 
         await user.click(screen.getByTestId('train-button'));
         await waitFor(() => expect(setModel).toHaveBeenCalledTimes(1));
-        expect(screen.getByTestId('alert-complete')).toBeVisible();
+        await waitFor(() => expect(screen.getByTestId('alert-complete')).toBeVisible());
     });
 });

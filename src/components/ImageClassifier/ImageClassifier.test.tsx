@@ -75,6 +75,8 @@ describe('ImageClassifier Integration', () => {
 
         const sample1 = new File(['somedata'], 'sample1.png', { type: 'image/png' });
         const sample2 = new File(['somedata'], 'sample2.png', { type: 'image/png' });
+        const sample3 = new File(['somedata'], 'sample3.png', { type: 'image/png' });
+        const sample4 = new File(['somedata'], 'sample4.png', { type: 'image/png' });
 
         const class1element = screen.getByTestId('file-trainingdata.labels.class 1');
         expect(class1element).toBeInTheDocument();
@@ -88,6 +90,10 @@ describe('ImageClassifier Integration', () => {
         await user.upload(class2element, sample2);
 
         const trainButton = screen.getByTestId('train-button');
+        expect(trainButton).toBeDisabled();
+
+        await user.upload(class1element, sample3);
+        await user.upload(class2element, sample4);
         await waitFor(() => expect(trainButton).toBeEnabled());
 
         await user.click(trainButton);

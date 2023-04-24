@@ -1,7 +1,7 @@
 import React, { useCallback, useRef, useState } from 'react';
 import style from './classification.module.css';
 import { IClassification } from '../../state';
-import { VerticalButton, Button } from '../button/Button';
+import { VerticalButton } from '../button/Button';
 import { Widget } from '../widget/Widget';
 import Sample from './Sample';
 import WebcamCapture from './WebcamCapture';
@@ -15,6 +15,9 @@ import { NativeTypes } from 'react-dnd-html5-backend';
 import UploadIcon from '@mui/icons-material/Upload';
 import { canvasFromFile } from '../../util/canvas';
 import DnDAnimation from '../DnDAnimation/DnDAnimation';
+import AlertPara from '../AlertPara/AlertPara';
+
+const SAMPLEMIN = 2;
 
 interface Props {
     name: string;
@@ -183,14 +186,19 @@ export function Classification({ name, active, data, index, setData, onActivate,
                         onChange={onFileChange}
                         multiple
                     />
-                    {data.samples.length === 0 && (
-                        <p className={style.samplesLabel}>{t('trainingdata.labels.addSamples')}:</p>
-                    )}
-                    {data.samples.length > 0 && (
-                        <p className={style.samplesLabel}>
-                            {t('trainingdata.labels.imageSamples', { count: data.samples.length })}
-                        </p>
-                    )}
+                    <AlertPara
+                        severity={data.samples.length === 1 ? 'info' : 'none'}
+                        hideIcon={active}
+                        isolated={active}
+                    >
+                        {data.samples.length === 0 && t('trainingdata.labels.addSamples')}
+                        {data.samples.length >= SAMPLEMIN &&
+                            t('trainingdata.labels.imageSamples', { count: data.samples.length })}
+                        {data.samples.length > 0 &&
+                            data.samples.length < SAMPLEMIN &&
+                            t('trainingdata.labels.needsMore')}
+                    </AlertPara>
+
                     {doAnimation && <DnDAnimation />}
                     <ol
                         ref={scrollRef}
