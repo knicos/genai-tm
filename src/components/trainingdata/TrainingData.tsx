@@ -40,11 +40,17 @@ export function TrainingData({ active, data, setData, disabled }: Props) {
 
     const doDeactivate = useCallback(
         (e: React.FocusEvent<HTMLElement>) => {
-            if (e.relatedTarget && !e.currentTarget.contains(e.relatedTarget)) {
-                setActiveIndex(-1);
-            } else if (!e.relatedTarget) {
-                setActiveIndex(-1);
-            }
+            const relTarget = e.relatedTarget;
+            const curTarget = e.currentTarget;
+            const doClose = () => {
+                if (relTarget && !curTarget.contains(relTarget)) {
+                    setActiveIndex(-1);
+                } else if (!relTarget) {
+                    setActiveIndex(-1);
+                }
+                window.removeEventListener('mouseup', doClose);
+            };
+            window.addEventListener('mouseup', doClose);
         },
         [setActiveIndex]
     );
