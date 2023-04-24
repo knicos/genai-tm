@@ -18,6 +18,7 @@ import { useDrop } from 'react-dnd';
 import { NativeTypes } from 'react-dnd-html5-backend';
 import TabPanel from './TabPanel';
 import WebcamInput from './WebcamInput';
+import { useTabActive } from '../../util/useTabActive';
 
 interface Props {
     disabled?: boolean;
@@ -29,13 +30,16 @@ interface Props {
 export default function Input({ enabled, model, ...props }: Props) {
     const { namespace, enableFileInput } = useVariant();
     const { t } = useTranslation(namespace);
-    const [enableInput, setEnableInput] = useState(true);
+    const [enableInputSwitch, setEnableInput] = useState(true);
     const [tabIndex, setTabIndex] = useState(0);
     const [, setPredictions] = useRecoilState(prediction);
     const [, setPredictionIndex] = useRecoilState(predictedIndex);
     const fileRef = useRef<HTMLInputElement>(null);
     const fileImageRef = useRef<HTMLDivElement>(null);
     const [file, setFile] = useState<HTMLCanvasElement | null>(null);
+    const isActive = useTabActive();
+
+    const enableInput = isActive && enableInputSwitch;
 
     const doChangeTab = useCallback(
         (event: React.SyntheticEvent, newValue: number) => {

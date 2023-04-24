@@ -6,6 +6,7 @@ import style from './Output.module.css';
 import { useVariant } from '../../util/variant';
 import { useTranslation } from 'react-i18next';
 import CircularProgress from '@mui/material/CircularProgress';
+import { useTabActive } from '../../util/useTabActive';
 
 interface Props {
     scaleFactor: number;
@@ -17,6 +18,7 @@ interface Props {
 export default function RawOutput({ scaleFactor, behaviours, predicted, volume }: Props) {
     const { namespace } = useVariant();
     const { t } = useTranslation(namespace);
+    const isActive = useTabActive();
 
     const currentBehaviour = predicted < behaviours.length ? behaviours[predicted] : null;
     const hasImage = !!currentBehaviour?.image || !!currentBehaviour?.text;
@@ -52,7 +54,7 @@ export default function RawOutput({ scaleFactor, behaviours, predicted, volume }
                                 showIcon={!hasImage}
                                 volume={volume / 100}
                                 uri={behaviour.audio.uri}
-                                play={ix === predicted}
+                                play={ix === predicted && isActive}
                             />
                         )}
                         {behaviour?.embed && (
