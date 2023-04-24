@@ -27,7 +27,7 @@ describe('Behaviours component', () => {
             />,
             { wrapper: TestWrapper }
         );
-        expect(setBehaviour).toHaveBeenCalledWith([{ image: expect.any(Object) }]);
+        expect(setBehaviour).toHaveBeenCalledWith([{ text: { text: 'testclass1' } }]);
     });
 
     it('renders with more behaviours than classes', async () => {

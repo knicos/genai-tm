@@ -16,8 +16,7 @@ describe('Behaviour component', () => {
             />,
             { wrapper: TestWrapper }
         );
-        expect(screen.getByTestId('image-upload')).toBeInTheDocument();
-        expect(screen.getByTestId('image-delete')).toBeDisabled();
+        expect(screen.getByTestId('text-message')).toBeInTheDocument();
         expect(screen.getByTestId('image-option')).toBeInTheDocument();
         expect(screen.getByTestId('audio-option')).toBeInTheDocument();
         expect(screen.getByTestId('text-option')).toBeInTheDocument();

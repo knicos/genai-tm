@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useRef, useEffect } from 'react';
 import { Widget } from '../widget/Widget';
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
@@ -37,7 +37,19 @@ interface Props {
 export default function Behaviour({ classLabel, behaviour, setBehaviour, index, ...props }: Props) {
     const { soundBehaviours, imageBehaviours, multipleBehaviours, embedBehaviours, namespace } = useVariant();
     const { t } = useTranslation(namespace);
-    const [value, setValue] = useState<BehaviourTypes>(imageBehaviours ? 'image' : 'sound');
+    const [value, setValue] = useState<BehaviourTypes>('text');
+    const prevLabel = useRef(classLabel);
+
+    useEffect(() => {
+        if (behaviour.text?.text === prevLabel.current && behaviour.text?.text !== classLabel) {
+            const mutated = { ...behaviour, text: { ...behaviour.text } };
+            if (mutated.text) {
+                mutated.text.text = classLabel;
+            }
+            setBehaviour(mutated, index);
+        }
+        prevLabel.current = classLabel;
+    }, [classLabel, behaviour, setBehaviour, index]);
 
     const handleChange = useCallback(
         (event: React.MouseEvent<HTMLElement>, newType: BehaviourTypes | null) => {
@@ -92,15 +104,13 @@ export default function Behaviour({ classLabel, behaviour, setBehaviour, index, 
                     size="small"
                     sx={{ margin: '1rem 0' }}
                 >
-                    {imageBehaviours && (
-                        <ToggleButton
-                            value="image"
-                            aria-label={t<string>('behaviours.aria.image')}
-                            data-testid="image-option"
-                        >
-                            <ImageIcon />
-                        </ToggleButton>
-                    )}
+                    <ToggleButton
+                        value="text"
+                        aria-label={t<string>('behaviours.aria.text')}
+                        data-testid="text-option"
+                    >
+                        <TextSnippetIcon />
+                    </ToggleButton>
                     {soundBehaviours && (
                         <ToggleButton
                             value="sound"
@@ -110,13 +120,15 @@ export default function Behaviour({ classLabel, behaviour, setBehaviour, index, 
                             <MusicNoteIcon />
                         </ToggleButton>
                     )}
-                    <ToggleButton
-                        value="text"
-                        aria-label={t<string>('behaviours.aria.text')}
-                        data-testid="text-option"
-                    >
-                        <TextSnippetIcon />
-                    </ToggleButton>
+                    {imageBehaviours && (
+                        <ToggleButton
+                            value="image"
+                            aria-label={t<string>('behaviours.aria.image')}
+                            data-testid="image-option"
+                        >
+                            <ImageIcon />
+                        </ToggleButton>
+                    )}
                     {embedBehaviours && (
                         <ToggleButton
                             value="embed"
