@@ -15,7 +15,7 @@
     "modelThreshold": false,
     "advancedMenu": false,
     "multipleBehaviours": true,
-    "disableSaveSamples": true,
+    "disableSaveSamples": false,
     "showTrainingAnimation": false,
     "resetOnLoad": false,
     "enableFileInput": true,
