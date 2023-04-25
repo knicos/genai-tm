@@ -1,5 +1,5 @@
 import React from 'react';
-import { act, render, screen, within } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import SaveDialog from './SaveDialog';
 import userEvent from '@testing-library/user-event';
 
@@ -51,6 +51,6 @@ describe('SaveDialog component', () => {
         const save = screen.getByTestId('save-save');
         await user.click(save);
         expect(trigger).toHaveBeenCalledTimes(1);
-        expect(onsave).toHaveBeenCalledWith({ samples: false, model: true, behaviours: true });
+        expect(onsave).toHaveBeenCalledWith({ samples: true, model: true, behaviours: true });
     });
 });

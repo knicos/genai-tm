@@ -9,17 +9,19 @@
 
 .dropSuggest {
     color: primary;
-    border: 1px dashed primary;
-    border-radius: 6px;
     display: flex;
     align-items: center;
     min-height: 58px;
     box-sizing: border-box;
-    padding: 0rem 1rem;
+    padding: 0;
     font-size: 11pt;
     text-align: center;
-    position: relative;
+    position: absolute;
     background: transparent;
+    left: 50%;
+    right: 1rem;
+    top: 0.5rem;
+    bottom: 0.5rem;
 }
 
 .dropSuggestAnimated {

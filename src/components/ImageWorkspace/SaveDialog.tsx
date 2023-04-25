@@ -25,7 +25,7 @@ export default function SaveDialog({ trigger, onSave, hasModel }: Props) {
     const { namespace, disableSaveSamples } = useVariant();
     const { t } = useTranslation(namespace);
 
-    const [saveSamples, setSaveSamples] = useState(false);
+    const [saveSamples, setSaveSamples] = useState(!disableSaveSamples);
     const [saveBehaviours, setSaveBehaviours] = useState(true);
 
     const changeSamples = useCallback(

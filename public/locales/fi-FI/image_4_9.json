@@ -47,15 +47,15 @@
             "imageSamples": "{{count}} kuvaa",
             "class": "Luokka",
             "wait": "Otetaan kuvia...",
-            "dropFiles": "or drag images here from a website or file",
-            "needsMore": "More samples are needed"
+            "dropFiles": "tai vedä kuvia tähän nettisivuilta tai tiedostoista",
+            "needsMore": "Lisää opetusdataa tarvitaan"
         },
         "aria": {
-            "sample": "uploaded sample",
-            "delete": "delete sample",
+            "sample": "ladattu opetusdata",
+            "delete": "poista opetusdata",
             "more": "Lisää asetuksia",
             "close": "Sulje",
-            "classCard": "Training data for {{name}}"
+            "classCard": "Opetusdata {{name}}lle"
         }
     },
     "training": {
@@ -91,7 +91,7 @@
             "upload": "lataa tai pudota tiedosto tähän"
         },
         "aria": {
-            "switch": "Enable input source"
+            "switch": " Ota webkamera käytöön"
         }
     },
     "model": {
@@ -106,21 +106,21 @@
     "output": {
         "labels": {
             "title": "Tulos",
-            "deploy": "Deploy"
+            "deploy": "Esitä"
         },
         "aria": {
-            "volume": "Volume",
-            "image": "class {{index}} output",
-            "display": "output for class {{index}}",
-            "expand": "expand window size"
+            "volume": "Äänenvoimakkuus",
+            "image": "luokan {{index}} tulos",
+            "display": "tulos luokalle {{index}}",
+            "expand": "laajenna"
         }
     },
     "behaviours": {
         "actions": {
             "upload": "Lataa",
             "delete": "Poista",
-            "record": "Record",
-            "stop": "Stop"
+            "record": "Äänitä",
+            "stop": "Lopeta"
         },
         "labels": {
             "title": "Toiminta:",
@@ -128,38 +128,38 @@
             "link": "Linkki",
             "linkError": "Linkkiä ei tueta",
             "embedInfo": "Näytä kuvia tai videoita linkistä. (Esimerksi YouTube, Vimeo, SoundCloud)",
-            "voiceRecording": "Voice Recording"
+            "voiceRecording": "Äänite"
         },
         "aria": {
-            "message": "Text for output",
-            "image": "image behaviour",
-            "sound": "sound behaviour",
-            "text": "text behaviour",
-            "embed": "embed link behaviour",
-            "imageOutput": "Uploaded image",
-            "noImage": "Image placeholder",
-            "stop": "stop",
-            "play": "play",
-            "behaviourCard": "Behaviour for {{name}}"
+            "message": "tuloksen teksti",
+            "image": "kuvan toiminto",
+            "sound": "Äänen toiminto",
+            "text": "tekstin toiminto",
+            "embed": "upotetun linkin toiminto",
+            "imageOutput": "Ladattu kuva",
+            "noImage": "kuvan paikkamerkki",
+            "stop": "Pysäytä",
+            "play": "aloita",
+            "behaviourCard": "toiminto {{name}}lle"
         }
     },
     "stepper": {
         "actions": {
-            "next": "Next"
+            "next": "Seuraava"
         },
         "aria": {
-            "step": "task steps"
+            "step": "seuraava vaihe"
         }
     },
     "webcam": {
         "aria": {
-            "video": "live webcam video"
+            "video": "webkameran syöte"
         }
     },
     "widget": {
         "aria": {
-            "editTitle": "edit title",
-            "editTitleInput": "{{value}} edit box"
+            "editTitle": "muokkaa otsikkoa",
+            "editTitleInput": "{{value}} muokkaa laatikkoa"
         },
         "labels": {
             "titlePlaceholder": "Nimi"
@@ -167,7 +167,7 @@
     },
     "fontcolor": {
         "aria": {
-            "title": "select font colour"
+            "title": "valitse fontin väri"
         }
     }
 }
