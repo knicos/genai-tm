@@ -4,42 +4,16 @@ import Behaviours from './Behaviours';
 import TestWrapper from '../../util/TestWrapper';
 
 describe('Behaviours component', () => {
-    it('renders without any classes', async () => {
+    it('renders with one behaviour', async () => {
         const setBehaviour = jest.fn();
         render(
             <Behaviours
-                classes={[]}
-                behaviours={[]}
+                classes={['c1']}
+                behaviours={[{ label: 'c1', text: { text: 'Test Message' } }]}
                 setBehaviours={setBehaviour}
             />,
             { wrapper: TestWrapper }
         );
         expect(screen.getByText('behaviours.labels.title')).toBeInTheDocument();
-    });
-
-    it('renders with more classes than behaviours', async () => {
-        const setBehaviour = jest.fn();
-        render(
-            <Behaviours
-                classes={['testclass1']}
-                behaviours={[]}
-                setBehaviours={setBehaviour}
-            />,
-            { wrapper: TestWrapper }
-        );
-        expect(setBehaviour).toHaveBeenCalledWith([{ text: { text: 'testclass1' } }]);
-    });
-
-    it('renders with more behaviours than classes', async () => {
-        const setBehaviour = jest.fn();
-        render(
-            <Behaviours
-                classes={[]}
-                behaviours={[{ text: { text: 'Test Message' } }]}
-                setBehaviours={setBehaviour}
-            />,
-            { wrapper: TestWrapper }
-        );
-        expect(setBehaviour).toHaveBeenCalledWith([]);
     });
 });

@@ -76,7 +76,7 @@ export async function loadProject(file: File | Blob): Promise<Project> {
     await Promise.all(promises);
 
     if (project.metadata && project.modelJson && project.modelWeights) {
-        const model = await tmImage.createTeachable(JSON.parse(project.metadata), {});
+        const model = await tmImage.createTeachable(JSON.parse(project.metadata), { version: 2, alpha: 0.35 });
 
         const parsedModel = JSON.parse(project.modelJson) as tf.io.ModelJSON;
 

@@ -10,7 +10,7 @@ describe('Behaviour component', () => {
         render(
             <Behaviour
                 index={0}
-                behaviour={{}}
+                behaviour={{ label: 'testClass' }}
                 classLabel="testClass"
                 setBehaviour={setBehaviour}
             />,
@@ -28,7 +28,7 @@ describe('Behaviour component', () => {
         render(
             <Behaviour
                 index={0}
-                behaviour={{}}
+                behaviour={{ label: 'testClass' }}
                 classLabel="testClass"
                 setBehaviour={setBehaviour}
             />,
@@ -46,7 +46,7 @@ describe('Behaviour component', () => {
         render(
             <Behaviour
                 index={0}
-                behaviour={{ text: { text: 'Test Message' } }}
+                behaviour={{ label: 'testClass', text: { text: 'Test Message' } }}
                 classLabel="testClass"
                 setBehaviour={setBehaviour}
             />,
@@ -61,6 +61,6 @@ describe('Behaviour component', () => {
         await user.keyboard('Another message');
         act(() => textarea.blur());
         expect(textarea).toHaveValue('Another message');
-        expect(setBehaviour).toHaveBeenCalledWith({ text: { text: 'Another message' } }, 0);
+        expect(setBehaviour).toHaveBeenCalledWith({ label: 'testClass', text: { text: 'Another message' } }, 0);
     });
 });

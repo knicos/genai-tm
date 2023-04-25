@@ -6,7 +6,12 @@ import userEvent from '@testing-library/user-event';
 describe('Text behaviour component', () => {
     it('renders without a behaviour', async () => {
         const setBehaviour = jest.fn();
-        render(<TextBehaviour setBehaviour={setBehaviour} />);
+        render(
+            <TextBehaviour
+                id="someid"
+                setBehaviour={setBehaviour}
+            />
+        );
         expect(within(screen.getByTestId('text-message')).getByDisplayValue('')).toBeInTheDocument();
     });
 
@@ -14,6 +19,7 @@ describe('Text behaviour component', () => {
         const setBehaviour = jest.fn();
         render(
             <TextBehaviour
+                id="someid"
                 setBehaviour={setBehaviour}
                 behaviour={{
                     text: 'Some test text',
@@ -29,6 +35,7 @@ describe('Text behaviour component', () => {
 
         render(
             <TextBehaviour
+                id="someid"
                 setBehaviour={setBehaviour}
                 behaviour={{
                     text: 'Some test text',

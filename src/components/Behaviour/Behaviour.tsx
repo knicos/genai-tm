@@ -21,6 +21,7 @@ export interface BehaviourType {
     audio?: AudioBehaviour;
     text?: TextBehaviour;
     embed?: EmbedBehaviour;
+    label: string;
 }
 
 interface Props {
@@ -60,23 +61,23 @@ export default function Behaviour({ classLabel, behaviour, setBehaviour, index, 
 
     const doSetBehaviour = useCallback(
         (image: ImageBehaviour | undefined) => {
-            setBehaviour(multipleBehaviours ? { ...behaviour, image } : { image }, index);
+            setBehaviour(multipleBehaviours ? { ...behaviour, image } : { label: classLabel, image }, index);
         },
-        [setBehaviour, behaviour, multipleBehaviours, index]
+        [setBehaviour, behaviour, multipleBehaviours, index, classLabel]
     );
 
     const doSetAudioBehaviour = useCallback(
         (audio: AudioBehaviour | undefined) => {
-            setBehaviour(multipleBehaviours ? { ...behaviour, audio } : { audio }, index);
+            setBehaviour(multipleBehaviours ? { ...behaviour, audio } : { label: classLabel, audio }, index);
         },
-        [setBehaviour, behaviour, multipleBehaviours, index]
+        [setBehaviour, behaviour, multipleBehaviours, index, classLabel]
     );
 
     const doSetTextBehaviour = useCallback(
         (text: TextBehaviour | undefined) => {
-            setBehaviour(multipleBehaviours ? { ...behaviour, text } : { text }, index);
+            setBehaviour(multipleBehaviours ? { ...behaviour, text } : { label: classLabel, text }, index);
         },
-        [setBehaviour, behaviour, multipleBehaviours, index]
+        [setBehaviour, behaviour, multipleBehaviours, index, classLabel]
     );
 
     const doSetEmbedBehaviour = useCallback(
@@ -153,6 +154,7 @@ export default function Behaviour({ classLabel, behaviour, setBehaviour, index, 
                 )}
                 {value === 'text' && (
                     <Text
+                        id={`behaviour-${index}`}
                         behaviour={behaviour.text}
                         setBehaviour={doSetTextBehaviour}
                     />

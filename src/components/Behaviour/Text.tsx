@@ -15,11 +15,12 @@ export interface TextBehaviour {
 }
 
 interface Props {
+    id: string;
     behaviour?: TextBehaviour;
     setBehaviour: (behaviour: TextBehaviour | undefined) => void;
 }
 
-export default function Text({ behaviour, setBehaviour }: Props) {
+export default function Text({ id, behaviour, setBehaviour }: Props) {
     const { namespace } = useVariant();
     const { t } = useTranslation(namespace);
     const [content, setContent] = useState('');
@@ -77,7 +78,7 @@ export default function Text({ behaviour, setBehaviour }: Props) {
                 label={t('behaviours.labels.message')}
                 aria-label={t<string>('behaviours.aria.message')}
                 fullWidth
-                id="message"
+                id={`${id}-message`}
                 size="small"
                 variant="outlined"
                 value={content}

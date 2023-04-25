@@ -19,6 +19,7 @@ import { loadProject } from './loader';
 import Alert from '@mui/material/Alert';
 import Snackbar from '@mui/material/Snackbar';
 import Deployer from '../Deployer/Deployer';
+import { patchBehaviours } from '../Behaviours/patch';
 
 const connections: IConnection[] = [
     { start: 'class', end: 'trainer', startPoint: 'right', endPoint: 'left' },
@@ -89,8 +90,9 @@ export default function Workspace({ step, visitedStep, onComplete, saveTrigger, 
         (model: TeachableMobileNet | undefined) => {
             addCloseAlert();
             setModel(model);
+            setBehaviours(patchBehaviours(behaviours, model?.getLabels() || []));
         },
-        [setModel]
+        [setModel, setBehaviours, behaviours]
     );
 
     const doSetData = useCallback(

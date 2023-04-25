@@ -22,6 +22,7 @@ describe('Output component', () => {
             <Output
                 behaviours={[
                     {
+                        label: 'testClass',
                         text: { text: 'Message' },
                     },
                 ]}
@@ -47,6 +48,7 @@ describe('Output component', () => {
             <Output
                 behaviours={[
                     {
+                        label: 'testClass',
                         text: { text: 'Message' },
                     },
                 ]}
@@ -73,12 +75,15 @@ describe('Output component', () => {
             <Output
                 behaviours={[
                     {
+                        label: 'testClass',
                         text: { text: 'Message1' },
                     },
                     {
+                        label: 'testClass',
                         text: { text: 'Message2' },
                     },
                     {
+                        label: 'testClass',
                         text: { text: 'Message3' },
                     },
                 ]}
@@ -106,6 +111,7 @@ describe('Output component', () => {
             <Output
                 behaviours={[
                     {
+                        label: 'testClass',
                         image: { uri: 'https://upload.wikimedia.org/wikipedia/commons/b/bd/Test.svg' },
                     },
                 ]}
@@ -131,6 +137,7 @@ describe('Output component', () => {
             <Output
                 behaviours={[
                     {
+                        label: 'testClass',
                         audio: { name: 'music.mp3', uri: '' },
                     },
                 ]}
@@ -156,6 +163,7 @@ describe('Output component', () => {
             <Output
                 behaviours={[
                     {
+                        label: 'testClass',
                         embed: { url: 'https://upload.wikimedia.org/wikipedia/commons/b/bd/Test.svg' },
                     },
                 ]}
