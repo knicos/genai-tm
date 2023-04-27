@@ -153,7 +153,8 @@
     },
     "webcam": {
         "aria": {
-            "video": "webkameran syöte"
+            "video": "webkameran syöte",
+            "flip": "Flip to different camera"
         }
     },
     "widget": {

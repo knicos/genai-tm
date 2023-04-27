@@ -153,7 +153,8 @@
     },
     "webcam": {
         "aria": {
-            "video": "live webcam video"
+            "video": "live webcam video",
+            "flip": "Flip to different camera"
         }
     },
     "widget": {

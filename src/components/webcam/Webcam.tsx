@@ -4,6 +4,8 @@ import style from './webcam.module.css';
 import Skeleton from '@mui/material/Skeleton';
 import { useTranslation } from 'react-i18next';
 import { useVariant } from '../../util/variant';
+import { IconButton } from '@mui/material';
+import CameraswitchIcon from '@mui/icons-material/Cameraswitch';
 
 interface Props {
     interval?: number;
@@ -21,6 +23,8 @@ export function Webcam({ interval, capture, onCapture, disable, direct, hidden }
     const webcamRef = useRef<HTMLDivElement>(null);
     const requestRef = useRef(-1);
     const previousTimeRef = useRef(0);
+    const [multiple, setMultiple] = useState(false);
+    const [facing, setFacing] = useState(false);
 
     const loop = useCallback(
         (timestamp: number) => {
@@ -50,9 +54,21 @@ export function Webcam({ interval, capture, onCapture, disable, direct, hidden }
 
     async function initWebcam() {
         const newWebcam = new TMWebcam(224, 224, true);
-        await newWebcam.setup();
+        await newWebcam.setup({ facingMode: facing ? 'user' : 'environment' });
         newWebcam.webcam.onsuspend = () => newWebcam.play();
         setWebcam(newWebcam);
+
+        if (!!navigator.mediaDevices?.enumerateDevices) {
+            try {
+                const devices = await navigator.mediaDevices.enumerateDevices();
+                const videoDev = devices.filter((d) => d.kind === 'videoinput');
+                if (videoDev.length > 1 && !multiple) {
+                    setMultiple(true);
+                }
+            } catch (e) {
+                console.error(e);
+            }
+        }
     }
 
     useEffect(() => {
@@ -62,7 +78,7 @@ export function Webcam({ interval, capture, onCapture, disable, direct, hidden }
     useEffect(() => {
         initWebcam().catch((e) => console.error('No webcam', e));
         return () => {
-            if (webcam) {
+            if (webcam?.webcam.srcObject) {
                 webcam.stop();
             }
             if (requestRef.current >= 0) {
@@ -70,7 +86,7 @@ export function Webcam({ interval, capture, onCapture, disable, direct, hidden }
             }
         };
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [facing]);
 
     useEffect(() => {
         if (webcam) {
@@ -100,6 +116,10 @@ export function Webcam({ interval, capture, onCapture, disable, direct, hidden }
         }
     }, [webcamRef, webcam]);
 
+    const doFlip = useCallback(() => {
+        setFacing((f) => !f);
+    }, [setFacing]);
+
     return hidden ? null : (
         <>
             {!webcam && (
@@ -109,13 +129,26 @@ export function Webcam({ interval, capture, onCapture, disable, direct, hidden }
                     height={224}
                 />
             )}
-            <div
-                data-testid="webcam"
-                className={style.container}
-                ref={webcamRef}
-                role="img"
-                aria-label={t<string>('webcam.aria.video')}
-            />
+            <div className={style.wrapContainer}>
+                {multiple && (
+                    <IconButton
+                        className={style.flipButton}
+                        size="large"
+                        color="inherit"
+                        onClick={doFlip}
+                        aria-label={t<string>('webcam.aria.flip')}
+                    >
+                        <CameraswitchIcon fontSize="large" />
+                    </IconButton>
+                )}
+                <div
+                    data-testid="webcam"
+                    className={style.container}
+                    ref={webcamRef}
+                    role="img"
+                    aria-label={t<string>('webcam.aria.video')}
+                />
+            </div>
         </>
     );
 }
