@@ -68,6 +68,7 @@ export function Classification({ name, active, data, index, setData, onActivate,
     const onFileChange = useCallback(
         (e: React.ChangeEvent<HTMLInputElement>) => {
             onDrop(Array.from(e.target.files || []));
+            e.target.value = '';
         },
         [onDrop]
     );

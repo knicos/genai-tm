@@ -80,6 +80,7 @@ export default function Image({ behaviour, setBehaviour }: Props) {
     const onFileChange = useCallback(
         (e: React.ChangeEvent<HTMLInputElement>) => {
             onDrop(Array.from(e.target.files || []));
+            e.target.value = '';
         },
         [onDrop]
     );
