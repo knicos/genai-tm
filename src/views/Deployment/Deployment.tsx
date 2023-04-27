@@ -38,7 +38,7 @@ export default function Deployment() {
     const onError = useCallback(() => setHadError(true), [setHadError]);
     const [model, behaviours] = useRemoteModel(code || '', onError);
 
-    const scaleFactor = Math.min((window.innerHeight - 200) / HEIGHT, window.innerWidth / WIDTH);
+    const scaleFactor = Math.min((window.innerHeight - 200) / HEIGHT, (window.innerWidth - 40) / WIDTH);
 
     const onDrop = useCallback(
         async (acceptedFiles: File[]) => {
@@ -119,43 +119,45 @@ export default function Deployment() {
                 onChange={onFileChange}
             />
             <div
-                className={style.controls}
+                className={style.barContainer}
                 style={{ width: `${Math.floor(scaleFactor * WIDTH)}px` }}
             >
-                <div
-                    ref={inputRef}
-                    className={style.inputContainer}
-                />
-                <Webcam
-                    hidden
-                    onCapture={doCapture}
-                    capture
-                    interval={100}
-                    disable={paused}
-                    direct
-                />
-                <IconButton
-                    color="inherit"
-                    onClick={doPause}
-                >
-                    {!paused && <VideocamIcon fontSize="large" />}
-                    {paused && <VideocamOffIcon fontSize="large" />}
-                </IconButton>
-                <IconButton
-                    color="inherit"
-                    onClick={doUpload}
-                >
-                    <FileUploadIcon fontSize="large" />
-                </IconButton>
-            </div>
-            <div className={style.volumeContainer}>
-                <VolumeDown />
-                <Slider
-                    aria-label={t<string>('output.aria.volume')}
-                    value={volume}
-                    onChange={changeVolume}
-                />
-                <VolumeUp />
+                <div className={style.controls}>
+                    <div
+                        ref={inputRef}
+                        className={style.inputContainer}
+                    />
+                    <Webcam
+                        hidden
+                        onCapture={doCapture}
+                        capture
+                        interval={100}
+                        disable={paused}
+                        direct
+                    />
+                    <IconButton
+                        color="inherit"
+                        onClick={doPause}
+                    >
+                        {!paused && <VideocamIcon fontSize="large" />}
+                        {paused && <VideocamOffIcon fontSize="large" />}
+                    </IconButton>
+                    <IconButton
+                        color="inherit"
+                        onClick={doUpload}
+                    >
+                        <FileUploadIcon fontSize="large" />
+                    </IconButton>
+                </div>
+                <div className={style.volumeContainer}>
+                    <VolumeDown />
+                    <Slider
+                        aria-label={t<string>('output.aria.volume')}
+                        value={volume}
+                        onChange={changeVolume}
+                    />
+                    <VolumeUp />
+                </div>
             </div>
             <Snackbar
                 anchorOrigin={{ vertical: 'top', horizontal: 'center' }}

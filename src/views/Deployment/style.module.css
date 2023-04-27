@@ -28,23 +28,29 @@
     text-shadow: 0 0 5px black;
 }
 
+.barContainer {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 2rem;
+    margin-top: 1rem;
+}
+
 .controls {
-    position: absolute;
-    bottom: 1rem;
     display: flex;
     justify-content: left;
     align-items: center;
     gap: 1rem;
     color: white;
+    flex-grow: 1;
 }
 
 .volumeContainer {
     display: flex;
     color: white;
-    position: absolute;
-    bottom: 1rem;
-    width: 100%;
+    width: 100px;
     max-width: 250px;
+    flex-grow: 2;
     gap: 1rem;
     align-items: center;
     justify-content: center;
