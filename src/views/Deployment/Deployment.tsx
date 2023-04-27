@@ -103,14 +103,6 @@ export default function Deployment() {
             className={dropProps.hovered ? style.dropContainer : style.container}
             ref={drop}
         >
-            <Webcam
-                hidden
-                onCapture={doCapture}
-                capture
-                interval={100}
-                disable={paused}
-                direct
-            />
             <Display
                 behaviours={behaviours}
                 scaleFactor={scaleFactor}
@@ -133,6 +125,14 @@ export default function Deployment() {
                 <div
                     ref={inputRef}
                     className={style.inputContainer}
+                />
+                <Webcam
+                    hidden
+                    onCapture={doCapture}
+                    capture
+                    interval={100}
+                    disable={paused}
+                    direct
                 />
                 <IconButton
                     color="inherit"

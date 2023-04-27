@@ -62,8 +62,9 @@ export function Webcam({ interval, capture, onCapture, disable, direct, hidden }
             try {
                 const devices = await navigator.mediaDevices.enumerateDevices();
                 const videoDev = devices.filter((d) => d.kind === 'videoinput');
-                if (videoDev.length > 1 && !multiple) {
-                    setMultiple(true);
+                if (videoDev.length > 1) {
+                    if (!multiple) setMultiple(true);
+                    newWebcam.flip = facing;
                 }
             } catch (e) {
                 console.error(e);
@@ -120,7 +121,20 @@ export function Webcam({ interval, capture, onCapture, disable, direct, hidden }
         setFacing((f) => !f);
     }, [setFacing]);
 
-    return hidden ? null : (
+    return hidden ? (
+        <>
+            {multiple && (
+                <IconButton
+                    size="large"
+                    color="inherit"
+                    onClick={doFlip}
+                    aria-label={t<string>('webcam.aria.flip')}
+                >
+                    <CameraswitchIcon fontSize="large" />
+                </IconButton>
+            )}
+        </>
+    ) : (
         <>
             {!webcam && (
                 <Skeleton
