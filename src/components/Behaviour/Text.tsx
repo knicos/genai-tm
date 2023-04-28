@@ -86,6 +86,7 @@ export default function Text({ id, behaviour, setBehaviour }: Props) {
                 onBlur={doBlur}
                 multiline
                 maxRows={4}
+                minRows={2}
             />
             <div className={style.row}>
                 <Alignment
