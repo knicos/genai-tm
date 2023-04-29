@@ -87,12 +87,6 @@ export function Classification({ name, active, data, index, setData, onActivate,
         },
     });
 
-    /*useEffect(() => {
-        if (scrollRef.current && dropProps.hovered) {
-            scrollRef.current.scrollLeft = scrollRef.current.scrollWidth;
-        }
-    }, [dropProps.hovered]);*/
-
     const setTitle = useCallback(
         (title: string) => {
             setData(
@@ -150,6 +144,7 @@ export function Classification({ name, active, data, index, setData, onActivate,
 
     return (
         <Widget
+            active={dropProps.hovered}
             title={name}
             aria-label={t<string>('trainingdata.aria.classCard', { name })}
             dataWidget="class"

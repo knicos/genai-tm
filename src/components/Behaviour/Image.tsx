@@ -7,8 +7,6 @@ import { VerticalButton } from '../button/Button';
 import IconImage from '../IconImage/IconImage';
 import { useTranslation } from 'react-i18next';
 import { useVariant } from '../../util/variant';
-import { useDrop } from 'react-dnd';
-import { NativeTypes } from 'react-dnd-html5-backend';
 import UploadIcon from '@mui/icons-material/Upload';
 
 export interface ImageBehaviour {
@@ -17,10 +15,11 @@ export interface ImageBehaviour {
 
 interface Props {
     behaviour?: ImageBehaviour;
+    dropping?: boolean;
     setBehaviour: (behaviour: ImageBehaviour | undefined) => void;
 }
 
-export default function Image({ behaviour, setBehaviour }: Props) {
+export default function Image({ behaviour, setBehaviour, dropping }: Props) {
     const { namespace } = useVariant();
     const { t } = useTranslation(namespace);
     const fileRef = useRef<HTMLInputElement>(null);
@@ -43,34 +42,6 @@ export default function Image({ behaviour, setBehaviour }: Props) {
         [setBehaviour]
     );
 
-    const [dropProps, drop] = useDrop({
-        accept: [NativeTypes.FILE, NativeTypes.URL],
-        drop(items: any) {
-            const types = Array.from<DataTransferItem>(items.items).map((i) => i.type);
-            const img = types.findIndex((i) => i.startsWith('image/'));
-
-            if (img >= 0) {
-                onDrop(items.files);
-            } else {
-                const uri = types.findIndex((i) => i === 'text/uri-list');
-                if (uri >= 0) {
-                    items.items[uri].getAsString((data: string) => {
-                        setBehaviour({
-                            uri: data,
-                        });
-                    });
-                }
-            }
-        },
-        collect(monitor) {
-            const can = monitor.canDrop();
-            return {
-                highlighted: can,
-                hovered: monitor.isOver() && can,
-            };
-        },
-    });
-
     const doDelete = useCallback(() => {
         setBehaviour(undefined);
     }, [setBehaviour]);
@@ -86,10 +57,7 @@ export default function Image({ behaviour, setBehaviour }: Props) {
     );
 
     return (
-        <div
-            ref={drop}
-            className={style.imageContainer}
-        >
+        <div className={style.imageContainer}>
             <input
                 data-testid={`image-file-upload}`}
                 hidden
@@ -134,7 +102,7 @@ export default function Image({ behaviour, setBehaviour }: Props) {
                         aria-label={t<string>('behaviours.aria.noImage')}
                     />
                 )}
-                {dropProps.hovered && (
+                {dropping && (
                     <div className={style.dropImage}>
                         <UploadIcon />
                     </div>

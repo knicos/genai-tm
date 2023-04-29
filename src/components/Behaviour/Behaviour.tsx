@@ -13,6 +13,8 @@ import Text, { TextBehaviour } from './Text';
 import Embed, { EmbedBehaviour } from './Embed';
 import LinkIcon from '@mui/icons-material/Link';
 import { useTranslation } from 'react-i18next';
+import { useDrop } from 'react-dnd';
+import { NativeTypes } from 'react-dnd-html5-backend';
 
 type BehaviourTypes = 'image' | 'sound' | 'speech' | 'text' | 'embed';
 
@@ -40,6 +42,63 @@ export default function Behaviour({ classLabel, behaviour, setBehaviour, index, 
     const { t } = useTranslation(namespace);
     const [value, setValue] = useState<BehaviourTypes>('text');
     const prevLabel = useRef(classLabel);
+
+    const [dropProps, drop] = useDrop({
+        accept: [NativeTypes.FILE, NativeTypes.URL],
+        drop(items: any) {
+            const types = Array.from<DataTransferItem>(items.items).map((i) => i.type);
+            const ix = types.findIndex((i) => i.startsWith('image/') || i.startsWith('audio/'));
+
+            if (ix >= 0) {
+                const file = items.files[0];
+                const reader = new FileReader();
+                reader.onabort = () => console.warn('file reading aborted');
+                reader.onerror = () => console.error('file reading error');
+                reader.onload = () => {
+                    if (file.type.startsWith('image/')) {
+                        setBehaviour(
+                            {
+                                image: { uri: reader.result as string },
+                                label: classLabel,
+                            },
+                            index
+                        );
+                        setValue('image');
+                    } else {
+                        setBehaviour(
+                            {
+                                audio: { uri: reader.result as string, name: file.name },
+                                label: classLabel,
+                            },
+                            index
+                        );
+                        setValue('sound');
+                    }
+                };
+                reader.readAsDataURL(file);
+            } else {
+                const uri = types.findIndex((i) => i === 'text/uri-list');
+                if (uri >= 0) {
+                    items.items[uri].getAsString((data: string) => {
+                        setBehaviour(
+                            {
+                                image: { uri: data },
+                                label: classLabel,
+                            },
+                            index
+                        );
+                    });
+                }
+            }
+        },
+        collect(monitor) {
+            const can = monitor.canDrop();
+            return {
+                highlighted: can,
+                hovered: monitor.isOver() && can,
+            };
+        },
+    });
 
     useEffect(() => {
         if (behaviour.text?.text === prevLabel.current && behaviour.text?.text !== classLabel) {
@@ -89,13 +148,17 @@ export default function Behaviour({ classLabel, behaviour, setBehaviour, index, 
 
     return (
         <Widget
+            active={dropProps.hovered}
             dataWidget="behaviour"
             title={classLabel}
             className={style.widget}
             aria-label={t<string>('behaviours.aria.behaviourCard', { name: classLabel })}
             {...props}
         >
-            <div className={style.container}>
+            <div
+                className={style.container}
+                ref={drop}
+            >
                 <ToggleButtonGroup
                     value={value}
                     onChange={handleChange}
@@ -144,12 +207,14 @@ export default function Behaviour({ classLabel, behaviour, setBehaviour, index, 
                     <Image
                         behaviour={behaviour.image}
                         setBehaviour={doSetBehaviour}
+                        dropping={dropProps.hovered}
                     />
                 )}
                 {value === 'sound' && (
                     <Sound
                         behaviour={behaviour.audio}
                         setBehaviour={doSetAudioBehaviour}
+                        dropping={dropProps.hovered}
                     />
                 )}
                 {value === 'text' && (

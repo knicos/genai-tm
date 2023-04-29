@@ -9,6 +9,8 @@
     box-shadow: 2px 2px 4px #bbb;
     flex-shrink: 0;
     animation: fadein 0.5s 1;
+    box-sizing: border-box;
+    border: 1px solid white;
 }
 
 @keyframes fadein {
@@ -24,6 +26,11 @@
     composes: widget;
     pointer-events: none;
     opacity: 0.5;
+}
+
+.widgetActive {
+    composes: widget;
+    border: 1px dashed primary;
 }
 
 .widget_title {

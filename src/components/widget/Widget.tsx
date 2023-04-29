@@ -17,6 +17,7 @@ interface Props extends React.PropsWithChildren {
     hidden?: boolean;
     dataWidget?: string;
     'aria-label'?: string;
+    active?: boolean;
 }
 
 const TextField = styled(MTextField)({
@@ -36,6 +37,7 @@ export function Widget({
     className,
     hidden,
     dataWidget,
+    active,
     ...props
 }: Props) {
     const { namespace } = useVariant();
@@ -44,7 +46,7 @@ export function Widget({
     const ref = useRef<HTMLElement>(null);
     const editRef = useRef<HTMLDivElement>(null);
 
-    const classToUse = disabled ? style.widgetDisabled : style.widget;
+    const classToUse = disabled ? style.widgetDisabled : active ? style.widgetActive : style.widget;
 
     const doEndEdit = useCallback(() => {
         if (editRef.current) {

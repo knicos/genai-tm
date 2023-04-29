@@ -77,6 +77,7 @@ export default function Input({ enabled, model, ...props }: Props) {
             if (acceptedFiles.length === 1) {
                 if (!acceptedFiles[0].type.startsWith('image/')) return;
                 const newCanvas = await canvasFromFile(acceptedFiles[0]);
+                setTabIndex(1);
                 setFile(newCanvas);
             }
         },
@@ -122,6 +123,7 @@ export default function Input({ enabled, model, ...props }: Props) {
 
     return (
         <Widget
+            active={dropProps.hovered}
             dataWidget="input"
             title={t<string>('input.labels.title')}
             menu={
@@ -145,7 +147,10 @@ export default function Input({ enabled, model, ...props }: Props) {
             {...props}
         >
             {enableFileInput && (
-                <div className={style.container}>
+                <div
+                    className={style.container}
+                    ref={drop}
+                >
                     <Tabs
                         value={tabIndex}
                         onChange={doChangeTab}
@@ -180,7 +185,6 @@ export default function Input({ enabled, model, ...props }: Props) {
                         value={tabIndex}
                         index={1}
                         enabled={enableInput}
-                        ref={drop}
                     >
                         <input
                             type="file"
