@@ -120,9 +120,10 @@ export default function Sound({ behaviour, setBehaviour }: Props) {
         [setBehaviour, t]
     );
 
+    const doPlayStop = useCallback(() => (audio ? doStop() : doPlay()), [audio, doStop, doPlay]);
+
     return (
         <>
-            <p className={style.audioTitle}>{behaviour?.name}</p>
             <div
                 className={style.imageContainer}
                 ref={drop}
@@ -153,28 +154,17 @@ export default function Sound({ behaviour, setBehaviour }: Props) {
                 >
                     {t('behaviours.actions.delete')}
                 </VerticalButton>
-                <div className={style.image}>
-                    {!audio && (
+                <div className={style.audio}>
+                    {!dropProps.hovered && (
                         <IconButton
-                            aria-label={t<string>('behaviours.aria.stop')}
+                            aria-label={t<string>(!audio ? 'behaviours.aria.play' : 'behaviours.aria.stop')}
                             data-testid="audio-play"
                             disabled={!behaviour}
                             color="primary"
-                            onClick={doPlay}
+                            onClick={doPlayStop}
                             size="large"
                         >
-                            <PlayArrowIcon fontSize="large" />
-                        </IconButton>
-                    )}
-                    {audio && (
-                        <IconButton
-                            aria-label={t<string>('behaviours.aria.stop')}
-                            data-testid="audio-stop"
-                            color="primary"
-                            onClick={doStop}
-                            size="large"
-                        >
-                            <StopIcon fontSize="large" />
+                            {!audio ? <PlayArrowIcon fontSize="large" /> : <StopIcon fontSize="large" />}
                         </IconButton>
                     )}
                     {dropProps.hovered && (

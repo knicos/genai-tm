@@ -26,7 +26,6 @@ describe('Audio behaviour component', () => {
         expect(screen.getByTestId('audio-upload')).toBeInTheDocument();
         expect(screen.getByTestId('audio-delete')).toBeEnabled();
         expect(screen.getByTestId('audio-play')).toBeEnabled();
-        expect(screen.getByText('filename goes here')).toBeInTheDocument();
     });
 
     it('can delete a behaviour', async () => {
