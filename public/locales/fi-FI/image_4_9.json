@@ -48,7 +48,8 @@
             "class": "Luokka",
             "wait": "Otetaan kuvia...",
             "dropFiles": "tai vedä kuvia tähän nettisivuilta tai tiedostoista",
-            "needsMore": "Lisää opetusdataa tarvitaan"
+            "needsMore": "Lisää opetusdataa tarvitaan",
+            "dropError": "Only images can be dropped here"
         },
         "aria": {
             "sample": "ladattu opetusdata",
@@ -128,7 +129,8 @@
             "link": "Linkki",
             "linkError": "Linkkiä ei tueta",
             "embedInfo": "Näytä kuvia tai videoita linkistä. (Esimerksi YouTube, Vimeo, SoundCloud)",
-            "voiceRecording": "Äänite"
+            "voiceRecording": "Äänite",
+            "dropError": "Only images or sounds can be dropped here"
         },
         "aria": {
             "message": "tuloksen teksti",

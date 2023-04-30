@@ -11,6 +11,7 @@
     animation: fadein 0.5s 1;
     box-sizing: border-box;
     border: 1px solid white;
+    position: relative;
 }
 
 @keyframes fadein {

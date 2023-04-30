@@ -48,7 +48,8 @@
             "class": "Class",
             "wait": "Capturing...",
             "dropFiles": "or drag images here from a website or file",
-            "needsMore": "More samples are needed"
+            "needsMore": "More samples are needed",
+            "dropError": "Only images can be dropped here"
         },
         "aria": {
             "sample": "uploaded sample",
@@ -128,7 +129,8 @@
             "link": "Link",
             "linkError": "That link is not supported",
             "embedInfo": "Show videos and images from a link. Only some links will work, for example: YouTube, Vimeo, SoundCloud, video files or images.",
-            "voiceRecording": "Voice Recording"
+            "voiceRecording": "Voice Recording",
+            "dropError": "Only images or sounds can be dropped here"
         },
         "aria": {
             "message": "Text for output",

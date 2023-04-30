@@ -16,6 +16,7 @@ import UploadIcon from '@mui/icons-material/Upload';
 import { canvasFromFile } from '../../util/canvas';
 import DnDAnimation from '../DnDAnimation/DnDAnimation';
 import AlertPara from '../AlertPara/AlertPara';
+import AlertModal from '../AlertModal/AlertModal';
 
 const SAMPLEMIN = 2;
 
@@ -37,6 +38,7 @@ export function Classification({ name, active, data, index, setData, onActivate,
     const scrollRef = useRef<HTMLOListElement>(null);
     const [loading, setLoading] = useState(false);
     const [showTip, setShowTip] = useState(false);
+    const [showDropError, setShowDropError] = useState(false);
 
     const doShowTip = useCallback(() => data.samples.length === 0 && setShowTip(true), [data, setShowTip]);
 
@@ -44,6 +46,10 @@ export function Classification({ name, active, data, index, setData, onActivate,
         (acceptedFiles: File[]) => {
             setLoading(true);
             const filtered = acceptedFiles.filter((f) => f.type.startsWith('image/'));
+            if (filtered.length === 0) {
+                setShowDropError(true);
+                return;
+            }
             const promises = filtered.map((file) => canvasFromFile(file));
 
             Promise.all(promises)
@@ -139,6 +145,8 @@ export function Classification({ name, active, data, index, setData, onActivate,
     const doActivate = useCallback(() => onActivate(index), [onActivate, index]);
 
     const doUploadClick = useCallback(() => fileRef.current?.click(), []);
+
+    const doDropErrorClose = useCallback(() => setShowDropError(false), [setShowDropError]);
 
     const doAnimation = index === 0 && showTip && showDragTip;
 
@@ -247,6 +255,13 @@ export function Classification({ name, active, data, index, setData, onActivate,
                     </ol>
                 </div>
             </div>
+            <AlertModal
+                open={showDropError}
+                onClose={doDropErrorClose}
+                severity="error"
+            >
+                {t('trainingdata.labels.dropError')}
+            </AlertModal>
         </Widget>
     );
 }

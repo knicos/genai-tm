@@ -15,6 +15,7 @@ import LinkIcon from '@mui/icons-material/Link';
 import { useTranslation } from 'react-i18next';
 import { useDrop } from 'react-dnd';
 import { NativeTypes } from 'react-dnd-html5-backend';
+import AlertModal from '../AlertModal/AlertModal';
 
 type BehaviourTypes = 'image' | 'sound' | 'speech' | 'text' | 'embed';
 
@@ -42,6 +43,7 @@ export default function Behaviour({ classLabel, behaviour, setBehaviour, index, 
     const { t } = useTranslation(namespace);
     const [value, setValue] = useState<BehaviourTypes>('text');
     const prevLabel = useRef(classLabel);
+    const [showDropError, setShowDropError] = useState(false);
 
     const [dropProps, drop] = useDrop({
         accept: [NativeTypes.FILE, NativeTypes.URL],
@@ -88,6 +90,8 @@ export default function Behaviour({ classLabel, behaviour, setBehaviour, index, 
                             index
                         );
                     });
+                } else {
+                    setShowDropError(true);
                 }
             }
         },
@@ -145,6 +149,8 @@ export default function Behaviour({ classLabel, behaviour, setBehaviour, index, 
         },
         [setBehaviour, index, behaviour]
     );
+
+    const doDropErrorClose = useCallback(() => setShowDropError(false), [setShowDropError]);
 
     return (
         <Widget
@@ -232,6 +238,13 @@ export default function Behaviour({ classLabel, behaviour, setBehaviour, index, 
                     />
                 )}
             </div>
+            <AlertModal
+                open={showDropError}
+                onClose={doDropErrorClose}
+                severity="error"
+            >
+                {t('behaviours.labels.dropError')}
+            </AlertModal>
         </Widget>
     );
 }

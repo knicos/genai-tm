@@ -19,6 +19,7 @@ import { NativeTypes } from 'react-dnd-html5-backend';
 import TabPanel from './TabPanel';
 import WebcamInput from './WebcamInput';
 import { useTabActive } from '../../util/useTabActive';
+import AlertModal from '../AlertModal/AlertModal';
 
 interface Props {
     disabled?: boolean;
@@ -38,6 +39,7 @@ export default function Input({ enabled, model, ...props }: Props) {
     const fileImageRef = useRef<HTMLDivElement>(null);
     const [file, setFile] = useState<HTMLCanvasElement | null>(null);
     const isActive = useTabActive();
+    const [showDropError, setShowDropError] = useState(false);
 
     const enableInput = isActive && enableInputSwitch;
 
@@ -75,7 +77,10 @@ export default function Input({ enabled, model, ...props }: Props) {
     const onDrop = useCallback(
         async (acceptedFiles: File[]) => {
             if (acceptedFiles.length === 1) {
-                if (!acceptedFiles[0].type.startsWith('image/')) return;
+                if (!acceptedFiles[0].type.startsWith('image/')) {
+                    setShowDropError(true);
+                    return;
+                }
                 const newCanvas = await canvasFromFile(acceptedFiles[0]);
                 setTabIndex(1);
                 setFile(newCanvas);
@@ -120,6 +125,8 @@ export default function Input({ enabled, model, ...props }: Props) {
         },
         [onDrop]
     );
+
+    const doDropErrorClose = useCallback(() => setShowDropError(false), [setShowDropError]);
 
     return (
         <Widget
@@ -232,6 +239,13 @@ export default function Input({ enabled, model, ...props }: Props) {
                     </div>
                 </div>
             )}
+            <AlertModal
+                open={showDropError}
+                onClose={doDropErrorClose}
+                severity="error"
+            >
+                {t('trainingdata.labels.dropError')}
+            </AlertModal>
         </Widget>
     );
 }

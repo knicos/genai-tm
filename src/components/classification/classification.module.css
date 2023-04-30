@@ -85,7 +85,8 @@
     justify-content: start;
     align-content: start;
     margin: 0;
-    overflow: auto;
+    overflow-y: auto;
+    overflow-x: scroll;
     box-sizing: border-box;
     height: 100%;
 }
