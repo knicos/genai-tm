@@ -1,4 +1,5 @@
 import React, { useRef, useEffect, useState, useCallback } from 'react';
+import * as tf from '@tensorflow/tfjs';
 import SvgLayer, { ILine } from './SvgLayer';
 import { TrainingData } from '../trainingdata/TrainingData';
 import Trainer from '../trainer/Trainer';
@@ -7,7 +8,7 @@ import { IConnection, extractNodesFromElements, generateLines } from './lines';
 import Output from '../Output/Output';
 import Behaviours, { BehaviourType } from '../Behaviours/Behaviours';
 import { useTranslation } from 'react-i18next';
-import { TeachableMobileNet } from '@teachablemachine/image';
+import { TeachableMobileNet, createTeachable } from '@teachablemachine/image';
 import { behaviourState, classState, fileData, IClassification, modelState, saveState } from '../../state';
 import style from './TeachableMachine.module.css';
 import { useVariant } from '../../util/variant';
@@ -66,6 +67,12 @@ export default function Workspace({ step, visitedStep, onComplete, saveTrigger, 
     const wkspaceRef = useRef<HTMLDivElement>(null);
 
     const closeError = useCallback(() => setErrMsg(null), [setErrMsg]);
+
+    // Cache the model on load
+    useEffect(() => {
+        createTeachable({ tfjsVersion: tf.version.tfjs }, { version: 2, alpha: 0.35 });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     useEffect(() => {
         if (projectFile) {
