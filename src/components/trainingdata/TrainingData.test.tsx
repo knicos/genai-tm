@@ -10,6 +10,7 @@ describe('TrainingData component', () => {
                 active={true}
                 data={[]}
                 setData={() => {}}
+                onFocused={() => {}}
             />
         );
         const linkElement = screen.getByTestId('addClass');
@@ -24,6 +25,7 @@ describe('TrainingData component', () => {
                 active={true}
                 data={[]}
                 setData={setData}
+                onFocused={() => {}}
             />
         );
         const linkElement = screen.getByText(/trainingdata.actions.addClass/i);
@@ -41,6 +43,7 @@ describe('TrainingData component', () => {
                 active={true}
                 data={testData}
                 setData={() => {}}
+                onFocused={() => {}}
             />
         );
         expect(screen.getByTestId('widget-Class1')).toBeInTheDocument();
@@ -56,6 +59,7 @@ describe('TrainingData component', () => {
                 active={true}
                 data={testData}
                 setData={() => {}}
+                onFocused={() => {}}
             />
         );
         expect(screen.getByTestId('widget-Class1')).toBeInTheDocument();

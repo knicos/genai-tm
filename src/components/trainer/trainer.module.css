@@ -4,6 +4,25 @@
     justify-content: stretch;
 }
 
+.buttonPrompt {
+    composes: buttonContainer;
+    animation: prompt 10s infinite;
+}
+
+@keyframes prompt {
+    0% {
+        transform: scale(1);
+    }
+
+    3% {
+        transform: scale(1.2);
+    }
+
+    6% {
+        transform: scale(1);
+    }
+}
+
 .widget {
     width: 280px;
 }

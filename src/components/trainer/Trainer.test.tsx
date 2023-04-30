@@ -3,6 +3,7 @@ import { render, screen, waitFor } from '@testing-library/react';
 import Trainer from './Trainer';
 import TestWrapper from '../../util/TestWrapper';
 import userEvent from '@testing-library/user-event';
+import { TeachableMobileNet } from '@teachablemachine/image';
 
 jest.mock('@tensorflow/tfjs');
 jest.mock('@teachablemachine/image', () => ({
@@ -50,7 +51,7 @@ describe('Trainer component', () => {
             expect(model.addExample).toHaveBeenCalledTimes(4);
             expect(model.train).toHaveBeenCalled();
         });
-        render(
+        const { rerender } = render(
             <Trainer
                 data={[
                     { label: 'Class 1', samples: [document.createElement('canvas'), document.createElement('canvas')] },
@@ -63,6 +64,16 @@ describe('Trainer component', () => {
 
         await user.click(screen.getByTestId('train-button'));
         await waitFor(() => expect(setModel).toHaveBeenCalledTimes(1));
+        rerender(
+            <Trainer
+                data={[
+                    { label: 'Class 1', samples: [document.createElement('canvas'), document.createElement('canvas')] },
+                    { label: 'Class 2', samples: [document.createElement('canvas'), document.createElement('canvas')] },
+                ]}
+                setModel={setModel}
+                model={{} as TeachableMobileNet}
+            />
+        );
         await waitFor(() => expect(screen.getByTestId('alert-complete')).toBeVisible());
     });
 });

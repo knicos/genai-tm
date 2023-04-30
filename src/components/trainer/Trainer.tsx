@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState, useCallback, useRef } from 'react';
 import * as tf from '@tensorflow/tfjs';
 import * as tmImage from '@teachablemachine/image';
 import Accordion from '@mui/material/Accordion';
@@ -25,6 +25,7 @@ interface Props {
     setModel: (model: tmImage.TeachableMobileNet) => void;
     focus?: boolean;
     disabled?: boolean;
+    editing?: boolean;
 }
 
 const HelpTooltip = styled(({ className, ...props }: TooltipProps) => (
@@ -45,7 +46,7 @@ const HelpTooltip = styled(({ className, ...props }: TooltipProps) => (
 
 type TrainingStage = 'ready' | 'loading' | 'prepare' | 'training' | 'done' | 'none';
 
-export default function Trainer({ data, model, setModel, ...props }: Props) {
+export default function Trainer({ data, model, setModel, editing, ...props }: Props) {
     const { namespace, advancedMenu, showTrainingAnimation } = useVariant();
     const { t } = useTranslation(namespace);
     const [training, setTraining] = useState(false);
@@ -54,6 +55,8 @@ export default function Trainer({ data, model, setModel, ...props }: Props) {
     const [settingEpochs, setSettingEpochs] = useState(50);
     const [settingRate, setSettingRate] = useState(0.001);
     const [settingBatch, setSettingBatch] = useState(16);
+    const promptTimer = useRef(-1);
+    const [prompt, setPrompt] = useState(false);
 
     const sampleMin = Math.min(...data.map((v) => v.samples.length));
     const isTrainable = data.length >= 2 && sampleMin >= 2;
@@ -112,13 +115,31 @@ export default function Trainer({ data, model, setModel, ...props }: Props) {
         if (model && model.isTrained) model.dispose();
         else if (model) model.model.dispose();
         setModel(tm);
-        setTrainingStage('done');
+        // setTrainingStage('done');
         setTraining(false);
     };
 
     useEffect(() => {
         setTrainingStage('none');
     }, [data]);
+
+    useEffect(() => {
+        if (model) setTrainingStage('done');
+    }, [model]);
+
+    useEffect(() => {
+        if (promptTimer.current >= 0) {
+            clearTimeout(promptTimer.current);
+            promptTimer.current = -1;
+        }
+        if (isTrainable && trainingStage === 'none' && !editing) {
+            promptTimer.current = window.setTimeout(() => {
+                setPrompt(true);
+            }, 4000);
+        } else {
+            setPrompt(false);
+        }
+    }, [trainingStage, editing, isTrainable]);
 
     useEffect(() => {
         if (training) startTraining(data);
@@ -156,7 +177,7 @@ export default function Trainer({ data, model, setModel, ...props }: Props) {
             {...props}
         >
             {showTrainingAnimation && <TrainingAnimation active={trainingStage === 'training'} />}
-            <div className={style.buttonContainer}>
+            <div className={prompt ? style.buttonPrompt : style.buttonContainer}>
                 <BusyButton
                     data-testid="train-button"
                     sx={{ flexGrow: 1 }}

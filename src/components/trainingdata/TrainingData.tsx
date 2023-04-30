@@ -12,9 +12,10 @@ interface Props {
     data: IClassification[];
     setData: (data: IClassification[]) => void;
     disabled?: boolean;
+    onFocused: (f: boolean) => void;
 }
 
-export function TrainingData({ active, data, setData, disabled }: Props) {
+export function TrainingData({ active, data, setData, disabled, onFocused }: Props) {
     const { namespace, disableAddClass } = useVariant();
     const { t } = useTranslation(namespace);
     const [activeIndex, setActiveIndex] = useState(-1);
@@ -51,13 +52,18 @@ export function TrainingData({ active, data, setData, disabled }: Props) {
                 window.removeEventListener('mouseup', doClose);
             };
             window.addEventListener('mouseup', doClose);
+            onFocused(false);
         },
-        [setActiveIndex]
+        [setActiveIndex, onFocused]
     );
 
     const addClass = useCallback(() => {
         setData([...data, { label: `${t('trainingdata.labels.class')} ${data.length + 1}`, samples: [] }]);
     }, [setData, data, t]);
+
+    const doFocus = useCallback(() => {
+        onFocused(true);
+    }, [onFocused]);
 
     return (
         <section
@@ -65,6 +71,7 @@ export function TrainingData({ active, data, setData, disabled }: Props) {
             data-widget="container"
             className={disabled ? style.containerDisabled : style.trainingcontainer}
             onBlur={doDeactivate}
+            onFocus={doFocus}
             aria-labelledby="training-data-header"
         >
             <h1 id="training-data-header">{t('trainingdata.labels.title')}</h1>

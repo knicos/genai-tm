@@ -60,6 +60,7 @@ export default function Workspace({ step, visitedStep, onComplete, saveTrigger, 
     const [lines, setLines] = useState<ILine[]>([]);
     const [errMsg, setErrMsg] = useState<string | null>(null);
     const [saving, setSaving] = useRecoilState(saveState);
+    const [editingData, setEditingData] = useState(false);
 
     const observer = useRef<ResizeObserver>();
     const wkspaceRef = useRef<HTMLDivElement>(null);
@@ -186,11 +187,13 @@ export default function Workspace({ step, visitedStep, onComplete, saveTrigger, 
                     data={data}
                     setData={doSetData}
                     active={true}
+                    onFocused={setEditingData}
                 />
                 <Trainer
                     focus={step === 0}
                     data={data}
                     model={model}
+                    editing={editingData}
                     setModel={doSetModel}
                 />
                 <div
