@@ -27,6 +27,7 @@ export interface IVariantContext {
     enableFileInput?: boolean;
     allowDeploy?: boolean;
     showDragTip?: boolean;
+    usep2p?: boolean;
 }
 
 export const VariantContext = React.createContext<IVariantContext>({

@@ -269,6 +269,16 @@ export default function GenerateCustom() {
                     }
                     label="Show Drag & Drop animation tip"
                 />
+                <FormControlLabel
+                    control={
+                        <Checkbox
+                            checked={state.usep2p}
+                            name="usep2p"
+                            onChange={doCheckChange}
+                        />
+                    }
+                    label="Enable Peer-2-Peer feature"
+                />
                 <Button
                     variant="contained"
                     type="submit"

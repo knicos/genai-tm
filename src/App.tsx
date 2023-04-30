@@ -24,8 +24,12 @@ const router = createBrowserRouter(
                 }
             />
             <Route
-                path="deploy/:code"
-                lazy={() => import('./views/Deployment')}
+                path="deploy/b/:code"
+                lazy={() => import('./views/Deployment/TabDeployment')}
+            />
+            <Route
+                path="deploy/p/:code"
+                lazy={() => import('./views/Deployment/PeerDeployment')}
             />
             <Route path="image">
                 <Route

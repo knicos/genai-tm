@@ -19,8 +19,9 @@ import { useRecoilState } from 'recoil';
 import { loadProject } from './loader';
 import Alert from '@mui/material/Alert';
 import Snackbar from '@mui/material/Snackbar';
-import Deployer from '../Deployer/Deployer';
+import PeerDeployer from '../PeerDeployer/PeerDeployer';
 import { patchBehaviours } from '../Behaviours/patch';
+import Deployer from '../Deployer/Deployer';
 
 const connections: IConnection[] = [
     { start: 'class', end: 'trainer', startPoint: 'right', endPoint: 'left' },
@@ -52,7 +53,7 @@ function addCloseAlert() {
 }
 
 export default function Workspace({ step, visitedStep, onComplete, saveTrigger, onSkip }: Props) {
-    const { namespace, resetOnLoad } = useVariant();
+    const { namespace, resetOnLoad, usep2p } = useVariant();
     const { t } = useTranslation(namespace);
     const [projectFile, setProjectFile] = useRecoilState(fileData);
     const [behaviours, setBehaviours] = useRecoilState(behaviourState);
@@ -184,10 +185,18 @@ export default function Workspace({ step, visitedStep, onComplete, saveTrigger, 
             className={style.workspace}
             ref={wkspaceRef}
         >
-            <Deployer
-                model={model}
-                behaviours={behaviours}
-            />
+            {usep2p && (
+                <PeerDeployer
+                    model={model}
+                    behaviours={behaviours}
+                />
+            )}
+            {!usep2p && (
+                <Deployer
+                    model={model}
+                    behaviours={behaviours}
+                />
+            )}
             <div className={visitedStep < 1 ? style.container3 : style.container5}>
                 <SvgLayer lines={lines} />
                 <TrainingData

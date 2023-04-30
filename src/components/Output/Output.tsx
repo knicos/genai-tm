@@ -31,7 +31,7 @@ export default function Output({ behaviours, ...props }: Props) {
         setVolume(newValue as number);
     }, []);
 
-    const { namespace, allowDeploy } = useVariant();
+    const { namespace, allowDeploy, usep2p } = useVariant();
     const { t } = useTranslation(namespace);
     const predicted = useRecoilValue(predictedIndex);
 
@@ -45,7 +45,7 @@ export default function Output({ behaviours, ...props }: Props) {
                 allowDeploy && (
                     <a
                         className={style.deployLink}
-                        href={`/deploy/${code}`}
+                        href={`/deploy/${usep2p ? 'p' : 'b'}/${code}`}
                         target="_blank"
                         aria-label={t<string>('output.aria.expand')}
                         rel="noreferrer"

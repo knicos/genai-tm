@@ -14,15 +14,22 @@ import { useDrop } from 'react-dnd';
 import { NativeTypes } from 'react-dnd-html5-backend';
 import { Webcam } from '../../components/webcam/Webcam';
 import Display, { WrappedInput } from './Display';
-import useRemoteModel from './useRemoteModel';
-import { useParams } from 'react-router-dom';
 import Alert from '@mui/material/Alert';
 import Snackbar from '@mui/material/Snackbar';
+import { TeachableMobileNet } from '@teachablemachine/image';
+import { BehaviourType } from '../../components/Behaviour/Behaviour';
 
 const WIDTH = 400;
 const HEIGHT = 350;
 
-export default function Deployment() {
+interface Props {
+    model: TeachableMobileNet | null;
+    behaviours: BehaviourType[];
+    error: boolean;
+    onCloseError: () => void;
+}
+
+export default function Deployment({ model, behaviours, error, onCloseError }: Props) {
     const [volume, setVolume] = useState(100);
     const changeVolume = useCallback((event: Event, newValue: number | number[]) => {
         setVolume(newValue as number);
@@ -33,10 +40,6 @@ export default function Deployment() {
     const fileRef = useRef<HTMLInputElement>(null);
     const inputRef = useRef<HTMLDivElement>(null);
     const [input, setInput] = useState<WrappedInput | null>(null);
-    const { code } = useParams();
-    const [hadError, setHadError] = useState(false);
-    const onError = useCallback(() => setHadError(true), [setHadError]);
-    const [model, behaviours] = useRemoteModel(code || '', onError);
 
     const scaleFactor = Math.min((window.innerHeight - 200) / HEIGHT, (window.innerWidth - 40) / WIDTH);
 
@@ -80,8 +83,6 @@ export default function Deployment() {
         },
         [setInput]
     );
-
-    const closeError = useCallback(() => setHadError(false), [setHadError]);
 
     useEffect(() => {
         if (input?.element && inputRef.current) {
@@ -161,12 +162,12 @@ export default function Deployment() {
             </div>
             <Snackbar
                 anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
-                open={hadError}
+                open={error}
                 autoHideDuration={null}
-                onClose={closeError}
+                onClose={onCloseError}
             >
                 <Alert
-                    onClose={closeError}
+                    onClose={onCloseError}
                     severity="error"
                 >
                     {t('deploy.labels.notFound')}
