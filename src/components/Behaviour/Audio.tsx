@@ -91,11 +91,17 @@ export default function Sound({ behaviour, setBehaviour, dropping }: Props) {
     );
 
     const onAudioData = useCallback(
-        (data: string) => {
-            setBehaviour({
-                uri: data,
-                name: t<string>('behaviours.labels.voiceRecording'),
-            });
+        (data: Blob) => {
+            const fr = new FileReader();
+            fr.onload = (e) => {
+                if (e.target?.result) {
+                    setBehaviour({
+                        uri: e.target.result as string,
+                        name: t<string>('behaviours.labels.voiceRecording'),
+                    });
+                }
+            };
+            fr.readAsDataURL(data);
         },
         [setBehaviour, t]
     );

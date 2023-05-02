@@ -15,7 +15,7 @@ async function getRecorder() {
 }
 
 interface Props {
-    onData: (audio: string) => void;
+    onData: (audio: Blob) => void;
 }
 
 const MAXDURATION = 30;
@@ -43,7 +43,7 @@ export default function AudioRecorder({ onData }: Props) {
         if (ready && recorder.current) {
             if (record) {
                 recorder.current.ondataavailable = (ev: BlobEvent) => {
-                    onData(URL.createObjectURL(ev.data));
+                    onData(ev.data);
                 };
                 if (recorder.current.state === 'inactive') {
                     recorder.current.start();
