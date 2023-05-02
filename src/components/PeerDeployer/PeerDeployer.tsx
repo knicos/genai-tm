@@ -1,16 +1,16 @@
 import { TeachableMobileNet } from '@teachablemachine/image';
-import React, { useRef, useEffect, useCallback } from 'react';
+import React, { useRef, useEffect, useCallback, useState } from 'react';
 import { BehaviourType } from '../Behaviour/Behaviour';
 import { generateBlob } from '../ImageWorkspace/saver';
-import { useRecoilState } from 'recoil';
-import { sessionCode } from '../../state';
-import { sendData } from '../../util/comms';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { sessionCode, sessionPassword, sharingActive } from '../../state';
 import { Peer } from 'peerjs';
+import randomId from '../../util/randomId';
 
 type ProjectKind = 'image';
 
 export interface DeployEvent {
-    event: 'request' | 'data';
+    event: 'request' | 'project';
 }
 
 export interface DeployEventRequest extends DeployEvent {
@@ -19,7 +19,7 @@ export interface DeployEventRequest extends DeployEvent {
 }
 
 export interface DeployEventData extends DeployEvent {
-    event: 'data';
+    event: 'project';
     project: Blob;
     kind: ProjectKind;
 }
@@ -31,32 +31,70 @@ interface Props {
 
 export default function PeerDeployer({ model, behaviours }: Props) {
     const [code, setCode] = useRecoilState(sessionCode);
+    const pwd = useRecoilValue(sessionPassword);
+    const [, setSharing] = useRecoilState(sharingActive);
     const channelRef = useRef<Peer>();
     const cache = useRef<Props>({ model, behaviours });
     const blob = useRef<Blob | null>(null);
 
     const getChannel = useCallback(() => {
         if (channelRef.current !== undefined) return channelRef.current;
-        channelRef.current = new Peer(code, {
-            host: 'peer-server.blueforest-87d967c8.northeurope.azurecontainerapps.io',
+
+        const peer = new Peer(code, {
+            host: process.env.REACT_APP_PEER_SERVER,
             secure: true,
         });
-        channelRef.current.on('open', (id: string) => {
-            console.log('Connected to peer server', id);
+        channelRef.current = peer;
+        peer.on('open', (id: string) => {
+            setSharing(true);
         });
-        channelRef.current.on('connection', (conn) => {
+        peer.on('close', () => {
+            setSharing(false);
+        });
+        peer.on('connection', (conn) => {
+            if (conn.metadata.password !== pwd) {
+                conn.close();
+                return;
+            }
             conn.on('data', async (data: unknown) => {
                 const ev = data as DeployEventRequest;
-                if (ev.event === 'request') {
+                if (ev?.event === 'request') {
                     if (blob.current === null) {
                         blob.current = await generateBlob(cache.current.model, cache.current.behaviours);
                     }
-                    conn.send({ event: 'data', project: blob.current, kind: 'image' });
+                    conn.send({ event: 'project', project: blob.current, kind: 'image' });
                 }
             });
+            conn.on('error', (err: Error) => {
+                console.error('Peer connection error', err);
+            });
+        });
+
+        peer.on('error', (err: any) => {
+            const type: string = err.type;
+            console.error('Peer', type);
+            switch (type) {
+                case 'disconnected':
+                case 'network':
+                    setTimeout(() => peer.reconnect(), 1000);
+                    break;
+                case 'server-error':
+                    setTimeout(() => peer.reconnect(), 5000);
+                    break;
+                case 'unavailable-id':
+                    setCode(randomId(8));
+                    peer.destroy();
+                    channelRef.current = undefined;
+                    break;
+                case 'browser-incompatible':
+                    break;
+                default:
+                    peer.destroy();
+                    channelRef.current = undefined;
+            }
         });
         return channelRef.current;
-    }, [setCode]);
+    }, [code, setCode, setSharing, pwd]);
 
     useEffect(() => {
         getChannel();
@@ -64,6 +102,15 @@ export default function PeerDeployer({ model, behaviours }: Props) {
         cache.current.model = model;
         cache.current.behaviours = behaviours;
     }, [model, behaviours, getChannel]);
+
+    useEffect(() => {
+        return () => {
+            if (channelRef.current) {
+                channelRef.current.destroy();
+                channelRef.current = undefined;
+            }
+        };
+    }, []);
 
     return null;
 }

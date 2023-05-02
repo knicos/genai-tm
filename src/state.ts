@@ -54,3 +54,13 @@ export const sessionCode = atom<string>({
     key: 'sessionCode',
     default: randomId(8),
 });
+
+export const sessionPassword = atom<string>({
+    key: 'sessionPassword',
+    default: randomId(20),
+});
+
+export const sharingActive = atom<boolean>({
+    key: 'p2p',
+    default: false,
+});

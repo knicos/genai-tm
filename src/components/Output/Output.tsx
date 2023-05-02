@@ -6,16 +6,11 @@ import { BehaviourType } from '../Behaviours/Behaviours';
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import { useVariant } from '../../util/variant';
 import { useRecoilValue } from 'recoil';
-import { predictedIndex, sessionCode } from '../../state';
+import { predictedIndex, sessionCode, sessionPassword, sharingActive } from '../../state';
 import RawOutput from './RawOutput';
 import Slider from '@mui/material/Slider';
 import VolumeDown from '@mui/icons-material/VolumeDown';
 import VolumeUp from '@mui/icons-material/VolumeUp';
-
-const WIDTH = 400;
-const HEIGHT = 350;
-const FULLSCREEN = 0.75;
-const MENUSPACE = 150;
 
 interface Props {
     behaviours: BehaviourType[];
@@ -26,6 +21,8 @@ interface Props {
 
 export default function Output({ behaviours, ...props }: Props) {
     const code = useRecoilValue(sessionCode);
+    const pwd = useRecoilValue(sessionPassword);
+    const sharing = useRecoilValue(sharingActive);
     const [volume, setVolume] = useState(100);
     const changeVolume = useCallback((event: Event, newValue: number | number[]) => {
         setVolume(newValue as number);
@@ -42,10 +39,11 @@ export default function Output({ behaviours, ...props }: Props) {
             className={style.widget}
             {...props}
             menu={
-                allowDeploy && (
+                allowDeploy &&
+                sharing && (
                     <a
                         className={style.deployLink}
-                        href={`/deploy/${usep2p ? 'p' : 'b'}/${code}`}
+                        href={`/deploy/${usep2p ? 'p' : 'b'}/${code}?p=${pwd}`}
                         target="_blank"
                         aria-label={t<string>('output.aria.expand')}
                         rel="noreferrer"
