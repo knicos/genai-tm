@@ -22,7 +22,7 @@
 
 .langBar button {
     display: flex;
-    border: none;
+    border: 2px solid transparent;
     background: none;
     outline: none;
     padding: 0;
@@ -47,15 +47,25 @@
 
 @media only screen and (max-height: 500px), (max-width: 700px) {
     .buttonBar {
-        flex-direction: column;
+        flex-direction: row;
+        flex-wrap: wrap;
         gap: 0.5rem;
         margin: 0.2rem 1rem;
+        flex-grow: 1;
+        align-items: center;
     }
     .langBar {
-        flex-direction: column;
+        flex-direction: row;
+        flex-wrap: wrap;
         justify-content: center;
+        align-items: center;
     }
     :global .AppBar h1 {
         display: none;
     }
+}
+
+.logo {
+    margin-right: 0.8rem;
+    display: flex;
 }

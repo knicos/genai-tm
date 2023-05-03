@@ -52,6 +52,20 @@ export default function ApplicationBar({ onSave }: Props) {
             position="static"
         >
             <Toolbar>
+                <a
+                    href="https://www.generation-ai-stn.fi"
+                    className={style.logo}
+                    aria-label="Project home page"
+                    target="_blank"
+                    rel="noreferrer"
+                >
+                    <img
+                        src="/logo48.png"
+                        alt="GenAI logo"
+                        width="48"
+                        height="48"
+                    />
+                </a>
                 <h1>{t('app.title')}</h1>
                 <input
                     type="file"
