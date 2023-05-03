@@ -23,3 +23,13 @@
     gap: 1rem;
     margin: 1rem auto;
 }
+
+.buttonBar {
+    display: flex;
+    justify-content: flex-start;
+    gap: 1rem;
+    width: 100%;
+    padding-top: 1rem;
+    border-top: 1px solid #eee;
+    margin-top: 1rem;
+}

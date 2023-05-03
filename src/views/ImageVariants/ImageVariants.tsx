@@ -17,9 +17,6 @@ export default function ImageVariants() {
                 <li>
                     <Link to="/image/general">{t('app.variantAdvanced')}</Link>
                 </li>
-                <li>
-                    <Link to="/image/generate">{t('app.variantCustom')}</Link>
-                </li>
             </ol>
         </div>
     );

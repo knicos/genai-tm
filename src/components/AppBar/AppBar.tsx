@@ -9,21 +9,26 @@ import FileOpenIcon from '@mui/icons-material/FileOpen';
 import style from './AppBar.module.css';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { fileData, saveState } from '../../state';
+import SettingsIcon from '@mui/icons-material/Settings';
+import { IconButton, Link } from '@mui/material';
+import { createSearchParams, useNavigate, useSearchParams } from 'react-router-dom';
 
 interface Props {
     onSave: () => void;
 }
 
-const LANGS = [
+export const LANGS = [
     { name: 'en-GB', label: 'English' },
     { name: 'fi-FI', label: 'Suomi' },
 ];
 
 export default function ApplicationBar({ onSave }: Props) {
-    const { namespace } = useVariant();
+    const [params] = useSearchParams();
+    const { namespace, showSettings } = useVariant();
     const { t, i18n } = useTranslation(namespace);
     const [projectFile, setProject] = useRecoilState(fileData);
     const saving = useRecoilValue(saveState);
+    const navigate = useNavigate();
 
     const openFile = useCallback(() => {
         document.getElementById('openfile')?.click();
@@ -44,6 +49,10 @@ export default function ApplicationBar({ onSave }: Props) {
         },
         [i18n]
     );
+
+    const doSettings = useCallback(() => {
+        navigate(`/image/settings?${createSearchParams(params)}`, { replace: false });
+    }, [navigate, params]);
 
     return (
         <AppBar
@@ -96,7 +105,7 @@ export default function ApplicationBar({ onSave }: Props) {
                         {t('app.save')}
                     </BusyButton>
                 </div>
-                <div className={style.langBar}>
+                <div className={showSettings ? style.langBarWithSettings : style.langBar}>
                     {LANGS.map((lng) => (
                         <button
                             key={lng.name}
@@ -116,6 +125,17 @@ export default function ApplicationBar({ onSave }: Props) {
                         </button>
                     ))}
                 </div>
+                {showSettings && (
+                    <IconButton
+                        component={Link}
+                        onClick={doSettings}
+                        size="large"
+                        color="inherit"
+                        aria-label="Settings"
+                    >
+                        <SettingsIcon fontSize="large" />
+                    </IconButton>
+                )}
             </Toolbar>
         </AppBar>
     );

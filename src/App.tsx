@@ -45,7 +45,7 @@ const router = createBrowserRouter(
                     lazy={() => import('./views/ImageGeneral/ImageGeneral')}
                 />
                 <Route
-                    path="generate"
+                    path="settings"
                     element={<GenerateCustom />}
                 />
             </Route>

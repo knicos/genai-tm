@@ -1,5 +1,5 @@
 import React, { useState, useCallback, FormEvent } from 'react';
-import { IVariantContext } from '../../util/variant';
+import { IVariantContext, useVariant, VariantContext } from '../../util/variant';
 import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
@@ -11,6 +11,10 @@ import { Button } from '../../components/button/Button';
 import { compressToEncodedURIComponent } from 'lz-string';
 import { useNavigate } from 'react-router-dom';
 import _settings from '../ImageGeneral/settings.json';
+import { useSearchParams } from 'react-router-dom';
+import { decompressFromEncodedURIComponent } from 'lz-string';
+import { useTranslation } from 'react-i18next';
+import { LANGS } from '../../components/AppBar/AppBar';
 
 const DEFAULTS = _settings as IVariantContext;
 
@@ -25,15 +29,18 @@ function delta(data: IVariantContext): Partial<IVariantContext> {
     return result;
 }
 
-export default function GenerateCustom() {
+function SettingsForm() {
     const navigate = useNavigate();
-    const [state, setState] = useState<IVariantContext>(DEFAULTS);
+    const { i18n } = useTranslation();
+    const initial = useVariant();
+    const [state, setState] = useState<IVariantContext>(initial);
 
     const doSubmit = useCallback(
         (event: FormEvent<HTMLFormElement>) => {
             event.preventDefault();
-            const urlCode = compressToEncodedURIComponent(JSON.stringify(delta(state)));
-            navigate(`/image/general?c=${urlCode}`);
+            const str = JSON.stringify(delta(state));
+            const urlCode = compressToEncodedURIComponent(str);
+            navigate(str === '{}' ? '/image/general' : `/image/general?c=${urlCode}`, { replace: false });
         },
         [state, navigate]
     );
@@ -52,10 +59,39 @@ export default function GenerateCustom() {
         [setState]
     );
 
+    const doCancel = useCallback(() => {
+        navigate(-1);
+    }, [navigate]);
+
+    const doReset = useCallback(() => {
+        setState(DEFAULTS);
+    }, [setState]);
+
+    const doLanguageChange = useCallback(
+        (event: SelectChangeEvent) => {
+            i18n.changeLanguage(event?.target.value);
+        },
+        [i18n]
+    );
+
     return (
         <div className={style.container}>
-            <h1>Custom Image Classifier</h1>
+            <h1>Settings</h1>
             <form onSubmit={doSubmit}>
+                <FormControl fullWidth>
+                    <InputLabel id="language-select">Language</InputLabel>
+                    <Select
+                        labelId="language-select"
+                        onChange={doLanguageChange}
+                        value={i18n.language}
+                        label="Language Level"
+                        name="namespace"
+                    >
+                        {LANGS.map((lng) => (
+                            <MenuItem value={lng.name}>{lng.label}</MenuItem>
+                        ))}
+                    </Select>
+                </FormControl>
                 <FormControl fullWidth>
                     <InputLabel id="template-select">Language Level</InputLabel>
                     <Select
@@ -279,13 +315,49 @@ export default function GenerateCustom() {
                     }
                     label="Enable Peer-2-Peer feature"
                 />
-                <Button
-                    variant="contained"
-                    type="submit"
-                >
-                    Generate
-                </Button>
+                <FormControlLabel
+                    control={
+                        <Checkbox
+                            checked={state.showSettings}
+                            name="showSettings"
+                            onChange={doCheckChange}
+                        />
+                    }
+                    label="Show settings"
+                />
+                <div className={style.buttonBar}>
+                    <Button
+                        variant="contained"
+                        type="submit"
+                    >
+                        Save
+                    </Button>
+                    <Button
+                        variant="outlined"
+                        onClick={doReset}
+                    >
+                        Reset
+                    </Button>
+                    <Button
+                        variant="outlined"
+                        onClick={doCancel}
+                    >
+                        Cancel
+                    </Button>
+                </div>
             </form>
         </div>
+    );
+}
+
+export default function GenerateCustom() {
+    const [params] = useSearchParams();
+    const customStr = decompressFromEncodedURIComponent(params.get('c') || '');
+    const custom = (customStr ? JSON.parse(customStr) : {}) as IVariantContext;
+
+    return (
+        <VariantContext.Provider value={{ ...DEFAULTS, ...custom }}>
+            <SettingsForm />
+        </VariantContext.Provider>
     );
 }

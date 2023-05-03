@@ -21,5 +21,6 @@
     "enableFileInput": true,
     "allowDeploy": true,
     "showDragTip": false,
-    "usep2p": false
+    "usep2p": false,
+    "showSettings": false
 }

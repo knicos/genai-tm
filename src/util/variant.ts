@@ -28,6 +28,7 @@ export interface IVariantContext {
     allowDeploy?: boolean;
     showDragTip?: boolean;
     usep2p?: boolean;
+    showSettings?: boolean;
 }
 
 export const VariantContext = React.createContext<IVariantContext>({

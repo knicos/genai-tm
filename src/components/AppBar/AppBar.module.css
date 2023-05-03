@@ -18,6 +18,7 @@
     gap: 0.5rem;
     height: 100%;
     align-items: center;
+    margin-right: 0.5rem;
 }
 
 .langBar button {
@@ -27,6 +28,7 @@
     outline: none;
     padding: 0;
     cursor: pointer;
+    box-sizing: border-box;
 }
 
 .langBar button:focus {
@@ -45,6 +47,10 @@
     box-sizing: content-box;
 }
 
+.langBarWithSettings {
+    composes: langBar;
+}
+
 @media only screen and (max-height: 500px), (max-width: 700px) {
     .buttonBar {
         flex-direction: row;
@@ -55,10 +61,12 @@
         align-items: center;
     }
     .langBar {
-        flex-direction: row;
         flex-wrap: wrap;
-        justify-content: center;
-        align-items: center;
+        gap: 0.2rem;
+        height: initial;
+    }
+    .langBarWithSettings {
+        display: none;
     }
     :global .AppBar h1 {
         display: none;
