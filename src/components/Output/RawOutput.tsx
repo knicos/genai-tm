@@ -7,15 +7,17 @@ import { useVariant } from '../../util/variant';
 import { useTranslation } from 'react-i18next';
 import CircularProgress from '@mui/material/CircularProgress';
 import { useTabActive } from '../../util/useTabActive';
+import SentimentVeryDissatisfiedIcon from '@mui/icons-material/SentimentVeryDissatisfied';
 
-interface Props {
+interface Props extends React.PropsWithChildren {
     scaleFactor: number;
     behaviours: BehaviourType[];
     predicted: number;
     volume: number;
+    error?: string;
 }
 
-export default function RawOutput({ scaleFactor, behaviours, predicted, volume }: Props) {
+export default function RawOutput({ scaleFactor, behaviours, predicted, volume, error, children }: Props) {
     const { namespace } = useVariant();
     const { t } = useTranslation(namespace);
     const isActive = useTabActive();
@@ -37,50 +39,58 @@ export default function RawOutput({ scaleFactor, behaviours, predicted, volume }
                     transform: `scale(${scaleFactor})`,
                 }}
             >
-                {(behaviours.length === 0 || predicted < 0) && <CircularProgress />}
-                {behaviours.map((behaviour, ix) => (
-                    <React.Fragment key={ix}>
-                        {behaviour?.image && (
-                            <img
-                                aria-hidden={ix !== predicted}
-                                data-testid="image-output"
-                                src={behaviour.image.uri}
-                                alt={t<string>('output.aria.image', { index: predicted + 1 })}
-                                style={{ display: ix === predicted ? 'initial' : 'none' }}
-                            />
-                        )}
-                        {behaviour?.audio && (
-                            <AudioPlayer
-                                showIcon={!hasImage}
-                                volume={volume / 100}
-                                uri={behaviour.audio.uri}
-                                play={ix === predicted && isActive}
-                            />
-                        )}
-                        {behaviour?.embed && (
-                            <Embedding
-                                show={ix === predicted}
-                                volume={volume / 100}
-                                url={behaviour.embed.url}
-                            />
-                        )}
-                        {behaviour?.text && (
-                            <p
-                                className={style.textOverlay}
-                                data-testid="text-output"
-                                style={{
-                                    fontSize: `${behaviour.text.size || 30}pt`,
-                                    display: ix === predicted ? 'initial' : 'none',
-                                    color: behaviour.text.color || '#000000',
-                                    textAlign: behaviour.text.align || 'center',
-                                }}
-                                aria-hidden={ix !== predicted}
-                            >
-                                {behaviour.text.text}
-                            </p>
-                        )}
-                    </React.Fragment>
-                ))}
+                {error && (
+                    <>
+                        <SentimentVeryDissatisfiedIcon className={style.errorIcon} />
+                        <span className={style.errorMessage}>{error}</span>
+                    </>
+                )}
+                {!error && (behaviours.length === 0 || predicted < 0) && <CircularProgress />}
+                {!error &&
+                    behaviours.map((behaviour, ix) => (
+                        <React.Fragment key={ix}>
+                            {behaviour?.image && (
+                                <img
+                                    aria-hidden={ix !== predicted}
+                                    data-testid="image-output"
+                                    src={behaviour.image.uri}
+                                    alt={t<string>('output.aria.image', { index: predicted + 1 })}
+                                    style={{ display: ix === predicted ? 'initial' : 'none' }}
+                                />
+                            )}
+                            {behaviour?.audio && (
+                                <AudioPlayer
+                                    showIcon={!hasImage}
+                                    volume={volume / 100}
+                                    uri={behaviour.audio.uri}
+                                    play={ix === predicted && isActive}
+                                />
+                            )}
+                            {behaviour?.embed && (
+                                <Embedding
+                                    show={ix === predicted}
+                                    volume={volume / 100}
+                                    url={behaviour.embed.url}
+                                />
+                            )}
+                            {behaviour?.text && (
+                                <p
+                                    className={style.textOverlay}
+                                    data-testid="text-output"
+                                    style={{
+                                        fontSize: `${behaviour.text.size || 30}pt`,
+                                        display: ix === predicted ? 'initial' : 'none',
+                                        color: behaviour.text.color || '#000000',
+                                        textAlign: behaviour.text.align || 'center',
+                                    }}
+                                    aria-hidden={ix !== predicted}
+                                >
+                                    {behaviour.text.text}
+                                </p>
+                            )}
+                        </React.Fragment>
+                    ))}
+                {children}
             </div>
         </div>
     );

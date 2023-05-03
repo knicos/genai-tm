@@ -102,3 +102,12 @@
 .deployLink:active {
     color: white;
 }
+
+.errorIcon {
+    font-size: 6rem;
+    color: #555;
+}
+
+.errorMessage {
+    color: rgb(95, 33, 32);
+}

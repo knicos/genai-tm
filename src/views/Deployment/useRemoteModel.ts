@@ -49,21 +49,17 @@ export function useP2PModel(code: string, onError?: () => void): [TeachableMobil
     const [params] = useSearchParams();
 
     useEffect(() => {
-        if (onError) {
-            if (timeoutRef.current >= 0) {
-                clearTimeout(timeoutRef.current);
-            }
-            timeoutRef.current = window.setTimeout(() => onError(), TIMEOUT_P2P);
-        }
         const peer = new Peer('', {
             host: process.env.REACT_APP_PEER_SERVER,
             secure: true,
         });
         peer.on('error', (err: any) => {
+            console.error(err);
             if (timeoutRef.current >= 0) {
                 clearTimeout(timeoutRef.current);
             }
             if (onError) onError();
+            peer.destroy();
         });
         peer.on('open', (id: string) => {
             const conn = peer.connect(code, { reliable: true, metadata: { password: params.get('p') } });
@@ -87,6 +83,16 @@ export function useP2PModel(code: string, onError?: () => void): [TeachableMobil
                 }
             });
             conn.on('open', () => {
+                if (onError) {
+                    if (timeoutRef.current >= 0) {
+                        clearTimeout(timeoutRef.current);
+                    }
+                    timeoutRef.current = window.setTimeout(() => {
+                        conn.close();
+                        peer.destroy();
+                        onError();
+                    }, TIMEOUT_P2P);
+                }
                 conn.send({ event: 'request', channel: id });
             });
         });

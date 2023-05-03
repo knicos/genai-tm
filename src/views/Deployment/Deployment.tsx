@@ -110,7 +110,17 @@ export default function Deployment({ model, behaviours, error, onCloseError }: P
                 volume={volume}
                 model={model}
                 input={input}
-            />
+                error={error ? t<string>('deploy.labels.notFound') : undefined}
+            >
+                {error && (
+                    <Alert
+                        className={style.errorInfo}
+                        severity="info"
+                    >
+                        {t('deploy.labels.errorInfo')}
+                    </Alert>
+                )}
+            </Display>
             {dropProps.hovered && <div className={style.dropInfo}>{t('deploy.labels.dropHere')}</div>}
             <input
                 type="file"
@@ -133,12 +143,13 @@ export default function Deployment({ model, behaviours, error, onCloseError }: P
                         onCapture={doCapture}
                         capture
                         interval={100}
-                        disable={paused}
+                        disable={paused || error}
                         direct
                     />
                     <IconButton
                         color="inherit"
                         onClick={doPause}
+                        disabled={error}
                     >
                         {!paused && <VideocamIcon fontSize="large" />}
                         {paused && <VideocamOffIcon fontSize="large" />}
@@ -146,6 +157,7 @@ export default function Deployment({ model, behaviours, error, onCloseError }: P
                     <IconButton
                         color="inherit"
                         onClick={doUpload}
+                        disabled={error}
                     >
                         <FileUploadIcon fontSize="large" />
                     </IconButton>
@@ -156,23 +168,11 @@ export default function Deployment({ model, behaviours, error, onCloseError }: P
                         aria-label={t<string>('output.aria.volume')}
                         value={volume}
                         onChange={changeVolume}
+                        disabled={error}
                     />
                     <VolumeUp />
                 </div>
             </div>
-            <Snackbar
-                anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
-                open={error}
-                autoHideDuration={null}
-                onClose={onCloseError}
-            >
-                <Alert
-                    onClose={onCloseError}
-                    severity="error"
-                >
-                    {t('deploy.labels.notFound')}
-                </Alert>
-            </Snackbar>
         </div>
     );
 }

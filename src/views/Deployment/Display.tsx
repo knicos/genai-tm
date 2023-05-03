@@ -14,15 +14,16 @@ export interface WrappedInput {
     element: HTMLCanvasElement;
 }
 
-interface Props {
+interface Props extends React.PropsWithChildren {
     input: WrappedInput | null;
     behaviours?: BehaviourType[];
     scaleFactor: number;
     volume: number;
     model: TeachableMobileNet | null;
+    error?: string;
 }
 
-export default function Display({ input, behaviours, scaleFactor, volume, model }: Props) {
+export default function Display({ input, behaviours, scaleFactor, volume, model, error, children }: Props) {
     const [predicted, setPredictionIndex] = useRecoilState(predictedIndex);
 
     useEffect(() => {
@@ -49,6 +50,9 @@ export default function Display({ input, behaviours, scaleFactor, volume, model 
             predicted={predicted}
             scaleFactor={scaleFactor}
             volume={volume}
-        />
+            error={error}
+        >
+            {children}
+        </RawOutput>
     );
 }
