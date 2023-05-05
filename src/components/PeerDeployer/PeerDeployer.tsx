@@ -58,6 +58,7 @@ export default function PeerDeployer({ model, behaviours }: Props) {
             }
             conn.on('data', async (data: unknown) => {
                 const ev = data as DeployEventRequest;
+                console.log('GOT DATA', data);
                 if (ev?.event === 'request') {
                     if (blob.current === null) {
                         blob.current = await generateBlob(cache.current.model, cache.current.behaviours);
@@ -72,7 +73,7 @@ export default function PeerDeployer({ model, behaviours }: Props) {
 
         peer.on('error', (err: any) => {
             const type: string = err.type;
-            console.error('Peer', type);
+            console.error('Peer', type, err);
             switch (type) {
                 case 'disconnected':
                 case 'network':

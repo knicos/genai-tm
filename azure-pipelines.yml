@@ -9,7 +9,7 @@ trigger:
             - main
     tags:
         include:
-            - "v*"
+            - 'v*'
 
 pool:
     vmImage: ubuntu-latest
@@ -39,8 +39,8 @@ stages:
             steps:
                 - task: NodeTool@0
                   inputs:
-                      versionSpec: "16.x"
-                  displayName: "Install Node.js"
+                      versionSpec: '16.x'
+                  displayName: 'Install Node.js'
 
                 - task: Cache@2
                   inputs:
@@ -54,7 +54,7 @@ stages:
                 - script: |
                       npm ci
                       npm run build
-                  displayName: "Build"
+                  displayName: 'Build'
 
                 - publish: $(System.DefaultWorkingDirectory)/build
                   artifact: DistFolder
@@ -78,13 +78,13 @@ stages:
                 - script: |
                       npm ci
                       CI=true npm test
-                  displayName: "Test"
+                  displayName: 'Test'
                 - task: PublishTestResults@2
                   displayName: Publish Test Results
                   condition: succeededOrFailed()
                   inputs:
                       testRunner: JUnit
-                      testResultsFiles: "**/junit.xml"
+                      testResultsFiles: '**/junit.xml'
 
     - stage: DeployProduction
       displayName: Deploy Production
@@ -98,8 +98,8 @@ stages:
                   artifact: DistFolder
                 - task: AzureStaticWebApp@0
                   inputs:
-                      app_location: "DistFolder"
-                      output_location: "DistFolder"
+                      app_location: 'DistFolder'
+                      output_location: 'DistFolder'
                       cwd: $(Pipeline.Workspace)
                       skip_api_build: true
                       skip_app_build: true
@@ -125,10 +125,11 @@ stages:
                   artifact: DistFolder
                 - task: AzureStaticWebApp@0
                   inputs:
-                      app_location: "DistFolder"
-                      output_location: "DistFolder"
+                      app_location: 'DistFolder'
+                      api_location: 'api'
+                      output_location: 'DistFolder'
                       cwd: $(Pipeline.Workspace)
-                      skip_api_build: true
+                      skip_api_build: false
                       skip_app_build: true
                       azure_static_web_apps_api_token: $(deployment_token)
                       deployment_environment: staging
