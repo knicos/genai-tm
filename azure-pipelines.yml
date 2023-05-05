@@ -126,7 +126,7 @@ stages:
                 - task: AzureStaticWebApp@0
                   inputs:
                       app_location: 'DistFolder'
-                      api_location: 'api'
+                      api_location: 's/api'
                       output_location: 'DistFolder'
                       cwd: $(Pipeline.Workspace)
                       skip_api_build: false
