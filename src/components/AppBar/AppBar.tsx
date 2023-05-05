@@ -10,8 +10,8 @@ import style from './AppBar.module.css';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { fileData, saveState } from '../../state';
 import SettingsIcon from '@mui/icons-material/Settings';
-import { IconButton, Link } from '@mui/material';
-import { createSearchParams, useNavigate, useSearchParams } from 'react-router-dom';
+import { IconButton, Link as MUILink } from '@mui/material';
+import { createSearchParams, useNavigate, useSearchParams, Link } from 'react-router-dom';
 
 interface Props {
     onSave: () => void;
@@ -61,12 +61,10 @@ export default function ApplicationBar({ onSave }: Props) {
             position="static"
         >
             <Toolbar>
-                <a
-                    href="https://www.generation-ai-stn.fi"
+                <Link
+                    to="/about"
                     className={style.logo}
-                    aria-label="Project home page"
-                    target="_blank"
-                    rel="noreferrer"
+                    title="About"
                 >
                     <img
                         src="/logo48.png"
@@ -74,8 +72,8 @@ export default function ApplicationBar({ onSave }: Props) {
                         width="48"
                         height="48"
                     />
-                </a>
-                <h1>{t('app.title')}</h1>
+                    <h1>{t('app.title')}</h1>
+                </Link>
                 <input
                     type="file"
                     id="openfile"
@@ -127,7 +125,7 @@ export default function ApplicationBar({ onSave }: Props) {
                 </div>
                 {showSettings && (
                     <IconButton
-                        component={Link}
+                        component={MUILink}
                         onClick={doSettings}
                         size="large"
                         color="inherit"

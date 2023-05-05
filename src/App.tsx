@@ -10,6 +10,7 @@ import { RecoilRoot } from 'recoil';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { StyledEngineProvider } from '@mui/material/styles';
+import About from './views/About/About';
 
 const router = createBrowserRouter(
     createRoutesFromElements(
@@ -49,6 +50,10 @@ const router = createBrowserRouter(
                     element={<GenerateCustom />}
                 />
             </Route>
+            <Route
+                path="about"
+                element={<About />}
+            />
             <Route
                 path="home"
                 element={<Home />}

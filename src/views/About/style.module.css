@@ -1,0 +1,15 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    font-size: 14pt;
+    width: 100%;
+    max-width: 700px;
+    align-self: center;
+    box-sizing: border-box;
+    padding: 0.8rem;
+}
+
+.container p {
+    margin-bottom: 1rem;
+    text-align: justify;
+}

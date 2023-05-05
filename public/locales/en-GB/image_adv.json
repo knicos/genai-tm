@@ -128,7 +128,7 @@
             "message": "Message",
             "link": "Link",
             "linkError": "That link is not supported",
-            "embedInfo": "Show videos and images from a link. Only some links will work, for example: YouTube, Vimeo, SoundCloud, video files or images.",
+            "embedInfo": "Show videos and images from a link. Only some links will work, for example YouTube, Vimeo, SoundCloud, video files or images.",
             "voiceRecording": "Voice Recording",
             "dropError": "Only images or sounds can be dropped here"
         },

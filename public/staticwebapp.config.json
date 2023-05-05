@@ -7,6 +7,10 @@
         {
             "route": "/deploy*",
             "rewrite": "index.html"
+        },
+        {
+            "route": "/about",
+            "rewrite": "index.html"
         }
     ]
 }

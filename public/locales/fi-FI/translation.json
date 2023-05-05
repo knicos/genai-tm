@@ -12,5 +12,11 @@
             "dropHere": "Drop image here",
             "errorInfo": "This page only exists if you keep your classifier open in a browser tab. There might also be security restrictions that prevent it from being found."
         }
+    },
+    "about": {
+        "back": "Back",
+        "title": "About",
+        "privacyTitle": "Privacy Notice",
+        "privacy": "We do not collect or store any personal data about your use of this application. Cookies are not used by this application and there is no tracking of activity. Your sample data and models remain on your device unless you choose to share them. When sharing, the data is not stored in our servers and becomes unavailable to others if you close your browser tab."
     }
 }
