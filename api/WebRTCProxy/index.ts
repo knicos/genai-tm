@@ -26,11 +26,9 @@ async function createWSS(url: string) {
 
     await new Promise<void>((resolve, reject) => {
         ws.on('open', () => {
-            console.log('OPEN');
             resolve();
         });
         ws.on('error', (e) => {
-            console.log('ERROR', e);
             reject();
         });
     });
@@ -51,7 +49,9 @@ const httpTrigger: AzureFunction = async function (context: Context, req: HttpRe
     const code: string = context.bindingData.id;
 
     const peer = new ndc.PeerConnection('Peer1', {
-        iceServers: ['stun:stun.l.google.com:19302', 'turn:peerjs:peerjsp@eu-0.turn.peerjs.com:3478'],
+        iceServers: ['stun:stun.l.google.com:19302', 'turn:peerjs:peerjsp@eu-0.turn.peerjs.com:3478?transport=tcp'],
+        iceTransportPolicy: 'relay',
+        enableIceTcp: true,
     });
 
     const ws = await createWSS(
@@ -59,7 +59,6 @@ const httpTrigger: AzureFunction = async function (context: Context, req: HttpRe
     );
 
     peer.onLocalDescription((sdp, type) => {
-        console.log('DESC', sdp, type);
         ws.send(
             JSON.stringify({
                 type: type.toUpperCase(),
