@@ -51,7 +51,9 @@ export function useP2PModel(code: string, onError?: () => void): [TeachableMobil
     useEffect(() => {
         const peer = new Peer('', {
             host: process.env.REACT_APP_PEER_SERVER,
-            secure: true,
+            secure: process.env.REACT_APP_PEER_SECURE === '1',
+            key: process.env.REACT_APP_PEER_KEY || 'peerjs',
+            port: process.env.REACT_APP_PEER_PORT ? parseInt(process.env.REACT_APP_PEER_PORT) : 443,
         });
         peer.on('error', (err: any) => {
             console.error(err);

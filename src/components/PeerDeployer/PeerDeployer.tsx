@@ -42,7 +42,9 @@ export default function PeerDeployer({ model, behaviours }: Props) {
 
         const peer = new Peer(code, {
             host: process.env.REACT_APP_PEER_SERVER,
-            secure: true,
+            secure: process.env.REACT_APP_PEER_SECURE === '1',
+            key: process.env.REACT_APP_PEER_KEY || 'peerjs',
+            port: process.env.REACT_APP_PEER_PORT ? parseInt(process.env.REACT_APP_PEER_PORT) : 443,
         });
         channelRef.current = peer;
         peer.on('open', (id: string) => {
