@@ -50,7 +50,9 @@ const httpTrigger: AzureFunction = async function (context: Context, req: HttpRe
     const pwd: string = req.query.p || (req.body && req.body.p);
     const code: string = context.bindingData.id;
 
-    const peer = new ndc.PeerConnection('Peer1', { iceServers: ['stun:stun.l.google.com:19302'] });
+    const peer = new ndc.PeerConnection('Peer1', {
+        iceServers: ['stun:stun.l.google.com:19302', 'turn:peerjs:peerjsp@eu-0.turn.peerjs.com:3478'],
+    });
 
     const ws = await createWSS(
         'wss://peer-server.blueforest-87d967c8.northeurope.azurecontainerapps.io/peerjs?key=peerjs&id=proxy&token=none&version=1.4.7'
@@ -82,7 +84,6 @@ const httpTrigger: AzureFunction = async function (context: Context, req: HttpRe
     });
 
     peer.onLocalCandidate((candidate, mid) => {
-        console.log('Peer1 Candidate:', candidate);
         ws.send(
             JSON.stringify({
                 type: 'CANDIDATE',
@@ -107,16 +108,11 @@ const httpTrigger: AzureFunction = async function (context: Context, req: HttpRe
     return new Promise((resolve) => {
         ws.on('message', (data: any, binary) => {
             const obj = JSON.parse(binary ? data.toString() : data);
-            console.log('MESSAGE', obj);
             if (obj.type === 'OPEN') {
                 dc1 = peer.createDataChannel('data', { protocol: 'raw', ordered: true });
                 dc1.onOpen(async () => {
-                    console.log('DATA CHANNEL OPEN');
                     try {
-                        console.log(
-                            'SENT',
-                            dc1.sendMessageBinary(Buffer.from(await pack({ event: 'request' }).arrayBuffer()))
-                        );
+                        dc1.sendMessageBinary(Buffer.from(await pack({ event: 'request' }).arrayBuffer()));
                     } catch (e) {
                         console.error(e);
                     }
@@ -143,8 +139,6 @@ const httpTrigger: AzureFunction = async function (context: Context, req: HttpRe
                             peer.close();
                             ws.close();
 
-                            console.log('Response', context.res);
-
                             context.res = {
                                 headers: {
                                     'Content-Type': 'application/zip',
@@ -155,7 +149,6 @@ const httpTrigger: AzureFunction = async function (context: Context, req: HttpRe
                             resolve();
                         }
                     } else {
-                        console.log('Got message', data);
                     }
                 });
                 dc1.onError((err) => console.error(err));
