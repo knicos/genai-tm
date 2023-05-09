@@ -7,10 +7,14 @@
         "variantCustom": "Custom"
     },
     "deploy": {
+        "actions": {
+            "copy": "Copy"
+        },
         "labels": {
             "notFound": "Could not find classifier.",
             "dropHere": "Drop image here",
-            "errorInfo": "This page only exists if you keep your classifier open in a browser tab. There might also be security restrictions that prevent it from being found."
+            "errorInfo": "This page only exists if you keep your classifier open in a browser tab. There might also be security restrictions that prevent it from being found.",
+            "share": "Share to other devices"
         }
     },
     "about": {

@@ -71,3 +71,25 @@
     font-size: 0.5rem;
     max-width: 40%;
 }
+
+.qrcode {
+    background: white;
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    padding: 0.5rem 2rem;
+}
+
+.shareText {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    font-size: 1.2rem;
+    margin-left: 1rem;
+    align-items: flex-start;
+}
+
+.qrclose {
+    align-self: flex-start;
+    margin-left: auto;
+}

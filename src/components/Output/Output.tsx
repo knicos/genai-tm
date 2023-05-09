@@ -43,7 +43,7 @@ export default function Output({ behaviours, ...props }: Props) {
                 sharing && (
                     <a
                         className={style.deployLink}
-                        href={`/deploy/${usep2p ? 'p' : 'b'}/${code}?p=${pwd}`}
+                        href={`/deploy/${usep2p ? 'p' : 'b'}/${code}?p=${pwd}&qr=1`}
                         target="_blank"
                         aria-label={t<string>('output.aria.expand')}
                         rel="noreferrer"

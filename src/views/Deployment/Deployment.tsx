@@ -15,21 +15,20 @@ import { NativeTypes } from 'react-dnd-html5-backend';
 import { Webcam } from '../../components/webcam/Webcam';
 import Display, { WrappedInput } from './Display';
 import Alert from '@mui/material/Alert';
-import Snackbar from '@mui/material/Snackbar';
 import { TeachableMobileNet } from '@teachablemachine/image';
 import { BehaviourType } from '../../components/Behaviour/Behaviour';
 
 const WIDTH = 400;
 const HEIGHT = 350;
 
-interface Props {
+interface Props extends React.PropsWithChildren {
     model: TeachableMobileNet | null;
     behaviours: BehaviourType[];
     error: boolean;
     onCloseError: () => void;
 }
 
-export default function Deployment({ model, behaviours, error, onCloseError }: Props) {
+export default function Deployment({ model, behaviours, error, onCloseError, children }: Props) {
     const [volume, setVolume] = useState(100);
     const changeVolume = useCallback((event: Event, newValue: number | number[]) => {
         setVolume(newValue as number);
@@ -41,7 +40,7 @@ export default function Deployment({ model, behaviours, error, onCloseError }: P
     const inputRef = useRef<HTMLDivElement>(null);
     const [input, setInput] = useState<WrappedInput | null>(null);
 
-    const scaleFactor = Math.min((window.innerHeight - 200) / HEIGHT, (window.innerWidth - 40) / WIDTH);
+    const scaleFactor = Math.min((window.innerHeight - 200 - 164) / HEIGHT, (window.innerWidth - 40) / WIDTH);
 
     const onDrop = useCallback(
         async (acceptedFiles: File[]) => {
@@ -112,6 +111,7 @@ export default function Deployment({ model, behaviours, error, onCloseError }: P
                 input={input}
                 error={error ? t<string>('deploy.labels.notFound') : undefined}
             >
+                {children}
                 {error && (
                     <Alert
                         className={style.errorInfo}
