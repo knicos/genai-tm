@@ -1,7 +1,7 @@
 import { TeachableMobileNet } from '@teachablemachine/image';
-import React, { useRef, useEffect, useCallback, useState } from 'react';
+import React, { useRef, useEffect, useCallback } from 'react';
 import { BehaviourType } from '../Behaviour/Behaviour';
-import { generateBlob } from '../ImageWorkspace/saver';
+import { generateBlob, ModelContents } from '../ImageWorkspace/saver';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { sessionCode, sessionPassword, sharingActive } from '../../state';
 import { Peer } from 'peerjs';
@@ -10,18 +10,25 @@ import randomId from '../../util/randomId';
 type ProjectKind = 'image';
 
 export interface DeployEvent {
-    event: 'request' | 'project';
+    event: 'request' | 'project' | 'model';
 }
 
 export interface DeployEventRequest extends DeployEvent {
     event: 'request';
-    channel: string;
+    channel?: string;
+    entity?: 'model' | 'metadata' | 'project' | 'weights';
 }
 
 export interface DeployEventData extends DeployEvent {
     event: 'project';
     project: Blob;
     kind: ProjectKind;
+}
+
+export interface ModelEventData extends DeployEvent {
+    event: 'model';
+    component: 'model' | 'metadata' | 'weights';
+    data: Blob;
 }
 
 interface Props {
@@ -35,7 +42,7 @@ export default function PeerDeployer({ model, behaviours }: Props) {
     const [, setSharing] = useRecoilState(sharingActive);
     const channelRef = useRef<Peer>();
     const cache = useRef<Props>({ model, behaviours });
-    const blob = useRef<Blob | null>(null);
+    const blob = useRef<ModelContents | null>(null);
 
     const getChannel = useCallback(() => {
         if (channelRef.current !== undefined) return channelRef.current;
@@ -65,7 +72,20 @@ export default function PeerDeployer({ model, behaviours }: Props) {
                     if (blob.current === null) {
                         blob.current = await generateBlob(cache.current.model, cache.current.behaviours);
                     }
-                    conn.send({ event: 'project', project: blob.current, kind: 'image' });
+                    switch (ev.entity || 'project') {
+                        case 'metadata':
+                            conn.send({ event: 'model', component: 'metadata', data: blob.current.metadata });
+                            break;
+                        case 'model':
+                            conn.send({ event: 'model', component: 'model', data: blob.current.model });
+                            break;
+                        case 'weights':
+                            conn.send({ event: 'model', component: 'weights', data: blob.current.weights });
+                            break;
+                        case 'project':
+                            conn.send({ event: 'project', project: blob.current.zip, kind: 'image' });
+                            break;
+                    }
                 }
             });
             conn.on('error', (err: Error) => {

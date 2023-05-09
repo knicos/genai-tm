@@ -5,11 +5,19 @@ import { BehaviourType } from '../Behaviours/Behaviours';
 import { TeachableMobileNet } from '@teachablemachine/image';
 import { IClassification } from '../../state';
 
+export interface ModelContents {
+    behaviours?: string;
+    zip?: Blob;
+    model?: string;
+    metadata?: string;
+    weights?: ArrayBuffer;
+}
+
 export async function generateBlob(
     model?: TeachableMobileNet,
     behaviours?: BehaviourType[],
     samples?: IClassification[]
-) {
+): Promise<ModelContents> {
     const zip = new JSZip();
     if (samples) {
         const folder = zip.folder('samples');
@@ -23,31 +31,34 @@ export async function generateBlob(
             }
         }
     }
+
+    const contents: ModelContents = {};
+
     if (behaviours) {
-        zip.file(
-            'behaviours.json',
-            JSON.stringify({
-                behaviours,
-                version: 1,
-            })
-        );
+        contents.behaviours = JSON.stringify({
+            behaviours,
+            version: 1,
+        });
+        zip.file('behaviours.json', contents.behaviours);
     }
 
     let zipData: Blob = new Blob();
     if (model) {
-        zip.file('metadata.json', JSON.stringify(model.getMetadata()));
+        contents.metadata = JSON.stringify(model.getMetadata());
+        zip.file('metadata.json', contents.metadata);
 
         await model.save({
             save: async (artifact: tfjs.io.ModelArtifacts) => {
-                if (artifact.weightData) zip.file('weights.bin', artifact.weightData);
+                if (artifact.weightData) {
+                    contents.weights = artifact.weightData;
+                    zip.file('weights.bin', artifact.weightData);
+                }
                 if (typeof artifact.modelTopology) {
-                    zip.file(
-                        'model.json',
-                        JSON.stringify({
-                            modelTopology: artifact.modelTopology,
-                            weightsManifest: [{ paths: ['./weights.bin'], weights: artifact.weightSpecs }],
-                        })
-                    );
+                    contents.model = JSON.stringify({
+                        modelTopology: artifact.modelTopology,
+                        weightsManifest: [{ paths: ['./weights.bin'], weights: artifact.weightSpecs }],
+                    });
+                    zip.file('model.json', contents.model);
                 }
 
                 zipData = await zip.generateAsync({ type: 'blob' });
@@ -62,7 +73,9 @@ export async function generateBlob(
     } else {
         console.warn('No model to save');
     }
-    return zipData;
+
+    contents.zip = zipData;
+    return contents;
 }
 
 export async function saveProject(
@@ -72,5 +85,5 @@ export async function saveProject(
     samples?: IClassification[]
 ) {
     const zipData = await generateBlob(model, behaviours, samples);
-    saveAs(zipData, name);
+    if (zipData.zip) saveAs(zipData.zip, name);
 }

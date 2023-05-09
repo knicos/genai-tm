@@ -1,7 +1,7 @@
 import { TeachableMobileNet } from '@teachablemachine/image';
 import React, { useRef, useEffect, useCallback } from 'react';
 import { BehaviourType } from '../Behaviour/Behaviour';
-import { generateBlob } from '../ImageWorkspace/saver';
+import { ModelContents, generateBlob } from '../ImageWorkspace/saver';
 import { useRecoilValue, useRecoilState } from 'recoil';
 import { sessionCode, sharingActive } from '../../state';
 import { sendData } from '../../util/comms';
@@ -16,7 +16,7 @@ export default function Deployer({ model, behaviours }: Props) {
     const code = useRecoilValue(sessionCode);
     const [, setSharing] = useRecoilState(sharingActive);
     const channelRef = useRef<BroadcastChannel>();
-    const blob = useRef<Blob | null>(null);
+    const blob = useRef<ModelContents | null>(null);
 
     const getChannel = useCallback(() => {
         if (channelRef.current !== undefined) return channelRef.current;
@@ -33,7 +33,13 @@ export default function Deployer({ model, behaviours }: Props) {
                 if (blob.current === null) {
                     blob.current = await generateBlob(model, behaviours);
                 }
-                sendData<DeployEventData>(ev.data.channel, { event: 'project', project: blob.current, kind: 'image' });
+                if (blob.current.zip) {
+                    sendData<DeployEventData>(ev.data.channel || '', {
+                        event: 'project',
+                        project: blob.current.zip,
+                        kind: 'image',
+                    });
+                }
             }
         };
     }, [model, behaviours, getChannel]);
