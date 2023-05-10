@@ -107,9 +107,11 @@ export default function PeerDeployer({ model, behaviours }: Props) {
                 case 'disconnected':
                 case 'network':
                     setTimeout(() => peer.reconnect(), 1000);
+                    setSharing(false);
                     break;
                 case 'server-error':
                     setTimeout(() => peer.reconnect(), 5000);
+                    setSharing(false);
                     break;
                 case 'unavailable-id':
                     setCode(randomId(8));
@@ -117,9 +119,12 @@ export default function PeerDeployer({ model, behaviours }: Props) {
                     channelRef.current = undefined;
                     break;
                 case 'browser-incompatible':
+                    setSharing(false);
+                    console.error('Your browser does not support WebRTC');
                     break;
                 default:
                     peer.destroy();
+                    setSharing(false);
                     channelRef.current = undefined;
             }
         });
