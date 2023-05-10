@@ -14,6 +14,7 @@ export interface ModelContents {
 }
 
 export async function generateBlob(
+    code: string,
     model?: TeachableMobileNet,
     behaviours?: BehaviourType[],
     samples?: IClassification[]
@@ -44,7 +45,7 @@ export async function generateBlob(
 
     let zipData: Blob = new Blob();
     if (model) {
-        contents.metadata = JSON.stringify(model.getMetadata());
+        contents.metadata = JSON.stringify({ ...model.getMetadata(), projectId: code });
         zip.file('metadata.json', contents.metadata);
 
         await model.save({
@@ -80,10 +81,11 @@ export async function generateBlob(
 
 export async function saveProject(
     name: string,
+    code: string,
     model?: TeachableMobileNet,
     behaviours?: BehaviourType[],
     samples?: IClassification[]
 ) {
-    const zipData = await generateBlob(model, behaviours, samples);
+    const zipData = await generateBlob(code, model, behaviours, samples);
     if (zipData.zip) saveAs(zipData.zip, name);
 }

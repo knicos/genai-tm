@@ -13,6 +13,7 @@ interface ProjectTemp {
 }
 
 interface Project {
+    id?: string;
     model?: tmImage.TeachableMobileNet;
     behaviours?: BehaviourType[];
     samples?: IClassification[];
@@ -76,7 +77,8 @@ export async function loadProject(file: File | Blob): Promise<Project> {
     await Promise.all(promises);
 
     if (project.metadata && project.modelJson && project.modelWeights) {
-        const model = await tmImage.createTeachable(JSON.parse(project.metadata), { version: 2, alpha: 0.35 });
+        const meta = JSON.parse(project.metadata);
+        const model = await tmImage.createTeachable(meta, { version: 2, alpha: 0.35 });
 
         const parsedModel = JSON.parse(project.modelJson) as tf.io.ModelJSON;
 
@@ -129,6 +131,7 @@ export async function loadProject(file: File | Blob): Promise<Project> {
         }
 
         return {
+            id: meta.projectId,
             model,
             behaviours: project.behaviours ? JSON.parse(project.behaviours).behaviours : [],
             samples: samples.length > 0 ? samples : undefined,

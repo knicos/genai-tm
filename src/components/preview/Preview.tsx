@@ -8,14 +8,17 @@ import { useVariant } from '../../util/variant';
 import Alert from '@mui/material/Alert';
 import { useRecoilValue } from 'recoil';
 import { prediction } from '../../state';
+import { Button } from '../button/Button';
+import ShareIcon from '@mui/icons-material/Share';
 
 interface Props {
     model?: boolean;
+    onExport?: () => void;
 }
 
 const colourWheel: Colours[] = ['orange', 'purple', 'blue', 'green', 'red'];
 
-export default function Preview({ model }: Props) {
+export default function Preview({ model, onExport }: Props) {
     const { namespace } = useVariant();
     const { t } = useTranslation(namespace);
     const preds = useRecoilValue(prediction);
@@ -25,6 +28,17 @@ export default function Preview({ model }: Props) {
             dataWidget="model"
             title={t<string>('model.labels.title')}
             className={style.widget}
+            menu={
+                onExport ? (
+                    <Button
+                        onClick={onExport}
+                        variant="outlined"
+                        startIcon={<ShareIcon />}
+                    >
+                        Share
+                    </Button>
+                ) : null
+            }
         >
             {model && (
                 <div className={style.previewContainer}>

@@ -17,6 +17,7 @@ export interface DeployEventRequest extends DeployEvent {
     event: 'request';
     channel?: string;
     entity?: 'model' | 'metadata' | 'project' | 'weights';
+    password?: string;
 }
 
 export interface DeployEventData extends DeployEvent {
@@ -44,6 +45,13 @@ export default function PeerDeployer({ model, behaviours }: Props) {
     const cache = useRef<Props>({ model, behaviours });
     const blob = useRef<ModelContents | null>(null);
 
+    useEffect(() => {
+        if (channelRef.current) {
+            channelRef.current.destroy();
+            channelRef.current = undefined;
+        }
+    }, [code]);
+
     const getChannel = useCallback(() => {
         if (channelRef.current !== undefined) return channelRef.current;
 
@@ -61,16 +69,11 @@ export default function PeerDeployer({ model, behaviours }: Props) {
             setSharing(false);
         });
         peer.on('connection', (conn) => {
-            if (conn.metadata.password !== pwd) {
-                conn.close();
-                return;
-            }
             conn.on('data', async (data: unknown) => {
                 const ev = data as DeployEventRequest;
-                console.log('GOT DATA', data);
                 if (ev?.event === 'request') {
                     if (blob.current === null) {
-                        blob.current = await generateBlob(cache.current.model, cache.current.behaviours);
+                        blob.current = await generateBlob(code, cache.current.model, cache.current.behaviours);
                     }
                     switch (ev.entity || 'project') {
                         case 'metadata':
@@ -83,6 +86,10 @@ export default function PeerDeployer({ model, behaviours }: Props) {
                             conn.send({ event: 'model', component: 'weights', data: blob.current.weights });
                             break;
                         case 'project':
+                            if (ev?.password !== pwd) {
+                                conn.close();
+                                return;
+                            }
                             conn.send({ event: 'project', project: blob.current.zip, kind: 'image' });
                             break;
                     }

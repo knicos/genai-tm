@@ -64,7 +64,7 @@ export function useP2PModel(code: string, onError?: () => void): [TeachableMobil
             peer.destroy();
         });
         peer.on('open', (id: string) => {
-            const conn = peer.connect(code, { reliable: true, metadata: { password: params.get('p') } });
+            const conn = peer.connect(code, { reliable: true });
             conn.on('data', async (data: unknown) => {
                 const ev = data as DeployEventData;
 
@@ -95,7 +95,7 @@ export function useP2PModel(code: string, onError?: () => void): [TeachableMobil
                         onError();
                     }, TIMEOUT_P2P);
                 }
-                conn.send({ event: 'request', channel: id });
+                conn.send({ event: 'request', channel: id, password: params.get('p') });
             });
         });
     }, [code, onError, params]);

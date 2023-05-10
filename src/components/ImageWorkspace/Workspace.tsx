@@ -15,13 +15,15 @@ import { useVariant } from '../../util/variant';
 import Input from '../Input/Input';
 import SaveDialog, { SaveProperties } from './SaveDialog';
 import { saveProject } from './saver';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import { loadProject } from './loader';
 import Alert from '@mui/material/Alert';
 import Snackbar from '@mui/material/Snackbar';
 import PeerDeployer from '../PeerDeployer/PeerDeployer';
 import { patchBehaviours } from '../Behaviours/patch';
 import Deployer from '../Deployer/Deployer';
+import ExportDialog from './ExportDialog';
+import { sessionCode, sharingActive } from '../../state';
 
 const connections: IConnection[] = [
     { start: 'class', end: 'trainer', startPoint: 'right', endPoint: 'left' },
@@ -63,6 +65,12 @@ export default function Workspace({ step, visitedStep, onComplete, saveTrigger, 
     const [errMsg, setErrMsg] = useState<string | null>(null);
     const [saving, setSaving] = useRecoilState(saveState);
     const [editingData, setEditingData] = useState(false);
+    const [showShare, setShowShare] = useState(false);
+    const [code, setCode] = useRecoilState(sessionCode);
+    const sharing = useRecoilValue(sharingActive);
+
+    const doCloseShare = useCallback(() => setShowShare(false), [setShowShare]);
+    const doShare = useCallback(() => setShowShare(true), [setShowShare]);
 
     const observer = useRef<ResizeObserver>();
     const wkspaceRef = useRef<HTMLDivElement>(null);
@@ -79,6 +87,9 @@ export default function Workspace({ step, visitedStep, onComplete, saveTrigger, 
         if (projectFile) {
             loadProject(projectFile)
                 .then((project) => {
+                    if (project.id) {
+                        setCode(project.id);
+                    }
                     setModel(project.model);
                     if (project.behaviours) setBehaviours(project.behaviours);
                     if (project.samples) setData(project.samples);
@@ -93,7 +104,7 @@ export default function Workspace({ step, visitedStep, onComplete, saveTrigger, 
                     setProjectFile(null);
                 });
         }
-    }, [projectFile, onSkip, setBehaviours, setData, setModel, setProjectFile, resetOnLoad]);
+    }, [projectFile, onSkip, setBehaviours, setData, setModel, setProjectFile, resetOnLoad, setCode]);
 
     const doSetModel = useCallback(
         (model: TeachableMobileNet | undefined) => {
@@ -162,6 +173,7 @@ export default function Workspace({ step, visitedStep, onComplete, saveTrigger, 
         if (saving) {
             saveProject(
                 'my-classifier.zip',
+                code,
                 model,
                 saving.behaviours ? behaviours : undefined,
                 saving.samples ? data : undefined
@@ -171,7 +183,7 @@ export default function Workspace({ step, visitedStep, onComplete, saveTrigger, 
                 setSaving(null);
             });
         }
-    }, [saving, model, behaviours, data, setSaving]);
+    }, [saving, model, behaviours, data, setSaving, code]);
 
     const doSave = useCallback(
         (props: SaveProperties) => {
@@ -220,7 +232,10 @@ export default function Workspace({ step, visitedStep, onComplete, saveTrigger, 
                         enabled={!!model}
                         model={model}
                     />
-                    <Preview model={!!model} />
+                    <Preview
+                        model={!!model}
+                        onExport={sharing ? doShare : undefined}
+                    />
                 </div>
                 <Behaviours
                     hidden={visitedStep < 1}
@@ -239,6 +254,10 @@ export default function Workspace({ step, visitedStep, onComplete, saveTrigger, 
                 trigger={saveTrigger}
                 onSave={doSave}
                 hasModel={!!model}
+            />
+            <ExportDialog
+                open={showShare}
+                onClose={doCloseShare}
             />
             <Snackbar
                 anchorOrigin={{ vertical: 'top', horizontal: 'center' }}

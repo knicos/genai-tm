@@ -31,7 +31,7 @@ export default function Deployer({ model, behaviours }: Props) {
         channel.onmessage = async (ev: MessageEvent<DeployEventRequest>) => {
             if (ev.data.event === 'request') {
                 if (blob.current === null) {
-                    blob.current = await generateBlob(model, behaviours);
+                    blob.current = await generateBlob(code, model, behaviours);
                 }
                 if (blob.current.zip) {
                     sendData<DeployEventData>(ev.data.channel || '', {
@@ -42,7 +42,7 @@ export default function Deployer({ model, behaviours }: Props) {
                 }
             }
         };
-    }, [model, behaviours, getChannel]);
+    }, [model, behaviours, getChannel, code]);
 
     return null;
 }
