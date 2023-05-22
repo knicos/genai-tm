@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 import AppBar from '@mui/material/AppBar';
 import BusyButton from '../BusyButton/BusyButton';
 import Toolbar from '@mui/material/Toolbar';
@@ -12,8 +12,10 @@ import { fileData, saveState } from '../../state';
 import SettingsIcon from '@mui/icons-material/Settings';
 import { IconButton, Link as MUILink } from '@mui/material';
 import { createSearchParams, useNavigate, useSearchParams, Link } from 'react-router-dom';
+import Suggestion from '../Suggestion/Suggestion';
 
 interface Props {
+    showReminder?: boolean;
     onSave: () => void;
 }
 
@@ -22,13 +24,15 @@ export const LANGS = [
     { name: 'fi-FI', label: 'Suomi' },
 ];
 
-export default function ApplicationBar({ onSave }: Props) {
+export default function ApplicationBar({ showReminder, onSave }: Props) {
     const [params] = useSearchParams();
-    const { namespace, showSettings } = useVariant();
+    const { namespace, showSettings, showSaveReminder } = useVariant();
     const { t, i18n } = useTranslation(namespace);
     const [projectFile, setProject] = useRecoilState(fileData);
     const saving = useRecoilValue(saveState);
     const navigate = useNavigate();
+    const saveButtonRef = useRef(null);
+    const [reminder, setReminder] = useState(true);
 
     const openFile = useCallback(() => {
         document.getElementById('openfile')?.click();
@@ -54,12 +58,23 @@ export default function ApplicationBar({ onSave }: Props) {
         navigate(`/image/settings?${createSearchParams(params)}`, { replace: false });
     }, [navigate, params]);
 
+    const doSave = useCallback(() => {
+        setReminder(false);
+        onSave();
+    }, [setReminder, onSave]);
+
     return (
         <AppBar
             component="nav"
             className="AppBar"
             position="static"
         >
+            <Suggestion
+                open={showReminder && reminder && showSaveReminder}
+                anchorEl={saveButtonRef.current}
+            >
+                Remember to save your classifier.
+            </Suggestion>
             <Toolbar>
                 <Link
                     to="/about"
@@ -98,7 +113,8 @@ export default function ApplicationBar({ onSave }: Props) {
                         color="inherit"
                         variant="outlined"
                         startIcon={<SaveAltIcon />}
-                        onClick={onSave}
+                        onClick={doSave}
+                        ref={saveButtonRef}
                     >
                         {t('app.save')}
                     </BusyButton>

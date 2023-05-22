@@ -48,6 +48,7 @@ export default function ImageClassifier() {
     const [allowedStep, setAllowedStep] = useState(0);
     const [visited, setVisited] = useState(0);
     const [saveTrigger, setSaveTrigger] = useState<(() => void) | undefined>(undefined);
+    const [showReminder, setShowReminder] = useState(false);
 
     const doComplete = useCallback(
         (newstep: number) => {
@@ -65,6 +66,8 @@ export default function ImageClassifier() {
         [setAllowedStep, setStep]
     );
 
+    const doSaveRemind = useCallback(() => setShowReminder(true), [setShowReminder]);
+
     const nextStep = useCallback(() => {
         setStep(step + 1);
         setVisited((oldVisited) => Math.max(oldVisited, step + 1));
@@ -74,13 +77,17 @@ export default function ImageClassifier() {
 
     return (
         <ThemeProvider theme={theme}>
-            <AppBar onSave={doSave} />
+            <AppBar
+                onSave={doSave}
+                showReminder={showReminder}
+            />
             <Workspace
                 step={step}
                 visitedStep={visited}
                 onComplete={doComplete}
                 saveTrigger={saveTrigger}
                 onSkip={doSkip}
+                onSaveRemind={doSaveRemind}
             />
             <nav
                 className={visited < 1 ? style.stepButton : style.stepButtonHidden}

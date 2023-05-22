@@ -1,0 +1,20 @@
+@value secondary from "../../style/colours.module.css";
+
+.content {
+    background: secondary;
+    color: white;
+    border-radius: 6px;
+    padding: 1rem;
+    margin-top: 14px;
+    max-width: 10rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    align-items: flex-end;
+}
+
+.arrow {
+    border-left: 15px solid transparent;
+    border-right: 15px solid transparent;
+    border-bottom: 15px solid secondary;
+}

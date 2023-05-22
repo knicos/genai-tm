@@ -35,8 +35,7 @@ export default function Behaviours({ onChange, ...props }: Props) {
 
     useEffect(() => {
         setBehaviours((old) => patchBehaviours(old, labels || []));
-        if (onChange) onChange();
-    }, [labels, setBehaviours, onChange]);
+    }, [labels, setBehaviours]);
 
     return (
         <section

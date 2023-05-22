@@ -22,6 +22,8 @@ import Deployer from '../Deployer/Deployer';
 import ExportDialog from './ExportDialog';
 import { useModelCreator } from '../../util/TeachableModel';
 
+const SAVE_PERIOD = 5 * 60 * 1000; // 5 mins
+
 const connections: IConnection[] = [
     { start: 'class', end: 'trainer', startPoint: 'right', endPoint: 'left' },
     { start: 'trainer', end: 'model', startPoint: 'right', endPoint: 'left' },
@@ -36,6 +38,7 @@ interface Props {
     onComplete: (step: number) => void;
     saveTrigger?: () => void;
     onSkip: (step: number) => void;
+    onSaveRemind: () => void;
 }
 
 function alertMessage(e: Event) {
@@ -51,7 +54,7 @@ function addCloseAlert() {
     }
 }
 
-export default function Workspace({ step, visitedStep, onComplete, saveTrigger, onSkip }: Props) {
+export default function Workspace({ step, visitedStep, onComplete, saveTrigger, onSkip, onSaveRemind }: Props) {
     const { namespace, resetOnLoad, usep2p, modelVariant } = useVariant();
     const { t } = useTranslation(namespace);
     const [data, setData] = useRecoilState(classState);
@@ -70,15 +73,19 @@ export default function Workspace({ step, visitedStep, onComplete, saveTrigger, 
 
     const observer = useRef<ResizeObserver>();
     const wkspaceRef = useRef<HTMLDivElement>(null);
+    const saveTimer = useRef(-1);
 
     const closeError = useCallback(() => setErrMsg(null), [setErrMsg]);
 
     const doSetData = useCallback(
         (d: ((old: IClassification[]) => IClassification[]) | IClassification[]) => {
             addCloseAlert();
+            if (saveTimer.current === -1) {
+                setTimeout(onSaveRemind, SAVE_PERIOD);
+            }
             setData(d);
         },
-        [setData]
+        [setData, onSaveRemind]
     );
 
     useEffect(() => {
@@ -118,11 +125,25 @@ export default function Workspace({ step, visitedStep, onComplete, saveTrigger, 
 
     const doTrained = useCallback(() => {
         addCloseAlert();
+        if (saveTimer.current === -1) {
+            setTimeout(onSaveRemind, SAVE_PERIOD);
+        }
         onComplete(1);
-    }, [onComplete]);
+    }, [onComplete, onSaveRemind]);
+
+    const doBehaviourChange = useCallback(() => {
+        addCloseAlert();
+        if (saveTimer.current === -1) {
+            setTimeout(onSaveRemind, SAVE_PERIOD);
+        }
+    }, [onSaveRemind]);
 
     const doSaved = useCallback(() => {
         window.removeEventListener('beforeunload', alertMessage);
+        if (saveTimer.current !== -1) {
+            clearTimeout(saveTimer.current);
+            saveTimer.current = -1;
+        }
         hasAlert = false;
     }, []);
 
@@ -185,7 +206,7 @@ export default function Workspace({ step, visitedStep, onComplete, saveTrigger, 
                 <Behaviours
                     hidden={visitedStep < 1}
                     focus={step === 1}
-                    onChange={addCloseAlert}
+                    onChange={doBehaviourChange}
                 />
                 <Output hidden={visitedStep < 1} />
             </div>

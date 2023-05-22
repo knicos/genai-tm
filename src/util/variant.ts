@@ -31,6 +31,7 @@ export interface IVariantContext {
     showDragTip?: boolean;
     usep2p?: boolean;
     showSettings?: boolean;
+    showSaveReminder?: boolean;
 }
 
 export const VariantContext = React.createContext<IVariantContext>({

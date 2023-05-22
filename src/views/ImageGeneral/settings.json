@@ -23,5 +23,6 @@
     "showDragTip": false,
     "usep2p": false,
     "showSettings": true,
-    "modelVariant": "image"
+    "modelVariant": "image",
+    "showSaveReminder": false
 }

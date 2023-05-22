@@ -3,7 +3,8 @@
         "title": "GenAI kuvien luokittelija",
         "about": "Tietoa sovelluksesta",
         "save": "Tallenna",
-        "load": "Avaa"
+        "load": "Avaa",
+        "reminder": "Remember to save your classifier."
     },
     "save": {
         "title": "Tallenna luokittelija",

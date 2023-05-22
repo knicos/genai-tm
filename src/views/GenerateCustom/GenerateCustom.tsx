@@ -325,6 +325,16 @@ function SettingsForm() {
                     }
                     label="Show settings"
                 />
+                <FormControlLabel
+                    control={
+                        <Checkbox
+                            checked={state.showSaveReminder}
+                            name="showSaveReminder"
+                            onChange={doCheckChange}
+                        />
+                    }
+                    label="Show Save Reminder"
+                />
                 <FormControl fullWidth>
                     <InputLabel id="model-select">Model</InputLabel>
                     <Select

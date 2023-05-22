@@ -3,7 +3,8 @@
         "title": "GenAI Image Classifier",
         "about": "About",
         "save": "Save",
-        "load": "Open"
+        "load": "Open",
+        "reminder": "Remember to save your classifier."
     },
     "save": {
         "title": "Save Classifier",

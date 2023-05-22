@@ -13,6 +13,7 @@ describe('ImageWorkspace component', () => {
                 visitedStep={0}
                 onComplete={complete}
                 onSkip={skip}
+                onSaveRemind={skip}
             />,
             { wrapper: TestWrapper }
         );
@@ -29,6 +30,7 @@ describe('ImageWorkspace component', () => {
                 visitedStep={1}
                 onComplete={complete}
                 onSkip={skip}
+                onSaveRemind={skip}
             />,
             { wrapper: TestWrapper }
         );
