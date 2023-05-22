@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import { TMType } from './TeachableModel';
 
 export type Features = 'advancedMenu';
 
@@ -7,6 +8,7 @@ export interface IVariantContext {
     advancedMenu?: boolean;
     modelSelect?: boolean;
     modelThreshold?: boolean;
+    modelVariant: TMType;
     trainingStep?: boolean;
     behavioursStep?: boolean;
     imageBehaviours?: boolean;
@@ -33,6 +35,7 @@ export interface IVariantContext {
 
 export const VariantContext = React.createContext<IVariantContext>({
     namespace: 'translation',
+    modelVariant: 'image',
 });
 
 export function useVariant() {

@@ -2,11 +2,12 @@ import React from 'react';
 import { render, screen, waitFor } from '@testing-library/react';
 import Input from './Input';
 import TestWrapper from '../../util/TestWrapper';
-import { TeachableMobileNet } from '@teachablemachine/image';
 import RecoilObserver from '../../util/Observer';
-import { prediction, predictedIndex } from '../../state';
+import { prediction, predictedIndex, modelState } from '../../state';
+import { TeachableModel } from '../../util/TeachableModel';
+import { MutableSnapshot } from 'recoil';
 
-jest.mock('@teachablemachine/image', () => ({
+jest.mock('@genai/tm-image', () => ({
     Webcam: function () {
         return {
             setup: jest.fn(),
@@ -30,8 +31,29 @@ describe('Input component', () => {
         const onPredict = jest.fn();
 
         const model = {
-            predict: jest.fn(() => [{ className: 'Class 1', probability: 0.1 }]),
-        } as unknown as TeachableMobileNet;
+            predict: jest.fn(() => {
+                return [{ className: 'Class 1', probability: 0.1 }];
+            }),
+            isTrained: jest.fn(() => true),
+            getImageSize: jest.fn(() => 224),
+            getVariant: jest.fn(() => 'image'),
+            getLabels: jest.fn(() => ['Class 1']),
+            estimate: jest.fn(),
+            draw: jest.fn(),
+        } as unknown as TeachableModel;
+
+        function ModelWrapper({ children }: React.PropsWithChildren) {
+            return (
+                <TestWrapper
+                    initializeState={(snap: MutableSnapshot) => {
+                        snap.set(predictedIndex, -1);
+                        snap.set(modelState, model);
+                    }}
+                >
+                    {children}
+                </TestWrapper>
+            );
+        }
 
         render(
             <>
@@ -39,16 +61,13 @@ describe('Input component', () => {
                     node={prediction}
                     onChange={onPredict}
                 />
-                <Input
-                    model={model}
-                    enabled={true}
-                />
+                <Input />
             </>,
-            { wrapper: TestWrapper }
+            { wrapper: ModelWrapper }
         );
 
-        expect(screen.getByTestId('webcam')).toBeInTheDocument();
         await waitFor(() => expect(model.predict).toHaveBeenCalled());
+        expect(screen.getByTestId('webcam')).toBeInTheDocument();
         expect(onPredict).toHaveBeenCalledWith([{ className: 'Class 1', probability: 0.1 }]);
     });
 
@@ -63,7 +82,26 @@ describe('Input component', () => {
                 { className: 'Class 4', probability: 0.02 },
                 { className: 'Class 5', probability: 0.199 },
             ]),
-        } as unknown as TeachableMobileNet;
+            isTrained: jest.fn(() => true),
+            getImageSize: jest.fn(() => 224),
+            getVariant: jest.fn(() => 'image'),
+            getLabels: jest.fn(() => ['Class 1']),
+            estimate: jest.fn(),
+            draw: jest.fn(),
+        } as unknown as TeachableModel;
+
+        function ModelWrapper({ children }: React.PropsWithChildren) {
+            return (
+                <TestWrapper
+                    initializeState={(snap: MutableSnapshot) => {
+                        snap.set(predictedIndex, -1);
+                        snap.set(modelState, model);
+                    }}
+                >
+                    {children}
+                </TestWrapper>
+            );
+        }
 
         render(
             <>
@@ -71,12 +109,9 @@ describe('Input component', () => {
                     node={predictedIndex}
                     onChange={onPredict}
                 />
-                <Input
-                    model={model}
-                    enabled={true}
-                />
+                <Input />
             </>,
-            { wrapper: TestWrapper }
+            { wrapper: ModelWrapper }
         );
 
         await waitFor(() => expect(model.predict).toHaveBeenCalled());

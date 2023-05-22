@@ -2,6 +2,7 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import WebcamCapture from './WebcamCapture';
 import userEvent from '@testing-library/user-event';
+import TestWrapper from '../../util/TestWrapper';
 
 describe('WebcamCapture component', () => {
     it('opens and closes', async () => {
@@ -13,7 +14,8 @@ describe('WebcamCapture component', () => {
                 visible={true}
                 onClose={onClose}
                 onCapture={onCapture}
-            />
+            />,
+            { wrapper: TestWrapper }
         );
         expect(screen.getByTestId('webcamwindow')).toBeInTheDocument();
         expect(onClose).toHaveBeenCalledTimes(0);

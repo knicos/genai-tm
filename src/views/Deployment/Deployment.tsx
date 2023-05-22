@@ -15,14 +15,14 @@ import { NativeTypes } from 'react-dnd-html5-backend';
 import { Webcam } from '../../components/webcam/Webcam';
 import Display, { WrappedInput } from './Display';
 import Alert from '@mui/material/Alert';
-import { TeachableMobileNet } from '@teachablemachine/image';
 import { BehaviourType } from '../../components/Behaviour/Behaviour';
+import { TeachableModel } from '../../util/TeachableModel';
 
 const WIDTH = 400;
 const HEIGHT = 350;
 
 interface Props extends React.PropsWithChildren {
-    model: TeachableMobileNet | null;
+    model: TeachableModel | null;
     behaviours: BehaviourType[];
     error: boolean;
     onCloseError: () => void;
@@ -145,6 +145,7 @@ export default function Deployment({ model, behaviours, error, onCloseError, chi
                         interval={100}
                         disable={paused || error}
                         direct
+                        size={model?.getImageSize() || 224}
                     />
                     <IconButton
                         color="inherit"

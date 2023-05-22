@@ -8,6 +8,7 @@ import style from './classification.module.css';
 import WebcamSettings, { IWebcamSettings } from './WebcamSettings';
 import { useTranslation } from 'react-i18next';
 import { useVariant } from '../../util/variant';
+import { useTeachableModel } from '../../util/TeachableModel';
 
 interface Props {
     visible?: boolean;
@@ -26,6 +27,7 @@ export default function WebcamCapture({ visible, onCapture, onClose }: Props) {
         count: 1,
     });
     const buttonRef = useRef<HTMLButtonElement>(null);
+    const { draw, imageSize } = useTeachableModel();
 
     const startCapture = useCallback(() => setCapturing(true), [setCapturing]);
     const startTouchCapture = useCallback(
@@ -39,6 +41,13 @@ export default function WebcamCapture({ visible, onCapture, onClose }: Props) {
         [setCapturing]
     );
     const stopCapture = useCallback(() => setCapturing(false), [setCapturing]);
+
+    const doPostProcess = useCallback(
+        (image: HTMLCanvasElement) => {
+            draw(image);
+        },
+        [draw]
+    );
 
     useEffect(() => {
         if (buttonRef.current) {
@@ -86,6 +95,8 @@ export default function WebcamCapture({ visible, onCapture, onClose }: Props) {
                             capture={capturing}
                             onCapture={onCapture}
                             interval={200}
+                            onPostprocess={doPostProcess}
+                            size={imageSize}
                         />
                     </div>
                     <div className={style.webcambuttoncontainer}>

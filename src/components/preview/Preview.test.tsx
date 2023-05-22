@@ -5,7 +5,7 @@ import TestWrapper from '../../util/TestWrapper';
 import { MutableSnapshot } from 'recoil';
 import { prediction } from '../../state';
 
-describe('Output component', () => {
+describe('Preview component', () => {
     it('renders with no model', async () => {
         function NoPredWrapper({ children }: React.PropsWithChildren) {
             return (
@@ -18,7 +18,7 @@ describe('Output component', () => {
                 </TestWrapper>
             );
         }
-        render(<Preview model={false} />, { wrapper: NoPredWrapper });
+        render(<Preview />, { wrapper: NoPredWrapper });
         expect(screen.getByText('model.labels.mustTrain')).toBeInTheDocument();
     });
 
@@ -27,14 +27,14 @@ describe('Output component', () => {
             return (
                 <TestWrapper
                     initializeState={(snap: MutableSnapshot) => {
-                        snap.set(prediction, []);
+                        snap.set(prediction, [{ className: 'Class1', probability: 0.5 }]);
                     }}
                 >
                     {children}
                 </TestWrapper>
             );
         }
-        render(<Preview model={true} />, { wrapper: NoPredWrapper });
+        render(<Preview />, { wrapper: NoPredWrapper });
         expect(screen.queryByText('model.labels.mustTrain')).not.toBeInTheDocument();
     });
 
@@ -53,7 +53,7 @@ describe('Output component', () => {
                 </TestWrapper>
             );
         }
-        render(<Preview model={true} />, { wrapper: PredWrapper });
+        render(<Preview />, { wrapper: PredWrapper });
         expect(screen.getByTestId('prediction-0')).toBeVisible();
         expect(screen.getByTestId('prediction-1')).toBeVisible();
         expect(screen.getByText('Class1')).toBeInTheDocument();

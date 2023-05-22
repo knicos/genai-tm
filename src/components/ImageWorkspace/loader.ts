@@ -1,8 +1,10 @@
 import JSZip from 'jszip';
+import { useEffect } from 'react';
 import * as tf from '@tensorflow/tfjs';
-import * as tmImage from '@teachablemachine/image';
 import { BehaviourType } from '../Behaviour/Behaviour';
-import { IClassification } from '../../state';
+import { IClassification, behaviourState, classState, fileData, sessionCode } from '../../state';
+import { TeachableModel, useModelLoader, Metadata } from '../../util/TeachableModel';
+import { useRecoilState, useSetRecoilState } from 'recoil';
 
 interface ProjectTemp {
     modelJson?: string;
@@ -14,7 +16,9 @@ interface ProjectTemp {
 
 interface Project {
     id?: string;
-    model?: tmImage.TeachableMobileNet;
+    metadata?: Metadata;
+    model?: tf.io.ModelJSON;
+    weights?: ArrayBuffer;
     behaviours?: BehaviourType[];
     samples?: IClassification[];
 }
@@ -78,19 +82,11 @@ export async function loadProject(file: File | Blob): Promise<Project> {
 
     if (project.metadata && project.modelJson && project.modelWeights) {
         const meta = JSON.parse(project.metadata);
-        const model = await tmImage.createTeachable(meta, { version: 2, alpha: 0.35 });
 
         const parsedModel = JSON.parse(project.modelJson) as tf.io.ModelJSON;
 
-        model.model = await tf.loadLayersModel({
-            load: async () => {
-                return {
-                    modelTopology: parsedModel.modelTopology,
-                    weightData: project.modelWeights,
-                    weightSpecs: parsedModel.weightsManifest[0].weights,
-                };
-            },
-        });
+        const model = new TeachableModel('image', meta, parsedModel, project.modelWeights);
+        await model.ready();
 
         let samplePromises: Promise<HTMLCanvasElement>[] = [];
 
@@ -132,11 +128,56 @@ export async function loadProject(file: File | Blob): Promise<Project> {
 
         return {
             id: meta.projectId,
-            model,
+            model: parsedModel,
+            metadata: meta,
+            weights: project.modelWeights,
             behaviours: project.behaviours ? JSON.parse(project.behaviours).behaviours : [],
             samples: samples.length > 0 ? samples : undefined,
         };
     }
 
     return {};
+}
+
+interface Props {
+    onLoaded?: (hadBehaviours: boolean) => void;
+    onError?: (err: unknown) => void;
+}
+
+export function ModelLoader({ onLoaded, onError }: Props) {
+    const [projectFile, setProjectFile] = useRecoilState(fileData);
+    const setBehaviours = useSetRecoilState(behaviourState);
+    const setCode = useSetRecoilState(sessionCode);
+    const setData = useSetRecoilState(classState);
+    const loadModel = useModelLoader();
+
+    useEffect(() => {
+        if (projectFile) {
+            loadProject(projectFile)
+                .then((project) => {
+                    if (project.id) setCode(project.id);
+                    if (project.behaviours) setBehaviours(project.behaviours);
+                    if (project.samples) setData(project.samples);
+
+                    if (project.metadata && project.model && project.weights) {
+                        loadModel(project.metadata, project.model, project.weights).then((result) => {
+                            if (result && onLoaded) {
+                                onLoaded(!!project.behaviours);
+                            }
+                        });
+                    }
+
+                    /*if (project.behaviours && !resetOnLoad) {
+                        onSkip(1);
+                    }*/
+                    setProjectFile(null);
+                })
+                .catch((e) => {
+                    if (onError) onError(e);
+                    setProjectFile(null);
+                });
+        }
+    }, [projectFile, loadModel, setProjectFile, onLoaded, setData, setCode, setBehaviours, onError]);
+
+    return null;
 }

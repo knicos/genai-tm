@@ -3,17 +3,17 @@ import randomId from '../../util/randomId';
 import { sendData } from '../../util/comms';
 import { DeployEventData } from '../../components/PeerDeployer/PeerDeployer';
 import { loadProject } from '../../components/ImageWorkspace/loader';
-import { TeachableMobileNet } from '@teachablemachine/image';
 import { BehaviourType } from '../../components/Behaviour/Behaviour';
 import { Peer } from 'peerjs';
 import { useSearchParams } from 'react-router-dom';
+import { TeachableModel } from '../../util/TeachableModel';
 
 const TIMEOUT_LOCAL = 5000;
 const TIMEOUT_P2P = 15000;
 
-export function useTabModel(code: string, onError?: () => void): [TeachableMobileNet | null, BehaviourType[]] {
+export function useTabModel(code: string, onError?: () => void): [TeachableModel | null, BehaviourType[]] {
     const channel = useRef<BroadcastChannel>();
-    const [model, setModel] = useState<TeachableMobileNet | null>(null);
+    const [model, setModel] = useState<TeachableModel | null>(null);
     const [behaviours, setBehaviours] = useState<BehaviourType[]>([]);
     const [myCode] = useState(() => randomId(8));
     const timeoutRef = useRef<number>(-1);
@@ -32,7 +32,8 @@ export function useTabModel(code: string, onError?: () => void): [TeachableMobil
                     clearTimeout(timeoutRef.current);
                 }
                 const project = await loadProject(ev.data.project);
-                if (project.model) setModel(project.model);
+                if (project.model)
+                    setModel(new TeachableModel('image', project.metadata, project.model, project.weights));
                 if (project.behaviours) setBehaviours(project.behaviours);
             }
         };
@@ -42,8 +43,8 @@ export function useTabModel(code: string, onError?: () => void): [TeachableMobil
     return [model, behaviours];
 }
 
-export function useP2PModel(code: string, onError?: () => void): [TeachableMobileNet | null, BehaviourType[]] {
-    const [model, setModel] = useState<TeachableMobileNet | null>(null);
+export function useP2PModel(code: string, onError?: () => void): [TeachableModel | null, BehaviourType[]] {
+    const [model, setModel] = useState<TeachableModel | null>(null);
     const [behaviours, setBehaviours] = useState<BehaviourType[]>([]);
     const timeoutRef = useRef<number>(-1);
     const [params] = useSearchParams();
@@ -75,7 +76,8 @@ export function useP2PModel(code: string, onError?: () => void): [TeachableMobil
 
                     try {
                         const project = await loadProject(ev.project);
-                        if (project.model) setModel(project.model);
+                        if (project.model)
+                            setModel(new TeachableModel('image', project.metadata, project.model, project.weights));
                         if (project.behaviours) setBehaviours(project.behaviours);
                     } catch (e) {
                         if (onError) onError();

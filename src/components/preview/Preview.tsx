@@ -1,4 +1,3 @@
-import { TeachableMobileNet } from '@teachablemachine/image';
 import React from 'react';
 import { Widget } from '../widget/Widget';
 import PercentageBar, { Colours } from '../PercentageBar/PercentageBar';
@@ -12,16 +11,17 @@ import { Button } from '../button/Button';
 import ShareIcon from '@mui/icons-material/Share';
 
 interface Props {
-    model?: boolean;
     onExport?: () => void;
 }
 
 const colourWheel: Colours[] = ['orange', 'purple', 'blue', 'green', 'red'];
 
-export default function Preview({ model, onExport }: Props) {
+export default function Preview({ onExport }: Props) {
     const { namespace, usep2p } = useVariant();
     const { t } = useTranslation(namespace);
     const preds = useRecoilValue(prediction);
+
+    const model = preds.length > 0;
 
     return (
         <Widget

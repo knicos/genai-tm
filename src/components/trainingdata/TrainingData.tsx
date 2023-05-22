@@ -10,7 +10,7 @@ import { useVariant } from '../../util/variant';
 interface Props {
     active?: boolean;
     data: IClassification[];
-    setData: (data: IClassification[]) => void;
+    setData: (data: ((old: IClassification[]) => IClassification[]) | IClassification[]) => void;
     disabled?: boolean;
     onFocused: (f: boolean) => void;
 }
@@ -25,12 +25,14 @@ export function TrainingData({ active, data, setData, disabled, onFocused }: Pro
     }, [disabled]);
 
     const setDataIx = useCallback(
-        (samples: IClassification, ix: number) => {
-            const newdata = [...data];
-            newdata[ix] = samples;
-            setData(newdata);
+        (samples: (old: IClassification) => IClassification, ix: number) => {
+            setData((data) => {
+                const newdata = [...data];
+                newdata[ix] = samples(data[ix]);
+                return newdata;
+            });
         },
-        [data, setData]
+        [setData]
     );
 
     const doActivate = useCallback((ix: number) => active && setActiveIndex(ix), [active, setActiveIndex]);

@@ -6,9 +6,6 @@ import style from './Input.module.css';
 import { useTranslation } from 'react-i18next';
 import { useVariant } from '../../util/variant';
 import Skeleton from '@mui/material/Skeleton';
-import { useRecoilState } from 'recoil';
-import { predictedIndex, prediction } from '../../state';
-import { TeachableMobileNet } from '@teachablemachine/image';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import UploadFileIcon from '@mui/icons-material/UploadFile';
@@ -20,26 +17,24 @@ import TabPanel from './TabPanel';
 import WebcamInput from './WebcamInput';
 import { useTabActive } from '../../util/useTabActive';
 import AlertModal from '../AlertModal/AlertModal';
+import { useTeachableModel } from '../../util/TeachableModel';
 
 interface Props {
     disabled?: boolean;
     hidden?: boolean;
-    enabled?: boolean;
-    model?: TeachableMobileNet;
 }
 
-export default function Input({ enabled, model, ...props }: Props) {
+export default function Input(props: Props) {
     const { namespace, enableFileInput } = useVariant();
     const { t } = useTranslation(namespace);
     const [enableInputSwitch, setEnableInput] = useState(true);
     const [tabIndex, setTabIndex] = useState(0);
-    const [, setPredictions] = useRecoilState(prediction);
-    const [, setPredictionIndex] = useRecoilState(predictedIndex);
     const fileRef = useRef<HTMLInputElement>(null);
     const fileImageRef = useRef<HTMLDivElement>(null);
     const [file, setFile] = useState<HTMLCanvasElement | null>(null);
     const isActive = useTabActive();
     const [showDropError, setShowDropError] = useState(false);
+    const { predict, canPredict, draw, imageSize } = useTeachableModel();
 
     const enableInput = isActive && enableInputSwitch;
 
@@ -63,15 +58,11 @@ export default function Input({ enabled, model, ...props }: Props) {
 
     const doPrediction = useCallback(
         async (image: HTMLCanvasElement) => {
-            if (model) {
-                const p = await model.predict(image);
-                setPredictions(p);
-
-                const nameOfMax = p.reduce((prev, val) => (val.probability > prev.probability ? val : prev));
-                setPredictionIndex(p.indexOf(nameOfMax));
+            if (canPredict) {
+                predict(image);
             }
         },
-        [setPredictions, setPredictionIndex, model]
+        [canPredict, predict]
     );
 
     const onDrop = useCallback(
@@ -126,6 +117,13 @@ export default function Input({ enabled, model, ...props }: Props) {
         [onDrop]
     );
 
+    const doPostProcess = useCallback(
+        (image: HTMLCanvasElement) => {
+            draw(image);
+        },
+        [draw]
+    );
+
     const doDropErrorClose = useCallback(() => setShowDropError(false), [setShowDropError]);
 
     return (
@@ -139,7 +137,7 @@ export default function Input({ enabled, model, ...props }: Props) {
                         labelPlacement="start"
                         control={
                             <Switch
-                                disabled={!enabled}
+                                disabled={!canPredict}
                                 checked={enableInput}
                                 onChange={changeWebcamToggle}
                                 data-testid="webcam-switch"
@@ -165,13 +163,13 @@ export default function Input({ enabled, model, ...props }: Props) {
                         variant="fullWidth"
                     >
                         <Tab
-                            disabled={!enabled}
+                            disabled={!canPredict}
                             label={t<string>('input.labels.webcam')}
                             id="input-tab-0"
                             aria-controls="input-panel-0"
                         />
                         <Tab
-                            disabled={!enabled}
+                            disabled={!canPredict}
                             label={t<string>('input.labels.file')}
                             id="input-tab-1"
                             aria-controls="input-panel-1"
@@ -183,9 +181,11 @@ export default function Input({ enabled, model, ...props }: Props) {
                         enabled={enableInput}
                     >
                         <WebcamInput
-                            enabled={enabled}
+                            enabled={canPredict}
                             enableInput={enableInput}
                             doPrediction={doPrediction}
+                            doPostProcess={doPostProcess}
+                            size={imageSize}
                         />
                     </TabPanel>
                     <TabPanel
@@ -203,7 +203,7 @@ export default function Input({ enabled, model, ...props }: Props) {
                         <Button
                             className={dropProps.hovered ? style.filesButtonHighlight : style.filesButton}
                             onClick={doUploadClick}
-                            disabled={!enabled || !enableInput}
+                            disabled={!canPredict || !enableInput}
                             startIcon={<UploadFileIcon fontSize="large" />}
                             variant="outlined"
                         >
@@ -221,8 +221,8 @@ export default function Input({ enabled, model, ...props }: Props) {
                             <Skeleton
                                 sx={{ marginTop: '1rem' }}
                                 variant="rounded"
-                                width={224}
-                                height={224}
+                                width={imageSize}
+                                height={imageSize}
                             />
                         )}
                     </TabPanel>
@@ -232,9 +232,11 @@ export default function Input({ enabled, model, ...props }: Props) {
                 <div className={style.container}>
                     <div className={enableInput ? style.inputContainer : style.inputContainerDisable}>
                         <WebcamInput
-                            enabled={enabled}
+                            size={imageSize}
+                            enabled={canPredict}
                             enableInput={enableInput}
                             doPrediction={doPrediction}
+                            doPostProcess={doPostProcess}
                         />
                     </div>
                 </div>

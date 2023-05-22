@@ -2,26 +2,25 @@ import React, { useState, useCallback } from 'react';
 import { Widget } from '../widget/Widget';
 import { useTranslation } from 'react-i18next';
 import style from './Output.module.css';
-import { BehaviourType } from '../Behaviours/Behaviours';
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import { useVariant } from '../../util/variant';
 import { useRecoilValue } from 'recoil';
-import { predictedIndex, sessionCode, sessionPassword, sharingActive } from '../../state';
+import { predictedIndex, sessionCode, sessionPassword, sharingActive, behaviourState } from '../../state';
 import RawOutput from './RawOutput';
 import Slider from '@mui/material/Slider';
 import VolumeDown from '@mui/icons-material/VolumeDown';
 import VolumeUp from '@mui/icons-material/VolumeUp';
 
 interface Props {
-    behaviours: BehaviourType[];
     focus?: boolean;
     disabled?: boolean;
     hidden?: boolean;
 }
 
-export default function Output({ behaviours, ...props }: Props) {
+export default function Output(props: Props) {
     const code = useRecoilValue(sessionCode);
     const pwd = useRecoilValue(sessionPassword);
+    const behaviours = useRecoilValue(behaviourState);
     const sharing = useRecoilValue(sharingActive);
     const [volume, setVolume] = useState(100);
     const changeVolume = useCallback((event: Event, newValue: number | number[]) => {

@@ -2,6 +2,13 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import SaveDialog from './SaveDialog';
 import userEvent from '@testing-library/user-event';
+import TestWrapper from '../../util/TestWrapper';
+
+jest.mock('../../util/TeachableModel', () => ({
+    useTeachableModel: function () {
+        return { hasModel: true };
+    },
+}));
 
 describe('SaveDialog component', () => {
     it('renders open', async () => {
@@ -11,8 +18,8 @@ describe('SaveDialog component', () => {
             <SaveDialog
                 trigger={trigger}
                 onSave={onsave}
-                hasModel={true}
-            />
+            />,
+            { wrapper: TestWrapper }
         );
 
         expect(screen.getByText('save.message')).toBeInTheDocument();
@@ -27,8 +34,8 @@ describe('SaveDialog component', () => {
             <SaveDialog
                 trigger={trigger}
                 onSave={onsave}
-                hasModel={true}
-            />
+            />,
+            { wrapper: TestWrapper }
         );
 
         const cancel = screen.getByTestId('save-cancel');
@@ -44,8 +51,8 @@ describe('SaveDialog component', () => {
             <SaveDialog
                 trigger={trigger}
                 onSave={onsave}
-                hasModel={true}
-            />
+            />,
+            { wrapper: TestWrapper }
         );
 
         const save = screen.getByTestId('save-save');

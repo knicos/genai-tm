@@ -1,29 +1,26 @@
 import React, { useRef, useEffect, useState, useCallback } from 'react';
-import * as tf from '@tensorflow/tfjs';
 import SvgLayer, { ILine } from './SvgLayer';
 import { TrainingData } from '../trainingdata/TrainingData';
 import Trainer from '../trainer/Trainer';
 import Preview from '../preview/Preview';
 import { IConnection, extractNodesFromElements, generateLines } from './lines';
 import Output from '../Output/Output';
-import Behaviours, { BehaviourType } from '../Behaviours/Behaviours';
+import Behaviours from '../Behaviours/Behaviours';
 import { useTranslation } from 'react-i18next';
-import { TeachableMobileNet, createTeachable } from '@teachablemachine/image';
-import { behaviourState, classState, fileData, IClassification, modelState, saveState } from '../../state';
+import { classState, IClassification, saveState, sharingActive } from '../../state';
 import style from './TeachableMachine.module.css';
 import { useVariant } from '../../util/variant';
 import Input from '../Input/Input';
 import SaveDialog, { SaveProperties } from './SaveDialog';
-import { saveProject } from './saver';
-import { useRecoilState, useRecoilValue } from 'recoil';
-import { loadProject } from './loader';
+import { ModelSaver } from './saver';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
+import { ModelLoader } from './loader';
 import Alert from '@mui/material/Alert';
 import Snackbar from '@mui/material/Snackbar';
 import PeerDeployer from '../PeerDeployer/PeerDeployer';
-import { patchBehaviours } from '../Behaviours/patch';
 import Deployer from '../Deployer/Deployer';
 import ExportDialog from './ExportDialog';
-import { sessionCode, sharingActive } from '../../state';
+import { useModelCreator } from '../../util/TeachableModel';
 
 const connections: IConnection[] = [
     { start: 'class', end: 'trainer', startPoint: 'right', endPoint: 'left' },
@@ -55,19 +52,18 @@ function addCloseAlert() {
 }
 
 export default function Workspace({ step, visitedStep, onComplete, saveTrigger, onSkip }: Props) {
-    const { namespace, resetOnLoad, usep2p } = useVariant();
+    const { namespace, resetOnLoad, usep2p, modelVariant } = useVariant();
     const { t } = useTranslation(namespace);
-    const [projectFile, setProjectFile] = useRecoilState(fileData);
-    const [behaviours, setBehaviours] = useRecoilState(behaviourState);
-    const [model, setModel] = useRecoilState(modelState);
     const [data, setData] = useRecoilState(classState);
     const [lines, setLines] = useState<ILine[]>([]);
     const [errMsg, setErrMsg] = useState<string | null>(null);
-    const [saving, setSaving] = useRecoilState(saveState);
+    const setSaving = useSetRecoilState(saveState);
     const [editingData, setEditingData] = useState(false);
     const [showShare, setShowShare] = useState(false);
-    const [code, setCode] = useRecoilState(sessionCode);
     const sharing = useRecoilValue(sharingActive);
+
+    // Ensure an initial model exists
+    useModelCreator(modelVariant);
 
     const doCloseShare = useCallback(() => setShowShare(false), [setShowShare]);
     const doShare = useCallback(() => setShowShare(true), [setShowShare]);
@@ -77,58 +73,12 @@ export default function Workspace({ step, visitedStep, onComplete, saveTrigger, 
 
     const closeError = useCallback(() => setErrMsg(null), [setErrMsg]);
 
-    // Cache the model on load
-    useEffect(() => {
-        createTeachable({ tfjsVersion: tf.version.tfjs }, { version: 2, alpha: 0.35 });
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
-
-    useEffect(() => {
-        if (projectFile) {
-            loadProject(projectFile)
-                .then((project) => {
-                    if (project.id) {
-                        setCode(project.id);
-                    }
-                    setModel(project.model);
-                    if (project.behaviours) setBehaviours(project.behaviours);
-                    if (project.samples) setData(project.samples);
-                    if (project.behaviours && !resetOnLoad) {
-                        onSkip(1);
-                    }
-                    setProjectFile(null);
-                })
-                .catch((e) => {
-                    setErrMsg('Could not load model file');
-                    console.error(e);
-                    setProjectFile(null);
-                });
-        }
-    }, [projectFile, onSkip, setBehaviours, setData, setModel, setProjectFile, resetOnLoad, setCode]);
-
-    const doSetModel = useCallback(
-        (model: TeachableMobileNet | undefined) => {
-            addCloseAlert();
-            setModel(model);
-            setBehaviours(patchBehaviours(behaviours, model?.getLabels() || []));
-        },
-        [setModel, setBehaviours, behaviours]
-    );
-
     const doSetData = useCallback(
-        (d: IClassification[]) => {
+        (d: ((old: IClassification[]) => IClassification[]) | IClassification[]) => {
             addCloseAlert();
             setData(d);
         },
         [setData]
-    );
-
-    const doSetBehaviours = useCallback(
-        (b: BehaviourType[]) => {
-            addCloseAlert();
-            setBehaviours(b);
-        },
-        [setBehaviours]
     );
 
     useEffect(() => {
@@ -144,6 +94,7 @@ export default function Workspace({ step, visitedStep, onComplete, saveTrigger, 
                 },
             ]);
         }
+
         if (wkspaceRef.current) {
             observer.current = new ResizeObserver(() => {
                 if (wkspaceRef.current) {
@@ -165,25 +116,15 @@ export default function Workspace({ step, visitedStep, onComplete, saveTrigger, 
         }
     }, []);
 
-    useEffect(() => {
-        if (model) onComplete(1);
-    }, [model, onComplete]);
+    const doTrained = useCallback(() => {
+        addCloseAlert();
+        onComplete(1);
+    }, [onComplete]);
 
-    useEffect(() => {
-        if (saving) {
-            saveProject(
-                'my-classifier.zip',
-                code,
-                model,
-                saving.behaviours ? behaviours : undefined,
-                saving.samples ? data : undefined
-            ).then(() => {
-                window.removeEventListener('beforeunload', alertMessage);
-                hasAlert = false;
-                setSaving(null);
-            });
-        }
-    }, [saving, model, behaviours, data, setSaving, code]);
+    const doSaved = useCallback(() => {
+        window.removeEventListener('beforeunload', alertMessage);
+        hasAlert = false;
+    }, []);
 
     const doSave = useCallback(
         (props: SaveProperties) => {
@@ -192,23 +133,35 @@ export default function Workspace({ step, visitedStep, onComplete, saveTrigger, 
         [setSaving]
     );
 
+    const doLoadError = useCallback(
+        (e: unknown) => {
+            setErrMsg('Could not load model');
+            console.log(e);
+        },
+        [setErrMsg]
+    );
+
+    const doLoaded = useCallback(
+        (hadBehaviours: boolean) => {
+            if (hadBehaviours && !resetOnLoad) {
+                onSkip(1);
+            }
+        },
+        [onSkip, resetOnLoad]
+    );
+
     return (
         <main
             className={style.workspace}
             ref={wkspaceRef}
         >
-            {usep2p && (
-                <PeerDeployer
-                    model={model}
-                    behaviours={behaviours}
-                />
-            )}
-            {!usep2p && (
-                <Deployer
-                    model={model}
-                    behaviours={behaviours}
-                />
-            )}
+            {usep2p && <PeerDeployer />}
+            {!usep2p && <Deployer />}
+            <ModelLoader
+                onLoaded={doLoaded}
+                onError={doLoadError}
+            />
+            <ModelSaver onSaved={doSaved} />
             <div className={visitedStep < 1 ? style.container3 : style.container5}>
                 <SvgLayer lines={lines} />
                 <TrainingData
@@ -219,41 +172,27 @@ export default function Workspace({ step, visitedStep, onComplete, saveTrigger, 
                 />
                 <Trainer
                     focus={step === 0}
-                    data={data}
-                    model={model}
                     editing={editingData}
-                    setModel={doSetModel}
+                    onTrained={doTrained}
                 />
                 <div
                     className={style.column}
                     data-widget="container"
                 >
-                    <Input
-                        enabled={!!model}
-                        model={model}
-                    />
-                    <Preview
-                        model={!!model}
-                        onExport={sharing ? doShare : undefined}
-                    />
+                    <Input />
+                    <Preview onExport={sharing ? doShare : undefined} />
                 </div>
                 <Behaviours
                     hidden={visitedStep < 1}
                     focus={step === 1}
-                    classes={model?.getLabels() || []}
-                    behaviours={behaviours}
-                    setBehaviours={doSetBehaviours}
+                    onChange={addCloseAlert}
                 />
-                <Output
-                    hidden={visitedStep < 1}
-                    behaviours={behaviours}
-                />
+                <Output hidden={visitedStep < 1} />
             </div>
 
             <SaveDialog
                 trigger={saveTrigger}
                 onSave={doSave}
-                hasModel={!!model}
             />
             <ExportDialog
                 open={showShare}

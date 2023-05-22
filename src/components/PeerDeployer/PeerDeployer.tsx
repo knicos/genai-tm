@@ -1,11 +1,11 @@
-import { TeachableMobileNet } from '@teachablemachine/image';
 import React, { useRef, useEffect, useCallback } from 'react';
 import { BehaviourType } from '../Behaviour/Behaviour';
 import { generateBlob, ModelContents } from '../ImageWorkspace/saver';
 import { useRecoilState, useRecoilValue } from 'recoil';
-import { sessionCode, sessionPassword, sharingActive } from '../../state';
+import { behaviourState, sessionCode, sessionPassword, sharingActive } from '../../state';
 import { Peer } from 'peerjs';
 import randomId from '../../util/randomId';
+import { TeachableModel, useTeachableModel } from '../../util/TeachableModel';
 
 type ProjectKind = 'image';
 
@@ -32,17 +32,19 @@ export interface ModelEventData extends DeployEvent {
     data: Blob;
 }
 
-interface Props {
-    model?: TeachableMobileNet;
+interface CacheState {
+    model?: TeachableModel;
     behaviours?: BehaviourType[];
 }
 
-export default function PeerDeployer({ model, behaviours }: Props) {
+export default function PeerDeployer() {
     const [code, setCode] = useRecoilState(sessionCode);
     const pwd = useRecoilValue(sessionPassword);
     const [, setSharing] = useRecoilState(sharingActive);
     const channelRef = useRef<Peer>();
-    const cache = useRef<Props>({ model, behaviours });
+    const { model } = useTeachableModel();
+    const behaviours = useRecoilValue(behaviourState);
+    const cache = useRef<CacheState>({ model, behaviours });
     const blob = useRef<ModelContents | null>(null);
 
     useEffect(() => {

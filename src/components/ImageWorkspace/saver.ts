@@ -2,8 +2,10 @@ import JSZip from 'jszip';
 import { saveAs } from 'file-saver';
 import tfjs from '@tensorflow/tfjs';
 import { BehaviourType } from '../Behaviours/Behaviours';
-import { TeachableMobileNet } from '@teachablemachine/image';
-import { IClassification } from '../../state';
+import { IClassification, saveState, behaviourState, classState, sessionCode } from '../../state';
+import { TeachableModel, useTeachableModel } from '../../util/TeachableModel';
+import { useRecoilValue, useRecoilState } from 'recoil';
+import { useEffect } from 'react';
 
 export interface ModelContents {
     behaviours?: string;
@@ -15,7 +17,7 @@ export interface ModelContents {
 
 export async function generateBlob(
     code: string,
-    model?: TeachableMobileNet,
+    model?: TeachableModel,
     behaviours?: BehaviourType[],
     samples?: IClassification[]
 ): Promise<ModelContents> {
@@ -82,10 +84,39 @@ export async function generateBlob(
 export async function saveProject(
     name: string,
     code: string,
-    model?: TeachableMobileNet,
+    model?: TeachableModel,
     behaviours?: BehaviourType[],
     samples?: IClassification[]
 ) {
     const zipData = await generateBlob(code, model, behaviours, samples);
     if (zipData.zip) saveAs(zipData.zip, name);
+}
+
+interface Props {
+    onSaved?: () => void;
+}
+
+export function ModelSaver({ onSaved }: Props) {
+    const { model } = useTeachableModel();
+    const behaviours = useRecoilValue(behaviourState);
+    const code = useRecoilValue(sessionCode);
+    const data = useRecoilValue(classState);
+    const [saving, setSaving] = useRecoilState(saveState);
+
+    useEffect(() => {
+        if (saving) {
+            saveProject(
+                'my-classifier.zip',
+                code,
+                model,
+                saving.behaviours ? behaviours : undefined,
+                saving.samples ? data : undefined
+            ).then(() => {
+                setSaving(null);
+                if (onSaved) onSaved();
+            });
+        }
+    }, [saving, code, data, behaviours, model, onSaved, setSaving]);
+
+    return null;
 }

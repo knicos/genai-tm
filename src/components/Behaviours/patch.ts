@@ -1,6 +1,8 @@
 import { BehaviourType } from './Behaviours';
 
 export function patchBehaviours(old: BehaviourType[], classes: string[]): BehaviourType[] {
+    if (old.length === 0 && classes.length === 0) return old;
+
     const classSet = new Set(classes);
     const unmapped: BehaviourType[] = [];
 

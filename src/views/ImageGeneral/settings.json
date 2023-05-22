@@ -22,5 +22,6 @@
     "allowDeploy": true,
     "showDragTip": false,
     "usep2p": false,
-    "showSettings": true
+    "showSettings": true,
+    "modelVariant": "image"
 }

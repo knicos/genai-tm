@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { Webcam as TMWebcam } from '@teachablemachine/image';
+import { Webcam as TMWebcam } from '@genai/tm-image';
 import style from './webcam.module.css';
 import Skeleton from '@mui/material/Skeleton';
 import { useTranslation } from 'react-i18next';
@@ -11,30 +11,54 @@ interface Props {
     interval?: number;
     capture?: boolean;
     disable?: boolean;
-    onCapture?: (image: HTMLCanvasElement) => void;
+    onCapture?: (image: HTMLCanvasElement) => void | Promise<void>;
+    onPreprocess?: (image: HTMLCanvasElement) => void | Promise<void>;
+    onPostprocess?: (image: HTMLCanvasElement) => void | Promise<void>;
     direct?: boolean;
     hidden?: boolean;
+    size: number;
 }
 
-export function Webcam({ interval, capture, onCapture, disable, direct, hidden }: Props) {
+export function Webcam({
+    interval,
+    capture,
+    onCapture,
+    disable,
+    direct,
+    hidden,
+    onPreprocess,
+    onPostprocess,
+    size,
+}: Props) {
     const { namespace } = useVariant();
     const { t } = useTranslation(namespace);
     const [webcam, setWebcam] = useState<TMWebcam | null>(null);
-    const webcamRef = useRef<HTMLDivElement>(null);
+    const webcamRef = useRef<HTMLCanvasElement>(null);
     const requestRef = useRef(-1);
     const previousTimeRef = useRef(0);
+    const loopRef = useRef<(n: number) => Promise<void>>();
     const [multiple, setMultiple] = useState(false);
     const [facing, setFacing] = useState(false);
 
-    const loop = useCallback(
-        (timestamp: number) => {
-            if (disable) return;
+    useEffect(() => {
+        loopRef.current = async (timestamp: number) => {
+            if (disable) {
+                if (loopRef.current) {
+                    requestRef.current = window.requestAnimationFrame(loopRef.current);
+                }
+                return;
+            }
             if (webcam) {
                 webcam.update();
                 const actualInterval = interval !== undefined ? interval : 1000.0;
+
+                if (onPreprocess) {
+                    await onPreprocess(webcam.canvas);
+                }
+
                 if (capture && onCapture && timestamp - previousTimeRef.current >= actualInterval) {
                     if (direct) {
-                        onCapture(webcam.canvas);
+                        await onCapture(webcam.canvas);
                     } else {
                         const newImage = document.createElement('canvas');
                         newImage.width = webcam.canvas.width;
@@ -42,18 +66,33 @@ export function Webcam({ interval, capture, onCapture, disable, direct, hidden }
                         const context = newImage.getContext('2d');
                         if (!context) console.error('Failed to get context');
                         context?.drawImage(webcam.canvas, 0, 0);
-                        onCapture(newImage);
+                        await onCapture(newImage);
                     }
                     previousTimeRef.current = timestamp;
                 }
+
+                if (onPostprocess) {
+                    await onPostprocess(webcam.canvas);
+                }
+
+                const ctx = webcamRef.current?.getContext('2d');
+                if (ctx) {
+                    ctx.drawImage(webcam.canvas, 0, 0);
+                }
             }
-            requestRef.current = window.requestAnimationFrame(loop);
-        },
-        [webcam, interval, capture, onCapture, direct, disable]
-    );
+
+            if (loopRef.current) {
+                requestRef.current = window.requestAnimationFrame(loopRef.current);
+            }
+        };
+
+        if (requestRef.current === -1) {
+            requestRef.current = window.requestAnimationFrame(loopRef.current);
+        }
+    }, [webcam, interval, capture, onCapture, direct, disable, onPostprocess, onPreprocess]);
 
     async function initWebcam() {
-        const newWebcam = new TMWebcam(224, 224, true);
+        const newWebcam = new TMWebcam(size, size, true);
         await newWebcam.setup({ facingMode: facing ? 'user' : 'environment' });
         newWebcam.webcam.onsuspend = () => newWebcam.play();
         setWebcam(newWebcam);
@@ -82,40 +121,26 @@ export function Webcam({ interval, capture, onCapture, disable, direct, hidden }
             if (webcam?.webcam.srcObject) {
                 webcam.stop();
             }
-            if (requestRef.current >= 0) {
-                window.cancelAnimationFrame(requestRef.current);
-            }
+            loopRef.current = undefined;
         };
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [facing]);
 
     useEffect(() => {
+        /*if (requestRef.current >= 0) {
+            console.log('STOP');
+            loopRef.current = undefined;
+            requestRef.current = -1;
+        }*/
+
         if (webcam) {
             if (disable) {
                 webcam.pause();
-                if (requestRef.current >= 0) {
-                    window.cancelAnimationFrame(requestRef.current);
-                }
-                requestRef.current = -1;
             } else {
                 webcam.play();
-                if (requestRef.current >= 0) {
-                    window.cancelAnimationFrame(requestRef.current);
-                }
-                requestRef.current = window.requestAnimationFrame(loop);
             }
         }
-    }, [webcam, disable, loop]);
-
-    useEffect(() => {
-        if (webcam && webcamRef.current) {
-            while (webcamRef.current.lastChild) {
-                webcamRef.current.removeChild(webcamRef.current.lastChild);
-            }
-            webcamRef.current.appendChild(webcam.canvas);
-            webcam.play();
-        }
-    }, [webcamRef, webcam]);
+    }, [webcam, disable]);
 
     const doFlip = useCallback(() => {
         setFacing((f) => !f);
@@ -139,30 +164,38 @@ export function Webcam({ interval, capture, onCapture, disable, direct, hidden }
             {!webcam && (
                 <Skeleton
                     variant="rounded"
-                    width={224}
-                    height={224}
+                    width={Math.min(224, size)}
+                    height={Math.min(224, size)}
                 />
             )}
-            <div className={style.wrapContainer}>
-                {multiple && (
-                    <IconButton
-                        className={style.flipButton}
-                        size="large"
-                        color="inherit"
-                        onClick={doFlip}
-                        aria-label={t<string>('webcam.aria.flip')}
+            {webcam && (
+                <div className={style.wrapContainer}>
+                    {multiple && (
+                        <IconButton
+                            className={style.flipButton}
+                            size="large"
+                            color="inherit"
+                            onClick={doFlip}
+                            aria-label={t<string>('webcam.aria.flip')}
+                        >
+                            <CameraswitchIcon fontSize="large" />
+                        </IconButton>
+                    )}
+                    <div
+                        data-testid="webcam"
+                        className={style.container}
+                        role="img"
+                        aria-label={t<string>('webcam.aria.video')}
                     >
-                        <CameraswitchIcon fontSize="large" />
-                    </IconButton>
-                )}
-                <div
-                    data-testid="webcam"
-                    className={style.container}
-                    ref={webcamRef}
-                    role="img"
-                    aria-label={t<string>('webcam.aria.video')}
-                />
-            </div>
+                        <canvas
+                            style={{ maxWidth: '224px' }}
+                            width={size}
+                            height={size}
+                            ref={webcamRef}
+                        />
+                    </div>
+                </div>
+            )}
         </>
     );
 }

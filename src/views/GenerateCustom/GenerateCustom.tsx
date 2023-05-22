@@ -325,6 +325,19 @@ function SettingsForm() {
                     }
                     label="Show settings"
                 />
+                <FormControl fullWidth>
+                    <InputLabel id="model-select">Model</InputLabel>
+                    <Select
+                        labelId="model-select"
+                        onChange={doSelectChange}
+                        value={state.modelVariant}
+                        label="Model"
+                        name="modelVariant"
+                    >
+                        <MenuItem value="image">Image (MobileNet)</MenuItem>
+                        <MenuItem value="pose">Pose (PoseNet)</MenuItem>
+                    </Select>
+                </FormControl>
                 <div className={style.buttonBar}>
                     <Button
                         variant="contained"

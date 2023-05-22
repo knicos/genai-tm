@@ -1,22 +1,18 @@
-import { TeachableMobileNet } from '@teachablemachine/image';
 import React, { useRef, useEffect, useCallback } from 'react';
-import { BehaviourType } from '../Behaviour/Behaviour';
 import { ModelContents, generateBlob } from '../ImageWorkspace/saver';
 import { useRecoilValue, useRecoilState } from 'recoil';
-import { sessionCode, sharingActive } from '../../state';
+import { behaviourState, sessionCode, sharingActive } from '../../state';
 import { sendData } from '../../util/comms';
 import { DeployEventRequest, DeployEventData } from '../PeerDeployer/PeerDeployer';
+import { useTeachableModel } from '../../util/TeachableModel';
 
-interface Props {
-    model?: TeachableMobileNet;
-    behaviours?: BehaviourType[];
-}
-
-export default function Deployer({ model, behaviours }: Props) {
+export default function Deployer() {
     const code = useRecoilValue(sessionCode);
     const [, setSharing] = useRecoilState(sharingActive);
     const channelRef = useRef<BroadcastChannel>();
     const blob = useRef<ModelContents | null>(null);
+    const { model } = useTeachableModel();
+    const behaviours = useRecoilValue(behaviourState);
 
     const getChannel = useCallback(() => {
         if (channelRef.current !== undefined) return channelRef.current;

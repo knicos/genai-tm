@@ -26,8 +26,10 @@ i18n.use(initReactI18next).init({
 
 expect.extend(toHaveNoViolations);
 
+const mockLabels = ['class 1', 'class 2'];
+
 jest.mock('@tensorflow/tfjs');
-jest.mock('@teachablemachine/image', () => ({
+jest.mock('@genai/tm-image', () => ({
     Webcam: function () {
         return {
             setup: jest.fn(),
@@ -42,10 +44,14 @@ jest.mock('@teachablemachine/image', () => ({
     createTeachable: function () {
         return {
             setLabels: jest.fn(),
-            getLabels: jest.fn(() => ['class 1', 'class 2']),
+            setName: jest.fn(),
+            getLabels: jest.fn(() => mockLabels),
             setSeed: jest.fn(),
             addExample: jest.fn(),
             train: jest.fn(),
+            getMetadata: jest.fn(() => ({
+                imageSize: 224,
+            })),
             predict: jest.fn(() => [
                 { className: 'class 1', probability: 0.2 },
                 { className: 'class 2', probability: 0.4 },
@@ -82,7 +88,7 @@ describe('ImageClassifier Integration', () => {
         expect(class1element).toBeInTheDocument();
 
         await user.upload(class1element, sample1);
-        expect(await screen.findByTestId('sample-0')).toBeInTheDocument();
+        expect(await screen.findByTestId('sample-1')).toBeInTheDocument();
 
         const class2element = screen.getByTestId('file-trainingdata.labels.class 2');
         expect(class2element).toBeInTheDocument();

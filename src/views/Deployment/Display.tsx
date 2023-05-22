@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
 import { BehaviourType } from '../../components/Behaviour/Behaviour';
 import RawOutput from '../../components/Output/RawOutput';
-import { TeachableMobileNet } from '@teachablemachine/image';
 import { useRecoilState } from 'recoil';
 import { predictedIndex } from '../../state';
+import { TeachableModel } from '../../util/TeachableModel';
 
 interface Predictions {
     className: string;
@@ -19,7 +19,7 @@ interface Props extends React.PropsWithChildren {
     behaviours?: BehaviourType[];
     scaleFactor: number;
     volume: number;
-    model: TeachableMobileNet | null;
+    model: TeachableModel | null;
     error?: string;
 }
 

@@ -26,7 +26,7 @@ interface Props {
     onActivate: (ix: number) => void;
     onDelete: (ix: number) => void;
     data: IClassification;
-    setData: (data: IClassification, ix: number) => void;
+    setData: (data: (old: IClassification) => IClassification, ix: number) => void;
     setActive: (active: boolean, ix: number) => void;
     index: number;
 }
@@ -58,17 +58,17 @@ export function Classification({ name, active, data, index, setData, onActivate,
                         v.style.width = '58px';
                     });
                     setData(
-                        {
+                        (data) => ({
                             label: data.label,
                             samples: [...results, ...data.samples],
-                        },
+                        }),
                         index
                     );
                     setLoading(false);
                 })
                 .catch((e) => console.error(e));
         },
-        [setData, data, index]
+        [setData, index]
     );
 
     const onFileChange = useCallback(
@@ -96,46 +96,46 @@ export function Classification({ name, active, data, index, setData, onActivate,
     const setTitle = useCallback(
         (title: string) => {
             setData(
-                {
+                (data) => ({
                     label: title,
                     samples: data.samples,
-                },
+                }),
                 index
             );
         },
-        [setData, index, data]
+        [setData, index]
     );
 
     const removeSamples = useCallback(() => {
-        setData({ label: data.label, samples: [] }, index);
-    }, [data, index, setData]);
+        setData((data) => ({ label: data.label, samples: [] }), index);
+    }, [index, setData]);
 
     const onCapture = useCallback(
         (image: HTMLCanvasElement) => {
             image.style.width = '58px';
 
             setData(
-                {
+                (data) => ({
                     label: name,
                     samples: [image, ...data.samples],
-                },
+                }),
                 index
             );
         },
-        [setData, data, index, name]
+        [setData, index, name]
     );
 
     const doDelete = useCallback(
         (ix: number) => {
             setData(
-                {
+                (data) => ({
                     label: name,
-                    samples: data.samples.filter((ss, ixx) => ixx !== ix),
-                },
+                    samples: data.samples.filter((ss, ixx) => data.samples.length - ixx !== ix),
+                }),
                 index
             );
         },
-        [setData, name, data, index]
+        [setData, name, index]
     );
 
     const doDeleteClass = useCallback(() => onDelete(index), [index, onDelete]);
@@ -246,8 +246,8 @@ export function Classification({ name, active, data, index, setData, onActivate,
                         )}
                         {data.samples.map((s, ix) => (
                             <Sample
-                                key={ix}
-                                index={ix}
+                                key={data.samples.length - ix}
+                                index={data.samples.length - ix}
                                 image={s}
                                 onDelete={doDelete}
                             />

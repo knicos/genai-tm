@@ -1,8 +1,6 @@
 import React, { useEffect, useState, useCallback, useRef } from 'react';
-import * as tf from '@tensorflow/tfjs';
-import * as tmImage from '@teachablemachine/image';
 import Accordion from '@mui/material/Accordion';
-import { IClassification } from '../../state';
+import { IClassification, classState } from '../../state';
 import BusyButton from '../BusyButton/BusyButton';
 import { Widget } from '../widget/Widget';
 import style from './trainer.module.css';
@@ -18,11 +16,11 @@ import { styled } from '@mui/material/styles';
 import { useTranslation } from 'react-i18next';
 import { useVariant } from '../../util/variant';
 import TrainingAnimation from '../TrainingAnimation/TrainingAnimation';
+import { useModelTrainer } from '../../util/TeachableModel';
+import { useRecoilValue } from 'recoil';
 
 interface Props {
-    data: IClassification[];
-    model?: tmImage.TeachableMobileNet;
-    setModel: (model: tmImage.TeachableMobileNet) => void;
+    onTrained?: () => void;
     focus?: boolean;
     disabled?: boolean;
     editing?: boolean;
@@ -44,105 +42,45 @@ const HelpTooltip = styled(({ className, ...props }: TooltipProps) => (
     },
 }));
 
-type TrainingStage = 'ready' | 'loading' | 'prepare' | 'training' | 'done' | 'none';
-
-export default function Trainer({ data, model, setModel, editing, ...props }: Props) {
+export default function Trainer({ onTrained, editing, ...props }: Props) {
     const { namespace, advancedMenu, showTrainingAnimation } = useVariant();
     const { t } = useTranslation(namespace);
     const [training, setTraining] = useState(false);
-    const [trainingStage, setTrainingStage] = useState<TrainingStage>('none');
-    const [epochs, setEpochs] = useState(0);
     const [settingEpochs, setSettingEpochs] = useState(50);
     const [settingRate, setSettingRate] = useState(0.001);
     const [settingBatch, setSettingBatch] = useState(16);
     const promptTimer = useRef(-1);
     const [prompt, setPrompt] = useState(false);
+    const { stage, epochs, clearTraining, train } = useModelTrainer();
+    const data = useRecoilValue(classState);
 
     const sampleMin = Math.min(...data.map((v) => v.samples.length));
     const isTrainable = data.length >= 2 && sampleMin >= 2;
 
-    async function loadModel() {
-        await tf.ready();
-
-        try {
-            const model = await tmImage.createTeachable({ tfjsVersion: tf.version.tfjs }, { version: 2, alpha: 0.35 });
-            return model;
-        } catch (err) {
-            console.log(err);
-        }
-    }
-
-    const startTraining = async (training: IClassification[]) => {
-        setTrainingStage('loading');
-        setEpochs(0);
-        const tm = await loadModel();
-
-        if (!tm) {
-            return;
-        }
-
-        setTrainingStage('prepare');
-
-        await new Promise((resolve) => {
-            setTimeout(() => {
-                tm.setLabels(training.map((t) => t.label));
-                tm.setSeed('something');
-                const promises = training.reduce<Promise<void>[]>(
-                    (p, v, ix) => [...p, ...v.samples.map((s) => tm.addExample(ix, s))],
-                    []
-                );
-                Promise.all(promises).then(resolve);
-            }, 10);
-        });
-
-        setTrainingStage('training');
-        await tm.train(
-            {
-                denseUnits: 100,
-                epochs: settingEpochs,
-                learningRate: settingRate,
-                batchSize: settingBatch,
-            },
-            {
-                onEpochEnd: (epoch, logs) => {
-                    setEpochs(epoch / 50);
-                },
-            }
-        );
-
-        // If a model is loaded from file, it isn't trained and cannot be disposed in the same way
-        // This is a slight bug or limitation in the GTM code.
-        if (model && model.isTrained) model.dispose();
-        else if (model) model.model.dispose();
-        setModel(tm);
-        // setTrainingStage('done');
-        setTraining(false);
-    };
-
     useEffect(() => {
-        setTrainingStage('none');
-    }, [data]);
-
-    useEffect(() => {
-        if (model) setTrainingStage('done');
-    }, [model]);
+        clearTraining();
+    }, [data, clearTraining]);
 
     useEffect(() => {
         if (promptTimer.current >= 0) {
             clearTimeout(promptTimer.current);
             promptTimer.current = -1;
         }
-        if (isTrainable && trainingStage === 'none' && !editing) {
+        if (isTrainable && stage === 'none' && !editing) {
             promptTimer.current = window.setTimeout(() => {
                 setPrompt(true);
             }, 4000);
         } else {
             setPrompt(false);
         }
-    }, [trainingStage, editing, isTrainable]);
+    }, [stage, editing, isTrainable]);
 
     useEffect(() => {
-        if (training) startTraining(data);
+        if (training)
+            train(data, { batchSize: settingBatch, epochs: settingEpochs, learningRate: settingRate }).then(() => {
+                setTraining(false);
+                if (onTrained) onTrained();
+            });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [training]);
 
@@ -176,7 +114,7 @@ export default function Trainer({ data, model, setModel, editing, ...props }: Pr
             className={style.widget}
             {...props}
         >
-            {showTrainingAnimation && <TrainingAnimation active={trainingStage === 'training'} />}
+            {showTrainingAnimation && <TrainingAnimation active={stage === 'training'} />}
             <div className={prompt ? style.buttonPrompt : style.buttonContainer}>
                 <BusyButton
                     data-testid="train-button"
@@ -193,7 +131,7 @@ export default function Trainer({ data, model, setModel, editing, ...props }: Pr
 
             {
                 <div className={style.statusContainer}>
-                    {trainingStage === 'none' && isTrainable && (
+                    {stage === 'none' && isTrainable && (
                         <Alert
                             data-testid="alert-needstraining"
                             severity="warning"
@@ -201,7 +139,7 @@ export default function Trainer({ data, model, setModel, editing, ...props }: Pr
                             <p>{t('training.labels.needsTraining')}</p>
                         </Alert>
                     )}
-                    {trainingStage === 'none' && !isTrainable && (
+                    {stage === 'none' && !isTrainable && (
                         <Alert
                             data-testid="alert-addmore"
                             severity="info"
@@ -209,19 +147,19 @@ export default function Trainer({ data, model, setModel, editing, ...props }: Pr
                             <p>{t('training.labels.addMore')}</p>
                         </Alert>
                     )}
-                    {trainingStage === 'loading' && (
+                    {stage === 'loading' && (
                         <p>
                             <span>{t('training.labels.loading')}</span>
                             <LinearProgress />
                         </p>
                     )}
-                    {trainingStage === 'prepare' && (
+                    {stage === 'prepare' && (
                         <p>
                             <span>{t('training.labels.prepairing')}</span>
                             <LinearProgress />
                         </p>
                     )}
-                    {trainingStage === 'training' && (
+                    {stage === 'training' && (
                         <div className={style.trainingProgress}>
                             <span>{t('training.labels.training')}</span>
                             <LinearProgress
@@ -231,7 +169,7 @@ export default function Trainer({ data, model, setModel, editing, ...props }: Pr
                             />
                         </div>
                     )}
-                    {trainingStage === 'done' && (
+                    {stage === 'done' && (
                         <Alert
                             data-testid="alert-complete"
                             severity="success"
