@@ -64,6 +64,7 @@ export default function RawOutput({ scaleFactor, behaviours, predicted, volume, 
                                     volume={volume / 100}
                                     uri={behaviour.audio.uri}
                                     play={ix === predicted && isActive}
+                                    loop={behaviour.audio.loop}
                                 />
                             )}
                             {behaviour?.embed && (

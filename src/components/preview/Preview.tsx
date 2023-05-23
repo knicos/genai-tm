@@ -31,11 +31,12 @@ export default function Preview({ onExport }: Props) {
             menu={
                 onExport && usep2p ? (
                     <Button
+                        disabled={!model}
                         onClick={onExport}
                         variant="outlined"
                         startIcon={<ShareIcon />}
                     >
-                        Share
+                        {t('model.actions.export')}
                     </Button>
                 ) : null
             }

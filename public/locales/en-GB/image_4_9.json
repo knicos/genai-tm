@@ -98,7 +98,7 @@
     },
     "model": {
         "actions": {
-            "export": "Export"
+            "export": "Share"
         },
         "labels": {
             "title": "Classifier",
@@ -131,7 +131,8 @@
             "linkError": "That link is not supported",
             "embedInfo": "Show videos and images from a link. Only some links will work, for example YouTube, Vimeo, SoundCloud, video files or images.",
             "voiceRecording": "Voice Recording",
-            "dropError": "Only images or sounds can be dropped here"
+            "dropError": "Only images or sounds can be dropped here",
+            "loop": "Loop"
         },
         "aria": {
             "message": "Text for output",
@@ -143,7 +144,8 @@
             "noImage": "Image placeholder",
             "stop": "stop",
             "play": "play",
-            "behaviourCard": "Behaviour for {{name}}"
+            "behaviourCard": "Behaviour for {{name}}",
+            "loop": "Loop"
         }
     },
     "stepper": {

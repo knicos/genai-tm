@@ -131,7 +131,8 @@
             "linkError": "Linkkiä ei tueta",
             "embedInfo": "Näytä kuvia tai videoita linkistä. (Esimerksi YouTube, Vimeo, SoundCloud)",
             "voiceRecording": "Äänite",
-            "dropError": "Only images or sounds can be dropped here"
+            "dropError": "Only images or sounds can be dropped here",
+            "loop": "Loop"
         },
         "aria": {
             "message": "tuloksen teksti",
@@ -143,7 +144,8 @@
             "noImage": "kuvan paikkamerkki",
             "stop": "Pysäytä",
             "play": "aloita",
-            "behaviourCard": "toiminto {{name}}lle"
+            "behaviourCard": "toiminto {{name}}lle",
+            "loop": "Loop"
         }
     },
     "stepper": {

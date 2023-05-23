@@ -6,9 +6,10 @@ interface Props {
     play: boolean;
     volume?: number;
     showIcon?: boolean;
+    loop?: boolean;
 }
 
-export default function AudioPlayer({ uri, play, volume, showIcon }: Props) {
+export default function AudioPlayer({ uri, play, volume, showIcon, loop }: Props) {
     const [audio, setAudio] = useState<HTMLAudioElement | null>(null);
 
     useEffect(
@@ -29,13 +30,13 @@ export default function AudioPlayer({ uri, play, volume, showIcon }: Props) {
     useEffect(() => {
         if (audio) {
             if (play) {
-                audio.loop = true;
+                audio.loop = loop || false;
                 audio.play();
             } else {
                 audio.pause();
             }
         }
-    }, [play, audio]);
+    }, [play, audio, loop]);
 
     useEffect(
         () => () => {

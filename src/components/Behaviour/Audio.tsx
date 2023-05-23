@@ -10,10 +10,13 @@ import UploadIcon from '@mui/icons-material/Upload';
 import { useTranslation } from 'react-i18next';
 import { useVariant } from '../../util/variant';
 import AudioRecorder from '../AudioRecorder/AudioRecorder';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Switch from '@mui/material/Switch';
 
 export interface AudioBehaviour {
     uri: string;
     name: string;
+    loop?: boolean;
 }
 
 interface Props {
@@ -55,7 +58,10 @@ export default function Sound({ behaviour, setBehaviour, dropping }: Props) {
 
                 const a = new Audio(behaviour.uri);
                 setAudio(a);
-                a.loop = true;
+                a.onended = () => {
+                    setAudio(null);
+                };
+                a.loop = behaviour.loop || false;
                 a.play();
                 return a;
             }),
@@ -108,9 +114,18 @@ export default function Sound({ behaviour, setBehaviour, dropping }: Props) {
 
     const doPlayStop = useCallback(() => (audio ? doStop() : doPlay()), [audio, doStop, doPlay]);
 
+    const changeLoop = useCallback(
+        (event: React.ChangeEvent<HTMLInputElement>, checked: boolean) => {
+            if (behaviour) {
+                setBehaviour({ ...behaviour, loop: checked });
+            }
+        },
+        [setBehaviour, behaviour]
+    );
+
     return (
         <>
-            <div className={style.imageContainer}>
+            <div className={style.baseContainer}>
                 <input
                     data-testid={`audio-file-upload}`}
                     hidden
@@ -156,6 +171,22 @@ export default function Sound({ behaviour, setBehaviour, dropping }: Props) {
                         </div>
                     )}
                 </div>
+            </div>
+            <div className={style.audioOptions}>
+                <FormControlLabel
+                    labelPlacement="start"
+                    control={
+                        <Switch
+                            disabled={!behaviour?.uri}
+                            checked={behaviour?.loop}
+                            onChange={changeLoop}
+                            data-testid="loop-switch"
+                            aria-label={t<string>('behaviours.aria.loop')}
+                        />
+                    }
+                    hidden
+                    label={t<string>('behaviours.labels.loop')}
+                />
             </div>
         </>
     );
