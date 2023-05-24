@@ -7,7 +7,7 @@ import { prediction, predictedIndex, modelState } from '../../state';
 import { TeachableModel } from '../../util/TeachableModel';
 import { MutableSnapshot } from 'recoil';
 
-jest.mock('@genai/tm-image', () => ({
+jest.mock('@knicos/tm-image', () => ({
     Webcam: function () {
         return {
             setup: jest.fn(),

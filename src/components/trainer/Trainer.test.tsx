@@ -9,7 +9,7 @@ import { TeachableModel } from '../../util/TeachableModel';
 import RecoilObserver from '../../util/Observer';
 
 jest.mock('@tensorflow/tfjs');
-jest.mock('@genai/tm-image', () => ({
+jest.mock('@knicos/tm-image', () => ({
     createTeachable: function () {
         return {
             setLabels: jest.fn(),

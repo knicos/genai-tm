@@ -29,7 +29,7 @@ expect.extend(toHaveNoViolations);
 const mockLabels = ['class 1', 'class 2'];
 
 jest.mock('@tensorflow/tfjs');
-jest.mock('@genai/tm-image', () => ({
+jest.mock('@knicos/tm-image', () => ({
     Webcam: function () {
         return {
             setup: jest.fn(),

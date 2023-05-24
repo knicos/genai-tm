@@ -1,6 +1,6 @@
-import { TeachableMobileNet, Metadata as ImageMetadata, createTeachable as createImage } from '@genai/tm-image';
-import { TrainingParameters as ImageTrainingParams } from '@genai/tm-image/dist/teachable-mobilenet';
-import { TrainingParameters as PoseTrainingParams } from '@genai/tm-pose/dist/teachable-posenet';
+import { TeachableMobileNet, Metadata as ImageMetadata, createTeachable as createImage } from '@knicos/tm-image';
+import { TrainingParameters as ImageTrainingParams } from '@knicos/tm-image/dist/teachable-mobilenet';
+import { TrainingParameters as PoseTrainingParams } from '@knicos/tm-pose/dist/teachable-posenet';
 import { Pose } from '@tensorflow-models/posenet';
 import {
     TeachablePoseNet,
@@ -8,7 +8,7 @@ import {
     drawKeypoints,
     drawSkeleton,
     createTeachable as createPose,
-} from '@genai/tm-pose';
+} from '@knicos/tm-pose';
 import * as tf from '@tensorflow/tfjs';
 import { IClassification, modelState, predictedIndex, prediction } from '../state';
 import { useRecoilState, useSetRecoilState, useRecoilValue } from 'recoil';

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { Webcam as TMWebcam } from '@genai/tm-image';
+import { Webcam as TMWebcam } from '@knicos/tm-image';
 import style from './webcam.module.css';
 import Skeleton from '@mui/material/Skeleton';
 import { useTranslation } from 'react-i18next';
