@@ -121,7 +121,6 @@ export function Webcam({
             if (webcam?.webcam.srcObject) {
                 webcam.stop();
             }
-            loopRef.current = undefined;
         };
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [facing]);
