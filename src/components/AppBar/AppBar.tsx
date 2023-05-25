@@ -22,6 +22,7 @@ interface Props {
 export const LANGS = [
     { name: 'en-GB', label: 'English' },
     { name: 'fi-FI', label: 'Suomi' },
+    { name: 'pt-BR', label: 'Português Brasileiro' },
 ];
 
 export default function ApplicationBar({ showReminder, onSave }: Props) {

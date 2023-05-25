@@ -125,7 +125,7 @@
             "stop": "Stop"
         },
         "labels": {
-            "title": "Behaviors",
+            "title": "Actions",
             "message": "Message",
             "link": "Link",
             "linkError": "That link is not supported",
