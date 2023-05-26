@@ -45,6 +45,20 @@ export default function Behaviour({ classLabel, behaviour, setBehaviour, index, 
     const prevLabel = useRef(classLabel);
     const [showDropError, setShowDropError] = useState(false);
 
+    const patchBehaviour = useCallback(
+        (newBehaviour: Partial<BehaviourType>) => {
+            setBehaviour(
+                {
+                    ...behaviour,
+                    ...newBehaviour,
+                    label: classLabel,
+                },
+                index
+            );
+        },
+        [setBehaviour, index, behaviour, classLabel]
+    );
+
     const [dropProps, drop] = useDrop({
         accept: [NativeTypes.FILE, NativeTypes.URL],
         drop(items: any) {
@@ -58,22 +72,14 @@ export default function Behaviour({ classLabel, behaviour, setBehaviour, index, 
                 reader.onerror = () => console.error('file reading error');
                 reader.onload = () => {
                     if (file.type.startsWith('image/')) {
-                        setBehaviour(
-                            {
-                                image: { uri: reader.result as string },
-                                label: classLabel,
-                            },
-                            index
-                        );
+                        patchBehaviour({
+                            image: { uri: reader.result as string },
+                        });
                         setValue('image');
                     } else {
-                        setBehaviour(
-                            {
-                                audio: { uri: reader.result as string, name: file.name },
-                                label: classLabel,
-                            },
-                            index
-                        );
+                        patchBehaviour({
+                            audio: { uri: reader.result as string, name: file.name },
+                        });
                         setValue('sound');
                     }
                 };
@@ -82,13 +88,9 @@ export default function Behaviour({ classLabel, behaviour, setBehaviour, index, 
                 const uri = types.findIndex((i) => i === 'text/uri-list');
                 if (uri >= 0) {
                     items.items[uri].getAsString((data: string) => {
-                        setBehaviour(
-                            {
-                                image: { uri: data },
-                                label: classLabel,
-                            },
-                            index
-                        );
+                        patchBehaviour({
+                            image: { uri: data },
+                        });
                     });
                 } else {
                     setShowDropError(true);
