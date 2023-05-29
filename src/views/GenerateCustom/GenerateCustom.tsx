@@ -1,5 +1,5 @@
-import React, { useState, useCallback, FormEvent } from 'react';
-import { IVariantContext, useVariant, VariantContext } from '../../util/variant';
+import React, { useState, useCallback, FormEvent, useEffect } from 'react';
+import { IVariantContext, VariantContext } from '../../util/variant';
 import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
@@ -10,19 +10,31 @@ import style from './GenerateCustom.module.css';
 import { Button } from '../../components/button/Button';
 import { compressToEncodedURIComponent } from 'lz-string';
 import { useNavigate } from 'react-router-dom';
-import _settings from '../ImageGeneral/settings.json';
+import _settings from '../ImageGeneral/configuration.json';
 import { useSearchParams } from 'react-router-dom';
 import { decompressFromEncodedURIComponent } from 'lz-string';
 import { useTranslation } from 'react-i18next';
 import { LANGS } from '../../components/AppBar/AppBar';
+import { VariantConfiguration, VARIANTS } from '../ImageGeneral/ImageGeneral';
+import Accordion from '@mui/material/Accordion';
+import AccordionSummary from '@mui/material/AccordionSummary';
+import AccordionDetails from '@mui/material/AccordionDetails';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import { ThemeProvider } from '@mui/material/styles';
+import { theme } from '../../style/theme';
 
-const DEFAULTS = _settings as IVariantContext;
+const DEFAULTS = _settings as VariantConfiguration;
 
-function delta(data: IVariantContext): Partial<IVariantContext> {
+function delta(data: IVariantContext, template: VARIANTS): Partial<IVariantContext> {
     const result: any = {};
     const keys = Object.keys(data) as Array<keyof IVariantContext>;
+    const merged = {
+        ...DEFAULTS.base,
+        ...DEFAULTS[data.modelVariant],
+        ...DEFAULTS[template],
+    };
     for (const k of keys) {
-        if (data[k] !== DEFAULTS[k]) {
+        if (data[k] !== merged[k]) {
             result[k] = data[k];
         }
     }
@@ -31,18 +43,36 @@ function delta(data: IVariantContext): Partial<IVariantContext> {
 
 function SettingsForm() {
     const navigate = useNavigate();
-    const { i18n } = useTranslation();
-    const initial = useVariant();
-    const [state, setState] = useState<IVariantContext>(initial);
+    const { i18n, t } = useTranslation();
+    const [state, setState] = useState<IVariantContext>(DEFAULTS.base);
+    const [template, setTemplate] = useState<VARIANTS>('general');
+
+    useEffect(() => {
+        setState((old) => ({
+            ...DEFAULTS.base,
+            ...DEFAULTS[old.modelVariant],
+            ...DEFAULTS[template],
+        }));
+    }, [template]);
+
+    const doChangeTemplate = useCallback(
+        (event: SelectChangeEvent) => {
+            setTemplate(event.target.value as VARIANTS);
+        },
+        [setTemplate]
+    );
 
     const doSubmit = useCallback(
         (event: FormEvent<HTMLFormElement>) => {
             event.preventDefault();
-            const str = JSON.stringify(delta(state));
+            const str = JSON.stringify(delta(state, template));
             const urlCode = compressToEncodedURIComponent(str);
-            navigate(str === '{}' ? '/image/general' : `/image/general?c=${urlCode}`, { replace: false });
+            navigate(
+                str === '{}' ? `/${state.modelVariant}/${template}` : `/${state.modelVariant}/${template}?c=${urlCode}`,
+                { replace: false }
+            );
         },
-        [state, navigate]
+        [state, navigate, template]
     );
 
     const doCheckChange = useCallback(
@@ -64,7 +94,7 @@ function SettingsForm() {
     }, [navigate]);
 
     const doReset = useCallback(() => {
-        setState(DEFAULTS);
+        setState(DEFAULTS.base);
     }, [setState]);
 
     const doLanguageChange = useCallback(
@@ -75,301 +105,330 @@ function SettingsForm() {
     );
 
     return (
-        <div className={style.container}>
-            <h1>Settings</h1>
-            <form onSubmit={doSubmit}>
-                <FormControl fullWidth>
-                    <InputLabel id="language-select">Language</InputLabel>
-                    <Select
-                        labelId="language-select"
-                        onChange={doLanguageChange}
-                        value={i18n.language}
-                        label="Language Level"
-                        name="namespace"
+        <ThemeProvider theme={theme}>
+            <div className={style.container}>
+                <h1>{t('settings.title')}</h1>
+                <form onSubmit={doSubmit}>
+                    <FormControl fullWidth>
+                        <InputLabel id="language-select">{t('settings.labels.language')}</InputLabel>
+                        <Select
+                            labelId="language-select"
+                            onChange={doLanguageChange}
+                            value={i18n.language}
+                            label={t<string>('settings.labels.language')}
+                            name="namespace"
+                        >
+                            {LANGS.map((lng, ix) => (
+                                <MenuItem
+                                    key={ix}
+                                    value={lng.name}
+                                >
+                                    {lng.label}
+                                </MenuItem>
+                            ))}
+                        </Select>
+                    </FormControl>
+                    <FormControl fullWidth>
+                        <InputLabel id="model-select">{t('settings.labels.model')}</InputLabel>
+                        <Select
+                            labelId="model-select"
+                            onChange={doSelectChange}
+                            value={state.modelVariant}
+                            label={t<string>('settings.labels.model')}
+                            name="modelVariant"
+                        >
+                            <MenuItem value="image">{t('settings.values.models.0')}</MenuItem>
+                            <MenuItem value="pose">{t('settings.values.models.1')}</MenuItem>
+                        </Select>
+                    </FormControl>
+                    <FormControl fullWidth>
+                        <InputLabel id="template-select">{t('settings.labels.variant')}</InputLabel>
+                        <Select
+                            labelId="template-select"
+                            onChange={doChangeTemplate}
+                            value={template}
+                            label={t<string>('settings.labels.variant')}
+                        >
+                            <MenuItem value="general">{t('settings.values.variants.0')}</MenuItem>
+                            <MenuItem value="classroom">{t('settings.values.variants.1')}</MenuItem>
+                        </Select>
+                    </FormControl>
+                    <Accordion
+                        disableGutters
+                        sx={{ boxShadow: 'unset' }}
                     >
-                        {LANGS.map((lng) => (
-                            <MenuItem value={lng.name}>{lng.label}</MenuItem>
-                        ))}
-                    </Select>
-                </FormControl>
-                <FormControl fullWidth>
-                    <InputLabel id="template-select">Language Level</InputLabel>
-                    <Select
-                        labelId="template-select"
-                        onChange={doSelectChange}
-                        value={state.namespace}
-                        label="Language Level"
-                        name="namespace"
-                    >
-                        <MenuItem value="image_adv">Advanced</MenuItem>
-                        <MenuItem value="image_4_9">Grade 4-9</MenuItem>
-                    </Select>
-                </FormControl>
-                <FormControlLabel
-                    control={
-                        <Checkbox
-                            checked={state.advancedMenu}
-                            name="advancedMenu"
-                            onChange={doCheckChange}
-                        />
-                    }
-                    label="Show Advanced Training Menu"
-                />
-                <FormControlLabel
-                    control={
-                        <Checkbox
-                            checked={state.modelSelect}
-                            name="modelSelect"
-                            onChange={doCheckChange}
-                        />
-                    }
-                    label="Allow model selection"
-                />
-                <FormControlLabel
-                    control={
-                        <Checkbox
-                            checked={state.modelThreshold}
-                            name="modelThreshold"
-                            onChange={doCheckChange}
-                        />
-                    }
-                    label="Enable threshold output"
-                />
-                <FormControlLabel
-                    control={
-                        <Checkbox
-                            checked={state.sampleUploadFile}
-                            name="sampleUploadFile"
-                            onChange={doCheckChange}
-                        />
-                    }
-                    label="Enable file upload for samples"
-                />
-                <FormControlLabel
-                    control={
-                        <Checkbox
-                            checked={state.disableAddClass}
-                            name="disableAddClass"
-                            onChange={doCheckChange}
-                        />
-                    }
-                    label="Disable adding classes"
-                />
-                <FormControlLabel
-                    control={
-                        <Checkbox
-                            checked={state.disabledClassRemove}
-                            name="disabledClassRemove"
-                            onChange={doCheckChange}
-                        />
-                    }
-                    label="Disable class removal"
-                />
-                <FormControlLabel
-                    control={
-                        <Checkbox
-                            checked={state.disableClassNameEdit}
-                            name="disableClassNameEdit"
-                            onChange={doCheckChange}
-                        />
-                    }
-                    label="Disable class name editing"
-                />
-                <FormControlLabel
-                    control={
-                        <Checkbox
-                            checked={state.imageBehaviours}
-                            name="imageBehaviours"
-                            onChange={doCheckChange}
-                        />
-                    }
-                    label="Image behaviours"
-                />
-                <FormControlLabel
-                    control={
-                        <Checkbox
-                            checked={state.soundBehaviours}
-                            name="soundBehaviours"
-                            onChange={doCheckChange}
-                        />
-                    }
-                    label="Sound behaviours"
-                />
-                <FormControlLabel
-                    control={
-                        <Checkbox
-                            checked={state.embedBehaviours}
-                            name="embedBehaviours"
-                            onChange={doCheckChange}
-                        />
-                    }
-                    label="Embedding behaviours"
-                />
-                <FormControlLabel
-                    control={
-                        <Checkbox
-                            checked={state.textBehaviours}
-                            name="textBehaviours"
-                            onChange={doCheckChange}
-                        />
-                    }
-                    label="Text behaviours                  "
-                />
-                <FormControlLabel
-                    control={
-                        <Checkbox
-                            checked={state.trainingStep}
-                            name="trainingStep"
-                            onChange={doCheckChange}
-                        />
-                    }
-                    label="Include training step"
-                />
-                <FormControlLabel
-                    control={
-                        <Checkbox
-                            checked={state.behavioursStep}
-                            name="behavioursStep"
-                            onChange={doCheckChange}
-                        />
-                    }
-                    label="Include behaviors step"
-                />
-                <FormControlLabel
-                    control={
-                        <Checkbox
-                            checked={state.multipleBehaviours}
-                            name="multipleBehaviours"
-                            onChange={doCheckChange}
-                        />
-                    }
-                    label="Allow multiple behaviours"
-                />
-                <FormControlLabel
-                    control={
-                        <Checkbox
-                            checked={state.disableSaveSamples}
-                            name="disableSaveSamples"
-                            onChange={doCheckChange}
-                        />
-                    }
-                    label="Disable sample saving option"
-                />
-                <FormControlLabel
-                    control={
-                        <Checkbox
-                            checked={state.showTrainingAnimation}
-                            name="showTrainingAnimation"
-                            onChange={doCheckChange}
-                        />
-                    }
-                    label="Show Training Animation"
-                />
-                <FormControlLabel
-                    control={
-                        <Checkbox
-                            checked={state.resetOnLoad}
-                            name="resetOnLoad"
-                            onChange={doCheckChange}
-                        />
-                    }
-                    label="Hide Behaviours on Load"
-                />
-                <FormControlLabel
-                    control={
-                        <Checkbox
-                            checked={state.enableFileInput}
-                            name="enableFileInput"
-                            onChange={doCheckChange}
-                        />
-                    }
-                    label="Enable input from files"
-                />
-                <FormControlLabel
-                    control={
-                        <Checkbox
-                            checked={state.allowDeploy}
-                            name="allowDeploy"
-                            onChange={doCheckChange}
-                        />
-                    }
-                    label="Allow deployment link"
-                />
-                <FormControlLabel
-                    control={
-                        <Checkbox
-                            checked={state.showDragTip}
-                            name="showDragTip"
-                            onChange={doCheckChange}
-                        />
-                    }
-                    label="Show Drag & Drop animation tip"
-                />
-                <FormControlLabel
-                    control={
-                        <Checkbox
-                            checked={state.usep2p}
-                            name="usep2p"
-                            onChange={doCheckChange}
-                        />
-                    }
-                    label="Enable Peer-2-Peer feature"
-                />
-                <FormControlLabel
-                    control={
-                        <Checkbox
-                            checked={state.showSettings}
-                            name="showSettings"
-                            onChange={doCheckChange}
-                        />
-                    }
-                    label="Show settings"
-                />
-                <FormControlLabel
-                    control={
-                        <Checkbox
-                            checked={state.showSaveReminder}
-                            name="showSaveReminder"
-                            onChange={doCheckChange}
-                        />
-                    }
-                    label="Show Save Reminder"
-                />
-                <FormControl fullWidth>
-                    <InputLabel id="model-select">Model</InputLabel>
-                    <Select
-                        labelId="model-select"
-                        onChange={doSelectChange}
-                        value={state.modelVariant}
-                        label="Model"
-                        name="modelVariant"
-                    >
-                        <MenuItem value="image">Image (MobileNet)</MenuItem>
-                        <MenuItem value="pose">Pose (PoseNet)</MenuItem>
-                    </Select>
-                </FormControl>
-                <div className={style.buttonBar}>
-                    <Button
-                        variant="contained"
-                        type="submit"
-                    >
-                        Save
-                    </Button>
-                    <Button
-                        variant="outlined"
-                        onClick={doReset}
-                    >
-                        Reset
-                    </Button>
-                    <Button
-                        variant="outlined"
-                        onClick={doCancel}
-                    >
-                        Cancel
-                    </Button>
-                </div>
-            </form>
-        </div>
+                        <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                            <span className={style.advancedTitle}>{t('settings.labels.advanced')}</span>
+                        </AccordionSummary>
+                        <AccordionDetails>
+                            <FormControl fullWidth>
+                                <InputLabel id="langlevel-select">Language Level</InputLabel>
+                                <Select
+                                    labelId="langlevel-select"
+                                    onChange={doSelectChange}
+                                    value={state.namespace}
+                                    label="Language Level"
+                                    name="namespace"
+                                >
+                                    <MenuItem value="image_adv">Advanced</MenuItem>
+                                    <MenuItem value="image_4_9">Grade 4-9</MenuItem>
+                                </Select>
+                            </FormControl>
+                            <FormControlLabel
+                                control={
+                                    <Checkbox
+                                        checked={state.advancedMenu}
+                                        name="advancedMenu"
+                                        onChange={doCheckChange}
+                                    />
+                                }
+                                label="Show Advanced Training Menu"
+                            />
+                            <FormControlLabel
+                                control={
+                                    <Checkbox
+                                        checked={state.modelSelect}
+                                        name="modelSelect"
+                                        onChange={doCheckChange}
+                                    />
+                                }
+                                label="Allow model selection"
+                            />
+                            <FormControlLabel
+                                control={
+                                    <Checkbox
+                                        checked={state.modelThreshold}
+                                        name="modelThreshold"
+                                        onChange={doCheckChange}
+                                    />
+                                }
+                                label="Enable threshold output"
+                            />
+                            <FormControlLabel
+                                control={
+                                    <Checkbox
+                                        checked={state.sampleUploadFile}
+                                        name="sampleUploadFile"
+                                        onChange={doCheckChange}
+                                    />
+                                }
+                                label="Enable file upload for samples"
+                            />
+                            <FormControlLabel
+                                control={
+                                    <Checkbox
+                                        checked={state.disableAddClass}
+                                        name="disableAddClass"
+                                        onChange={doCheckChange}
+                                    />
+                                }
+                                label="Disable adding classes"
+                            />
+                            <FormControlLabel
+                                control={
+                                    <Checkbox
+                                        checked={state.disabledClassRemove}
+                                        name="disabledClassRemove"
+                                        onChange={doCheckChange}
+                                    />
+                                }
+                                label="Disable class removal"
+                            />
+                            <FormControlLabel
+                                control={
+                                    <Checkbox
+                                        checked={state.disableClassNameEdit}
+                                        name="disableClassNameEdit"
+                                        onChange={doCheckChange}
+                                    />
+                                }
+                                label="Disable class name editing"
+                            />
+                            <FormControlLabel
+                                control={
+                                    <Checkbox
+                                        checked={state.imageBehaviours}
+                                        name="imageBehaviours"
+                                        onChange={doCheckChange}
+                                    />
+                                }
+                                label="Image behaviours"
+                            />
+                            <FormControlLabel
+                                control={
+                                    <Checkbox
+                                        checked={state.soundBehaviours}
+                                        name="soundBehaviours"
+                                        onChange={doCheckChange}
+                                    />
+                                }
+                                label="Sound behaviours"
+                            />
+                            <FormControlLabel
+                                control={
+                                    <Checkbox
+                                        checked={state.embedBehaviours}
+                                        name="embedBehaviours"
+                                        onChange={doCheckChange}
+                                    />
+                                }
+                                label="Embedding behaviours"
+                            />
+                            <FormControlLabel
+                                control={
+                                    <Checkbox
+                                        checked={state.textBehaviours}
+                                        name="textBehaviours"
+                                        onChange={doCheckChange}
+                                    />
+                                }
+                                label="Text behaviours                  "
+                            />
+                            <FormControlLabel
+                                control={
+                                    <Checkbox
+                                        checked={state.trainingStep}
+                                        name="trainingStep"
+                                        onChange={doCheckChange}
+                                    />
+                                }
+                                label="Include training step"
+                            />
+                            <FormControlLabel
+                                control={
+                                    <Checkbox
+                                        checked={state.behavioursStep}
+                                        name="behavioursStep"
+                                        onChange={doCheckChange}
+                                    />
+                                }
+                                label="Include behaviors step"
+                            />
+                            <FormControlLabel
+                                control={
+                                    <Checkbox
+                                        checked={state.multipleBehaviours}
+                                        name="multipleBehaviours"
+                                        onChange={doCheckChange}
+                                    />
+                                }
+                                label="Allow multiple behaviours"
+                            />
+                            <FormControlLabel
+                                control={
+                                    <Checkbox
+                                        checked={state.disableSaveSamples}
+                                        name="disableSaveSamples"
+                                        onChange={doCheckChange}
+                                    />
+                                }
+                                label="Disable sample saving option"
+                            />
+                            <FormControlLabel
+                                control={
+                                    <Checkbox
+                                        checked={state.showTrainingAnimation}
+                                        name="showTrainingAnimation"
+                                        onChange={doCheckChange}
+                                    />
+                                }
+                                label="Show Training Animation"
+                            />
+                            <FormControlLabel
+                                control={
+                                    <Checkbox
+                                        checked={state.resetOnLoad}
+                                        name="resetOnLoad"
+                                        onChange={doCheckChange}
+                                    />
+                                }
+                                label="Hide Behaviours on Load"
+                            />
+                            <FormControlLabel
+                                control={
+                                    <Checkbox
+                                        checked={state.enableFileInput}
+                                        name="enableFileInput"
+                                        onChange={doCheckChange}
+                                    />
+                                }
+                                label="Enable input from files"
+                            />
+                            <FormControlLabel
+                                control={
+                                    <Checkbox
+                                        checked={state.allowDeploy}
+                                        name="allowDeploy"
+                                        onChange={doCheckChange}
+                                    />
+                                }
+                                label="Allow deployment link"
+                            />
+                            <FormControlLabel
+                                control={
+                                    <Checkbox
+                                        checked={state.showDragTip}
+                                        name="showDragTip"
+                                        onChange={doCheckChange}
+                                    />
+                                }
+                                label="Show Drag & Drop animation tip"
+                            />
+                            <FormControlLabel
+                                control={
+                                    <Checkbox
+                                        checked={state.usep2p}
+                                        name="usep2p"
+                                        onChange={doCheckChange}
+                                    />
+                                }
+                                label="Enable Peer-2-Peer feature"
+                            />
+                            <FormControlLabel
+                                control={
+                                    <Checkbox
+                                        checked={state.showSettings}
+                                        name="showSettings"
+                                        onChange={doCheckChange}
+                                    />
+                                }
+                                label="Show settings"
+                            />
+                            <FormControlLabel
+                                control={
+                                    <Checkbox
+                                        checked={state.showSaveReminder}
+                                        name="showSaveReminder"
+                                        onChange={doCheckChange}
+                                    />
+                                }
+                                label="Show Save Reminder"
+                            />
+                        </AccordionDetails>
+                    </Accordion>
+                    <div className={style.buttonBar}>
+                        <Button
+                            variant="contained"
+                            type="submit"
+                        >
+                            {t('settings.actions.save')}
+                        </Button>
+                        <Button
+                            variant="outlined"
+                            onClick={doReset}
+                        >
+                            {t('settings.actions.reset')}
+                        </Button>
+                        <Button
+                            variant="outlined"
+                            onClick={doCancel}
+                        >
+                            {t('settings.actions.cancel')}
+                        </Button>
+                    </div>
+                </form>
+            </div>
+        </ThemeProvider>
     );
 }
 
@@ -378,8 +437,13 @@ export default function GenerateCustom() {
     const customStr = decompressFromEncodedURIComponent(params.get('c') || '');
     const custom = (customStr ? JSON.parse(customStr) : {}) as IVariantContext;
 
+    const merged = {
+        ...DEFAULTS.base,
+        ...custom,
+    };
+
     return (
-        <VariantContext.Provider value={{ ...DEFAULTS, ...custom }}>
+        <VariantContext.Provider value={merged}>
             <SettingsForm />
         </VariantContext.Provider>
     );

@@ -1,7 +1,7 @@
 {
     "app": {
-        "variantTitle": "Image Classifier",
-        "variantMessage": "Select the variation to use:",
+        "variantTitle": "GenAI Teachable Apps",
+        "variantMessage": "Please select from the options below to begin.",
         "variantAge4_9": "Grade 4-9",
         "variantAdvanced": "Default",
         "variantCustom": "Custom"
@@ -22,5 +22,23 @@
         "title": "About",
         "privacyTitle": "Privacy Notice",
         "privacy": "We do not collect or store any personal data about your use of this application. Cookies are not used by this application and there is no tracking of activity. Your sample data and models remain on your device unless you choose to share them. When sharing, the data is not stored in our servers and becomes unavailable to others if you close your browser tab."
+    },
+    "settings": {
+        "title": "Settings",
+        "actions": {
+            "save": "Save",
+            "reset": "Reset",
+            "cancel": "Cancel"
+        },
+        "labels": {
+            "language": "Language",
+            "model": "Model",
+            "variant": "Interface Variant",
+            "advanced": "Advanced"
+        },
+        "values": {
+            "models": ["Image (MobileNet)", "Pose (PoseNet)"],
+            "variants": ["General Use", "Classroom"]
+        }
     }
 }

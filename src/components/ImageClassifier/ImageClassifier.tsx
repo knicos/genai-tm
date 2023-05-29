@@ -1,45 +1,13 @@
 import React, { useState, useCallback } from 'react';
 import style from './stepper.module.css';
 import { useTranslation } from 'react-i18next';
-import Stepper from '@mui/material/Stepper';
-import Step from '@mui/material/Step';
-import StepLabel from '@mui/material/StepLabel';
-import IconButton from '@mui/material/IconButton';
-import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import AppBar from '../../components/AppBar/AppBar';
 import Workspace from '../../components/ImageWorkspace/Workspace';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import colours from '../../style/colours.module.css';
+import { ThemeProvider } from '@mui/material/styles';
 import { useVariant } from '../../util/variant';
 import Fab from '@mui/material/Fab';
-
-const isTest = global?.process?.env?.NODE_ENV === 'test';
-
-const theme = createTheme({
-    palette: {
-        primary: {
-            main: isTest ? '#fff' : colours.primary,
-        },
-        success: {
-            main: '#00972e',
-        },
-    },
-    typography: {
-        fontFamily: [
-            '-apple-system',
-            'BlinkMacSystemFont',
-            '"Segoe UI"',
-            'Roboto',
-            '"Helvetica Neue"',
-            'Arial',
-            'sans-serif',
-            '"Apple Color Emoji"',
-            '"Segoe UI Emoji"',
-            '"Segoe UI Symbol"',
-        ].join(','),
-    },
-});
+import { theme } from '../../style/theme';
 
 export default function ImageClassifier() {
     const { namespace } = useVariant();

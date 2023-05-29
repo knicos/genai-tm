@@ -1,0 +1,43 @@
+{
+    "base": {
+        "namespace": "image_adv",
+        "sampleUploadFile": true,
+        "imageBehaviours": true,
+        "soundBehaviours": true,
+        "speechBehaviours": true,
+        "textBehaviours": true,
+        "embedBehaviours": true,
+        "trainingStep": true,
+        "behavioursStep": true,
+        "disableAddClass": false,
+        "disableClassNameEdit": false,
+        "disabledClassRemove": false,
+        "modelSelect": false,
+        "modelThreshold": false,
+        "advancedMenu": false,
+        "multipleBehaviours": true,
+        "disableSaveSamples": false,
+        "showTrainingAnimation": false,
+        "resetOnLoad": false,
+        "enableFileInput": true,
+        "allowDeploy": true,
+        "showDragTip": false,
+        "usep2p": false,
+        "showSettings": true,
+        "modelVariant": "image",
+        "showSaveReminder": false
+    },
+    "image": {
+        "modelVariant": "image"
+    },
+    "pose": {
+        "modelVariant": "pose"
+    },
+    "general": {},
+    "classroom": {
+        "namespace": "image_4_9",
+        "embedBehaviours": false,
+        "showSettings": false,
+        "showSaveReminder": true
+    }
+}

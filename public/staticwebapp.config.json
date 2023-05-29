@@ -5,11 +5,19 @@
             "rewrite": "index.html"
         },
         {
+            "route": "/pose*",
+            "rewrite": "index.html"
+        },
+        {
             "route": "/deploy*",
             "rewrite": "index.html"
         },
         {
             "route": "/about",
+            "rewrite": "index.html"
+        },
+        {
+            "route": "/settings",
             "rewrite": "index.html"
         }
     ]

@@ -33,3 +33,8 @@
     border-top: 1px solid #eee;
     margin-top: 1rem;
 }
+
+.advancedTitle {
+    font-weight: bold;
+    color: #008297;
+}

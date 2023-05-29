@@ -5,13 +5,12 @@ import Home from './views/Home/Home';
 import {
     RouterProvider,
     Route,
-    Navigate,
     createBrowserRouter,
     createRoutesFromElements,
     useRouteError,
+    Navigate,
 } from 'react-router-dom';
 import gitInfo from './generatedGitInfo.json';
-import ImageVariants from './views/ImageVariants/ImageVariants';
 import GenerateCustom from './views/GenerateCustom/GenerateCustom';
 import { RecoilRoot } from 'recoil';
 import { DndProvider } from 'react-dnd';
@@ -21,6 +20,15 @@ import About from './views/About/About';
 
 function ErrorComponent() {
     const error = useRouteError();
+
+    if ((error as any).status === 404) {
+        return (
+            <section className="errorView">
+                <h1>Page not found</h1>
+            </section>
+        );
+    }
+
     return (
         <section className="errorView">
             <h1>Something went wrong</h1>
@@ -51,9 +59,13 @@ const router = createBrowserRouter(
                 element={
                     <Navigate
                         replace
-                        to="/image"
+                        to="/image/general"
                     />
                 }
+            />
+            <Route
+                path="settings"
+                element={<GenerateCustom />}
             />
             <Route
                 path="deploy/b/:code"
@@ -63,24 +75,6 @@ const router = createBrowserRouter(
                 path="deploy/p/:code"
                 lazy={() => import('./views/Deployment/PeerDeployment')}
             />
-            <Route path="image">
-                <Route
-                    index
-                    element={<ImageVariants />}
-                />
-                <Route
-                    path="grade4_9"
-                    lazy={() => import('./views/ImageAge4To9/ImageAge4To9')}
-                />
-                <Route
-                    path="general"
-                    lazy={() => import('./views/ImageGeneral/ImageGeneral')}
-                />
-                <Route
-                    path="settings"
-                    element={<GenerateCustom />}
-                />
-            </Route>
             <Route
                 path="about"
                 element={<About />}
@@ -88,6 +82,10 @@ const router = createBrowserRouter(
             <Route
                 path="home"
                 element={<Home />}
+            />
+            <Route
+                path=":kind/:variant"
+                lazy={() => import('./views/ImageGeneral/ImageGeneral')}
             />
         </Route>
     )

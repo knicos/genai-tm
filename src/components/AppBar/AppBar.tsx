@@ -56,7 +56,7 @@ export default function ApplicationBar({ showReminder, onSave }: Props) {
     );
 
     const doSettings = useCallback(() => {
-        navigate(`/image/settings?${createSearchParams(params)}`, { replace: false });
+        navigate(`/settings?${createSearchParams(params)}`, { replace: false });
     }, [navigate, params]);
 
     const doSave = useCallback(() => {
