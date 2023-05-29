@@ -13,6 +13,7 @@
         "saveSamples": "Save Samples",
         "saveClassifier": "Save Classifier",
         "saveBehaviours": "Save Behaviors",
+        "name": "Name",
         "actions": {
             "save": "Save",
             "cancel": "Cancel"

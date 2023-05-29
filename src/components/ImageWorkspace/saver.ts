@@ -105,8 +105,9 @@ export function ModelSaver({ onSaved }: Props) {
 
     useEffect(() => {
         if (saving) {
+            model?.setName(saving.name);
             saveProject(
-                'my-classifier.zip',
+                `${saving.name}.zip`,
                 code,
                 model,
                 saving.behaviours ? behaviours : undefined,

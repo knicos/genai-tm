@@ -58,6 +58,6 @@ describe('SaveDialog component', () => {
         const save = screen.getByTestId('save-save');
         await user.click(save);
         expect(trigger).toHaveBeenCalledTimes(1);
-        expect(onsave).toHaveBeenCalledWith({ samples: true, model: true, behaviours: true });
+        expect(onsave).toHaveBeenCalledWith({ samples: true, model: true, behaviours: true, name: 'My Model' });
     });
 });

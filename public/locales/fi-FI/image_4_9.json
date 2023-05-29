@@ -13,6 +13,7 @@
         "saveSamples": "Tallenna esimerkit",
         "saveClassifier": "Tallenna luokittelija",
         "saveBehaviours": "Tallenna toiminnot",
+        "name": "Name",
         "actions": {
             "save": "Tallenna",
             "cancel": "Peruuta"

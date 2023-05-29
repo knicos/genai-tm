@@ -59,6 +59,14 @@ export class TeachableModel {
         });
     }
 
+    public setName(name: string) {
+        if (this.imageModel) {
+            this.imageModel.setName(name);
+        } else if (this.poseModel) {
+            this.poseModel.setName(name);
+        }
+    }
+
     public getVariant() {
         return this.variant;
     }

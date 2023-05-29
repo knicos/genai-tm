@@ -55,3 +55,7 @@
     gap: 3rem;
     align-items: center;
 }
+
+.padded {
+    margin: 1rem 0;
+}

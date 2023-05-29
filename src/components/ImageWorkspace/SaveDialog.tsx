@@ -9,11 +9,14 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import { useVariant } from '../../util/variant';
 import { useTranslation } from 'react-i18next';
 import { useTeachableModel } from '../../util/TeachableModel';
+import TextField from '@mui/material/TextField';
+import style from './TeachableMachine.module.css';
 
 export interface SaveProperties {
     samples: boolean;
     model: boolean;
     behaviours: boolean;
+    name: string;
 }
 
 interface Props {
@@ -25,9 +28,9 @@ export default function SaveDialog({ trigger, onSave }: Props) {
     const { namespace, disableSaveSamples } = useVariant();
     const { t } = useTranslation(namespace);
     const { hasModel } = useTeachableModel();
-
     const [saveSamples, setSaveSamples] = useState(!disableSaveSamples);
     const [saveBehaviours, setSaveBehaviours] = useState(true);
+    const [name, setName] = useState('My Model');
 
     const changeSamples = useCallback(
         (event: FormEvent<HTMLInputElement>) => {
@@ -48,9 +51,17 @@ export default function SaveDialog({ trigger, onSave }: Props) {
             samples: saveSamples,
             model: true,
             behaviours: saveBehaviours,
+            name,
         });
         if (trigger) trigger();
-    }, [trigger, onSave, saveBehaviours, saveSamples]);
+    }, [trigger, onSave, saveBehaviours, saveSamples, name]);
+
+    const doNameChange = useCallback(
+        (ev: React.ChangeEvent<HTMLInputElement>) => {
+            setName(ev.target.value);
+        },
+        [setName]
+    );
 
     return (
         <Dialog
@@ -60,6 +71,15 @@ export default function SaveDialog({ trigger, onSave }: Props) {
             <DialogTitle>{t('save.title')}</DialogTitle>
             <DialogContent>
                 <p>{hasModel ? t('save.message') : t('save.noModel')}</p>
+                <div className={style.padded}>
+                    <TextField
+                        label={t<string>('save.name')}
+                        variant="filled"
+                        fullWidth
+                        value={name}
+                        onChange={doNameChange}
+                    />
+                </div>
                 {!disableSaveSamples && (
                     <FormControlLabel
                         control={
