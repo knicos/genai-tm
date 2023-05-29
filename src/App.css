@@ -20,3 +20,23 @@
     color: #666;
     font-size: 6pt;
 }
+
+.errorView {
+    margin: auto;
+    width: 100%;
+    max-width: 400px;
+    background: white;
+    padding: 2rem;
+}
+
+.errorView p {
+    margin: 1rem 0;
+}
+
+.code {
+    font-family: 'Courier New', Courier, monospace;
+    padding: 0.5rem;
+    background: #eee;
+    overflow: scroll;
+    font-size: 10pt;
+}

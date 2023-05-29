@@ -2,7 +2,14 @@ import React from 'react';
 
 import './App.css';
 import Home from './views/Home/Home';
-import { RouterProvider, Route, Navigate, createBrowserRouter, createRoutesFromElements } from 'react-router-dom';
+import {
+    RouterProvider,
+    Route,
+    Navigate,
+    createBrowserRouter,
+    createRoutesFromElements,
+    useRouteError,
+} from 'react-router-dom';
 import gitInfo from './generatedGitInfo.json';
 import ImageVariants from './views/ImageVariants/ImageVariants';
 import GenerateCustom from './views/GenerateCustom/GenerateCustom';
@@ -12,9 +19,33 @@ import { HTML5Backend } from 'react-dnd-html5-backend';
 import { StyledEngineProvider } from '@mui/material/styles';
 import About from './views/About/About';
 
+function ErrorComponent() {
+    const error = useRouteError();
+    return (
+        <section className="errorView">
+            <h1>Something went wrong</h1>
+            <p>
+                Please report this issue to{' '}
+                <a
+                    href="https://github.com/knicos/genai-tm/issues"
+                    target="_blank"
+                    rel="noreferrer"
+                >
+                    our project on github
+                </a>{' '}
+                if you have time, including the information below. Refresh the page to try again.
+            </p>
+            <p className="code">{JSON.stringify(error)}</p>
+        </section>
+    );
+}
+
 const router = createBrowserRouter(
     createRoutesFromElements(
-        <Route path="/">
+        <Route
+            path="/"
+            ErrorBoundary={ErrorComponent}
+        >
             <Route
                 index
                 element={
