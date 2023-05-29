@@ -102,7 +102,14 @@ function App() {
                             aria-hidden
                             className="versionBox"
                         >
-                            Version: {gitInfo.gitTag}
+                            Version:{' '}
+                            <a
+                                href={`https://github.com/knicos/genai-tm/releases/tag/${gitInfo.gitTag}`}
+                                target="_blank"
+                                rel="noreferrer"
+                            >
+                                {gitInfo.gitTag}
+                            </a>
                         </div>
                     </StyledEngineProvider>
                 </DndProvider>
