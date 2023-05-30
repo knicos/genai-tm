@@ -22,7 +22,7 @@
         "enableFileInput": true,
         "allowDeploy": true,
         "showDragTip": false,
-        "usep2p": false,
+        "usep2p": true,
         "showSettings": true,
         "modelVariant": "image",
         "showSaveReminder": false

@@ -6,6 +6,7 @@ import { behaviourState, sessionCode, sessionPassword, sharingActive } from '../
 import { Peer } from 'peerjs';
 import randomId from '../../util/randomId';
 import { TeachableModel, useTeachableModel } from '../../util/TeachableModel';
+import { createAnalysis, createModelStats } from './analysis';
 
 type ProjectKind = 'image';
 
@@ -35,6 +36,8 @@ export interface ModelEventData extends DeployEvent {
 interface CacheState {
     model?: TeachableModel;
     behaviours?: BehaviourType[];
+    reference?: number[];
+    predictions?: number[];
 }
 
 export default function PeerDeployer() {
@@ -62,6 +65,7 @@ export default function PeerDeployer() {
             secure: process.env.REACT_APP_PEER_SECURE === '1',
             key: process.env.REACT_APP_PEER_KEY || 'peerjs',
             port: process.env.REACT_APP_PEER_PORT ? parseInt(process.env.REACT_APP_PEER_PORT) : 443,
+            config: { iceServers: [{ urls: 'stun:stun.l.google.com:19302' }], sdpSemantics: 'unified-plan' },
         });
         channelRef.current = peer;
         peer.on('open', (id: string) => {
@@ -94,6 +98,25 @@ export default function PeerDeployer() {
                             }
                             conn.send({ event: 'project', project: blob.current.zip, kind: 'image' });
                             break;
+                    }
+                } else if (ev?.event === 'analyse') {
+                    if (cache.current?.model) {
+                        if (cache.current.reference === undefined || cache.current.predictions === undefined) {
+                            const { reference, predictions } = await cache.current.model.calculateAccuracy();
+                            const cvtReference = (await reference.array()) as number[];
+                            const cvtPredictions = (await predictions.array()) as number[];
+                            cache.current.reference = cvtReference;
+                            cache.current.predictions = cvtPredictions;
+                        }
+                        conn.send({
+                            event: 'analysis',
+                            ...createAnalysis(
+                                cache.current.model.getLabels(),
+                                cache.current.reference,
+                                cache.current.predictions
+                            ),
+                            ...createModelStats(cache.current.model),
+                        });
                     }
                 }
             });
@@ -138,6 +161,8 @@ export default function PeerDeployer() {
         blob.current = null;
         cache.current.model = model;
         cache.current.behaviours = behaviours;
+        cache.current.predictions = undefined;
+        cache.current.reference = undefined;
     }, [model, behaviours, getChannel]);
 
     useEffect(() => {

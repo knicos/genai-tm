@@ -1,11 +1,4 @@
 {
-    "app": {
-        "variantTitle": "Classificador de Imagens",
-        "variantMessage": "Selecione a variação a ser usada:",
-        "variantAge4_9": "4º ao 9º ano",
-        "variantAdvanced": "Padrão",
-        "variantCustom": "Personalizado"
-    },
     "deploy": {
         "actions": {
             "copy": "Copiar"

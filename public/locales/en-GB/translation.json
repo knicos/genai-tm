@@ -1,11 +1,4 @@
 {
-    "app": {
-        "variantTitle": "GenAI Teachable Apps",
-        "variantMessage": "Please select from the options below to begin.",
-        "variantAge4_9": "Grade 4-9",
-        "variantAdvanced": "Default",
-        "variantCustom": "Custom"
-    },
     "deploy": {
         "actions": {
             "copy": "Copy"

@@ -295,6 +295,43 @@ export class TeachableModel {
         }
         return '';
     }
+
+    public getNumExamples(): number {
+        if (this.imageModel) {
+            return this.imageModel.examples.reduce((t, e) => t + e.length, 0);
+        } else if (this.poseModel) {
+            return this.poseModel.examples.reduce((t, e) => t + e.length, 0);
+        }
+        return 0;
+    }
+
+    public getExamplesPerClass(): number[] {
+        if (this.imageModel) {
+            return this.imageModel.examples.map((e) => e.length);
+        } else if (this.poseModel) {
+            return this.poseModel.examples.map((e) => e.length);
+        }
+        return [];
+    }
+
+    public getNumValidation(): number {
+        if (this.imageModel) {
+            return this.imageModel.examples.reduce((t, e) => t + Math.ceil(e.length * 0.15), 0);
+        } else if (this.poseModel) {
+            return this.poseModel.examples.reduce((t, e) => t + Math.ceil(e.length * 0.15), 0);
+        }
+        return 0;
+    }
+
+    public calculateAccuracy() {
+        if (this.imageModel) {
+            return this.imageModel.calculateAccuracyPerClass();
+        } else if (this.poseModel) {
+            return this.poseModel.calculateAccuracyPerClass();
+        } else {
+            throw new Error('no_model');
+        }
+    }
 }
 
 export function usePredictions() {

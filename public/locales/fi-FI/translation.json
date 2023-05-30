@@ -1,11 +1,4 @@
 {
-    "app": {
-        "variantTitle": "Kuvantunnistus",
-        "variantMessage": "Valitse käytettävä muunnelma:",
-        "variantAge4_9": "Luokka 4-9",
-        "variantAdvanced": "Pitkälle kehittynyt",
-        "variantCustom": "Custom"
-    },
     "deploy": {
         "actions": {
             "copy": "Copy"
