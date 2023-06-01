@@ -98,6 +98,7 @@ export async function loadProject(file: File | Blob): Promise<Project> {
                         canvas.width = 224;
                         canvas.height = 224;
                         canvas.style.width = '58px';
+                        canvas.style.height = '58px';
                         const ctx = canvas.getContext('2d');
                         const img = new Image();
                         img.onload = (ev: Event) => {

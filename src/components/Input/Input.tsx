@@ -9,7 +9,13 @@ import Skeleton from '@mui/material/Skeleton';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import UploadFileIcon from '@mui/icons-material/UploadFile';
-import { canvasFromFile } from '../../util/canvas';
+import {
+    canvasFromDataTransfer,
+    canvasFromFile,
+    canvasFromImage,
+    canvasFromURL,
+    canvasesFromFiles,
+} from '../../util/canvas';
 import { Button } from '../button/Button';
 import { useDrop } from 'react-dnd';
 import { NativeTypes } from 'react-dnd-html5-backend';
@@ -65,21 +71,6 @@ export default function Input(props: Props) {
         [canPredict, predict]
     );
 
-    const onDrop = useCallback(
-        async (acceptedFiles: File[]) => {
-            if (acceptedFiles.length === 1) {
-                if (!acceptedFiles[0].type.startsWith('image/')) {
-                    setShowDropError(true);
-                    return;
-                }
-                const newCanvas = await canvasFromFile(acceptedFiles[0]);
-                setTabIndex(1);
-                setFile(newCanvas);
-            }
-        },
-        [setFile]
-    );
-
     useEffect(() => {
         if (file) {
             doPrediction(file);
@@ -87,9 +78,16 @@ export default function Input(props: Props) {
     }, [file, doPrediction]);
 
     const [dropProps, drop] = useDrop({
-        accept: [NativeTypes.FILE, NativeTypes.URL],
-        drop(items: any) {
-            onDrop(items.files);
+        accept: [NativeTypes.FILE, NativeTypes.URL, NativeTypes.HTML],
+        async drop(items: any) {
+            const canvases = await canvasFromDataTransfer(items);
+
+            if (canvases.length === 0) {
+                setShowDropError(true);
+            } else {
+                setTabIndex(1);
+                setFile(canvases[0]);
+            }
         },
         collect(monitor) {
             const can = monitor.canDrop();
@@ -111,10 +109,17 @@ export default function Input(props: Props) {
 
     const onFileChange = useCallback(
         (e: React.ChangeEvent<HTMLInputElement>) => {
-            onDrop(Array.from(e.target.files || []));
+            canvasesFromFiles(Array.from(e.target.files || [])).then((canvases) => {
+                if (canvases.length === 0) {
+                    setShowDropError(true);
+                } else {
+                    setTabIndex(1);
+                    setFile(canvases[0]);
+                }
+            });
             e.target.value = '';
         },
-        [onDrop]
+        [setShowDropError, setTabIndex, setFile]
     );
 
     const doPostProcess = useCallback(

@@ -13,7 +13,13 @@ import { useDrop } from 'react-dnd';
 import { useVariant } from '../../util/variant';
 import { NativeTypes } from 'react-dnd-html5-backend';
 import UploadIcon from '@mui/icons-material/Upload';
-import { canvasFromFile } from '../../util/canvas';
+import {
+    canvasFromURL,
+    canvasFromFile,
+    canvasFromImage,
+    canvasFromDataTransfer,
+    canvasesFromFiles,
+} from '../../util/canvas';
 import DnDAnimation from '../DnDAnimation/DnDAnimation';
 import AlertPara from '../AlertPara/AlertPara';
 import AlertModal from '../AlertModal/AlertModal';
@@ -42,56 +48,68 @@ export function Classification({ name, active, data, index, setData, onActivate,
 
     const doShowTip = useCallback(() => data.samples.length === 0 && setShowTip(true), [data, setShowTip]);
 
-    const onDrop = useCallback(
-        (acceptedFiles: File[]) => {
+    const onFileChange = useCallback(
+        (e: React.ChangeEvent<HTMLInputElement>) => {
             setLoading(true);
-            const filtered = acceptedFiles.filter((f) => f.type.startsWith('image/'));
-            if (filtered.length === 0) {
-                setShowDropError(true);
-                return;
-            }
-            const promises = filtered.map((file) => canvasFromFile(file));
-
-            Promise.all(promises)
-                .then((results: HTMLCanvasElement[]) => {
-                    results.forEach((v) => {
+            canvasesFromFiles(Array.from(e.target.files || [])).then((canvases) => {
+                if (canvases.length > 0) {
+                    canvases.forEach((v) => {
                         v.style.width = '58px';
+                        v.style.height = '58px';
                     });
                     setData(
                         (data) => ({
                             label: data.label,
-                            samples: [...results, ...data.samples],
+                            samples: [...canvases, ...data.samples],
                         }),
                         index
                     );
-                    setLoading(false);
-                })
-                .catch((e) => console.error(e));
-        },
-        [setData, index]
-    );
-
-    const onFileChange = useCallback(
-        (e: React.ChangeEvent<HTMLInputElement>) => {
-            onDrop(Array.from(e.target.files || []));
+                }
+                setLoading(false);
+            });
             e.target.value = '';
         },
-        [onDrop]
+        [setLoading, setData, index]
     );
 
-    const [dropProps, drop] = useDrop({
-        accept: [NativeTypes.FILE, NativeTypes.URL],
-        drop(items: any) {
-            onDrop(items.files);
+    const [dropProps, drop] = useDrop(
+        {
+            accept: [NativeTypes.URL, NativeTypes.HTML, NativeTypes.FILE],
+            async drop(items: any) {
+                setLoading(true);
+                try {
+                    const canvases = await canvasFromDataTransfer(items);
+
+                    if (canvases.length > 0) {
+                        canvases.forEach((v) => {
+                            v.style.width = '58px';
+                            v.style.height = '58px';
+                        });
+                        setData(
+                            (data) => ({
+                                label: data.label,
+                                samples: [...canvases, ...data.samples],
+                            }),
+                            index
+                        );
+                    } else {
+                        setShowDropError(true);
+                    }
+                } catch (e) {
+                    setShowDropError(true);
+                }
+                setLoading(false);
+            },
+            collect(monitor) {
+                const can = monitor.canDrop();
+                return {
+                    highlighted: can,
+                    hovered: monitor.isOver(),
+                };
+            },
         },
-        collect(monitor) {
-            const can = monitor.canDrop();
-            return {
-                highlighted: can,
-                hovered: monitor.isOver(),
-            };
-        },
-    });
+        [setData, index, setShowDropError]
+    );
 
     const setTitle = useCallback(
         (title: string) => {
@@ -113,6 +131,7 @@ export function Classification({ name, active, data, index, setData, onActivate,
     const onCapture = useCallback(
         (image: HTMLCanvasElement) => {
             image.style.width = '58px';
+            image.style.height = '58px';
 
             setData(
                 (data) => ({

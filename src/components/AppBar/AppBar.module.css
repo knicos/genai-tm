@@ -5,6 +5,10 @@
     gap: 1rem;
 }
 
+:global .MuiAppBar-root {
+    z-index: 2;
+}
+
 .buttonBar :global .MuiButton-root {
     text-transform: none;
 }
@@ -49,6 +53,12 @@
 
 .langBarWithSettings {
     composes: langBar;
+}
+
+@media only screen and (max-width: 850px) {
+    :global .AppBar h1 {
+        display: none;
+    }
 }
 
 @media only screen and (max-height: 500px), (max-width: 700px) {

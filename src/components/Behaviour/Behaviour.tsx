@@ -60,40 +60,54 @@ export default function Behaviour({ classLabel, behaviour, setBehaviour, index, 
     );
 
     const [dropProps, drop] = useDrop({
-        accept: [NativeTypes.FILE, NativeTypes.URL],
-        drop(items: any) {
-            const types = Array.from<DataTransferItem>(items.items).map((i) => i.type);
-            const ix = types.findIndex((i) => i.startsWith('image/') || i.startsWith('audio/'));
-
-            if (ix >= 0) {
-                const file = items.files[0];
-                const reader = new FileReader();
-                reader.onabort = () => console.warn('file reading aborted');
-                reader.onerror = () => console.error('file reading error');
-                reader.onload = () => {
-                    if (file.type.startsWith('image/')) {
-                        patchBehaviour({
-                            image: { uri: reader.result as string },
-                        });
-                        setValue('image');
-                    } else {
-                        patchBehaviour({
-                            audio: { uri: reader.result as string, name: file.name },
-                        });
-                        setValue('sound');
-                    }
-                };
-                reader.readAsDataURL(file);
-            } else {
-                const uri = types.findIndex((i) => i === 'text/uri-list');
-                if (uri >= 0) {
-                    items.items[uri].getAsString((data: string) => {
-                        patchBehaviour({
-                            image: { uri: data },
-                        });
+        accept: [NativeTypes.FILE, NativeTypes.URL, NativeTypes.HTML],
+        async drop(items: any) {
+            if (items.html) {
+                const root = document.createElement('html');
+                root.innerHTML = items.html;
+                const imgElements = root.getElementsByTagName('img');
+                if (imgElements.length > 0) {
+                    patchBehaviour({
+                        image: { uri: imgElements[0].src },
                     });
+                    setValue('image');
+                }
+            } else {
+                const types = Array.from<DataTransferItem>(items.items).map((i) => i.type);
+                const ix = types.findIndex((i) => i.startsWith('image/') || i.startsWith('audio/'));
+
+                if (ix >= 0) {
+                    const file = items.files[0];
+                    const reader = new FileReader();
+                    reader.onabort = () => console.warn('file reading aborted');
+                    reader.onerror = () => console.error('file reading error');
+                    reader.onload = () => {
+                        if (file.type.startsWith('image/')) {
+                            patchBehaviour({
+                                image: { uri: reader.result as string },
+                            });
+                            setValue('image');
+                        } else {
+                            patchBehaviour({
+                                audio: { uri: reader.result as string, name: file.name },
+                            });
+                            setValue('sound');
+                        }
+                    };
+                    reader.readAsDataURL(file);
                 } else {
-                    setShowDropError(true);
+                    const uri = types.findIndex((i) => i === 'text/uri-list');
+                    if (uri >= 0) {
+                        items.items[uri].getAsString((data: string) => {
+                            const uris = data.split('\n');
+                            patchBehaviour({
+                                image: { uri: uris[0] },
+                            });
+                            setValue('image');
+                        });
+                    } else {
+                        setShowDropError(true);
+                    }
                 }
             }
         },
