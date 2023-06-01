@@ -14,6 +14,7 @@ interface Props {
     onCapture?: (image: HTMLCanvasElement) => void | Promise<void>;
     onPreprocess?: (image: HTMLCanvasElement) => void | Promise<void>;
     onPostprocess?: (image: HTMLCanvasElement) => void | Promise<void>;
+    onActivated?: (available: boolean) => void;
     direct?: boolean;
     hidden?: boolean;
     size: number;
@@ -28,6 +29,7 @@ export function Webcam({
     hidden,
     onPreprocess,
     onPostprocess,
+    onActivated,
     size,
 }: Props) {
     const { namespace } = useVariant();
@@ -109,6 +111,8 @@ export function Webcam({
                 console.error(e);
             }
         }
+
+        if (onActivated) onActivated(true);
     }
 
     useEffect(() => {
@@ -116,14 +120,17 @@ export function Webcam({
     }, [capture]);
 
     useEffect(() => {
-        initWebcam().catch((e) => console.error('No webcam', e));
+        initWebcam().catch((e) => {
+            if (onActivated) onActivated(false);
+            console.error('No webcam', e);
+        });
         return () => {
             if (webcam?.webcam.srcObject) {
                 webcam.stop();
             }
         };
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [facing]);
+    }, [facing, onActivated]);
 
     useEffect(() => {
         /*if (requestRef.current >= 0) {

@@ -43,13 +43,20 @@ export function useTabModel(code: string, onError?: () => void): [TeachableModel
     return [model, behaviours];
 }
 
-export function useP2PModel(code: string, onError?: () => void): [TeachableModel | null, BehaviourType[]] {
+export function useP2PModel(
+    code: string,
+    onError?: () => void,
+    enabled?: boolean
+): [TeachableModel | null, BehaviourType[]] {
     const [model, setModel] = useState<TeachableModel | null>(null);
     const [behaviours, setBehaviours] = useState<BehaviourType[]>([]);
     const timeoutRef = useRef<number>(-1);
     const [params] = useSearchParams();
 
     useEffect(() => {
+        if (!enabled) {
+            return;
+        }
         const peer = new Peer('', {
             host: process.env.REACT_APP_PEER_SERVER,
             secure: process.env.REACT_APP_PEER_SECURE === '1',
@@ -101,7 +108,7 @@ export function useP2PModel(code: string, onError?: () => void): [TeachableModel
                 conn.send({ event: 'request', channel: id, password: params.get('p') });
             });
         });
-    }, [code, onError, params]);
+    }, [code, onError, params, enabled]);
 
     return [model, behaviours];
 }

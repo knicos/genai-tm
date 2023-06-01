@@ -26,9 +26,10 @@ interface Props extends React.PropsWithChildren {
     behaviours: BehaviourType[];
     error: boolean;
     onCloseError: () => void;
+    onActivated?: (available: boolean) => void;
 }
 
-export default function Deployment({ model, behaviours, error, onCloseError, children }: Props) {
+export default function Deployment({ model, behaviours, error, onActivated, children }: Props) {
     const [volume, setVolume] = useState(100);
     const changeVolume = useCallback((event: Event, newValue: number | number[]) => {
         setVolume(newValue as number);
@@ -146,6 +147,7 @@ export default function Deployment({ model, behaviours, error, onCloseError, chi
                         disable={paused || error}
                         direct
                         size={model?.getImageSize() || 224}
+                        onActivated={onActivated}
                     />
                     <IconButton
                         color="inherit"

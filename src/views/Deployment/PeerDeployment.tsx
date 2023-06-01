@@ -15,8 +15,9 @@ export function Component() {
     const { code } = useParams();
     const [query, setQuery] = useSearchParams();
     const [hadError, setHadError] = useState(false);
+    const [enableWebRTC, setEnableWebRTC] = useState(false);
     const onError = useCallback(() => setHadError(true), [setHadError]);
-    const [model, behaviours] = useP2PModel(code || '', onError);
+    const [model, behaviours] = useP2PModel(code || '', onError, enableWebRTC);
     const [showQR, setShowQR] = useState(!!query.get('qr'));
     const canvas = useRef<HTMLCanvasElement>(null);
     const { namespace } = useVariant();
@@ -29,6 +30,15 @@ export function Component() {
     const doCopy = useCallback(() => {
         navigator.clipboard.writeText(window.location.href);
     }, []);
+
+    const doActivated = useCallback(
+        (available: boolean) => {
+            // Remove this if TURN servers are used
+            if (!available) setHadError(true);
+            setEnableWebRTC(true);
+        },
+        [setEnableWebRTC, setHadError]
+    );
 
     useEffect(() => {
         query.delete('qr');
@@ -45,6 +55,7 @@ export function Component() {
                 behaviours={behaviours}
                 error={hadError}
                 onCloseError={closeError}
+                onActivated={doActivated}
             />
             {showQR && (
                 <div className={style.qrcode}>

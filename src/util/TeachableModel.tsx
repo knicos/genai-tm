@@ -211,7 +211,8 @@ export class TeachableModel {
         if (!this.trained) return [];
 
         if (this.imageModel) {
-            return this.imageModel.predict(image);
+            const predictions = await this.imageModel.predict(image);
+            return predictions;
         } else if (this.poseModel) {
             // Force an estimate if we are not generating one already
             if (!this.busy) {
