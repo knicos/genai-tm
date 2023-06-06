@@ -9,7 +9,7 @@ import { useSearchParams } from 'react-router-dom';
 import { TeachableModel } from '../../util/TeachableModel';
 
 const TIMEOUT_LOCAL = 5000;
-const TIMEOUT_P2P = 15000;
+const TIMEOUT_P2P = 30000;
 
 export function useTabModel(code: string, onError?: () => void): [TeachableModel | null, BehaviourType[]] {
     const channel = useRef<BroadcastChannel>();
