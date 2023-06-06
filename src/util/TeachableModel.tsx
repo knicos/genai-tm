@@ -25,6 +25,8 @@ interface TrainingParameters extends ImageTrainingParams, PoseTrainingParams {}
 
 export type Metadata = ImageMetadata | PoseMetadata;
 
+const NULLARRAY: string[] = [];
+
 export class TeachableModel {
     private imageModel?: TeachableMobileNet;
     private poseModel?: TeachablePoseNet;
@@ -285,7 +287,7 @@ export class TeachableModel {
         } else if (this.poseModel) {
             return this.poseModel.getLabels();
         }
-        return [];
+        return NULLARRAY;
     }
 
     public getLabel(ix: number): string {

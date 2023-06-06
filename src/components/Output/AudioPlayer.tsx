@@ -31,7 +31,7 @@ export default function AudioPlayer({ uri, play, volume, showIcon, loop }: Props
         if (audio) {
             if (play) {
                 audio.loop = loop || false;
-                audio.play();
+                audio.play()?.catch((e) => console.error(e));
             } else {
                 audio.pause();
             }

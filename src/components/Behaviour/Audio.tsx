@@ -62,7 +62,7 @@ export default function Sound({ behaviour, setBehaviour, dropping }: Props) {
                     setAudio(null);
                 };
                 a.loop = behaviour.loop || false;
-                a.play();
+                a.play()?.catch((e) => console.error(e));
                 return a;
             }),
         [setAudio, behaviour]

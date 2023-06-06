@@ -157,11 +157,11 @@ export function ModelLoader({ onLoaded, onError }: Props) {
             loadProject(projectFile)
                 .then((project) => {
                     if (project.id) setCode(project.id);
-                    if (project.behaviours) setBehaviours(project.behaviours);
-                    if (project.samples) setData(project.samples);
+                    setData(project.samples ? project.samples : []);
 
                     if (project.metadata && project.model && project.weights) {
                         loadModel(project.metadata, project.model, project.weights).then((result) => {
+                            if (project.behaviours) setBehaviours(project.behaviours);
                             if (result && onLoaded) {
                                 onLoaded(!!project.behaviours);
                             }
