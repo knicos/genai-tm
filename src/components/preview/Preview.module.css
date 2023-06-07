@@ -19,9 +19,5 @@
 }
 
 .valueCell {
-    width: 100%;
-}
-
-.labelCell {
-    white-space: nowrap;
+    min-width: 5rem;
 }
