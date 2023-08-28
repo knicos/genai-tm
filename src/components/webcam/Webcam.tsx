@@ -96,6 +96,8 @@ export function Webcam({
     async function initWebcam() {
         const newWebcam = new TMWebcam(size, size, true);
         await newWebcam.setup({ facingMode: facing ? 'user' : 'environment' });
+        newWebcam.webcam.playsInline = true;
+        newWebcam.webcam.muted = true;
         newWebcam.webcam.onsuspend = () => newWebcam.play();
         setWebcam(newWebcam);
 
