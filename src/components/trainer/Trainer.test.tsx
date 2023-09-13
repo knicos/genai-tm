@@ -47,11 +47,17 @@ describe('Trainer component', () => {
                         snap.set(classState, [
                             {
                                 label: 'Class 1',
-                                samples: [document.createElement('canvas'), document.createElement('canvas')],
+                                samples: [
+                                    { data: document.createElement('canvas'), id: '' },
+                                    { data: document.createElement('canvas'), id: '' },
+                                ],
                             },
                             {
                                 label: 'Class 2',
-                                samples: [document.createElement('canvas'), document.createElement('canvas')],
+                                samples: [
+                                    { data: document.createElement('canvas'), id: '' },
+                                    { data: document.createElement('canvas'), id: '' },
+                                ],
                             },
                         ]);
                     }}
@@ -84,11 +90,17 @@ describe('Trainer component', () => {
                         snap.set(classState, [
                             {
                                 label: 'Class 1',
-                                samples: [document.createElement('canvas'), document.createElement('canvas')],
+                                samples: [
+                                    { data: document.createElement('canvas'), id: '' },
+                                    { data: document.createElement('canvas'), id: '' },
+                                ],
                             },
                             {
                                 label: 'Class 2',
-                                samples: [document.createElement('canvas'), document.createElement('canvas')],
+                                samples: [
+                                    { data: document.createElement('canvas'), id: '' },
+                                    { data: document.createElement('canvas'), id: '' },
+                                ],
                             },
                         ]);
                         snap.set(modelState, model);

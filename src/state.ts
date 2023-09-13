@@ -4,9 +4,14 @@ import { SaveProperties } from './components/ImageWorkspace/SaveDialog';
 import randomId from './util/randomId';
 import { TeachableModel } from './util/TeachableModel';
 
+export interface ISample {
+    data: HTMLCanvasElement;
+    id: string;
+}
+
 export interface IClassification {
     label: string;
-    samples: HTMLCanvasElement[];
+    samples: ISample[];
 }
 
 export const fileData = atom<File | null>({

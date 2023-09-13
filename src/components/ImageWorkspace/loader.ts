@@ -123,7 +123,7 @@ export async function loadProject(file: File | Blob): Promise<Project> {
             }
             samples.push({
                 label: model.getLabel(i),
-                samples: newImage,
+                samples: newImage.map((i) => ({ data: i, id: '' })),
             });
         }
 

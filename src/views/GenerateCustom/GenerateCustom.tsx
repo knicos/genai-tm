@@ -404,6 +404,16 @@ function SettingsForm() {
                                 }
                                 label="Show Save Reminder"
                             />
+                            <FormControlLabel
+                                control={
+                                    <Checkbox
+                                        checked={state.enabledP2PData}
+                                        name="enabledP2PData"
+                                        onChange={doCheckChange}
+                                    />
+                                }
+                                label="Enable P2P Data Collection"
+                            />
                         </AccordionDetails>
                     </Accordion>
                     <div className={style.buttonBar}>

@@ -1,0 +1,37 @@
+@value primary from "../../style/colours.module.css";
+
+.main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+}
+
+.main header {
+    background: primary;
+    width: 100%;
+    color: white;
+}
+
+.main header h1 {
+    margin: 0.5rem;
+    margin-left: 1rem;
+    font-size: 1.5rem;
+}
+
+.webcam {
+    margin-top: 5%;
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+.capture {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    width: 100%;
+    align-items: center;
+    background: white;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid silver;
+}

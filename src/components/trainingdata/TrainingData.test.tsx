@@ -2,6 +2,7 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { TrainingData } from './TrainingData';
+import TestWrapper from '../../util/TestWrapper';
 
 describe('TrainingData component', () => {
     it('renders with no data', () => {
@@ -11,7 +12,8 @@ describe('TrainingData component', () => {
                 data={[]}
                 setData={() => {}}
                 onFocused={() => {}}
-            />
+            />,
+            { wrapper: TestWrapper }
         );
         const linkElement = screen.getByTestId('addClass');
         expect(linkElement).toBeInTheDocument();
@@ -26,7 +28,8 @@ describe('TrainingData component', () => {
                 data={[]}
                 setData={setData}
                 onFocused={() => {}}
-            />
+            />,
+            { wrapper: TestWrapper }
         );
         const linkElement = screen.getByText(/trainingdata.actions.addClass/i);
         await user.click(linkElement);
@@ -44,7 +47,8 @@ describe('TrainingData component', () => {
                 data={testData}
                 setData={() => {}}
                 onFocused={() => {}}
-            />
+            />,
+            { wrapper: TestWrapper }
         );
         expect(screen.getByTestId('widget-Class1')).toBeInTheDocument();
         expect(screen.getByTestId('widget-Class2')).toBeInTheDocument();
@@ -53,14 +57,15 @@ describe('TrainingData component', () => {
     it('renders with samples', () => {
         const canvas = document.createElement('canvas');
         canvas.setAttribute('data-testid', 'testcanvas');
-        const testData = [{ label: 'Class1', samples: [canvas] }];
+        const testData = [{ label: 'Class1', samples: [{ data: canvas, id: '' }] }];
         render(
             <TrainingData
                 active={true}
                 data={testData}
                 setData={() => {}}
                 onFocused={() => {}}
-            />
+            />,
+            { wrapper: TestWrapper }
         );
         expect(screen.getByTestId('widget-Class1')).toBeInTheDocument();
         expect(screen.getByTestId('testcanvas')).toBeInTheDocument();

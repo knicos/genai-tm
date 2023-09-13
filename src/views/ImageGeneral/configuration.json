@@ -25,7 +25,8 @@
         "usep2p": true,
         "showSettings": true,
         "modelVariant": "image",
-        "showSaveReminder": false
+        "showSaveReminder": false,
+        "enabledP2PData": false
     },
     "image": {
         "modelVariant": "image"

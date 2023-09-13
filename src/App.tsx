@@ -76,6 +76,10 @@ const router = createBrowserRouter(
                 lazy={() => import('./views/Deployment/PeerDeployment')}
             />
             <Route
+                path="collect/:code/:classIndex"
+                lazy={() => import('./views/Collection/Collection')}
+            />
+            <Route
                 path="about"
                 element={<About />}
             />

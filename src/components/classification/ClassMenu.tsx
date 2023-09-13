@@ -5,6 +5,11 @@ import MenuItem from '@mui/material/MenuItem';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { useTranslation } from 'react-i18next';
 import { useVariant } from '../../util/variant';
+import QRCode from '../QRCode/QRCode';
+import { useRecoilValue } from 'recoil';
+import { sessionCode, sharingActive } from '../../state';
+import Alert from '@mui/material/Alert';
+import style from './classification.module.css';
 
 interface Props {
     index: number;
@@ -14,7 +19,9 @@ interface Props {
 }
 
 export default function ClassMenu({ hasSamples, index, onDeleteClass, onRemoveSamples }: Props) {
-    const { namespace, disabledClassRemove } = useVariant();
+    const code = useRecoilValue(sessionCode);
+    const sharing = useRecoilValue(sharingActive);
+    const { namespace, disabledClassRemove, enabledP2PData } = useVariant();
     const { t } = useTranslation(namespace);
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
@@ -66,6 +73,19 @@ export default function ClassMenu({ hasSamples, index, onDeleteClass, onRemoveSa
                 >
                     {t('trainingdata.actions.removeAll')}
                 </MenuItem>
+                {sharing && enabledP2PData && (
+                    <div className={style.shareBox}>
+                        <QRCode url={`${window.location.origin}/collect/${code}/${index}`} />
+                        {index === 0 && (
+                            <Alert
+                                data-testid="alert-addmore"
+                                severity="info"
+                            >
+                                <p>You can use a phone or tablet to add images</p>
+                            </Alert>
+                        )}
+                    </div>
+                )}
             </Menu>
         </div>
     );

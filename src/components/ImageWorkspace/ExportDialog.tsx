@@ -42,6 +42,7 @@ function LinkText(props: LinkProps) {
 
 export default function ExportDialog({ open, onClose }: Props) {
     const code = useRecoilValue(sessionCode);
+    const sharing = useRecoilValue(sharingActive);
     const { namespace } = useVariant();
     const { t } = useTranslation(namespace);
     const textRef = useRef<HTMLInputElement>(null);
@@ -63,7 +64,7 @@ export default function ExportDialog({ open, onClose }: Props) {
         navigator.clipboard.writeText(link);
     }, [link]);
 
-    return sharingActive ? (
+    return sharing ? (
         <Dialog
             open={open}
             onClose={onClose}

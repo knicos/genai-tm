@@ -1,0 +1,46 @@
+.sampleList {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 4px;
+    width: 100%;
+    padding: 4px;
+    box-sizing: border-box;
+}
+
+.scroller {
+    overflow-y: scroll;
+    width: 100%;
+    flex-grow: 1;
+    background: black;
+}
+
+.sampleImage {
+    overflow: hidden;
+    flex-shrink: 0;
+    position: relative;
+    display: flex;
+}
+
+.sampleImage :global .MuiCircularProgress-root {
+    position: absolute;
+    top: 35%;
+    left: 35%;
+}
+
+.sampleImage img {
+    width: 100%;
+    height: 100%;
+}
+
+.sampleImage-pending {
+    composes: sampleImage;
+    opacity: 0.5;
+}
+
+.sampleImage-deleted {
+    composes: sampleImage;
+}
+
+.sampleImage-added {
+    composes: sampleImage;
+}

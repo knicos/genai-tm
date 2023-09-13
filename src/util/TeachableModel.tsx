@@ -474,7 +474,7 @@ export function useModelTrainer() {
                             tm.setLabels(data.map((t) => t.label));
                             tm.setSeed('something');
                             const promises = data.reduce<Promise<void>[]>(
-                                (p, v, ix) => [...p, ...v.samples.map((s) => tm.addExample(ix, s))],
+                                (p, v, ix) => [...p, ...v.samples.map((s) => tm.addExample(ix, s.data))],
                                 []
                             );
                             Promise.all(promises).then(resolve);

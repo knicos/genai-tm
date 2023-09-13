@@ -2,16 +2,34 @@ import React, { useRef, useEffect, useCallback } from 'react';
 import { BehaviourType } from '../Behaviour/Behaviour';
 import { generateBlob, ModelContents } from '../ImageWorkspace/saver';
 import { useRecoilState, useRecoilValue } from 'recoil';
-import { behaviourState, sessionCode, sessionPassword, sharingActive } from '../../state';
+import { behaviourState, classState, sessionCode, sessionPassword, sharingActive } from '../../state';
 import { Peer } from 'peerjs';
 import randomId from '../../util/randomId';
 import { TeachableModel, useTeachableModel } from '../../util/TeachableModel';
 import { createAnalysis, createModelStats } from './analysis';
+import { canvasFromURL } from '../../util/canvas';
 
 type ProjectKind = 'image';
 
 export interface DeployEvent {
-    event: 'request' | 'project' | 'model';
+    event: 'request' | 'project' | 'model' | 'add_sample' | 'request_class' | 'delete_sample';
+}
+
+export interface AddSampleEvent extends DeployEvent {
+    event: 'add_sample';
+    data: string;
+    index: number;
+    id: string;
+}
+
+export interface DeleteSampleEvent extends DeployEvent {
+    event: 'delete_sample';
+    index: number;
+    id: string;
+}
+
+export interface RequestClassEvent extends DeployEvent {
+    event: 'request_class';
 }
 
 export interface DeployEventRequest extends DeployEvent {
@@ -38,12 +56,15 @@ interface CacheState {
     behaviours?: BehaviourType[];
     reference?: number[];
     predictions?: number[];
+    classNames?: string[];
+    samples?: string[][];
 }
 
 export default function PeerDeployer() {
     const [code, setCode] = useRecoilState(sessionCode);
     const pwd = useRecoilValue(sessionPassword);
     const [, setSharing] = useRecoilState(sharingActive);
+    const [classes, setClassData] = useRecoilState(classState);
     const channelRef = useRef<Peer>();
     const { model } = useTeachableModel();
     const behaviours = useRecoilValue(behaviourState);
@@ -76,6 +97,7 @@ export default function PeerDeployer() {
         });
         peer.on('connection', (conn) => {
             conn.on('data', async (data: unknown) => {
+                console.log('DATA', data);
                 const ev = data as DeployEventRequest;
                 if (ev?.event === 'request') {
                     if (blob.current === null) {
@@ -99,6 +121,38 @@ export default function PeerDeployer() {
                             conn.send({ event: 'project', project: blob.current.zip, kind: 'image' });
                             break;
                     }
+                } else if (ev?.event === 'request_class') {
+                    if (cache.current.classNames) {
+                        conn.send({ event: 'class', labels: cache.current.classNames, samples: cache.current.samples });
+                    }
+                } else if (ev?.event === 'add_sample') {
+                    const sev = data as AddSampleEvent;
+                    const newImage = await canvasFromURL(sev.data);
+                    setClassData((old) => {
+                        let newData = [...old];
+                        if (newData.length > sev.index) {
+                            newData[sev.index] = {
+                                samples: [{ data: newImage, id: sev.id }, ...newData[sev.index].samples],
+                                label: old[sev.index].label,
+                            };
+                            conn.send({ event: 'sample_state', state: 'added', id: sev.id });
+                        }
+                        return newData;
+                    });
+                } else if (ev?.event === 'delete_sample') {
+                    const sev = data as DeleteSampleEvent;
+                    setClassData((old) => {
+                        if (old.length > sev.index) {
+                            const newData = [...old];
+                            newData[sev.index] = {
+                                label: old[sev.index].label,
+                                samples: old[sev.index].samples.filter((s) => s.id !== sev.id),
+                            };
+                            conn.send({ event: 'sample_state', state: 'deleted', id: sev.id });
+                            return newData;
+                        }
+                        return old;
+                    });
                 } else if (ev?.event === 'analyse') {
                     if (cache.current?.model) {
                         if (cache.current.reference === undefined || cache.current.predictions === undefined) {
@@ -154,7 +208,7 @@ export default function PeerDeployer() {
             }
         });
         return channelRef.current;
-    }, [code, setCode, setSharing, pwd]);
+    }, [code, setCode, setSharing, pwd, setClassData]);
 
     useEffect(() => {
         getChannel();
@@ -163,7 +217,14 @@ export default function PeerDeployer() {
         cache.current.behaviours = behaviours;
         cache.current.predictions = undefined;
         cache.current.reference = undefined;
+        console.log('REFRESH CACHE');
     }, [model, behaviours, getChannel]);
+
+    useEffect(() => {
+        cache.current.classNames = classes.map((c) => c.label);
+        cache.current.samples = classes.map((c) => c.samples.map((s) => s.id));
+        console.log('REBUILD', cache.current.samples);
+    }, [classes]);
 
     useEffect(() => {
         return () => {

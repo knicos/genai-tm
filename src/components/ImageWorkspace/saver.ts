@@ -29,7 +29,7 @@ export async function generateBlob(
                 const s = samples[j];
                 for (let i = 0; i < s.samples.length; ++i) {
                     const ss = s.samples[i];
-                    folder.file(`${j}_${i}.png`, ss.toDataURL('image/png').split(';base64,')[1], { base64: true });
+                    folder.file(`${j}_${i}.png`, ss.data.toDataURL('image/png').split(';base64,')[1], { base64: true });
                 }
             }
         }

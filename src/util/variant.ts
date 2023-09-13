@@ -32,6 +32,7 @@ export interface IVariantContext {
     usep2p?: boolean;
     showSettings?: boolean;
     showSaveReminder?: boolean;
+    enabledP2PData?: boolean;
 }
 
 export const VariantContext = React.createContext<IVariantContext>({

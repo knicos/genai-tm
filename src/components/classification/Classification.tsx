@@ -60,7 +60,7 @@ export function Classification({ name, active, data, index, setData, onActivate,
                     setData(
                         (data) => ({
                             label: data.label,
-                            samples: [...canvases, ...data.samples],
+                            samples: [...canvases.map((c) => ({ data: c, id: '' })), ...data.samples],
                         }),
                         index
                     );
@@ -88,7 +88,7 @@ export function Classification({ name, active, data, index, setData, onActivate,
                         setData(
                             (data) => ({
                                 label: data.label,
-                                samples: [...canvases, ...data.samples],
+                                samples: [...canvases.map((c) => ({ data: c, id: '' })), ...data.samples],
                             }),
                             index
                         );
@@ -136,7 +136,7 @@ export function Classification({ name, active, data, index, setData, onActivate,
             setData(
                 (data) => ({
                     label: name,
-                    samples: [image, ...data.samples],
+                    samples: [{ data: image, id: '' }, ...data.samples],
                 }),
                 index
             );
@@ -267,7 +267,7 @@ export function Classification({ name, active, data, index, setData, onActivate,
                             <Sample
                                 key={data.samples.length - ix}
                                 index={data.samples.length - ix}
-                                image={s}
+                                image={s.data}
                                 onDelete={doDelete}
                             />
                         ))}
