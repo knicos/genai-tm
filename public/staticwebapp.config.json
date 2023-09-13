@@ -13,6 +13,10 @@
             "rewrite": "index.html"
         },
         {
+            "route": "/collect*",
+            "rewrite": "index.html"
+        },
+        {
             "route": "/about",
             "rewrite": "index.html"
         },
