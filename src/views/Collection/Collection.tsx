@@ -7,7 +7,7 @@ import { ThemeProvider } from '@mui/material/styles';
 import { theme } from '../../style/theme';
 import { usePeerSender } from './usePeerSender';
 import randomId from '../../util/randomId';
-import Sample, { SampleState, SampleStateValue } from '../../components/ImageGrid/Sample';
+import { SampleState, SampleStateValue } from '../../components/ImageGrid/Sample';
 import ImageGrid from '../../components/ImageGrid/ImageGrid';
 
 export function Component() {
@@ -31,30 +31,37 @@ export function Component() {
         [setSamples]
     );
 
-    const [sampleSender, sampleDeleter, classLabels, status] = usePeerSender(code || '', doError, doSampleState);
+    const doSamplesUpdate = useCallback(
+        (samples: Set<string>[]) => {
+            setSamples((old) => old.filter((o) => o.state !== 'added' || samples[index].has(o.id)));
+        },
+        [setSamples, index]
+    );
+
+    const { sender, deleter, state, classNames } = usePeerSender(code || '', doError, doSampleState, doSamplesUpdate);
 
     const doDelete = useCallback(
         (ix: number) => {
             const item = samples[ix];
-            if (item && sampleDeleter) {
+            if (item && deleter) {
                 setSamples((old) => old.map((o, i) => (ix === i ? { ...o, state: 'pending' } : o)));
-                sampleDeleter(index, item.id);
+                deleter(index, item.id);
             }
         },
-        [samples, sampleDeleter, index]
+        [samples, deleter, index]
     );
 
     const doCapture = useCallback(
         (img: HTMLCanvasElement) => {
             const id = randomId(16);
             setSamples((old) => [{ data: img, id, state: 'pending' }, ...old]);
-            if (sampleSender) {
-                sampleSender(img, index, id);
+            if (sender) {
+                sender(img, index, id);
             } else {
                 console.warn('No sample sender');
             }
         },
-        [setSamples, sampleSender, index]
+        [setSamples, sender, index]
     );
 
     const startCapture = useCallback(() => setCapturing(true), [setCapturing]);
@@ -82,11 +89,11 @@ export function Component() {
             <main className={style.main}>
                 <header>
                     <h1>
-                        {status === 'connected'
-                            ? classLabels.length > index
-                                ? classLabels[index]
+                        {state === 'connected'
+                            ? classNames.length > index
+                                ? classNames[index]
                                 : ''
-                            : status === 'disconnected'
+                            : state === 'disconnected'
                             ? 'Disconnected'
                             : 'Connecting...'}
                     </h1>
@@ -102,7 +109,7 @@ export function Component() {
                             interval={200}
                             onCapture={doCapture}
                             capture={capturing}
-                            disable={status !== 'connected'}
+                            disable={state !== 'connected'}
                         />
                     </div>
                     <Button

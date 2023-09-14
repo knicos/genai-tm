@@ -5,6 +5,9 @@ import { useRecoilValue } from 'recoil';
 import { webrtcActive } from '../../state';
 
 const TIMEOUT_P2P = 30000;
+const RECONNECT_TIMER_1 = 2000;
+const RECONNECT_TIMER_2 = 5000;
+const POLLING = 5000;
 
 type ConnectionStatus = 'connecting' | 'connected' | 'disconnected';
 
@@ -16,11 +19,19 @@ interface SampleFuncs {
     delete: SampleDelete;
 }
 
+interface ReturnObject {
+    sender?: SampleSender;
+    deleter?: SampleDelete;
+    classNames: string[];
+    state: ConnectionStatus;
+}
+
 export function usePeerSender(
     code: string,
     onError: () => void,
-    onSampleState: (id: string, state: SampleStateValue) => void
-): [SampleSender | null, SampleDelete | null, string[], ConnectionStatus] {
+    onSampleState: (id: string, state: SampleStateValue) => void,
+    onSamplesUpdate?: (samples: Set<string>[]) => void
+): ReturnObject {
     const [sampleFuncs, setSampleFuncs] = useState<SampleFuncs | null>(null);
     const [classLabels, setClassLabels] = useState<string[]>([]);
     const timeoutRef = useRef<number>(-1);
@@ -70,7 +81,7 @@ export function usePeerSender(
                     case 'peer-unavailable':
                         if (connRef.current) connRef.current.close();
                         setStatus('disconnected');
-                        setTimeout(() => setStatus('connecting'), 4000);
+                        setTimeout(() => setStatus('connecting'), RECONNECT_TIMER_2);
                         break;
                     default:
                         break;
@@ -79,7 +90,7 @@ export function usePeerSender(
             peer.on('disconnected', () => {
                 setTimeout(() => {
                     if (!peer.destroyed) peer.reconnect();
-                }, 5000);
+                }, RECONNECT_TIMER_2);
             });
             peer.on('close', () => {
                 setStatus('disconnected');
@@ -118,6 +129,14 @@ export function usePeerSender(
                 if (data?.event === 'class') {
                     pollWaiting.current = false;
                     setClassLabels(data.labels);
+
+                    const newSampleIDs = data.samples.map((s: string[]) => {
+                        const newSet = new Set<string>();
+                        s.forEach((a) => newSet.add(a));
+                        return newSet;
+                    });
+
+                    if (onSamplesUpdate) onSamplesUpdate(newSampleIDs);
                 } else if (data?.event === 'sample_state') {
                     onSampleState(data?.id, data?.state);
                 }
@@ -131,7 +150,7 @@ export function usePeerSender(
                 if (timeoutRef.current >= 0) clearTimeout(timeoutRef.current);
                 if (pollRef.current >= 0) clearInterval(pollRef.current);
                 pollWaiting.current = false;
-                setTimeout(() => setStatus('connecting'), 2000);
+                setTimeout(() => setStatus('connecting'), RECONNECT_TIMER_1);
                 connRef.current = undefined;
             });
             conn.on('open', () => {
@@ -146,7 +165,7 @@ export function usePeerSender(
                     }
                     pollWaiting.current = true;
                     conn.send({ event: 'request_class' });
-                }, 5000);
+                }, POLLING);
                 setStatus('connected');
                 setSampleFuncs({
                     send: (img: HTMLCanvasElement, classIndex: number, id: string) => {
@@ -158,7 +177,12 @@ export function usePeerSender(
                 });
             });
         }
-    }, [status, code, onError, onSampleState]);
+    }, [status, code, onError, onSampleState, onSamplesUpdate]);
 
-    return sampleFuncs ? [sampleFuncs.send, sampleFuncs.delete, classLabels, status] : [null, null, [], status];
+    return {
+        sender: sampleFuncs ? sampleFuncs.send : undefined,
+        deleter: sampleFuncs ? sampleFuncs.delete : undefined,
+        classNames: classLabels,
+        state: status,
+    };
 }

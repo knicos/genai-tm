@@ -1,9 +1,9 @@
 .sampleList {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
-    gap: 4px;
+    gap: 5px;
     width: 100%;
-    padding: 4px;
+    padding: 1rem;
     box-sizing: border-box;
 }
 
@@ -19,6 +19,7 @@
     flex-shrink: 0;
     position: relative;
     display: flex;
+    border-radius: 5px;
 }
 
 .sampleImage :global .MuiCircularProgress-root {

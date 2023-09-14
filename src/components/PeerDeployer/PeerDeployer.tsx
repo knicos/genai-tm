@@ -97,7 +97,6 @@ export default function PeerDeployer() {
         });
         peer.on('connection', (conn) => {
             conn.on('data', async (data: unknown) => {
-                console.log('DATA', data);
                 const ev = data as DeployEventRequest;
                 if (ev?.event === 'request') {
                     if (blob.current === null) {
@@ -217,13 +216,11 @@ export default function PeerDeployer() {
         cache.current.behaviours = behaviours;
         cache.current.predictions = undefined;
         cache.current.reference = undefined;
-        console.log('REFRESH CACHE');
     }, [model, behaviours, getChannel]);
 
     useEffect(() => {
         cache.current.classNames = classes.map((c) => c.label);
         cache.current.samples = classes.map((c) => c.samples.map((s) => s.id));
-        console.log('REBUILD', cache.current.samples);
     }, [classes]);
 
     useEffect(() => {
