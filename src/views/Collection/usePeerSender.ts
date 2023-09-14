@@ -15,10 +15,15 @@ interface SampleFuncs {
 }
 
 async function checkWebRTC() {
-    const stream = await navigator?.mediaDevices?.getUserMedia({ video: true });
-    stream.getTracks().forEach(function (track) {
-        track.stop();
-    });
+    try {
+        const stream = await navigator?.mediaDevices?.getUserMedia({ audio: true });
+        stream.getTracks().forEach(function (track) {
+            track.stop();
+        });
+    } catch (e) {
+        console.error(e);
+        throw new Error('Could not use WebRTC');
+    }
 }
 
 export function usePeerSender(
