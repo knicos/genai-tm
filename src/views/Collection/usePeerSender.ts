@@ -16,7 +16,7 @@ interface SampleFuncs {
 
 async function checkWebRTC() {
     try {
-        const stream = await navigator?.mediaDevices?.getUserMedia({ audio: true });
+        const stream = await navigator?.mediaDevices?.getUserMedia({ video: true });
         stream.getTracks().forEach(function (track) {
             track.stop();
         });
