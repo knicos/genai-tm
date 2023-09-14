@@ -6,6 +6,8 @@ import { useTranslation } from 'react-i18next';
 import { useVariant } from '../../util/variant';
 import { IconButton } from '@mui/material';
 import CameraswitchIcon from '@mui/icons-material/Cameraswitch';
+import { useRecoilState } from 'recoil';
+import { webrtcActive } from '../../state';
 
 interface Props {
     interval?: number;
@@ -41,6 +43,7 @@ export function Webcam({
     const loopRef = useRef<(n: number) => Promise<void>>();
     const [multiple, setMultiple] = useState(false);
     const [facing, setFacing] = useState(false);
+    const [, setWebtRTCActive] = useRecoilState(webrtcActive);
 
     useEffect(() => {
         loopRef.current = async (timestamp: number) => {
@@ -96,6 +99,7 @@ export function Webcam({
     async function initWebcam() {
         const newWebcam = new TMWebcam(size, size, true);
         await newWebcam.setup({ facingMode: facing ? 'user' : 'environment' });
+        setWebtRTCActive(true);
         newWebcam.webcam.playsInline = true;
         newWebcam.webcam.muted = true;
         newWebcam.webcam.onsuspend = () => newWebcam.play();

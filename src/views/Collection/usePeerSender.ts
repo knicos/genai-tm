@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
 import { DataConnection, Peer } from 'peerjs';
 import { SampleStateValue } from '../../components/ImageGrid/Sample';
+import { useRecoilValue } from 'recoil';
+import { webrtcActive } from '../../state';
 
 const TIMEOUT_P2P = 30000;
 
@@ -12,18 +14,6 @@ type SampleDelete = (classIndex: number, id: string) => void;
 interface SampleFuncs {
     send: SampleSender;
     delete: SampleDelete;
-}
-
-async function checkWebRTC() {
-    try {
-        const stream = await navigator?.mediaDevices?.getUserMedia({ video: true });
-        stream.getTracks().forEach(function (track) {
-            track.stop();
-        });
-    } catch (e) {
-        console.error(e);
-        throw new Error('Could not use WebRTC');
-    }
 }
 
 export function usePeerSender(
@@ -39,76 +29,73 @@ export function usePeerSender(
     const [status, setStatus] = useState<ConnectionStatus>('disconnected');
     const peerRef = useRef<Peer>();
     const connRef = useRef<DataConnection>();
+    const webRTC = useRecoilValue(webrtcActive);
 
     useEffect(() => {
-        checkWebRTC()
-            .then(() => {
-                if (peerRef.current && !peerRef.current.destroyed) return;
-                peerRef.current = new Peer('', {
-                    host: process.env.REACT_APP_PEER_SERVER,
-                    secure: process.env.REACT_APP_PEER_SECURE === '1',
-                    key: process.env.REACT_APP_PEER_KEY || 'peerjs',
-                    port: process.env.REACT_APP_PEER_PORT ? parseInt(process.env.REACT_APP_PEER_PORT) : 443,
-                    config: { iceServers: [{ urls: 'stun:stun.l.google.com:19302' }], sdpSemantics: 'unified-plan' },
-                });
-
-                const peer = peerRef.current;
-
-                peer.on('error', (err: any) => {
-                    console.error(err);
-                    if (timeoutRef.current >= 0) {
-                        clearTimeout(timeoutRef.current);
-                    }
-                    onError();
-                    // peer.destroy();
-
-                    switch (err.type) {
-                        case 'browser-incompatible':
-                        case 'disconnected':
-                        case 'invalid-id':
-                        case 'invalid-key':
-                        case 'ssl-unavailable':
-                        case 'server-error':
-                        case 'socket-error':
-                        case 'socket-closed':
-                        case 'unavailable-id':
-                        case 'webrtc':
-                            peer.destroy();
-                            setStatus('disconnected');
-                            break;
-                        case 'network':
-                        case 'peer-unavailable':
-                            if (connRef.current) connRef.current.close();
-                            setStatus('disconnected');
-                            setTimeout(() => setStatus('connecting'), 4000);
-                            break;
-                        default:
-                            break;
-                    }
-                });
-                peer.on('disconnected', () => {
-                    setTimeout(() => {
-                        if (!peer.destroyed) peer.reconnect();
-                    }, 5000);
-                });
-                peer.on('close', () => {
-                    setStatus('disconnected');
-                });
-
-                peer.on('open', (id: string) => {
-                    setStatus('connecting');
-                });
-            })
-            .catch(() => {
-                console.error('WebRTC not allowed');
+        if (webRTC) {
+            if (peerRef.current && !peerRef.current.destroyed) return;
+            peerRef.current = new Peer('', {
+                host: process.env.REACT_APP_PEER_SERVER,
+                secure: process.env.REACT_APP_PEER_SECURE === '1',
+                key: process.env.REACT_APP_PEER_KEY || 'peerjs',
+                port: process.env.REACT_APP_PEER_PORT ? parseInt(process.env.REACT_APP_PEER_PORT) : 443,
+                config: { iceServers: [{ urls: 'stun:stun.l.google.com:19302' }], sdpSemantics: 'unified-plan' },
             });
+
+            const peer = peerRef.current;
+
+            peer.on('error', (err: any) => {
+                console.error(err);
+                if (timeoutRef.current >= 0) {
+                    clearTimeout(timeoutRef.current);
+                }
+                onError();
+                // peer.destroy();
+
+                switch (err.type) {
+                    case 'browser-incompatible':
+                    case 'disconnected':
+                    case 'invalid-id':
+                    case 'invalid-key':
+                    case 'ssl-unavailable':
+                    case 'server-error':
+                    case 'socket-error':
+                    case 'socket-closed':
+                    case 'unavailable-id':
+                    case 'webrtc':
+                        peer.destroy();
+                        setStatus('disconnected');
+                        break;
+                    case 'network':
+                    case 'peer-unavailable':
+                        if (connRef.current) connRef.current.close();
+                        setStatus('disconnected');
+                        setTimeout(() => setStatus('connecting'), 4000);
+                        break;
+                    default:
+                        break;
+                }
+            });
+            peer.on('disconnected', () => {
+                setTimeout(() => {
+                    if (!peer.destroyed) peer.reconnect();
+                }, 5000);
+            });
+            peer.on('close', () => {
+                setStatus('disconnected');
+            });
+
+            peer.on('open', (id: string) => {
+                setStatus('connecting');
+            });
+        }
 
         return () => {
             if (timeoutRef.current >= 0) clearTimeout(timeoutRef.current);
             if (pollRef.current >= 0) clearInterval(pollRef.current);
             peerRef.current?.destroy();
         };
-    }, [onError]);
+    }, [onError, webRTC]);
 
     useEffect(() => {
         if (status === 'connecting' && peerRef.current) {
