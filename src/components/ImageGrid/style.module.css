@@ -7,11 +7,24 @@
     box-sizing: border-box;
 }
 
+.sampleListEmpty {
+    composes: sampleList;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .scroller {
     overflow-y: scroll;
     width: 100%;
     flex-grow: 1;
-    background: black;
+    background: #eee;
+}
+
+@media only screen and (min-width: 850px) {
+    .sampleList {
+        grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    }
 }
 
 .sampleImage {

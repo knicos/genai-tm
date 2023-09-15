@@ -22,7 +22,7 @@ export default function ClassMenu({ hasSamples, index, onDeleteClass, onRemoveSa
     const code = useRecoilValue(sessionCode);
     const sharing = useRecoilValue(sharingActive);
     const { namespace, disabledClassRemove, enabledP2PData } = useVariant();
-    const { t } = useTranslation(namespace);
+    const { t, i18n } = useTranslation(namespace);
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
     const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -75,13 +75,13 @@ export default function ClassMenu({ hasSamples, index, onDeleteClass, onRemoveSa
                 </MenuItem>
                 {sharing && enabledP2PData && (
                     <div className={style.shareBox}>
-                        <QRCode url={`${window.location.origin}/collect/${code}/${index}`} />
+                        <QRCode url={`${window.location.origin}/collect/${code}/${index}?lng=${i18n.language}`} />
                         {index === 0 && (
                             <Alert
-                                data-testid="alert-addmore"
+                                data-testid="alert-useqr"
                                 severity="info"
                             >
-                                <p>You can use a phone or tablet to add images</p>
+                                <p>{t('trainingdata.labels.qrMessage')}</p>
                             </Alert>
                         )}
                     </div>

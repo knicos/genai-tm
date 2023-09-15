@@ -139,6 +139,7 @@ export function usePeerSender(
                     if (onSamplesUpdate) onSamplesUpdate(newSampleIDs);
                 } else if (data?.event === 'sample_state') {
                     onSampleState(data?.id, data?.state);
+                    conn.send({ event: 'request_class' });
                 }
             });
             conn.on('error', (err: unknown) => {

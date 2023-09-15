@@ -13,13 +13,7 @@ import { useDrop } from 'react-dnd';
 import { useVariant } from '../../util/variant';
 import { NativeTypes } from 'react-dnd-html5-backend';
 import UploadIcon from '@mui/icons-material/Upload';
-import {
-    canvasFromURL,
-    canvasFromFile,
-    canvasFromImage,
-    canvasFromDataTransfer,
-    canvasesFromFiles,
-} from '../../util/canvas';
+import { canvasFromDataTransfer, canvasesFromFiles } from '../../util/canvas';
 import DnDAnimation from '../DnDAnimation/DnDAnimation';
 import AlertPara from '../AlertPara/AlertPara';
 import AlertModal from '../AlertModal/AlertModal';

@@ -2,19 +2,25 @@ import React, { useState, useCallback, useEffect, useRef } from 'react';
 import style from './style.module.css';
 import { useParams } from 'react-router-dom';
 import { Webcam } from '../../components/webcam/Webcam';
-import { Button } from '../../components/button/Button';
+import { VerticalButton } from '../../components/button/Button';
 import { ThemeProvider } from '@mui/material/styles';
 import { theme } from '../../style/theme';
 import { usePeerSender } from './usePeerSender';
 import randomId from '../../util/randomId';
 import { SampleState, SampleStateValue } from '../../components/ImageGrid/Sample';
 import ImageGrid from '../../components/ImageGrid/ImageGrid';
+import UploadFileIcon from '@mui/icons-material/UploadFile';
+import { canvasesFromFiles } from '../../util/canvas';
+import { useTranslation } from 'react-i18next';
 
 export function Component() {
     const { code, classIndex } = useParams();
     const [samples, setSamples] = useState<SampleState[]>([]);
     const [capturing, setCapturing] = useState(false);
+    const [count, setCount] = useState(0);
     const buttonRef = useRef<HTMLButtonElement>(null);
+    const fileRef = useRef<HTMLInputElement>(null);
+    const { t } = useTranslation();
 
     const index = parseInt(classIndex || '0');
 
@@ -33,7 +39,10 @@ export function Component() {
 
     const doSamplesUpdate = useCallback(
         (samples: Set<string>[]) => {
-            setSamples((old) => old.filter((o) => o.state !== 'added' || samples[index].has(o.id)));
+            if (samples.length > index) {
+                setSamples((old) => old.filter((o) => o.state !== 'added' || samples[index].has(o.id)));
+                setCount(samples[index].size);
+            }
         },
         [setSamples, index]
     );
@@ -63,6 +72,28 @@ export function Component() {
         },
         [setSamples, sender, index]
     );
+
+    const onFileChange = useCallback(
+        (e: React.ChangeEvent<HTMLInputElement>) => {
+            canvasesFromFiles(Array.from(e.target.files || [])).then((canvases) => {
+                const newSamples = canvases.map(
+                    (c) => ({ data: c, id: randomId(16), state: 'pending' } as SampleState)
+                );
+                setSamples((old) => [...newSamples, ...old]);
+                if (sender) {
+                    newSamples.forEach((s) => {
+                        sender(s.data, index, s.id);
+                    });
+                } else {
+                    console.warn('No sample sender');
+                }
+            });
+            e.target.value = '';
+        },
+        [sender, setSamples, index]
+    );
+
+    const doUploadClick = useCallback(() => fileRef.current?.click(), []);
 
     const startCapture = useCallback(() => setCapturing(true), [setCapturing]);
     const startTouchCapture = useCallback(
@@ -94,15 +125,24 @@ export function Component() {
                                 ? classNames[index]
                                 : ''
                             : state === 'disconnected'
-                            ? 'Disconnected'
-                            : 'Connecting...'}
+                            ? t('collect.disconnected')
+                            : t('collect.connecting')}
                     </h1>
+                    <div className={style.sampleCount}>{t('collect.sampleCount', { count })}</div>
                 </header>
                 <ImageGrid
                     samples={samples}
                     onDelete={doDelete}
                 />
                 <div className={style.capture}>
+                    <input
+                        hidden
+                        type="file"
+                        ref={fileRef}
+                        accept="image/*"
+                        onChange={onFileChange}
+                        multiple
+                    />
                     <div className={style.webcam}>
                         <Webcam
                             size={224}
@@ -112,18 +152,30 @@ export function Component() {
                             disable={state !== 'connected'}
                         />
                     </div>
-                    <Button
-                        ref={buttonRef}
-                        variant="contained"
-                        onMouseDown={startCapture}
-                        onMouseUp={stopCapture}
-                        onBlur={stopCapture}
-                        onMouseLeave={stopCapture}
-                        onTouchEnd={stopCapture}
-                        onTouchCancel={stopCapture}
-                    >
-                        Hold to Capture
-                    </Button>
+                    <div className={style.column}>
+                        <VerticalButton
+                            data-testid="webcambutton"
+                            variant="outlined"
+                            startIcon={<UploadFileIcon />}
+                            onClick={doUploadClick}
+                        >
+                            {t('collect.actions.upload')}
+                        </VerticalButton>
+                        <button
+                            className={style.recordButton}
+                            ref={buttonRef}
+                            onMouseDown={startCapture}
+                            onMouseUp={stopCapture}
+                            onBlur={stopCapture}
+                            onMouseLeave={stopCapture}
+                            onTouchEnd={stopCapture}
+                            onTouchCancel={stopCapture}
+                        >
+                            <div className={style.buttonCircleOuter}>
+                                <div className={capturing ? style.buttonCircleActive : style.buttonCircleInner} />
+                            </div>
+                        </button>
+                    </div>
                 </div>
             </main>
         </ThemeProvider>

@@ -10,6 +10,15 @@
             "share": "Compartilhar com outros dispositivos"
         }
     },
+    "collect": {
+        "samplePrompt": "Take photos or upload images here.",
+        "actions": {
+            "upload": "Upload"
+        },
+        "sampleCount": "{{count}} samples",
+        "connecting": "Connecting...",
+        "disconnected": "Disconnected"
+    },
     "about": {
         "back": "Voltar",
         "title": "Sobre",

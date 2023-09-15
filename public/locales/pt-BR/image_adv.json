@@ -51,7 +51,8 @@
             "wait": "Capturando...",
             "dropFiles": "ou arraste imagens aqui de um site ou arquivo",
             "needsMore": "São necessárias mais amostras",
-            "dropError": "Apenas imagens podem ser arrastadas aqui"
+            "dropError": "Apenas imagens podem ser arrastadas aqui",
+            "qrMessage": "You can use a phone or tablet to add images"
         },
         "aria": {
             "sample": "amostra carregada",
