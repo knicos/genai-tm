@@ -8,8 +8,9 @@ const TIMEOUT_P2P = 30000;
 const RECONNECT_TIMER_1 = 2000;
 const RECONNECT_TIMER_2 = 5000;
 const POLLING = 5000;
+const MAX_RETRY = 5;
 
-type ConnectionStatus = 'connecting' | 'connected' | 'disconnected';
+type ConnectionStatus = 'connecting' | 'connected' | 'disconnected' | 'failed';
 
 type SampleSender = (img: HTMLCanvasElement, classIndex: number, id: string) => void;
 type SampleDelete = (classIndex: number, id: string) => void;
@@ -41,6 +42,7 @@ export function usePeerSender(
     const peerRef = useRef<Peer>();
     const connRef = useRef<DataConnection>();
     const webRTC = useRecoilValue(webrtcActive);
+    const retryRef = useRef(0);
 
     useEffect(() => {
         if (webRTC) {
@@ -56,7 +58,7 @@ export function usePeerSender(
             const peer = peerRef.current;
 
             peer.on('error', (err: any) => {
-                console.error(err);
+                console.error(err.type, err);
                 if (timeoutRef.current >= 0) {
                     clearTimeout(timeoutRef.current);
                 }
@@ -80,8 +82,13 @@ export function usePeerSender(
                     case 'network':
                     case 'peer-unavailable':
                         if (connRef.current) connRef.current.close();
-                        setStatus('disconnected');
-                        setTimeout(() => setStatus('connecting'), RECONNECT_TIMER_2);
+                        retryRef.current++;
+                        if (retryRef.current > MAX_RETRY) {
+                            setStatus('failed');
+                        } else {
+                            setStatus('disconnected');
+                            setTimeout(() => setStatus('connecting'), RECONNECT_TIMER_2);
+                        }
                         break;
                     default:
                         break;
@@ -111,8 +118,15 @@ export function usePeerSender(
     useEffect(() => {
         if (status === 'connecting' && peerRef.current) {
             console.log('Connecting to peer', code);
+            if (!peerRef.current.open) {
+                setStatus('disconnected');
+                peerRef.current.reconnect();
+                return;
+            }
             const conn = peerRef.current.connect(code, { reliable: true });
             connRef.current = conn;
+
+            if (!conn) return;
 
             timeoutRef.current = window.setTimeout(() => {
                 conn.close();
@@ -120,7 +134,8 @@ export function usePeerSender(
             }, TIMEOUT_P2P);
 
             conn.on('iceStateChanged', (state: string) => {
-                if (state === 'disconnected') {
+                console.log('ICE', state);
+                if (state === 'disconnected' || state === 'failed') {
                     conn.close();
                 }
             });
@@ -146,15 +161,22 @@ export function usePeerSender(
                 console.log('Error', err);
             });
             conn.on('close', () => {
-                setStatus('disconnected');
+                retryRef.current++;
+                if (retryRef.current > MAX_RETRY) {
+                    setStatus('failed');
+                } else {
+                    setStatus('disconnected');
+                    setTimeout(() => setStatus('connecting'), RECONNECT_TIMER_1);
+                }
                 setSampleFuncs(null);
                 if (timeoutRef.current >= 0) clearTimeout(timeoutRef.current);
                 if (pollRef.current >= 0) clearInterval(pollRef.current);
                 pollWaiting.current = false;
-                setTimeout(() => setStatus('connecting'), RECONNECT_TIMER_1);
                 connRef.current = undefined;
             });
             conn.on('open', () => {
+                retryRef.current = 0;
+
                 if (timeoutRef.current >= 0) {
                     clearTimeout(timeoutRef.current);
                 }

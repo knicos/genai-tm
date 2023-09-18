@@ -12,6 +12,7 @@ import ImageGrid from '../../components/ImageGrid/ImageGrid';
 import UploadFileIcon from '@mui/icons-material/UploadFile';
 import { canvasesFromFiles } from '../../util/canvas';
 import { useTranslation } from 'react-i18next';
+import { Alert } from '@mui/material';
 
 export function Component() {
     const { code, classIndex } = useParams();
@@ -115,25 +116,36 @@ export function Component() {
         }
     }, [buttonRef, startTouchCapture]);
 
+    const connected = state === 'connected';
+
     return (
         <ThemeProvider theme={theme}>
             <main className={style.main}>
                 <header>
                     <h1>
-                        {state === 'connected'
+                        {connected
                             ? classNames.length > index
                                 ? classNames[index]
                                 : ''
                             : state === 'disconnected'
                             ? t('collect.disconnected')
+                            : state === 'failed'
+                            ? t('collect.failed')
                             : t('collect.connecting')}
                     </h1>
                     <div className={style.sampleCount}>{t('collect.sampleCount', { count })}</div>
                 </header>
-                <ImageGrid
-                    samples={samples}
-                    onDelete={doDelete}
-                />
+                {state !== 'failed' && (
+                    <ImageGrid
+                        samples={samples}
+                        onDelete={doDelete}
+                    />
+                )}
+                {state === 'failed' && (
+                    <div className={style.failedContainer}>
+                        <Alert severity="error">{t('collect.failedMessage')}</Alert>
+                    </div>
+                )}
                 <div className={style.capture}>
                     <input
                         hidden
@@ -143,13 +155,13 @@ export function Component() {
                         onChange={onFileChange}
                         multiple
                     />
-                    <div className={style.webcam}>
+                    <div className={!connected ? style.webcamDisabled : style.webcam}>
                         <Webcam
                             size={224}
                             interval={200}
                             onCapture={doCapture}
                             capture={capturing}
-                            disable={state !== 'connected'}
+                            disable={!connected}
                         />
                     </div>
                     <div className={style.column}>
@@ -158,6 +170,7 @@ export function Component() {
                             variant="outlined"
                             startIcon={<UploadFileIcon />}
                             onClick={doUploadClick}
+                            disabled={!connected}
                         >
                             {t('collect.actions.upload')}
                         </VerticalButton>
@@ -170,6 +183,7 @@ export function Component() {
                             onMouseLeave={stopCapture}
                             onTouchEnd={stopCapture}
                             onTouchCancel={stopCapture}
+                            disabled={!connected}
                         >
                             <div className={style.buttonCircleOuter}>
                                 <div className={capturing ? style.buttonCircleActive : style.buttonCircleInner} />

@@ -17,7 +17,9 @@
         },
         "sampleCount": "{{count}} samples",
         "connecting": "Connecting...",
-        "disconnected": "Disconnected"
+        "disconnected": "Disconnected",
+        "failed": "Failed",
+        "failedMessage": "This classifier could not be accessed from your device"
     },
     "about": {
         "back": "Voltar",

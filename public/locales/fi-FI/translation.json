@@ -13,11 +13,13 @@
     "collect": {
         "samplePrompt": "Take photos or upload images here.",
         "actions": {
-            "upload": "Upload"
+            "upload": "Lataa"
         },
         "sampleCount": "{{count}} kuvaa",
         "connecting": "Connecting...",
-        "disconnected": "Disconnected"
+        "disconnected": "Disconnected",
+        "failed": "Failed",
+        "failedMessage": "This classifier could not be accessed from your device"
     },
     "about": {
         "back": "Back",

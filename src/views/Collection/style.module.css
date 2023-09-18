@@ -36,6 +36,11 @@
     overflow: hidden;
 }
 
+.webcamDisabled {
+    composes: webcam;
+    filter: grayscale(0.8);
+}
+
 .column {
     display: flex;
     flex-direction: column;
@@ -59,6 +64,11 @@
     box-shadow: 0 0 4px #bbb;
 }
 
+.failedContainer {
+    flex-grow: 1;
+    padding: 1rem;
+}
+
 .recordButton {
     cursor: pointer;
     outline: none;
@@ -71,6 +81,14 @@
     border-radius: 50%;
     box-sizing: border-box;
     padding: 4px;
+}
+
+.recordButton:disabled .buttonCircleOuter {
+    background: #bbb;
+}
+
+.recordButton:disabled .buttonCircleOuter .buttonCircleInner {
+    background: #bbb;
 }
 
 .buttonCircleInner {

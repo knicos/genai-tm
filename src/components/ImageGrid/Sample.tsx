@@ -21,6 +21,7 @@ interface Props {
     onDelete: (index: number) => void;
     index: number;
     status: SampleStateValue;
+    disabled?: boolean;
 }
 
 export interface SampleState {
@@ -29,7 +30,7 @@ export interface SampleState {
     state: SampleStateValue;
 }
 
-export default function Sample({ image, index, onDelete, status }: Props) {
+export default function Sample({ image, index, onDelete, status, disabled }: Props) {
     const { namespace } = useVariant();
     const { t } = useTranslation(namespace);
     const ref = useRef<HTMLImageElement>(null);
@@ -53,6 +54,7 @@ export default function Sample({ image, index, onDelete, status }: Props) {
             <IconButton
                 aria-label={t<string>('trainingdata.aria.delete')}
                 onClick={doClick}
+                disabled={disabled}
             >
                 <DeleteForeverIcon />
             </IconButton>

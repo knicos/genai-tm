@@ -6,10 +6,11 @@ import { useTranslation } from 'react-i18next';
 
 interface Props {
     samples: SampleState[];
+    disabled?: boolean;
     onDelete: (index: number) => void;
 }
 
-export default function ImageGrid({ samples, onDelete }: Props) {
+export default function ImageGrid({ samples, onDelete, disabled }: Props) {
     const { t } = useTranslation();
     return (
         <div className={style.scroller}>
@@ -21,6 +22,7 @@ export default function ImageGrid({ samples, onDelete }: Props) {
                         index={ix}
                         onDelete={onDelete}
                         status={s.state}
+                        disabled={disabled}
                     />
                 ))}
                 {samples.length === 0 && (
