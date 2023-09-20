@@ -63,7 +63,7 @@ jest.mock('@knicos/tm-image', () => ({
 describe('ImageClassifier component', () => {
     it('renders', async () => {
         render(<ImageClassifier />, { wrapper: TestWrapper });
-        expect(screen.getByText('behaviours.labels.title')).not.toBeVisible();
+        await waitFor(() => expect(screen.getByText('behaviours.labels.title')).not.toBeVisible());
         expect(screen.getByTestId('widget-trainingdata.labels.class 1')).toBeInTheDocument();
         expect(screen.getByTestId('next-step')).toBeDisabled();
     });

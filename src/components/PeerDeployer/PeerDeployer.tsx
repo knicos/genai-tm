@@ -2,7 +2,7 @@ import React, { useRef, useEffect, useCallback } from 'react';
 import { BehaviourType } from '../Behaviour/Behaviour';
 import { generateBlob, ModelContents } from '../ImageWorkspace/saver';
 import { useRecoilState, useRecoilValue } from 'recoil';
-import { behaviourState, classState, sessionCode, sessionPassword, sharingActive } from '../../state';
+import { behaviourState, classState, sessionCode, sessionPassword, sharingActive, iceConfig } from '../../state';
 import { Peer } from 'peerjs';
 import randomId from '../../util/randomId';
 import { TeachableModel, useTeachableModel } from '../../util/TeachableModel';
@@ -70,6 +70,7 @@ export default function PeerDeployer() {
     const behaviours = useRecoilValue(behaviourState);
     const cache = useRef<CacheState>({ model, behaviours });
     const blob = useRef<ModelContents | null>(null);
+    const ice = useRecoilValue(iceConfig);
 
     useEffect(() => {
         if (channelRef.current) {
@@ -81,12 +82,14 @@ export default function PeerDeployer() {
     const getChannel = useCallback(() => {
         if (channelRef.current !== undefined) return channelRef.current;
 
+        if (!ice) return;
+
         const peer = new Peer(code, {
             host: process.env.REACT_APP_PEER_SERVER,
             secure: process.env.REACT_APP_PEER_SECURE === '1',
             key: process.env.REACT_APP_PEER_KEY || 'peerjs',
             port: process.env.REACT_APP_PEER_PORT ? parseInt(process.env.REACT_APP_PEER_PORT) : 443,
-            config: { iceServers: [{ urls: 'stun:stun.l.google.com:19302' }], sdpSemantics: 'unified-plan' },
+            config: { iceServers: ice.iceServers, sdpSemantics: 'unified-plan' },
         });
         channelRef.current = peer;
         peer.on('open', (id: string) => {
@@ -207,7 +210,7 @@ export default function PeerDeployer() {
             }
         });
         return channelRef.current;
-    }, [code, setCode, setSharing, pwd, setClassData]);
+    }, [code, setCode, setSharing, pwd, setClassData, ice]);
 
     useEffect(() => {
         getChannel();

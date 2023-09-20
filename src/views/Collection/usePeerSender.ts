@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { DataConnection, Peer } from 'peerjs';
 import { SampleStateValue } from '../../components/ImageGrid/Sample';
 import { useRecoilValue } from 'recoil';
-import { webrtcActive } from '../../state';
+import { webrtcActive, iceConfig } from '../../state';
 
 const TIMEOUT_P2P = 30000;
 const RECONNECT_TIMER_1 = 2000;
@@ -43,16 +43,17 @@ export function usePeerSender(
     const connRef = useRef<DataConnection>();
     const webRTC = useRecoilValue(webrtcActive);
     const retryRef = useRef(0);
+    const ice = useRecoilValue(iceConfig);
 
     useEffect(() => {
-        if (webRTC) {
+        if (webRTC && ice) {
             if (peerRef.current && !peerRef.current.destroyed) return;
             peerRef.current = new Peer('', {
                 host: process.env.REACT_APP_PEER_SERVER,
                 secure: process.env.REACT_APP_PEER_SECURE === '1',
                 key: process.env.REACT_APP_PEER_KEY || 'peerjs',
                 port: process.env.REACT_APP_PEER_PORT ? parseInt(process.env.REACT_APP_PEER_PORT) : 443,
-                config: { iceServers: [{ urls: 'stun:stun.l.google.com:19302' }], sdpSemantics: 'unified-plan' },
+                config: { iceServers: ice.iceServers, sdpSemantics: 'unified-plan' },
             });
 
             const peer = peerRef.current;
@@ -113,7 +114,7 @@ export function usePeerSender(
             if (pollRef.current >= 0) clearInterval(pollRef.current);
             peerRef.current?.destroy();
         };
-    }, [onError, webRTC]);
+    }, [onError, webRTC, ice]);
 
     useEffect(() => {
         if (status === 'connecting' && peerRef.current) {

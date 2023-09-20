@@ -1,10 +1,10 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import { Component } from './ImageGeneral';
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { RecoilRoot } from 'recoil';
 
-test('renders general view', () => {
+test('renders general view', async () => {
     render(
         <MemoryRouter initialEntries={['/image/general']}>
             <RecoilRoot>
@@ -17,6 +17,8 @@ test('renders general view', () => {
             </RecoilRoot>
         </MemoryRouter>
     );
-    const linkElement = screen.getByText(/training.actions.train/i);
-    expect(linkElement).toBeInTheDocument();
+    await waitFor(() => {
+        const linkElement = screen.getByText(/training.actions.train/i);
+        expect(linkElement).toBeInTheDocument();
+    });
 });

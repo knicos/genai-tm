@@ -7,6 +7,8 @@ import { BehaviourType } from '../../components/Behaviour/Behaviour';
 import { Peer } from 'peerjs';
 import { useSearchParams } from 'react-router-dom';
 import { TeachableModel } from '../../util/TeachableModel';
+import { iceConfig, webrtcActive } from '../../state';
+import { useRecoilValue } from 'recoil';
 
 const TIMEOUT_LOCAL = 5000;
 const TIMEOUT_P2P = 30000;
@@ -52,9 +54,11 @@ export function useP2PModel(
     const [behaviours, setBehaviours] = useState<BehaviourType[]>([]);
     const timeoutRef = useRef<number>(-1);
     const [params] = useSearchParams();
+    const webRTC = useRecoilValue(webrtcActive);
+    const ice = useRecoilValue(iceConfig);
 
     useEffect(() => {
-        if (!enabled) {
+        if (!enabled || !webRTC || !ice) {
             return;
         }
         const peer = new Peer('', {
@@ -62,7 +66,7 @@ export function useP2PModel(
             secure: process.env.REACT_APP_PEER_SECURE === '1',
             key: process.env.REACT_APP_PEER_KEY || 'peerjs',
             port: process.env.REACT_APP_PEER_PORT ? parseInt(process.env.REACT_APP_PEER_PORT) : 443,
-            config: { iceServers: [{ urls: 'stun:stun.l.google.com:19302' }], sdpSemantics: 'unified-plan' },
+            config: { iceServers: ice.iceServers, sdpSemantics: 'unified-plan' },
         });
         peer.on('error', (err: any) => {
             console.error(err);
@@ -108,7 +112,7 @@ export function useP2PModel(
                 conn.send({ event: 'request', channel: id, password: params.get('p') });
             });
         });
-    }, [code, onError, params, enabled]);
+    }, [code, onError, params, enabled, webRTC, ice]);
 
     return [model, behaviours];
 }

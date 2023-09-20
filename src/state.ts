@@ -1,4 +1,4 @@
-import { atom } from 'recoil';
+import { atom, selector } from 'recoil';
 import { BehaviourType } from './components/Behaviour/Behaviour';
 import { SaveProperties } from './components/ImageWorkspace/SaveDialog';
 import randomId from './util/randomId';
@@ -73,4 +73,21 @@ export const sharingActive = atom<boolean>({
 export const webrtcActive = atom<boolean>({
     key: 'webrtc',
     default: false,
+});
+
+export const iceConfig = selector<any>({
+    key: 'iceConfig',
+    get: async () => {
+        try {
+            const response = await fetch(`${process.env.REACT_APP_APIURL}/rtcconfig`);
+            if (response.ok) {
+                return response.json();
+            } else {
+                return null;
+            }
+        } catch (e) {
+            console.error(e);
+            return null;
+        }
+    },
 });

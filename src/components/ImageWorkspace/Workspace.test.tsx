@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import ImageWorkspace from './Workspace';
 import TestWrapper from '../../util/TestWrapper';
 
@@ -17,8 +17,8 @@ describe('ImageWorkspace component', () => {
             />,
             { wrapper: TestWrapper }
         );
-        expect(screen.getByText('behaviours.labels.title')).not.toBeVisible();
-        expect(screen.getByTestId('widget-trainingdata.labels.class 1')).toBeInTheDocument();
+        await waitFor(() => expect(screen.getByText('behaviours.labels.title')).not.toBeVisible());
+        expect(await screen.findByTestId('widget-trainingdata.labels.class 1')).toBeInTheDocument();
     });
 
     it('renders step 2', async () => {
@@ -34,7 +34,7 @@ describe('ImageWorkspace component', () => {
             />,
             { wrapper: TestWrapper }
         );
-        expect(screen.getByText('behaviours.labels.title')).toBeVisible();
+        await waitFor(() => expect(screen.getByText('behaviours.labels.title')).toBeVisible());
         expect(screen.getByTestId('widget-output.labels.title')).toBeVisible();
     });
 });
