@@ -27,7 +27,7 @@ export default function Output(props: Props) {
         setVolume(newValue as number);
     }, []);
 
-    const { namespace, allowDeploy, usep2p } = useVariant();
+    const { namespace, allowDeploy, usep2p, enableCollaboration } = useVariant();
     const { t } = useTranslation(namespace);
     const predicted = useRecoilValue(predictedIndex);
 
@@ -42,7 +42,7 @@ export default function Output(props: Props) {
                 sharing && (
                     <a
                         className={style.deployLink}
-                        href={`/deploy/${usep2p ? 'p' : 'b'}/${code}?p=${pwd}&qr=1`}
+                        href={`/deploy/${usep2p ? 'p' : 'b'}/${code}?p=${pwd}&qr=${enableCollaboration ? '1' : '0'}`}
                         target="_blank"
                         aria-label={t<string>('output.aria.expand')}
                         rel="noreferrer"

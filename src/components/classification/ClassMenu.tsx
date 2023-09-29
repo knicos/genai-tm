@@ -21,7 +21,7 @@ interface Props {
 export default function ClassMenu({ hasSamples, index, onDeleteClass, onRemoveSamples }: Props) {
     const code = useRecoilValue(sessionCode);
     const sharing = useRecoilValue(sharingActive);
-    const { namespace, disabledClassRemove, enabledP2PData } = useVariant();
+    const { namespace, disabledClassRemove, enabledP2PData, enableCollaboration } = useVariant();
     const { t, i18n } = useTranslation(namespace);
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
@@ -73,7 +73,7 @@ export default function ClassMenu({ hasSamples, index, onDeleteClass, onRemoveSa
                 >
                     {t('trainingdata.actions.removeAll')}
                 </MenuItem>
-                {sharing && enabledP2PData && (
+                {sharing && enabledP2PData && enableCollaboration && (
                     <div className={style.shareBox}>
                         <QRCode url={`${window.location.origin}/collect/${code}/${index}?lng=${i18n.language}`} />
                         {index === 0 && (

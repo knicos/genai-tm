@@ -414,6 +414,26 @@ function SettingsForm() {
                                 }
                                 label="Enable P2P Data Collection"
                             />
+                            <FormControlLabel
+                                control={
+                                    <Checkbox
+                                        checked={state.enableCollaboration}
+                                        name="enableCollaboration"
+                                        onChange={doCheckChange}
+                                    />
+                                }
+                                label="Enable Collaboration Features"
+                            />
+                            <FormControlLabel
+                                control={
+                                    <Checkbox
+                                        checked={state.allowModelSharing}
+                                        name="allowModelSharing"
+                                        onChange={doCheckChange}
+                                    />
+                                }
+                                label="Allow model sharing"
+                            />
                         </AccordionDetails>
                     </Accordion>
                     <div className={style.buttonBar}>

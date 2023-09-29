@@ -17,7 +17,7 @@ interface Props {
 const colourWheel: Colours[] = ['orange', 'purple', 'blue', 'green', 'red'];
 
 export default function Preview({ onExport }: Props) {
-    const { namespace, usep2p } = useVariant();
+    const { namespace, usep2p, allowModelSharing } = useVariant();
     const { t } = useTranslation(namespace);
     const preds = useRecoilValue(prediction);
 
@@ -29,7 +29,7 @@ export default function Preview({ onExport }: Props) {
             title={t<string>('model.labels.title')}
             className={style.widget}
             menu={
-                onExport && usep2p ? (
+                onExport && usep2p && allowModelSharing ? (
                     <Button
                         disabled={!model}
                         onClick={onExport}

@@ -26,7 +26,9 @@
         "showSettings": true,
         "modelVariant": "image",
         "showSaveReminder": false,
-        "enabledP2PData": false
+        "enabledP2PData": true,
+        "enableCollaboration": true,
+        "allowModelSharing": true
     },
     "image": {
         "modelVariant": "image"

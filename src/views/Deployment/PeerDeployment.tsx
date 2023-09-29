@@ -18,7 +18,7 @@ export function Component() {
     const [enableWebRTC, setEnableWebRTC] = useState(false);
     const onError = useCallback(() => setHadError(true), [setHadError]);
     const [model, behaviours] = useP2PModel(code || '', onError, enableWebRTC);
-    const [showQR, setShowQR] = useState(!!query.get('qr'));
+    const [showQR, setShowQR] = useState(query.get('qr') === '1');
     const canvas = useRef<HTMLCanvasElement>(null);
     const { namespace } = useVariant();
     const { t } = useTranslation(namespace);

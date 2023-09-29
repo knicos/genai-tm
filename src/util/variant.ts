@@ -33,6 +33,8 @@ export interface IVariantContext {
     showSettings?: boolean;
     showSaveReminder?: boolean;
     enabledP2PData?: boolean;
+    enableCollaboration?: boolean;
+    allowModelSharing?: boolean;
 }
 
 export const VariantContext = React.createContext<IVariantContext>({
