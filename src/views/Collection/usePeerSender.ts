@@ -11,7 +11,7 @@ const POLLING = 5000;
 const MAX_RETRY = 5;
 
 type ConnectionStatus = 'connecting' | 'connected' | 'disconnected' | 'failed';
-
+type CandidateType = 'unknown' | 'relay' | 'other';
 type SampleSender = (img: HTMLCanvasElement, classIndex: number, id: string) => void;
 type SampleDelete = (classIndex: number, id: string) => void;
 
@@ -25,6 +25,7 @@ interface ReturnObject {
     deleter?: SampleDelete;
     classNames: string[];
     state: ConnectionStatus;
+    type: CandidateType;
 }
 
 export function usePeerSender(
@@ -44,6 +45,7 @@ export function usePeerSender(
     const webRTC = useRecoilValue(webrtcActive);
     const retryRef = useRef(0);
     const ice = useRecoilValue(iceConfig);
+    const [candidateType, setCandidateType] = useState<CandidateType>('unknown');
 
     useEffect(() => {
         if (webRTC && ice) {
@@ -178,6 +180,17 @@ export function usePeerSender(
             conn.on('open', () => {
                 retryRef.current = 0;
 
+                conn.peerConnection.getStats().then((stats) => {
+                    stats.forEach((v) => {
+                        if (v.type === 'candidate-pair' && v.state === 'succeeded') {
+                            const remote = stats.get(v.remoteCandidateId);
+                            if (remote) {
+                                setCandidateType(remote.candidateType === 'relay' ? 'relay' : 'other');
+                            }
+                        }
+                    });
+                });
+
                 if (timeoutRef.current >= 0) {
                     clearTimeout(timeoutRef.current);
                 }
@@ -201,12 +214,13 @@ export function usePeerSender(
                 });
             });
         }
-    }, [status, code, onError, onSampleState, onSamplesUpdate]);
+    }, [status, code, onError, onSampleState, onSamplesUpdate, setCandidateType]);
 
     return {
         sender: sampleFuncs ? sampleFuncs.send : undefined,
         deleter: sampleFuncs ? sampleFuncs.delete : undefined,
         classNames: classLabels,
         state: status,
+        type: candidateType,
     };
 }

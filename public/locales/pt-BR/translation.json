@@ -20,7 +20,8 @@
         "disconnected": "Disconnected",
         "failed": "Failed",
         "failedMessage": "This classifier could not be accessed from your device",
-        "dropError": "Apenas imagens podem ser arrastadas aqui"
+        "dropError": "Apenas imagens podem ser arrastadas aqui",
+        "relayWarning": "Your data is being sent through our server. You may wish to use another WiFi connection to avoid this."
     },
     "about": {
         "back": "Voltar",

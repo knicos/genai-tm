@@ -53,7 +53,13 @@ export function Component() {
         [setSamples, index]
     );
 
-    const { sender, deleter, state, classNames } = usePeerSender(code || '', doError, doSampleState, doSamplesUpdate);
+    const {
+        sender,
+        deleter,
+        state,
+        classNames,
+        type: candidateType,
+    } = usePeerSender(code || '', doError, doSampleState, doSamplesUpdate);
 
     const doDelete = useCallback(
         (ix: number) => {
@@ -203,6 +209,14 @@ export function Component() {
                 >
                     {t('collect.dropError')}
                 </AlertModal>
+                {samples.length === 0 && !dropProps.hovered && candidateType === 'relay' && (
+                    <Alert
+                        severity="warning"
+                        style={{ maxWidth: '80%', border: '1px solid #ed6c02', marginBottom: '1rem' }}
+                    >
+                        {t('collect.relayWarning')}
+                    </Alert>
+                )}
                 <div className={style.capture}>
                     <input
                         hidden

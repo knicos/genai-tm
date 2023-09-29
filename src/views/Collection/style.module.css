@@ -5,6 +5,7 @@
     flex-direction: column;
     align-items: center;
     height: 100%;
+    background: #eee;
 }
 
 .main header {
@@ -113,12 +114,12 @@
         margin: auto;
         border-radius: 6px;
         overflow: hidden;
-        background: white;
+        background: #eee;
         box-shadow: 2px 2px 4px #bbb;
     }
 
     .main header {
-        background: inherit;
+        background: white;
         color: #444;
     }
 }
