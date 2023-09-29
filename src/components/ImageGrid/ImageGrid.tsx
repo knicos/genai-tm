@@ -17,7 +17,7 @@ export default function ImageGrid({ samples, onDelete, disabled }: Props) {
             <div className={samples.length === 0 ? style.sampleListEmpty : style.sampleList}>
                 {samples.map((s, ix) => (
                     <Sample
-                        key={samples.length - ix}
+                        key={s.id}
                         image={s.data}
                         index={ix}
                         onDelete={onDelete}
