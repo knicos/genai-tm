@@ -1,3 +1,5 @@
+@value primary from "../../style/colours.module.css";
+
 .sampleList {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
@@ -57,4 +59,27 @@
 
 .sampleImage-added {
     composes: sampleImage;
+}
+
+@keyframes grow {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 100%;
+    }
+}
+
+.dropPlaceholder {
+    composes: sampleImage;
+    width: 100%;
+    height: 100%;
+    aspect-ratio: 1;
+    border: 1px dashed primary;
+    background: #e8f0fe;
+    animation: grow 0.2s ease-in-out;
+    justify-content: center;
+    align-items: center;
+    color: primary;
 }

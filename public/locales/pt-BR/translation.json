@@ -11,15 +11,16 @@
         }
     },
     "collect": {
-        "samplePrompt": "Take photos or upload images here.",
+        "samplePrompt": "Tire fotos ou carregue imagens aqui.",
         "actions": {
-            "upload": "Upload"
+            "upload": "Carregar"
         },
-        "sampleCount": "{{count}} samples",
+        "sampleCount": "{{count}} amostras de imagem",
         "connecting": "Connecting...",
         "disconnected": "Disconnected",
         "failed": "Failed",
-        "failedMessage": "This classifier could not be accessed from your device"
+        "failedMessage": "This classifier could not be accessed from your device",
+        "dropError": "Apenas imagens podem ser arrastadas aqui"
     },
     "about": {
         "back": "Voltar",

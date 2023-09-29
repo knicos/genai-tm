@@ -10,15 +10,20 @@ import randomId from '../../util/randomId';
 import { SampleState, SampleStateValue } from '../../components/ImageGrid/Sample';
 import ImageGrid from '../../components/ImageGrid/ImageGrid';
 import UploadFileIcon from '@mui/icons-material/UploadFile';
-import { canvasesFromFiles } from '../../util/canvas';
+import { canvasesFromFiles, canvasFromDataTransfer } from '../../util/canvas';
 import { useTranslation } from 'react-i18next';
 import { Alert } from '@mui/material';
+import { useDrop } from 'react-dnd';
+import { NativeTypes } from 'react-dnd-html5-backend';
+import AlertModal from '../../components/AlertModal/AlertModal';
 
 export function Component() {
     const { code, classIndex } = useParams();
     const [samples, setSamples] = useState<SampleState[]>([]);
     const [capturing, setCapturing] = useState(false);
     const [count, setCount] = useState(0);
+    const [loading, setLoading] = useState(false);
+    const [showDropError, setShowDropError] = useState(false);
     const buttonRef = useRef<HTMLButtonElement>(null);
     const fileRef = useRef<HTMLInputElement>(null);
     const { t } = useTranslation();
@@ -94,6 +99,45 @@ export function Component() {
         [sender, setSamples, index]
     );
 
+    const [dropProps, drop] = useDrop(
+        {
+            accept: [NativeTypes.URL, NativeTypes.HTML, NativeTypes.FILE],
+            async drop(items: any) {
+                setLoading(true);
+                try {
+                    const canvases = await canvasFromDataTransfer(items);
+
+                    if (canvases.length > 0) {
+                        const newSamples = canvases.map(
+                            (c) => ({ data: c, id: randomId(16), state: 'pending' } as SampleState)
+                        );
+                        setSamples((old) => [...newSamples, ...old]);
+                        if (sender) {
+                            newSamples.forEach((s) => {
+                                sender(s.data, index, s.id);
+                            });
+                        } else {
+                            console.warn('No sample sender');
+                        }
+                    } else {
+                        setShowDropError(true);
+                    }
+                } catch (e) {
+                    setShowDropError(true);
+                }
+                setLoading(false);
+            },
+            collect(monitor) {
+                const can = monitor.canDrop();
+                return {
+                    highlighted: can,
+                    hovered: monitor.isOver(),
+                };
+            },
+        },
+        [setSamples, sender, index, setShowDropError]
+    );
+
     const doUploadClick = useCallback(() => fileRef.current?.click(), []);
 
     const startCapture = useCallback(() => setCapturing(true), [setCapturing]);
@@ -118,9 +162,14 @@ export function Component() {
 
     const connected = state === 'connected';
 
+    const doDropErrorClose = useCallback(() => setShowDropError(false), [setShowDropError]);
+
     return (
         <ThemeProvider theme={theme}>
-            <main className={style.main}>
+            <main
+                className={style.main}
+                ref={drop}
+            >
                 <header>
                     <h1>
                         {connected
@@ -139,6 +188,7 @@ export function Component() {
                     <ImageGrid
                         samples={samples}
                         onDelete={doDelete}
+                        showDrop={dropProps.hovered}
                     />
                 )}
                 {state === 'failed' && (
@@ -146,6 +196,13 @@ export function Component() {
                         <Alert severity="error">{t('collect.failedMessage')}</Alert>
                     </div>
                 )}
+                <AlertModal
+                    open={showDropError}
+                    onClose={doDropErrorClose}
+                    severity="error"
+                >
+                    {t('collect.dropError')}
+                </AlertModal>
                 <div className={style.capture}>
                     <input
                         hidden

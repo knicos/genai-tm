@@ -52,7 +52,7 @@
             "dropFiles": "tai vedä kuvia tähän nettisivuilta tai tiedostoista",
             "needsMore": "Lisää opetusdataa tarvitaan",
             "dropError": "Only images can be dropped here",
-            "qrMessage": "You can use a phone or tablet to add images"
+            "qrMessage": "Voit lisätä kuvia puhelimella tai tabletilla"
         },
         "aria": {
             "sample": "ladattu opetusdata",
