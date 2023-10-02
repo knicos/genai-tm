@@ -41,7 +41,8 @@
             "upload": "Carregar",
             "deleteClass": "Excluir Classe",
             "removeAll": "Remover todas as amostras",
-            "capture": "Segure para capturar"
+            "capture": "Segure para capturar",
+            "collaborate": "Colaborar"
         },
         "labels": {
             "title": "Dados de Treinamento",

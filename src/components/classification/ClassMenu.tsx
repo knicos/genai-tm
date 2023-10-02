@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import IconButton from '@mui/material/IconButton';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
@@ -6,10 +6,11 @@ import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { useTranslation } from 'react-i18next';
 import { useVariant } from '../../util/variant';
 import QRCode from '../QRCode/QRCode';
-import { useRecoilValue } from 'recoil';
-import { sessionCode, sharingActive } from '../../state';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { p2pActive, sessionCode, sharingActive } from '../../state';
 import Alert from '@mui/material/Alert';
 import style from './classification.module.css';
+import BusyButton from '../BusyButton/BusyButton';
 
 interface Props {
     index: number;
@@ -21,6 +22,7 @@ interface Props {
 export default function ClassMenu({ hasSamples, index, onDeleteClass, onRemoveSamples }: Props) {
     const code = useRecoilValue(sessionCode);
     const sharing = useRecoilValue(sharingActive);
+    const [p2penabled, setP2PEnabled] = useRecoilState(p2pActive);
     const { namespace, disabledClassRemove, enabledP2PData, enableCollaboration } = useVariant();
     const { t, i18n } = useTranslation(namespace);
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -31,6 +33,10 @@ export default function ClassMenu({ hasSamples, index, onDeleteClass, onRemoveSa
     const handleClose = () => {
         setAnchorEl(null);
     };
+
+    const doCollab = useCallback(() => {
+        setP2PEnabled(true);
+    }, [setP2PEnabled]);
 
     return (
         <div>
@@ -73,9 +79,21 @@ export default function ClassMenu({ hasSamples, index, onDeleteClass, onRemoveSa
                 >
                     {t('trainingdata.actions.removeAll')}
                 </MenuItem>
-                {sharing && enabledP2PData && enableCollaboration && (
+                {enabledP2PData && enableCollaboration && (
                     <div className={style.shareBox}>
-                        <QRCode url={`${window.location.origin}/collect/${code}/${index}?lng=${i18n.language}`} />
+                        {!sharing && (
+                            <BusyButton
+                                busy={p2penabled && !sharing}
+                                onClick={doCollab}
+                                variant="contained"
+                                style={{ margin: '1rem 0' }}
+                            >
+                                {t('trainingdata.actions.collaborate')}
+                            </BusyButton>
+                        )}
+                        {sharing && (
+                            <QRCode url={`${window.location.origin}/collect/${code}/${index}?lng=${i18n.language}`} />
+                        )}
                         {index === 0 && (
                             <Alert
                                 data-testid="alert-useqr"

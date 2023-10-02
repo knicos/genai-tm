@@ -70,6 +70,11 @@ export const sharingActive = atom<boolean>({
     default: false,
 });
 
+export const p2pActive = atom<boolean>({
+    key: 'enablep2p',
+    default: false,
+});
+
 export const webrtcActive = atom<boolean>({
     key: 'webrtc',
     default: false,

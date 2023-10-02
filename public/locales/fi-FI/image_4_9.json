@@ -41,7 +41,8 @@
             "upload": "Lataa",
             "deleteClass": "Poista luokka",
             "removeAll": "Poista kaikki tiedot",
-            "capture": "Pidä nappi pohjassa"
+            "capture": "Pidä nappi pohjassa",
+            "collaborate": "Tee yhteistyötä"
         },
         "labels": {
             "title": "Opetusdata",

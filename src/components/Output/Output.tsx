@@ -4,8 +4,8 @@ import { useTranslation } from 'react-i18next';
 import style from './Output.module.css';
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import { useVariant } from '../../util/variant';
-import { useRecoilValue } from 'recoil';
-import { predictedIndex, sessionCode, sessionPassword, sharingActive, behaviourState } from '../../state';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { predictedIndex, sessionCode, sessionPassword, sharingActive, behaviourState, p2pActive } from '../../state';
 import RawOutput from './RawOutput';
 import Slider from '@mui/material/Slider';
 import VolumeDown from '@mui/icons-material/VolumeDown';
@@ -21,7 +21,7 @@ export default function Output(props: Props) {
     const code = useRecoilValue(sessionCode);
     const pwd = useRecoilValue(sessionPassword);
     const behaviours = useRecoilValue(behaviourState);
-    const sharing = useRecoilValue(sharingActive);
+    const [, setP2PEnabled] = useRecoilState(p2pActive);
     const [volume, setVolume] = useState(100);
     const changeVolume = useCallback((event: Event, newValue: number | number[]) => {
         setVolume(newValue as number);
@@ -31,6 +31,10 @@ export default function Output(props: Props) {
     const { t } = useTranslation(namespace);
     const predicted = useRecoilValue(predictedIndex);
 
+    const doDeployClick = useCallback(() => {
+        setP2PEnabled(true);
+    }, [setP2PEnabled]);
+
     return (
         <Widget
             dataWidget={'output'}
@@ -38,14 +42,14 @@ export default function Output(props: Props) {
             className={style.widget}
             {...props}
             menu={
-                allowDeploy &&
-                sharing && (
+                allowDeploy && (
                     <a
                         className={style.deployLink}
                         href={`/deploy/${usep2p ? 'p' : 'b'}/${code}?p=${pwd}&qr=${enableCollaboration ? '1' : '0'}`}
                         target="_blank"
                         aria-label={t<string>('output.aria.expand')}
                         rel="noreferrer"
+                        onClick={doDeployClick}
                     >
                         <OpenInNewIcon />
                         {t('output.labels.deploy')}

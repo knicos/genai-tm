@@ -7,7 +7,7 @@ import { IConnection, extractNodesFromElements, generateLines } from './lines';
 import Output from '../Output/Output';
 import Behaviours from '../Behaviours/Behaviours';
 import { useTranslation } from 'react-i18next';
-import { classState, IClassification, saveState, sharingActive } from '../../state';
+import { classState, IClassification, saveState, p2pActive, sharingActive } from '../../state';
 import style from './TeachableMachine.module.css';
 import { useVariant } from '../../util/variant';
 import Input from '../Input/Input';
@@ -64,12 +64,16 @@ export default function Workspace({ step, visitedStep, onComplete, saveTrigger, 
     const [editingData, setEditingData] = useState(false);
     const [showShare, setShowShare] = useState(false);
     const sharing = useRecoilValue(sharingActive);
+    const [, setP2PEnabled] = useRecoilState(p2pActive);
 
     // Ensure an initial model exists
     useModelCreator(modelVariant);
 
     const doCloseShare = useCallback(() => setShowShare(false), [setShowShare]);
-    const doShare = useCallback(() => setShowShare(true), [setShowShare]);
+    const doShare = useCallback(() => {
+        setShowShare(true);
+        setP2PEnabled(true);
+    }, [setShowShare, setP2PEnabled]);
 
     const observer = useRef<ResizeObserver>();
     const wkspaceRef = useRef<HTMLDivElement>(null);
@@ -201,7 +205,7 @@ export default function Workspace({ step, visitedStep, onComplete, saveTrigger, 
                     data-widget="container"
                 >
                     <Input />
-                    <Preview onExport={sharing ? doShare : undefined} />
+                    <Preview onExport={doShare} />
                 </div>
                 <Behaviours
                     hidden={visitedStep < 1}
@@ -218,6 +222,7 @@ export default function Workspace({ step, visitedStep, onComplete, saveTrigger, 
             <ExportDialog
                 open={showShare}
                 onClose={doCloseShare}
+                ready={sharing}
             />
             <Snackbar
                 anchorOrigin={{ vertical: 'top', horizontal: 'center' }}

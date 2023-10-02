@@ -10,7 +10,7 @@ import TextField from '@mui/material/TextField';
 import { useRecoilValue } from 'recoil';
 import { sessionCode, sharingActive } from '../../state';
 import InputAdornment from '@mui/material/InputAdornment';
-import { IconButton } from '@mui/material';
+import { CircularProgress, IconButton } from '@mui/material';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 
 export interface SaveProperties {
@@ -21,6 +21,7 @@ export interface SaveProperties {
 
 interface Props {
     open: boolean;
+    ready?: boolean;
     onClose: () => void;
 }
 
@@ -40,7 +41,7 @@ function LinkText(props: LinkProps) {
     );
 }
 
-export default function ExportDialog({ open, onClose }: Props) {
+export default function ExportDialog({ open, onClose, ready }: Props) {
     const code = useRecoilValue(sessionCode);
     const sharing = useRecoilValue(sharingActive);
     const { namespace } = useVariant();
@@ -71,37 +72,44 @@ export default function ExportDialog({ open, onClose }: Props) {
             maxWidth="xs"
         >
             <DialogTitle>{t('share.labels.title')}</DialogTitle>
-            <DialogContent>
-                <p>
-                    <Trans
-                        i18nKey={`${namespace}:share.labels.instructions`}
-                        components={{
-                            scratchLink: <LinkText to="https://machinelearningforkids.co.uk/#!/pretrained" />,
+            {ready && (
+                <DialogContent>
+                    <p>
+                        <Trans
+                            i18nKey={`${namespace}:share.labels.instructions`}
+                            components={{
+                                scratchLink: <LinkText to="https://machinelearningforkids.co.uk/#!/pretrained" />,
+                            }}
+                        />
+                    </p>
+                    <TextField
+                        inputRef={textRef}
+                        sx={{ marginTop: '2rem' }}
+                        fullWidth
+                        autoFocus
+                        label="Link"
+                        variant="outlined"
+                        value={link}
+                        InputProps={{
+                            endAdornment: (
+                                <InputAdornment position="end">
+                                    <IconButton
+                                        disabled={!navigator?.clipboard?.writeText}
+                                        onClick={doCopy}
+                                    >
+                                        <ContentCopyIcon />
+                                    </IconButton>
+                                </InputAdornment>
+                            ),
                         }}
                     />
-                </p>
-                <TextField
-                    inputRef={textRef}
-                    sx={{ marginTop: '2rem' }}
-                    fullWidth
-                    autoFocus
-                    label="Link"
-                    variant="outlined"
-                    value={link}
-                    InputProps={{
-                        endAdornment: (
-                            <InputAdornment position="end">
-                                <IconButton
-                                    disabled={!navigator?.clipboard?.writeText}
-                                    onClick={doCopy}
-                                >
-                                    <ContentCopyIcon />
-                                </IconButton>
-                            </InputAdornment>
-                        ),
-                    }}
-                />
-            </DialogContent>
+                </DialogContent>
+            )}
+            {!ready && (
+                <DialogContent>
+                    <CircularProgress />
+                </DialogContent>
+            )}
             <DialogActions>
                 <Button
                     variant="contained"

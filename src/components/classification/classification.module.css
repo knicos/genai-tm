@@ -203,7 +203,6 @@
 }
 
 .shareBox {
-    width: 200px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -212,4 +211,5 @@
 
 .shareBox :global .MuiPaper-root {
     margin: 0 0.5rem;
+    width: 180px;
 }

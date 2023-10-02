@@ -2,7 +2,15 @@ import React, { useRef, useEffect, useCallback } from 'react';
 import { BehaviourType } from '../Behaviour/Behaviour';
 import { generateBlob, ModelContents } from '../ImageWorkspace/saver';
 import { useRecoilState, useRecoilValue } from 'recoil';
-import { behaviourState, classState, sessionCode, sessionPassword, sharingActive, iceConfig } from '../../state';
+import {
+    behaviourState,
+    classState,
+    sessionCode,
+    sessionPassword,
+    sharingActive,
+    iceConfig,
+    p2pActive,
+} from '../../state';
 import { Peer } from 'peerjs';
 import randomId from '../../util/randomId';
 import { TeachableModel, useTeachableModel } from '../../util/TeachableModel';
@@ -68,6 +76,7 @@ export default function PeerDeployer() {
     const channelRef = useRef<Peer>();
     const { model } = useTeachableModel();
     const behaviours = useRecoilValue(behaviourState);
+    const enableP2P = useRecoilValue(p2pActive);
     const cache = useRef<CacheState>({ model, behaviours });
     const blob = useRef<ModelContents | null>(null);
     const ice = useRecoilValue(iceConfig);
@@ -213,13 +222,15 @@ export default function PeerDeployer() {
     }, [code, setCode, setSharing, pwd, setClassData, ice]);
 
     useEffect(() => {
-        getChannel();
+        if (enableP2P) {
+            getChannel();
+        }
         blob.current = null;
         cache.current.model = model;
         cache.current.behaviours = behaviours;
         cache.current.predictions = undefined;
         cache.current.reference = undefined;
-    }, [model, behaviours, getChannel]);
+    }, [model, behaviours, getChannel, enableP2P]);
 
     useEffect(() => {
         cache.current.classNames = classes.map((c) => c.label);

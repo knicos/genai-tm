@@ -41,7 +41,8 @@
             "upload": "Upload",
             "deleteClass": "Delete Class",
             "removeAll": "Remove all samples",
-            "capture": "Hold to capture"
+            "capture": "Hold to capture",
+            "collaborate": "Collaborate"
         },
         "labels": {
             "title": "Training Data",
