@@ -17,8 +17,7 @@ import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import { ModelLoader } from './loader';
 import Alert from '@mui/material/Alert';
 import Snackbar from '@mui/material/Snackbar';
-import PeerDeployer from '../PeerDeployer/PeerDeployer';
-import Deployer from '../Deployer/Deployer';
+import DeployWrapper from './DeployWrapper';
 import ExportDialog from './ExportDialog';
 import { useModelCreator } from '../../util/TeachableModel';
 
@@ -55,7 +54,7 @@ function addCloseAlert() {
 }
 
 export default function Workspace({ step, visitedStep, onComplete, saveTrigger, onSkip, onSaveRemind }: Props) {
-    const { namespace, resetOnLoad, usep2p, modelVariant } = useVariant();
+    const { namespace, resetOnLoad, modelVariant } = useVariant();
     const { t } = useTranslation(namespace);
     const [data, setData] = useRecoilState(classState);
     const [lines, setLines] = useState<ILine[]>([]);
@@ -180,8 +179,7 @@ export default function Workspace({ step, visitedStep, onComplete, saveTrigger, 
             className={style.workspace}
             ref={wkspaceRef}
         >
-            {usep2p && <PeerDeployer />}
-            {!usep2p && <Deployer />}
+            <DeployWrapper />
             <ModelLoader
                 onLoaded={doLoaded}
                 onError={doLoadError}

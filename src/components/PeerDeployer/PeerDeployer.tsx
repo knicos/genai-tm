@@ -9,7 +9,7 @@ import {
     sessionPassword,
     sharingActive,
     iceConfig,
-    p2pActive,
+    //p2pActive,
 } from '../../state';
 import { Peer } from 'peerjs';
 import randomId from '../../util/randomId';
@@ -76,7 +76,7 @@ export default function PeerDeployer() {
     const channelRef = useRef<Peer>();
     const { model } = useTeachableModel();
     const behaviours = useRecoilValue(behaviourState);
-    const enableP2P = useRecoilValue(p2pActive);
+    //const enableP2P = useRecoilValue(p2pActive);
     const cache = useRef<CacheState>({ model, behaviours });
     const blob = useRef<ModelContents | null>(null);
     const ice = useRecoilValue(iceConfig);
@@ -222,15 +222,13 @@ export default function PeerDeployer() {
     }, [code, setCode, setSharing, pwd, setClassData, ice]);
 
     useEffect(() => {
-        if (enableP2P) {
-            getChannel();
-        }
+        getChannel();
         blob.current = null;
         cache.current.model = model;
         cache.current.behaviours = behaviours;
         cache.current.predictions = undefined;
         cache.current.reference = undefined;
-    }, [model, behaviours, getChannel, enableP2P]);
+    }, [model, behaviours, getChannel]);
 
     useEffect(() => {
         cache.current.classNames = classes.map((c) => c.label);
