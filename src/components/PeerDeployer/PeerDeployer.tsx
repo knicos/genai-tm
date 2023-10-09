@@ -9,6 +9,8 @@ import {
     sessionPassword,
     sharingActive,
     iceConfig,
+    shareSamples,
+    IClassification,
     //p2pActive,
 } from '../../state';
 import { Peer } from 'peerjs';
@@ -66,11 +68,13 @@ interface CacheState {
     predictions?: number[];
     classNames?: string[];
     samples?: string[][];
+    rawSamples?: IClassification[];
 }
 
 export default function PeerDeployer() {
     const [code, setCode] = useRecoilState(sessionCode);
     const pwd = useRecoilValue(sessionPassword);
+    const includeSamples = useRecoilValue(shareSamples);
     const [, setSharing] = useRecoilState(sharingActive);
     const [classes, setClassData] = useRecoilState(classState);
     const channelRef = useRef<Peer>();
@@ -112,7 +116,12 @@ export default function PeerDeployer() {
                 const ev = data as DeployEventRequest;
                 if (ev?.event === 'request') {
                     if (blob.current === null) {
-                        blob.current = await generateBlob(code, cache.current.model, cache.current.behaviours);
+                        blob.current = await generateBlob(
+                            code,
+                            cache.current.model,
+                            cache.current.behaviours,
+                            cache.current?.rawSamples ? cache.current.rawSamples : undefined
+                        );
                     }
                     switch (ev.entity || 'project') {
                         case 'metadata':
@@ -125,10 +134,6 @@ export default function PeerDeployer() {
                             conn.send({ event: 'model', component: 'weights', data: blob.current.weights });
                             break;
                         case 'project':
-                            if (ev?.password !== pwd) {
-                                conn.close();
-                                return;
-                            }
                             conn.send({ event: 'project', project: blob.current.zip, kind: 'image' });
                             break;
                     }
@@ -219,7 +224,7 @@ export default function PeerDeployer() {
             }
         });
         return channelRef.current;
-    }, [code, setCode, setSharing, pwd, setClassData, ice]);
+    }, [code, setCode, setSharing, setClassData, ice]);
 
     useEffect(() => {
         getChannel();
@@ -231,9 +236,14 @@ export default function PeerDeployer() {
     }, [model, behaviours, getChannel]);
 
     useEffect(() => {
+        // Reset the blob data if samples are included or excluded.
+        if ((cache.current.rawSamples && !includeSamples) || (!cache.current.rawSamples && includeSamples)) {
+            blob.current = null;
+        }
+        cache.current.rawSamples = includeSamples ? classes : undefined;
         cache.current.classNames = classes.map((c) => c.label);
         cache.current.samples = classes.map((c) => c.samples.map((s) => s.id));
-    }, [classes]);
+    }, [classes, includeSamples]);
 
     useEffect(() => {
         return () => {

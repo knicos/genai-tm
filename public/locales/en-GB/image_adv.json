@@ -185,6 +185,7 @@
         },
         "labels": {
             "title": "Share",
+            "includeSamples": "Include sample images",
             "instructions": "Copy the link to use the classifier in other applications such as <scratchLink>Scratch</scratchLink>. The link will only work if you keep this browser tab open, or if you save your project and open in again later."
         }
     }

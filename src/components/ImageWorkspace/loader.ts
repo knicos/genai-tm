@@ -5,6 +5,7 @@ import { BehaviourType } from '../Behaviour/Behaviour';
 import { IClassification, behaviourState, classState, fileData, sessionCode } from '../../state';
 import { TeachableModel, useModelLoader, Metadata } from '../../util/TeachableModel';
 import { useRecoilState, useSetRecoilState } from 'recoil';
+import { useSearchParams } from 'react-router-dom';
 
 interface ProjectTemp {
     modelJson?: string;
@@ -145,12 +146,55 @@ interface Props {
     onError?: (err: unknown) => void;
 }
 
+function mapToURL(project: string) {
+    if (project.startsWith('http')) {
+        return project;
+    }
+    if (project.length === 8 && /^[a-z0-9]+$/i.test(project)) {
+        return `${process.env.REACT_APP_APIURL}/model/${project}/project.zip`;
+    }
+}
+
 export function ModelLoader({ onLoaded, onError }: Props) {
     const [projectFile, setProjectFile] = useRecoilState(fileData);
+    const [params] = useSearchParams();
     const setBehaviours = useSetRecoilState(behaviourState);
     const setCode = useSetRecoilState(sessionCode);
     const setData = useSetRecoilState(classState);
     const loadModel = useModelLoader();
+
+    useEffect(() => {
+        if (params.has('project')) {
+            const project = params.get('project');
+            if (project) {
+                const url = mapToURL(project);
+                if (!url) return;
+
+                fetch(url)
+                    .then(async (result) => {
+                        if (result.status !== 200) {
+                            if (onError) onError(result);
+                            return;
+                        }
+                        const project = await loadProject(await result.blob());
+                        if (project.id) setCode(project.id);
+                        setData(project.samples ? project.samples : []);
+
+                        if (project.metadata && project.model && project.weights) {
+                            loadModel(project.metadata, project.model, project.weights).then((result) => {
+                                if (project.behaviours) setBehaviours(project.behaviours);
+                                if (result && onLoaded) {
+                                    onLoaded(!!project.behaviours);
+                                }
+                            });
+                        }
+                    })
+                    .catch((e) => {
+                        if (onError) onError(e);
+                    });
+            }
+        }
+    }, [params, loadModel, onLoaded, setData, setCode, setBehaviours, onError]);
 
     useEffect(() => {
         if (projectFile) {

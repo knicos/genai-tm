@@ -7,11 +7,13 @@ import { Button } from '../button/Button';
 import { useVariant } from '../../util/variant';
 import { useTranslation, Trans } from 'react-i18next';
 import TextField from '@mui/material/TextField';
-import { useRecoilValue } from 'recoil';
-import { sessionCode, sharingActive } from '../../state';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { sessionCode, shareSamples, sharingActive } from '../../state';
 import InputAdornment from '@mui/material/InputAdornment';
 import { CircularProgress, IconButton } from '@mui/material';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
+import Checkbox from '@mui/material/Checkbox';
+import FormControlLabel from '@mui/material/FormControlLabel';
 
 export interface SaveProperties {
     samples: boolean;
@@ -44,6 +46,7 @@ function LinkText(props: LinkProps) {
 export default function ExportDialog({ open, onClose, ready }: Props) {
     const code = useRecoilValue(sessionCode);
     const sharing = useRecoilValue(sharingActive);
+    const [samples, setShareSamples] = useRecoilState(shareSamples);
     const { namespace } = useVariant();
     const { t } = useTranslation(namespace);
     const textRef = useRef<HTMLInputElement>(null);
@@ -64,6 +67,10 @@ export default function ExportDialog({ open, onClose, ready }: Props) {
     const doCopy = useCallback(() => {
         navigator.clipboard.writeText(link);
     }, [link]);
+
+    const doChangeSamples = useCallback(() => {
+        setShareSamples((old) => !old);
+    }, [setShareSamples]);
 
     return sharing ? (
         <Dialog
@@ -102,6 +109,15 @@ export default function ExportDialog({ open, onClose, ready }: Props) {
                                 </InputAdornment>
                             ),
                         }}
+                    />
+                    <FormControlLabel
+                        control={
+                            <Checkbox
+                                checked={samples}
+                                onChange={doChangeSamples}
+                            />
+                        }
+                        label={t('share.labels.includeSamples')}
                     />
                 </DialogContent>
             )}

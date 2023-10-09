@@ -96,3 +96,8 @@ export const iceConfig = selector<any>({
         }
     },
 });
+
+export const shareSamples = atom<boolean>({
+    key: 'shareSamples',
+    default: false,
+});
