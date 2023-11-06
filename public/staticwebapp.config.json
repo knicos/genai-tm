@@ -17,6 +17,10 @@
             "rewrite": "index.html"
         },
         {
+            "route": "/input*",
+            "rewrite": "index.html"
+        },
+        {
             "route": "/about",
             "rewrite": "index.html"
         },

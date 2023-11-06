@@ -80,6 +80,10 @@ const router = createBrowserRouter(
                 lazy={() => import('./views/Collection/Collection')}
             />
             <Route
+                path="input/:code"
+                lazy={() => import('./views/Input/Input')}
+            />
+            <Route
                 path="about"
                 element={<About />}
             />

@@ -101,3 +101,8 @@ export const shareSamples = atom<boolean>({
     key: 'shareSamples',
     default: false,
 });
+
+export const inputImage = atom<HTMLCanvasElement | null>({
+    key: 'inputImage',
+    default: null,
+});

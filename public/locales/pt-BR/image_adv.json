@@ -91,6 +91,7 @@
             "title": "Entrada",
             "webcam": "Webcam",
             "file": "Arquivo",
+            "device": "Telefone",
             "switchOn": "Ligar",
             "switchOff": "Desligar",
             "upload": "Fazer carregamento ou soltar arquivo aqui"

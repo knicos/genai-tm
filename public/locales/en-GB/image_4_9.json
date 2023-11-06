@@ -91,6 +91,7 @@
             "title": "Input",
             "webcam": "Webcam",
             "file": "File",
+            "device": "Device",
             "switchOn": "On",
             "switchOff": "Off",
             "upload": "Upload or drop file here"

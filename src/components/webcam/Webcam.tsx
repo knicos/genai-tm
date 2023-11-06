@@ -139,6 +139,15 @@ export function Webcam({
     }, [facing, onActivated]);
 
     useEffect(() => {
+        return () => {
+            loopRef.current = undefined;
+            if (webcam?.webcam.srcObject) {
+                webcam.stop();
+            }
+        };
+    }, []);
+
+    useEffect(() => {
         /*if (requestRef.current >= 0) {
             console.log('STOP');
             loopRef.current = undefined;

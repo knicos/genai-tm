@@ -18,7 +18,7 @@ const IconButton = styled(MIconButton)({
 
 interface Props {
     image: HTMLCanvasElement;
-    onDelete: (index: number) => void;
+    onDelete?: (index: number) => void;
     index: number;
     status: SampleStateValue;
     disabled?: boolean;
@@ -44,20 +44,24 @@ export default function Sample({ image, index, onDelete, status, disabled }: Pro
         }
     }, [image]);
 
-    const doClick = useCallback(() => onDelete(index), [onDelete, index]);
+    const doClick = useCallback(() => {
+        if (onDelete) onDelete(index);
+    }, [onDelete, index]);
 
     return (
         <div
             className={style[`sampleImage-${status}`]}
             data-testid={`sample-${index}`}
         >
-            <IconButton
-                aria-label={t<string>('trainingdata.aria.delete')}
-                onClick={doClick}
-                disabled={disabled}
-            >
-                <DeleteForeverIcon />
-            </IconButton>
+            {onDelete && (
+                <IconButton
+                    aria-label={t<string>('trainingdata.aria.delete')}
+                    onClick={doClick}
+                    disabled={disabled}
+                >
+                    <DeleteForeverIcon />
+                </IconButton>
+            )}
             <img
                 ref={ref}
                 alt={''}

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Webcam } from '../webcam/Webcam';
 import Skeleton from '@mui/material/Skeleton';
 

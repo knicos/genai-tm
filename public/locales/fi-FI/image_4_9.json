@@ -90,7 +90,8 @@
         "labels": {
             "title": "Syöte",
             "webcam": "Webkamera",
-            "file": "TIedosto",
+            "file": "Tiedosto",
+            "device": "Laite",
             "switchOn": "Päällä",
             "switchOff": "Pois päältä",
             "upload": "lataa tai pudota tiedosto tähän"

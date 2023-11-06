@@ -90,7 +90,8 @@
         "labels": {
             "title": "Syöte",
             "webcam": "Webkamera",
-            "file": "TIedosto",
+            "file": "Tiedosto",
+            "device": "Laite",
             "switchOn": "Päällä",
             "switchOff": "Pois päältä",
             "upload": "lataa tai pudota tiedosto tähän"
@@ -134,8 +135,8 @@
             "linkError": "Linkkiä ei tueta",
             "embedInfo": "Näytä kuvia tai videoita linkistä. (Esimerksi YouTube, Vimeo, SoundCloud)",
             "voiceRecording": "Äänite",
-            "dropError": "Only images or sounds can be dropped here",
-            "loop": "Loop"
+            "dropError": "Tähän voi pudottaa vai kuvia tai ääniä",
+            "loop": "Toista"
         },
         "aria": {
             "message": "tuloksen teksti",
@@ -148,7 +149,7 @@
             "stop": "Pysäytä",
             "play": "aloita",
             "behaviourCard": "toiminto {{name}}lle",
-            "loop": "Loop"
+            "loop": "Toista"
         }
     },
     "stepper": {
@@ -162,7 +163,7 @@
     "webcam": {
         "aria": {
             "video": "webkameran syöte",
-            "flip": "Flip to different camera"
+            "flip": "Vaihda kameraa"
         }
     },
     "widget": {
@@ -184,9 +185,9 @@
             "close": "Close"
         },
         "labels": {
-            "title": "Share",
-            "includeSamples": "Include sample images",
-            "instructions": "Copy the link to use the classifier in other applications such as <scratchLink>Scratch</scratchLink>. The link will only work if you keep this browser tab open, or if you save your project and open in again later."
+            "title": "Jaa",
+            "includeSamples": "Liitä opetuskuvat mukaan",
+            "instructions": "Kopioimalla linkin luokittelijaasi voi käyttää muissa sovelluksissa kuten <scratchLink>Scratch</scratchLink>. Linkki toimii niin kauan kuin tämä välilehti on auki, tai jos talletat projektin ja avaat sen myöhemmin uudelleen."
         }
     }
 }

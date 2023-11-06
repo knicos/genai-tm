@@ -11,6 +11,7 @@ import {
     iceConfig,
     shareSamples,
     IClassification,
+    inputImage,
     //p2pActive,
 } from '../../state';
 import { Peer } from 'peerjs';
@@ -84,6 +85,7 @@ export default function PeerDeployer() {
     const cache = useRef<CacheState>({ model, behaviours });
     const blob = useRef<ModelContents | null>(null);
     const ice = useRecoilValue(iceConfig);
+    const [input, setInput] = useRecoilState(inputImage);
 
     useEffect(() => {
         if (channelRef.current) {
@@ -144,17 +146,21 @@ export default function PeerDeployer() {
                 } else if (ev?.event === 'add_sample') {
                     const sev = data as AddSampleEvent;
                     const newImage = await canvasFromURL(sev.data);
-                    setClassData((old) => {
-                        let newData = [...old];
-                        if (newData.length > sev.index) {
-                            newData[sev.index] = {
-                                samples: [{ data: newImage, id: sev.id }, ...newData[sev.index].samples],
-                                label: old[sev.index].label,
-                            };
-                            conn.send({ event: 'sample_state', state: 'added', id: sev.id });
-                        }
-                        return newData;
-                    });
+                    if (sev.index === -1) {
+                        setInput(newImage);
+                    } else {
+                        setClassData((old) => {
+                            let newData = [...old];
+                            if (newData.length > sev.index) {
+                                newData[sev.index] = {
+                                    samples: [{ data: newImage, id: sev.id }, ...newData[sev.index].samples],
+                                    label: old[sev.index].label,
+                                };
+                                conn.send({ event: 'sample_state', state: 'added', id: sev.id });
+                            }
+                            return newData;
+                        });
+                    }
                 } else if (ev?.event === 'delete_sample') {
                     const sev = data as DeleteSampleEvent;
                     setClassData((old) => {

@@ -10,6 +10,9 @@
             "share": "Compartilhar com outros dispositivos"
         }
     },
+    "testInput": {
+        "title": "Entrada"
+    },
     "collect": {
         "samplePrompt": "Tire fotos ou carregue imagens aqui.",
         "actions": {

@@ -10,6 +10,9 @@
             "share": "Share to other devices"
         }
     },
+    "testInput": {
+        "title": "Syöte"
+    },
     "collect": {
         "samplePrompt": "Ota kuvia tai lataa kuvia tästä.",
         "actions": {

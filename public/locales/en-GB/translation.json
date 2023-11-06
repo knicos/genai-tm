@@ -10,6 +10,9 @@
             "share": "Share to other devices"
         }
     },
+    "testInput": {
+        "title": "Input"
+    },
     "collect": {
         "samplePrompt": "Take photos or upload images here.",
         "actions": {

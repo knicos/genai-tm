@@ -24,6 +24,10 @@ import WebcamInput from './WebcamInput';
 import { useTabActive } from '../../util/useTabActive';
 import AlertModal from '../AlertModal/AlertModal';
 import { useTeachableModel } from '../../util/TeachableModel';
+import { inputImage, p2pActive, sessionCode, sharingActive } from '../../state';
+import { useRecoilValue, useRecoilState } from 'recoil';
+import BusyButton from '../BusyButton/BusyButton';
+import QRCode from '../QRCode/QRCode';
 
 interface Props {
     disabled?: boolean;
@@ -32,24 +36,34 @@ interface Props {
 
 export default function Input(props: Props) {
     const { namespace, enableFileInput } = useVariant();
-    const { t } = useTranslation(namespace);
+    const { t, i18n } = useTranslation(namespace);
     const [enableInputSwitch, setEnableInput] = useState(true);
     const [tabIndex, setTabIndex] = useState(0);
     const fileRef = useRef<HTMLInputElement>(null);
     const fileImageRef = useRef<HTMLDivElement>(null);
+    const remoteImageRef = useRef<HTMLDivElement>(null);
     const [file, setFile] = useState<HTMLCanvasElement | null>(null);
     const isActive = useTabActive();
     const [showDropError, setShowDropError] = useState(false);
     const { predict, canPredict, draw, imageSize } = useTeachableModel();
+    const [remoteInput, setRemoteInput] = useRecoilState(inputImage);
+    const code = useRecoilValue(sessionCode);
+    const sharing = useRecoilValue(sharingActive);
+    const [p2penabled, setP2PEnabled] = useRecoilState(p2pActive);
 
     const enableInput = isActive && enableInputSwitch;
+
+    const doCollab = useCallback(() => {
+        setP2PEnabled(true);
+    }, [setP2PEnabled]);
 
     const doChangeTab = useCallback(
         (event: React.SyntheticEvent, newValue: number) => {
             setTabIndex(newValue);
             setFile(null);
+            setRemoteInput(null);
         },
-        [setTabIndex]
+        [setTabIndex, setRemoteInput]
     );
 
     useEffect(() => {
@@ -62,6 +76,16 @@ export default function Input(props: Props) {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [file, fileImageRef.current]);
 
+    useEffect(() => {
+        if (remoteImageRef.current && remoteInput) {
+            while (remoteImageRef.current.firstChild) {
+                remoteImageRef.current.removeChild(remoteImageRef.current.firstChild);
+            }
+            remoteImageRef.current.appendChild(remoteInput);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [remoteInput, remoteImageRef.current]);
+
     const doPrediction = useCallback(
         async (image: HTMLCanvasElement) => {
             if (canPredict) {
@@ -72,10 +96,12 @@ export default function Input(props: Props) {
     );
 
     useEffect(() => {
-        if (file) {
+        if (tabIndex === 2 && remoteInput) {
+            doPrediction(remoteInput);
+        } else if (file) {
             doPrediction(file);
         }
-    }, [file, doPrediction]);
+    }, [tabIndex, remoteInput, file, doPrediction]);
 
     const [dropProps, drop] = useDrop({
         accept: [NativeTypes.FILE, NativeTypes.URL, NativeTypes.HTML],
@@ -179,6 +205,12 @@ export default function Input(props: Props) {
                             id="input-tab-1"
                             aria-controls="input-panel-1"
                         />
+                        <Tab
+                            disabled={!canPredict}
+                            label={t<string>('input.labels.device')}
+                            id="input-tab-2"
+                            aria-controls="input-panel-2"
+                        />
                     </Tabs>
                     <TabPanel
                         value={tabIndex}
@@ -187,7 +219,7 @@ export default function Input(props: Props) {
                     >
                         <WebcamInput
                             enabled={canPredict}
-                            enableInput={enableInput}
+                            enableInput={enableInput && tabIndex === 0}
                             doPrediction={doPrediction}
                             doPostProcess={doPostProcess}
                             size={imageSize}
@@ -223,6 +255,41 @@ export default function Input(props: Props) {
                             />
                         )}
                         {!file && (
+                            <Skeleton
+                                sx={{ marginTop: '1rem' }}
+                                variant="rounded"
+                                width={imageSize}
+                                height={imageSize}
+                            />
+                        )}
+                    </TabPanel>
+                    <TabPanel
+                        value={tabIndex}
+                        index={2}
+                        enabled={enableInput}
+                    >
+                        <div className={style.qrcode}>
+                            {!sharing && (
+                                <BusyButton
+                                    busy={p2penabled && !sharing}
+                                    onClick={doCollab}
+                                    variant="contained"
+                                    style={{ margin: '1rem 0' }}
+                                >
+                                    {t('trainingdata.actions.collaborate')}
+                                </BusyButton>
+                            )}
+                            {sharing && <QRCode url={`${window.location.origin}/input/${code}?lng=${i18n.language}`} />}
+                        </div>
+                        {!!remoteInput && (
+                            <div
+                                role="img"
+                                aria-label={t<string>('input.aria.imageFile')}
+                                ref={remoteImageRef}
+                                className={style.fileImage}
+                            />
+                        )}
+                        {!remoteInput && (
                             <Skeleton
                                 sx={{ marginTop: '1rem' }}
                                 variant="rounded"
