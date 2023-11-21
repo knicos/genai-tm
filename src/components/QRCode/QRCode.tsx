@@ -10,7 +10,7 @@ export default function QRCode({ url }: Props) {
 
     useEffect(() => {
         if (canvas.current) {
-            qr.toCanvas(canvas.current, url).catch((e) => console.error(e));
+            qr.toCanvas(canvas.current, url, { width: 250 }).catch((e) => console.error(e));
         }
     }, [url]);
 
