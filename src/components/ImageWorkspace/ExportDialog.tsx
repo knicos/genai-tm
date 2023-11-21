@@ -14,6 +14,7 @@ import { CircularProgress, IconButton } from '@mui/material';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
+import style from './TeachableMachine.module.css';
 
 export interface SaveProperties {
     samples: boolean;
@@ -89,6 +90,7 @@ export default function ExportDialog({ open, onClose, ready }: Props) {
                             }}
                         />
                     </p>
+                    <p className={style.codeShare}>{code}</p>
                     <TextField
                         inputRef={textRef}
                         sx={{ marginTop: '2rem' }}

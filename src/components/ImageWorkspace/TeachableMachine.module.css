@@ -59,3 +59,10 @@
 .padded {
     margin: 1rem 0;
 }
+
+.codeShare {
+    font-size: 2rem;
+    font-weight: bold;
+    text-align: center;
+    margin-top: 1rem;
+}
