@@ -25,18 +25,21 @@ export default function RawOutput({ scaleFactor, behaviours, predicted, volume, 
     const currentBehaviour = predicted < behaviours.length ? behaviours[predicted] : null;
     const hasImage = !!currentBehaviour?.image || !!currentBehaviour?.text;
 
+    // eslint-disable-next-line no-restricted-globals
+    const realScaleFactor = screen.width < 400 * scaleFactor ? screen.width / 400 : scaleFactor;
+
     return (
         <div
             style={{
-                width: `${Math.floor(400 * scaleFactor)}px`,
-                height: `${Math.floor(350 * scaleFactor)}px`,
+                width: `${Math.floor(400 * realScaleFactor)}px`,
+                height: `${Math.floor(350 * realScaleFactor)}px`,
             }}
         >
             <div
                 aria-label={t<string>('output.aria.display', { index: predicted + 1 })}
                 className={style.container}
                 style={{
-                    transform: `scale(${scaleFactor})`,
+                    transform: `scale(${realScaleFactor})`,
                 }}
             >
                 {error && (

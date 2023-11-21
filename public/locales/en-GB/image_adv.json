@@ -4,6 +4,7 @@
         "about": "About",
         "save": "Save",
         "load": "Open",
+        "language": "Language",
         "reminder": "Remember to save your classifier."
     },
     "save": {

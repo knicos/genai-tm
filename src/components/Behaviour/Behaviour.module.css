@@ -1,8 +1,8 @@
 @value primary, primaryHover from "../../style/colours.module.css";
 
 .widget {
-    width: 100%;
-    max-width: 305px;
+    /*width: 100%;*/
+    max-width: 100%;
 }
 
 .container {
@@ -30,7 +30,9 @@
     justify-content: flex-start;
     border-radius: 6px;
     border: 1px solid white;
-    height: 58px;
+    min-height: 58px;
+    text-wrap: nowrap;
+    flex-wrap: wrap;
 }
 
 .imageContainer {

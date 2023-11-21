@@ -88,12 +88,18 @@ export default function Embed({ behaviour, setBehaviour, firstBehaviour }: Props
                 />
             </div>
             {details.type === 'plain' && (
-                <Alert severity="error">
+                <Alert
+                    severity="error"
+                    sx={{ maxWidth: '280px' }}
+                >
                     <p>{t('behaviours.labels.linkError')}</p>
                 </Alert>
             )}
             {firstBehaviour && (
-                <Alert severity="info">
+                <Alert
+                    severity="info"
+                    sx={{ maxWidth: '280px' }}
+                >
                     <p>{t('behaviours.labels.embedInfo')}</p>
                 </Alert>
             )}

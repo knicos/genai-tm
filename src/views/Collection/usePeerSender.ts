@@ -120,7 +120,6 @@ export function usePeerSender(
 
     useEffect(() => {
         if (status === 'connecting' && peerRef.current) {
-            console.log('Connecting to peer', code);
             if (!peerRef.current.open) {
                 setStatus('disconnected');
                 peerRef.current.reconnect();
@@ -137,7 +136,6 @@ export function usePeerSender(
             }, TIMEOUT_P2P);
 
             conn.on('iceStateChanged', (state: string) => {
-                console.log('ICE', state);
                 if (state === 'disconnected' || state === 'failed') {
                     conn.close();
                 }

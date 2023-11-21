@@ -10,7 +10,7 @@ import style from './AppBar.module.css';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { fileData, saveState } from '../../state';
 import SettingsIcon from '@mui/icons-material/Settings';
-import { IconButton, Link as MUILink } from '@mui/material';
+import { IconButton, Link as MUILink, NativeSelect } from '@mui/material';
 import { createSearchParams, useNavigate, useSearchParams, Link } from 'react-router-dom';
 import Suggestion from '../Suggestion/Suggestion';
 
@@ -23,6 +23,7 @@ export const LANGS = [
     { name: 'en-GB', label: 'English' },
     { name: 'fi-FI', label: 'Suomi' },
     { name: 'pt-BR', label: 'Português Brasileiro' },
+    { name: 'sv', label: 'Svenska' },
 ];
 
 export default function ApplicationBar({ showReminder, onSave }: Props) {
@@ -49,8 +50,8 @@ export default function ApplicationBar({ showReminder, onSave }: Props) {
     );
 
     const doChangeLanguage = useCallback(
-        (e: React.MouseEvent<HTMLButtonElement>) => {
-            i18n.changeLanguage(e.currentTarget.getAttribute('data-lng') || 'en');
+        (e: React.ChangeEvent<HTMLSelectElement>) => {
+            i18n.changeLanguage(e.target.value || 'en-GB');
         },
         [i18n]
     );
@@ -121,24 +122,22 @@ export default function ApplicationBar({ showReminder, onSave }: Props) {
                     </BusyButton>
                 </div>
                 <div className={showSettings ? style.langBarWithSettings : style.langBar}>
-                    {LANGS.map((lng) => (
-                        <button
-                            key={lng.name}
-                            data-testid={`lang-${lng.name}`}
-                            data-lng={lng.name}
-                            onClick={doChangeLanguage}
-                            aria-label={lng.label}
-                            className={i18n.language === lng.name ? style.selected : ''}
-                            aria-pressed={i18n.language === lng.name}
-                        >
-                            <img
-                                width={24}
-                                height={24}
-                                src={`/icons/${lng.name}.svg`}
-                                alt={lng.label}
-                            />
-                        </button>
-                    ))}
+                    <NativeSelect
+                        value={i18n.language}
+                        onChange={doChangeLanguage}
+                        variant="outlined"
+                        data-testid="select-lang"
+                        inputProps={{ 'aria-label': t<string>('app.language') }}
+                    >
+                        {LANGS.map((lng) => (
+                            <option
+                                key={lng.name}
+                                value={lng.name}
+                            >
+                                {lng.label}
+                            </option>
+                        ))}
+                    </NativeSelect>
                 </div>
                 {showSettings && (
                     <IconButton

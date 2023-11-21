@@ -19,6 +19,7 @@ i18n.use(detector)
             escapeValue: false, // react already safes from xss
         },
         fallbackLng: 'en-GB',
+        supportedLngs: ['en-GB', 'fi-FI', 'sv', 'pt-BR'],
     });
 
 export default i18n;

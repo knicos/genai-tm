@@ -4,6 +4,7 @@
         "about": "Tietoa sovelluksesta",
         "save": "Tallenna",
         "load": "Avaa",
+        "language": "Language",
         "reminder": "Remember to save your classifier."
     },
     "save": {

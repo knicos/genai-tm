@@ -23,8 +23,7 @@ describe('AppBar component', () => {
         render(<ApplicationBar onSave={saveFn} />, { wrapper: TestWrapper });
         expect(screen.getByTestId('open-project')).toBeInTheDocument();
         expect(screen.getByTestId('save-project')).toBeInTheDocument();
-        expect(screen.getByTestId('lang-en-GB')).toBeInTheDocument();
-        expect(screen.getByTestId('lang-fi-FI')).toBeInTheDocument();
+        expect(screen.getByText('English')).toBeInTheDocument();
         expect(screen.getByText('app.title')).toBeInTheDocument();
     });
 
@@ -43,8 +42,8 @@ describe('AppBar component', () => {
 
         render(<ApplicationBar onSave={saveFn} />, { wrapper: TestWrapper });
 
-        const buttonElement = screen.getByTestId('lang-fi-FI');
-        await user.click(buttonElement);
+        const buttonElement = screen.getByLabelText('app.language');
+        await user.selectOptions(buttonElement, 'fi-FI');
         expect(changeLangFn).toHaveBeenCalledWith('fi-FI');
     });
 });

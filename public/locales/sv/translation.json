@@ -1,0 +1,50 @@
+{
+    "deploy": {
+        "actions": {
+            "copy": "Kopiera"
+        },
+        "labels": {
+            "notFound": "Klassificeraren hittas inte.",
+            "dropHere": "Släpp bilden här",
+            "errorInfo": "Denna sida existerar endast om du håller klassificerarn öppen i en flik i webbläsaren. Det kan också finnas säkerhetsbegränsningar som gör att den inte kan hittas.",
+            "share": "Dela till andra enheter"
+        }
+    },
+    "collect": {
+        "samplePrompt": "Ta foto eller ladda upp bilder här.",
+        "actions": {
+            "upload": "Ladda upp"
+        },
+        "sampleCount": "{{räkna}} prover",
+        "connecting": "Ansluter...",
+        "disconnected": "Frånkopplad",
+        "failed": "Misslyckades",
+        "failedMessage": "Denna klassificerare kunde inte nås från din enhet",
+        "dropError": "Endast bilder kan släppas här",
+        "relayWarning": "Din data skickas genom vår server. Du kanske vill använda en annan WiFi anslutning för att undvika detta."
+    },
+    "about": {
+        "back": "Tillbaka",
+        "title": "Om",
+        "privacyTitle": "Integritetsmeddelande",
+        "privacy": "We samlar inte in och sparar inte personlig information om din användning av denna applikation. Kakor används inte i denna applikation och din aktivitet spåras inte på något sätt. Din provdata och dina modeller förblir på din enhet huruvida du inte väljer att dela dem. Vid delning lagras data inte i våra servrar och blir otillgänglig för andra om du stänger fliken i din webbläsare."
+    },
+    "settings": {
+        "title": "Inställningar",
+        "actions": {
+            "save": "Spara",
+            "reset": "Återställ",
+            "cancel": "Avbryt"
+        },
+        "labels": {
+            "language": "Språk",
+            "model": "Modell",
+            "variant": "Gränssnittsvariant",
+            "advanced": "Avancerad"
+        },
+        "values": {
+            "models": ["Bild (MobileNet)", "Pose (PoseNet)"],
+            "variants": ["Allmän användning", "Klassrum"]
+        }
+    }
+}

@@ -23,32 +23,32 @@
     height: 100%;
     align-items: center;
     margin-right: 0.5rem;
+    color: white;
 }
 
-.langBar button {
-    display: flex;
-    border: 2px solid transparent;
-    background: none;
-    outline: none;
-    padding: 0;
-    cursor: pointer;
-    box-sizing: border-box;
+.langBar :global .MuiNativeSelect-root::before {
+    border-bottom: 1px solid white;
 }
 
-.langBar button:focus {
-    border: 2px solid white;
-    border-radius: 50%;
+.langBar :global .MuiNativeSelect-root:hover::before {
+    border-bottom: 2px solid white;
 }
 
-.langBar button.selected {
-    border: 2px solid white;
-    border-radius: 50%;
+.langBar :global .Mui-focused {
+    border-bottom: 1px solid #444;
 }
 
-.langBar img {
-    border-radius: 50%;
-    overflow: hidden;
-    box-sizing: content-box;
+.langBar :global .MuiNativeSelect-icon {
+    color: white;
+}
+
+.langBar select {
+    color: white;
+    font-size: 0.8rem;
+}
+
+.langBar option {
+    color: black;
 }
 
 .langBarWithSettings {
