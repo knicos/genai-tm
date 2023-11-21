@@ -20,6 +20,15 @@
             "cancel": "Cancel"
         }
     },
+    "load": {
+        "title": "Open Classifier",
+        "code": "Share code",
+        "or": "Or",
+        "actions": {
+            "openFile": "Open File",
+            "cancel": "Cancel"
+        }
+    },
     "alignment": {
         "aria": {
             "left": "left align",

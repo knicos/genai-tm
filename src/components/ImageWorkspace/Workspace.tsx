@@ -20,6 +20,7 @@ import Snackbar from '@mui/material/Snackbar';
 import DeployWrapper from './DeployWrapper';
 import ExportDialog from './ExportDialog';
 import { useModelCreator } from '../../util/TeachableModel';
+import OpenDialog from './OpenDialog';
 
 const SAVE_PERIOD = 5 * 60 * 1000; // 5 mins
 
@@ -217,6 +218,7 @@ export default function Workspace({ step, visitedStep, onComplete, saveTrigger, 
                 trigger={saveTrigger}
                 onSave={doSave}
             />
+            <OpenDialog />
             <ExportDialog
                 open={showShare}
                 onClose={doCloseShare}

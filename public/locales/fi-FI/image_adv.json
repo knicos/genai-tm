@@ -20,6 +20,15 @@
             "cancel": "Peruuta"
         }
     },
+    "load": {
+        "title": "Avaa",
+        "code": "Share code",
+        "or": "tai",
+        "actions": {
+            "openFile": "Avaa tiedosto",
+            "cancel": "Peruuta"
+        }
+    },
     "alignment": {
         "aria": {
             "left": "tasaa vasemmalle",

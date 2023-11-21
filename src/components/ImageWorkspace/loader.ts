@@ -2,7 +2,7 @@ import JSZip from 'jszip';
 import { useEffect } from 'react';
 import * as tf from '@tensorflow/tfjs';
 import { BehaviourType } from '../Behaviour/Behaviour';
-import { IClassification, behaviourState, classState, fileData, sessionCode } from '../../state';
+import { IClassification, behaviourState, classState, fileData, loadState, sessionCode } from '../../state';
 import { TeachableModel, useModelLoader, Metadata } from '../../util/TeachableModel';
 import { useRecoilState, useSetRecoilState } from 'recoil';
 import { useSearchParams } from 'react-router-dom';
@@ -161,12 +161,14 @@ export function ModelLoader({ onLoaded, onError }: Props) {
     const setBehaviours = useSetRecoilState(behaviourState);
     const setCode = useSetRecoilState(sessionCode);
     const setData = useSetRecoilState(classState);
+    const setLoading = useSetRecoilState(loadState);
     const loadModel = useModelLoader();
 
     useEffect(() => {
         if (params.has('project')) {
             const project = params.get('project');
             if (project) {
+                setLoading(true);
                 const url = mapToURL(project);
                 if (!url) return;
 
@@ -174,6 +176,7 @@ export function ModelLoader({ onLoaded, onError }: Props) {
                     .then(async (result) => {
                         if (result.status !== 200) {
                             if (onError) onError(result);
+                            setLoading(false);
                             return;
                         }
                         const project = await loadProject(await result.blob());
@@ -183,6 +186,7 @@ export function ModelLoader({ onLoaded, onError }: Props) {
                         if (project.metadata && project.model && project.weights) {
                             loadModel(project.metadata, project.model, project.weights).then((result) => {
                                 if (project.behaviours) setBehaviours(project.behaviours);
+                                setLoading(false);
                                 if (result && onLoaded) {
                                     onLoaded(!!project.behaviours);
                                 }
@@ -191,13 +195,15 @@ export function ModelLoader({ onLoaded, onError }: Props) {
                     })
                     .catch((e) => {
                         if (onError) onError(e);
+                        setLoading(false);
                     });
             }
         }
-    }, [params, loadModel, onLoaded, setData, setCode, setBehaviours, onError]);
+    }, [params, loadModel, onLoaded, setData, setCode, setBehaviours, onError, setLoading]);
 
     useEffect(() => {
         if (projectFile) {
+            setLoading(true);
             loadProject(projectFile)
                 .then((project) => {
                     if (project.id) setCode(project.id);
@@ -206,6 +212,7 @@ export function ModelLoader({ onLoaded, onError }: Props) {
                     if (project.metadata && project.model && project.weights) {
                         loadModel(project.metadata, project.model, project.weights).then((result) => {
                             if (project.behaviours) setBehaviours(project.behaviours);
+                            setLoading(false);
                             if (result && onLoaded) {
                                 onLoaded(!!project.behaviours);
                             }
@@ -220,9 +227,10 @@ export function ModelLoader({ onLoaded, onError }: Props) {
                 .catch((e) => {
                     if (onError) onError(e);
                     setProjectFile(null);
+                    setLoading(false);
                 });
         }
-    }, [projectFile, loadModel, setProjectFile, onLoaded, setData, setCode, setBehaviours, onError]);
+    }, [projectFile, loadModel, setProjectFile, onLoaded, setData, setCode, setBehaviours, onError, setLoading]);
 
     return null;
 }

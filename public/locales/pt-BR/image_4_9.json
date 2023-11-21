@@ -20,6 +20,15 @@
             "cancel": "Cancelar"
         }
     },
+    "load": {
+        "title": "Carregar",
+        "code": "Share code",
+        "or": "ou",
+        "actions": {
+            "openFile": "Carregar",
+            "cancel": "Cancelar"
+        }
+    },
     "alignment": {
         "aria": {
             "left": "alinhar à esquerda",

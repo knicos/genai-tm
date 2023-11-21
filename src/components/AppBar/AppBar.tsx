@@ -7,8 +7,8 @@ import { useVariant } from '../../util/variant';
 import SaveAltIcon from '@mui/icons-material/SaveAlt';
 import FileOpenIcon from '@mui/icons-material/FileOpen';
 import style from './AppBar.module.css';
-import { useRecoilState, useRecoilValue } from 'recoil';
-import { fileData, saveState } from '../../state';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
+import { fileData, loadState, saveState, showOpenDialog } from '../../state';
 import SettingsIcon from '@mui/icons-material/Settings';
 import { IconButton, Link as MUILink, NativeSelect } from '@mui/material';
 import { createSearchParams, useNavigate, useSearchParams, Link } from 'react-router-dom';
@@ -30,24 +30,17 @@ export default function ApplicationBar({ showReminder, onSave }: Props) {
     const [params] = useSearchParams();
     const { namespace, showSettings, showSaveReminder } = useVariant();
     const { t, i18n } = useTranslation(namespace);
-    const [projectFile, setProject] = useRecoilState(fileData);
+    const [projectFile] = useRecoilState(fileData);
     const saving = useRecoilValue(saveState);
     const navigate = useNavigate();
     const saveButtonRef = useRef(null);
     const [reminder, setReminder] = useState(true);
+    const setShowOpenDialog = useSetRecoilState(showOpenDialog);
+    const isloading = useRecoilValue(loadState);
 
     const openFile = useCallback(() => {
-        document.getElementById('openfile')?.click();
-    }, []);
-
-    const loadProject = useCallback(
-        (e: React.ChangeEvent<HTMLInputElement>) => {
-            if (e.currentTarget.files) {
-                setProject(e.currentTarget.files[0]);
-            }
-        },
-        [setProject]
-    );
+        setShowOpenDialog(true);
+    }, [setShowOpenDialog]);
 
     const doChangeLanguage = useCallback(
         (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -91,16 +84,9 @@ export default function ApplicationBar({ showReminder, onSave }: Props) {
                     />
                     <h1>{t('app.title')}</h1>
                 </Link>
-                <input
-                    type="file"
-                    id="openfile"
-                    onChange={loadProject}
-                    hidden={true}
-                    accept=".zip,application/zip"
-                />
                 <div className={style.buttonBar}>
                     <BusyButton
-                        busy={!!projectFile}
+                        busy={isloading}
                         data-testid="open-project"
                         color="inherit"
                         variant="outlined"

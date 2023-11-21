@@ -20,6 +20,15 @@
             "cancel": "avbryt"
         }
     },
+    "load": {
+        "title": "Öppna",
+        "code": "Share code",
+        "or": "eller",
+        "actions": {
+            "openFile": "Öppna",
+            "cancel": "avbryt"
+        }
+    },
     "alignment": {
         "aria": {
             "left": "vänsterställd",

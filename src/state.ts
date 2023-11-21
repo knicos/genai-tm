@@ -55,6 +55,11 @@ export const saveState = atom<SaveProperties | null>({
     default: null,
 });
 
+export const loadState = atom<boolean>({
+    key: 'loading',
+    default: false,
+});
+
 export const sessionCode = atom<string>({
     key: 'sessionCode',
     default: randomId(8),
@@ -105,4 +110,9 @@ export const shareSamples = atom<boolean>({
 export const inputImage = atom<HTMLCanvasElement | null>({
     key: 'inputImage',
     default: null,
+});
+
+export const showOpenDialog = atom<boolean>({
+    key: 'showOpenDialog',
+    default: false,
 });

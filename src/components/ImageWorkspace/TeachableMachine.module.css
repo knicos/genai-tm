@@ -66,3 +66,10 @@
     text-align: center;
     margin-top: 1rem;
 }
+
+.openColumn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}

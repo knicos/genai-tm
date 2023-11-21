@@ -7,6 +7,15 @@
         "language": "Language",
         "reminder": "Remember to save your classifier."
     },
+    "load": {
+        "title": "Open Classifier",
+        "code": "Share code",
+        "or": "Or",
+        "actions": {
+            "openFile": "Open File",
+            "cancel": "Cancel"
+        }
+    },
     "save": {
         "title": "Save Classifier",
         "noModel": "You need to create a classifier first.",
