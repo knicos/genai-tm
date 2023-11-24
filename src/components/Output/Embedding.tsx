@@ -1,4 +1,3 @@
-import React from 'react';
 import ReactPlayer from 'react-player/lazy';
 import { linkType } from '../Behaviour/links';
 

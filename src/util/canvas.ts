@@ -55,7 +55,7 @@ export async function canvasesFromFiles(files: File[], size = 224): Promise<HTML
     if (filtered.length === 0) {
         return [];
     }
-    const promises = filtered.map((file) => canvasFromFile(file));
+    const promises = filtered.map((file) => canvasFromFile(file, size));
     return Promise.all(promises);
 }
 
@@ -90,6 +90,7 @@ export function canvasFromURL(url: string, size = 224) {
     });
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export async function canvasFromDataTransfer(item: any, size = 224): Promise<HTMLCanvasElement[]> {
     if (item?.files?.length > 0) {
         const files = item.files as File[];

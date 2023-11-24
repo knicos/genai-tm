@@ -1,19 +1,19 @@
-import React from 'react';
+import { describe, it, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import ImageBehaviour from './Image';
 import userEvent from '@testing-library/user-event';
 
 describe('Image behaviour component', () => {
-    it('renders without a behaviour', async () => {
-        const setBehaviour = jest.fn();
+    it('renders without a behaviour', async ({ expect }) => {
+        const setBehaviour = vi.fn();
         render(<ImageBehaviour setBehaviour={setBehaviour} />);
         expect(screen.getByTestId('image-upload')).toBeInTheDocument();
         expect(screen.getByTestId('image-delete')).toBeDisabled();
         expect(screen.getByTestId('image-skeleton')).toBeInTheDocument();
     });
 
-    it('renders with a behaviour', async () => {
-        const setBehaviour = jest.fn();
+    it('renders with a behaviour', async ({ expect }) => {
+        const setBehaviour = vi.fn();
         render(
             <ImageBehaviour
                 setBehaviour={setBehaviour}
@@ -27,8 +27,8 @@ describe('Image behaviour component', () => {
         expect(screen.getByTestId('icon-image')).toBeInTheDocument();
     });
 
-    it('can delete a behaviour', async () => {
-        const setBehaviour = jest.fn();
+    it('can delete a behaviour', async ({ expect }) => {
+        const setBehaviour = vi.fn();
         const user = userEvent.setup();
 
         render(

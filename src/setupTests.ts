@@ -2,35 +2,37 @@
 // allows you to do things like:
 // expect(element).toHaveTextContent(/react/i)
 // learn more: https://github.com/testing-library/jest-dom
-import '@testing-library/jest-dom';
+import '@testing-library/jest-dom/vitest';
 import crypto from 'crypto';
 import mockReact from 'react';
+import { vi, afterEach } from 'vitest';
+import { cleanup } from '@testing-library/react';
 
 global.crypto = crypto.webcrypto as Crypto;
 
 class BC {
     onmessage: ((ev: MessageEvent<any>) => any) | null = null;
-    postMessage = jest.fn();
-    close = jest.fn();
+    postMessage = vi.fn();
+    close = vi.fn();
     onmessageerror: ((ev: MessageEvent<any>) => any) | null = null;
     name = 'noname';
-    addEventListener = jest.fn();
-    removeEventListener = jest.fn();
-    dispatchEvent = jest.fn();
+    addEventListener = vi.fn();
+    removeEventListener = vi.fn();
+    dispatchEvent = vi.fn();
 }
 
 global.BroadcastChannel = BC;
 
-jest.mock('react-dnd', () => ({
+vi.mock('react-dnd', () => ({
     useDrop: () => [{}, mockReact.createRef()],
     DndProvider: ({ children }: { children: unknown }) => children,
 }));
-jest.mock('react-dnd-html5-backend', () => ({
+vi.mock('react-dnd-html5-backend', () => ({
     NativeTypes: {
         FILE: Symbol(0),
         URL: Symbol(1),
     },
-    HTML5Backend: jest.fn(),
+    HTML5Backend: vi.fn(),
 }));
 
 class ResizeObserver {
@@ -40,3 +42,8 @@ class ResizeObserver {
 }
 
 global.ResizeObserver = ResizeObserver;
+
+// runs a cleanup after each test case (e.g. clearing jsdom)
+afterEach(() => {
+    cleanup();
+});

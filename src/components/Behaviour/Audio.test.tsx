@@ -1,19 +1,19 @@
-import React from 'react';
+import { describe, it, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import Sound from './Audio';
 import userEvent from '@testing-library/user-event';
 
 describe('Audio behaviour component', () => {
-    it('renders without a behaviour', async () => {
-        const setBehaviour = jest.fn();
+    it('renders without a behaviour', async ({ expect }) => {
+        const setBehaviour = vi.fn();
         render(<Sound setBehaviour={setBehaviour} />);
         expect(screen.getByTestId('audio-upload')).toBeInTheDocument();
         expect(screen.getByTestId('audio-delete')).toBeDisabled();
         expect(screen.getByTestId('audio-play')).toBeDisabled();
     });
 
-    it('renders with a behaviour', async () => {
-        const setBehaviour = jest.fn();
+    it('renders with a behaviour', async ({ expect }) => {
+        const setBehaviour = vi.fn();
         render(
             <Sound
                 setBehaviour={setBehaviour}
@@ -28,8 +28,8 @@ describe('Audio behaviour component', () => {
         expect(screen.getByTestId('audio-play')).toBeEnabled();
     });
 
-    it('can delete a behaviour', async () => {
-        const setBehaviour = jest.fn();
+    it('can delete a behaviour', async ({ expect }) => {
+        const setBehaviour = vi.fn();
         const user = userEvent.setup();
 
         render(

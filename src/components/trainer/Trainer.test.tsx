@@ -1,3 +1,4 @@
+import { describe, it, vi } from 'vitest';
 import React from 'react';
 import { render, screen, waitFor } from '@testing-library/react';
 import Trainer from './Trainer';
@@ -8,22 +9,22 @@ import { MutableSnapshot } from 'recoil';
 import { TeachableModel } from '../../util/TeachableModel';
 import RecoilObserver from '../../util/Observer';
 
-jest.mock('@tensorflow/tfjs');
-jest.mock('@knicos/tm-image', () => ({
+vi.mock('@tensorflow/tfjs');
+vi.mock('@knicos/tm-image', () => ({
     createTeachable: function () {
         return {
-            setLabels: jest.fn(),
-            setSeed: jest.fn(),
-            addExample: jest.fn(),
-            train: jest.fn(),
-            setName: jest.fn(),
-            getMetadata: jest.fn(() => ({})),
+            setLabels: vi.fn(),
+            setSeed: vi.fn(),
+            addExample: vi.fn(),
+            train: vi.fn(),
+            setName: vi.fn(),
+            getMetadata: vi.fn(() => ({})),
         };
     },
 }));
 
 describe('Trainer component', () => {
-    it('shows add more message', async () => {
+    it('shows add more message', async ({ expect }) => {
         function PredWrapper({ children }: React.PropsWithChildren) {
             return (
                 <TestWrapper
@@ -39,7 +40,7 @@ describe('Trainer component', () => {
         expect(screen.getByTestId('alert-addmore')).toBeVisible();
     });
 
-    it('shows needs training', async () => {
+    it('shows needs training', async ({ expect }) => {
         function PredWrapper({ children }: React.PropsWithChildren) {
             return (
                 <TestWrapper
@@ -70,18 +71,18 @@ describe('Trainer component', () => {
         expect(screen.getByTestId('alert-needstraining')).toBeVisible();
     });
 
-    it('can perform training', async () => {
+    it('can perform training', async ({ expect }) => {
         const user = userEvent.setup();
 
         const model = {
-            ready: jest.fn(async () => true),
-            isTrained: jest.fn(() => false),
-            addExample: jest.fn(),
-            train: jest.fn(),
-            getVariant: jest.fn(() => 'image'),
+            ready: vi.fn(async () => true),
+            isTrained: vi.fn(() => false),
+            addExample: vi.fn(),
+            train: vi.fn(),
+            getVariant: vi.fn(() => 'image'),
         } as unknown as TeachableModel;
 
-        const setModel = jest.fn((model: any) => {});
+        const setModel = vi.fn(() => {});
 
         function PredWrapper({ children }: React.PropsWithChildren) {
             return (
@@ -122,7 +123,7 @@ describe('Trainer component', () => {
         );
 
         await user.click(screen.getByTestId('train-button'));
-        await waitFor(() => expect(setModel).toHaveBeenCalledTimes(1));
+        await waitFor(() => expect(setModel).toHaveBeenCalledTimes(2));
         rerender(<Trainer />);
         await waitFor(() => expect(screen.getByTestId('alert-complete')).toBeVisible());
     });

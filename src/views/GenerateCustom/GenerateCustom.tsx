@@ -1,4 +1,4 @@
-import React, { useState, useCallback, FormEvent, useEffect } from 'react';
+import { useState, useCallback, FormEvent, useEffect } from 'react';
 import { IVariantContext, VariantContext } from '../../util/variant';
 import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';

@@ -1,19 +1,19 @@
-import React from 'react';
+import { describe, it, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import SaveDialog from './SaveDialog';
 import userEvent from '@testing-library/user-event';
 import TestWrapper from '../../util/TestWrapper';
 
-jest.mock('../../util/TeachableModel', () => ({
+vi.mock('../../util/TeachableModel', () => ({
     useTeachableModel: function () {
         return { hasModel: true };
     },
 }));
 
 describe('SaveDialog component', () => {
-    it('renders open', async () => {
-        const trigger = jest.fn();
-        const onsave = jest.fn();
+    it('renders open', async ({ expect }) => {
+        const trigger = vi.fn();
+        const onsave = vi.fn();
         render(
             <SaveDialog
                 trigger={trigger}
@@ -26,10 +26,10 @@ describe('SaveDialog component', () => {
         expect(screen.getByTestId('check-save-behaviours')).toBeInTheDocument();
     });
 
-    it('can be canceled', async () => {
+    it('can be canceled', async ({ expect }) => {
         const user = userEvent.setup();
-        const trigger = jest.fn();
-        const onsave = jest.fn();
+        const trigger = vi.fn();
+        const onsave = vi.fn();
         render(
             <SaveDialog
                 trigger={trigger}
@@ -43,10 +43,10 @@ describe('SaveDialog component', () => {
         expect(trigger).toHaveBeenCalledTimes(1);
     });
 
-    it('can generate a save request', async () => {
+    it('can generate a save request', async ({ expect }) => {
         const user = userEvent.setup();
-        const trigger = jest.fn();
-        const onsave = jest.fn();
+        const trigger = vi.fn();
+        const onsave = vi.fn();
         render(
             <SaveDialog
                 trigger={trigger}

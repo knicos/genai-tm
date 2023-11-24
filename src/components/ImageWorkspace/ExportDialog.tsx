@@ -52,7 +52,7 @@ export default function ExportDialog({ open, onClose, ready }: Props) {
     const { t } = useTranslation(namespace);
     const textRef = useRef<HTMLInputElement>(null);
 
-    const link = `${process.env.REACT_APP_APIURL}/model/${code}/`;
+    const link = `${import.meta.env.VITE_APP_APIURL}/model/${code}/`;
 
     useEffect(() => {
         if (open) {

@@ -1,12 +1,12 @@
-import React from 'react';
+import { describe, it, vi } from 'vitest';
 import { render, screen, waitFor } from '@testing-library/react';
 import ImageWorkspace from './Workspace';
 import TestWrapper from '../../util/TestWrapper';
 
 describe('ImageWorkspace component', () => {
-    it('renders step 1', async () => {
-        const complete = jest.fn();
-        const skip = jest.fn();
+    it('renders step 1', async ({ expect }) => {
+        const complete = vi.fn();
+        const skip = vi.fn();
         render(
             <ImageWorkspace
                 step={0}
@@ -21,9 +21,9 @@ describe('ImageWorkspace component', () => {
         expect(await screen.findByTestId('widget-trainingdata.labels.class 1')).toBeInTheDocument();
     });
 
-    it('renders step 2', async () => {
-        const complete = jest.fn();
-        const skip = jest.fn();
+    it('renders step 2', async ({ expect }) => {
+        const complete = vi.fn();
+        const skip = vi.fn();
         render(
             <ImageWorkspace
                 step={1}

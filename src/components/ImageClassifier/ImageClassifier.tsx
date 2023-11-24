@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import { useState, useCallback } from 'react';
 import style from './stepper.module.css';
 import { useTranslation } from 'react-i18next';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';

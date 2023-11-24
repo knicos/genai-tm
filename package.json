@@ -5,21 +5,16 @@
     "description": "Machine Learning tool for Children",
     "homepage": "https://www.generation-ai-stn.fi",
     "private": true,
+    "type": "module",
     "license": "MIT",
     "dependencies": {
         "@emotion/react": "^11.10.6",
         "@emotion/styled": "^11.10.6",
         "@knicos/tm-image": "^0.9.1",
         "@knicos/tm-pose": "^0.9.2",
-        "@mui/icons-material": "^5.11.16",
-        "@mui/material": "^5.11.12",
+        "@mui/icons-material": "^5.14.18",
+        "@mui/material": "^5.14.18",
         "@tensorflow/tfjs": "3.21.0",
-        "@testing-library/jest-dom": "^5.14.1",
-        "@testing-library/react": "^13.0.0",
-        "@types/jest": "^27.0.1",
-        "@types/node": "^16.7.13",
-        "@types/react": "^18.0.0",
-        "@types/react-dom": "^18.0.0",
         "file-saver": "^2.0.5",
         "i18next": "^22.4.11",
         "i18next-browser-languagedetector": "^7.0.1",
@@ -36,27 +31,36 @@
         "react-i18next": "^12.2.0",
         "react-player": "^2.12.0",
         "react-router-dom": "^6.9.0",
-        "react-scripts": "5.0.1",
         "recoil": "^0.7.7",
         "smoothscroll-polyfill": "^0.4.4",
-        "typescript": "^4.4.2",
         "web-vitals": "^2.1.0"
     },
     "scripts": {
         "git-info": "node scripts/gitInfo.js",
-        "analyze": "source-map-explorer 'build/static/js/*.js'",
-        "start": "react-scripts start",
-        "build": "npm run git-info && react-scripts build",
+        "start": "vite",
+        "build": "npm run git-info && tsc && vite build",
         "lint": "eslint --max-warnings=0 ./src/**/*.ts ./src/**/*.tsx",
-        "test": "react-scripts test --reporters=jest-junit --reporters=default",
-        "eject": "react-scripts eject",
-        "clean": "rm -rf ./node_modules && rm -rf ./build"
+        "test": "vitest",
+        "ci:test": "vitest --coverage --reporter=junit --outputFile=junit.xml",
+        "coverage": "vitest run --coverage",
+        "clean": "rm -rf ./node_modules && rm -rf ./dist",
+        "preview": "vite preview"
     },
     "eslintConfig": {
+        "parserOptions": {
+            "sourceType": "module",
+            "ecmaVersion": 2020,
+            "ecmaFeatures": {
+                "jsx": true
+            }
+        },
+        "parser": "@typescript-eslint/parser",
         "extends": [
-            "react-app",
-            "react-app/jest",
-            "prettier"
+            "eslint:recommended",
+            "plugin:@typescript-eslint/recommended"
+        ],
+        "plugins": [
+            "@typescript-eslint"
         ]
     },
     "browserslist": {
@@ -72,16 +76,27 @@
         ]
     },
     "devDependencies": {
+        "@testing-library/jest-dom": "^6.1.4",
+        "@testing-library/react": "^14.1.2",
         "@testing-library/user-event": "^14.4.3",
         "@types/file-saver": "^2.0.5",
         "@types/jest-axe": "^3.5.5",
         "@types/qrcode": "^1.5.0",
+        "@types/react": "^18.0.0",
         "@types/react-color": "^3.0.6",
+        "@types/react-dom": "^18.0.0",
         "@types/smoothscroll-polyfill": "^0.3.1",
+        "@typescript-eslint/eslint-plugin": "^6.12.0",
+        "@vitejs/plugin-react-swc": "^3.5.0",
+        "@vitest/coverage-v8": "^0.34.6",
         "eslint-config-prettier": "^8.7.0",
         "jest-axe": "^7.0.1",
         "jest-junit": "^15.0.0",
+        "jsdom": "^22.1.0",
         "prettier": "^2.8.4",
-        "source-map-explorer": "^2.5.3"
+        "source-map-explorer": "^2.5.3",
+        "typescript": "^5.3.2",
+        "vite": "^5.0.2",
+        "vitest": "^0.34.6"
     }
 }

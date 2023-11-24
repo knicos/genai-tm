@@ -1,10 +1,10 @@
-import React from 'react';
+import { it } from 'vitest';
 import { render, screen, waitFor } from '@testing-library/react';
 import { Component } from './ImageGeneral';
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { RecoilRoot } from 'recoil';
 
-test('renders general view', async () => {
+it('renders general view', async ({ expect }) => {
     render(
         <MemoryRouter initialEntries={['/image/general']}>
             <RecoilRoot>

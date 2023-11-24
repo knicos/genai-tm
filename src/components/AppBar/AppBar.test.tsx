@@ -1,12 +1,12 @@
-import React from 'react';
+import { describe, it, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import TestWrapper from '../../util/TestWrapper';
 import ApplicationBar from './AppBar';
 import { useTranslation } from 'react-i18next';
 import userEvent from '@testing-library/user-event';
 
-jest.mock('react-i18next', () => ({
-    useTranslation: jest.fn(),
+vi.mock('react-i18next', () => ({
+    useTranslation: vi.fn(),
     initReactI18next: {
         type: '3rdParty',
         init: () => {},
@@ -14,10 +14,10 @@ jest.mock('react-i18next', () => ({
 }));
 
 describe('AppBar component', () => {
-    it('renders with all elements', async () => {
-        const saveFn = jest.fn();
+    it('renders with all elements', async ({ expect }) => {
+        const saveFn = vi.fn();
 
-        const useTranslationSpy = useTranslation as ReturnType<typeof jest.fn>;
+        const useTranslationSpy = useTranslation as ReturnType<typeof vi.fn>;
         useTranslationSpy.mockImplementation(() => ({ t: (str: string) => str, i18n: {} }));
 
         render(<ApplicationBar onSave={saveFn} />, { wrapper: TestWrapper });
@@ -27,12 +27,12 @@ describe('AppBar component', () => {
         expect(screen.getByText('app.title')).toBeInTheDocument();
     });
 
-    it('can change language', async () => {
-        const saveFn = jest.fn();
-        const changeLangFn = jest.fn();
+    it('can change language', async ({ expect }) => {
+        const saveFn = vi.fn();
+        const changeLangFn = vi.fn();
         const user = userEvent.setup();
 
-        const useTranslationSpy = useTranslation as ReturnType<typeof jest.fn>;
+        const useTranslationSpy = useTranslation as ReturnType<typeof vi.fn>;
         useTranslationSpy.mockReturnValue({
             t: (str: string) => str,
             i18n: {

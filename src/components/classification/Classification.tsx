@@ -143,7 +143,7 @@ export function Classification({ name, active, data, index, setData, onActivate,
             setData(
                 (data) => ({
                     label: name,
-                    samples: data.samples.filter((ss, ixx) => data.samples.length - ixx !== ix),
+                    samples: data.samples.filter((_, ixx) => data.samples.length - ixx !== ix),
                 }),
                 index
             );

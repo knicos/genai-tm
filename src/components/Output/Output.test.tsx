@@ -1,3 +1,4 @@
+import { describe, it } from 'vitest';
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import Output from './Output';
@@ -6,7 +7,7 @@ import { MutableSnapshot } from 'recoil';
 import { behaviourState, predictedIndex } from '../../state';
 
 describe('Output component', () => {
-    it('renders no behaviours', async () => {
+    it('renders no behaviours', async ({ expect }) => {
         function NoPredWrapper({ children }: React.PropsWithChildren) {
             return (
                 <TestWrapper
@@ -28,7 +29,7 @@ describe('Output component', () => {
         expect(screen.getByTestId('text-output')).not.toBeVisible();
     });
 
-    it('renders a text behaviour', async () => {
+    it('renders a text behaviour', async ({ expect }) => {
         function PredWrapper({ children }: React.PropsWithChildren) {
             return (
                 <TestWrapper
@@ -51,7 +52,7 @@ describe('Output component', () => {
         expect(screen.getByText('Message')).toBeVisible();
     });
 
-    it('renders the correct behaviour index', async () => {
+    it('renders the correct behaviour index', async ({ expect }) => {
         function PredWrapper({ children }: React.PropsWithChildren) {
             return (
                 <TestWrapper
@@ -83,7 +84,7 @@ describe('Output component', () => {
         expect(screen.getByText('Message3')).not.toBeVisible();
     });
 
-    it('renders an image behaviour', async () => {
+    it('renders an image behaviour', async ({ expect }) => {
         function PredWrapper({ children }: React.PropsWithChildren) {
             return (
                 <TestWrapper
@@ -105,7 +106,7 @@ describe('Output component', () => {
         expect(screen.getByTestId('image-output')).toBeInTheDocument();
     });
 
-    it('renders an audio behaviour', async () => {
+    it('renders an audio behaviour', async ({ expect }) => {
         function PredWrapper({ children }: React.PropsWithChildren) {
             return (
                 <TestWrapper
@@ -127,7 +128,7 @@ describe('Output component', () => {
         expect(screen.getByTestId('audio-output-icon')).toBeVisible();
     });
 
-    it('renders an embed image behaviour', async () => {
+    it('renders an embed image behaviour', async ({ expect }) => {
         function PredWrapper({ children }: React.PropsWithChildren) {
             return (
                 <TestWrapper

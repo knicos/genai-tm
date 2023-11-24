@@ -1,11 +1,11 @@
-import React, { useState, useCallback } from 'react';
+import { useState, useCallback } from 'react';
 import { Widget } from '../widget/Widget';
 import { useTranslation } from 'react-i18next';
 import style from './Output.module.css';
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import { useVariant } from '../../util/variant';
 import { useRecoilState, useRecoilValue } from 'recoil';
-import { predictedIndex, sessionCode, sessionPassword, sharingActive, behaviourState, p2pActive } from '../../state';
+import { predictedIndex, sessionCode, sessionPassword, behaviourState, p2pActive } from '../../state';
 import RawOutput from './RawOutput';
 import Slider from '@mui/material/Slider';
 import VolumeDown from '@mui/icons-material/VolumeDown';
@@ -23,7 +23,7 @@ export default function Output(props: Props) {
     const behaviours = useRecoilValue(behaviourState);
     const [, setP2PEnabled] = useRecoilState(p2pActive);
     const [volume, setVolume] = useState(100);
-    const changeVolume = useCallback((event: Event, newValue: number | number[]) => {
+    const changeVolume = useCallback((_: Event, newValue: number | number[]) => {
         setVolume(newValue as number);
     }, []);
 

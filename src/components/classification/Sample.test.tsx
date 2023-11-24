@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import { describe, it } from 'vitest';
+import { useState } from 'react';
 import { render, screen } from '@testing-library/react';
 import Sample from './Sample';
 import userEvent from '@testing-library/user-event';
@@ -30,7 +31,7 @@ function TestWrapper() {
 }
 
 describe('Sample image component', () => {
-    it('always shows a single canvas', async () => {
+    it('always shows a single canvas', async ({ expect }) => {
         const user = userEvent.setup();
         render(<TestWrapper />);
         expect(screen.getAllByTestId('sample')).toHaveLength(1);

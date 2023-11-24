@@ -21,7 +21,7 @@ export default function FontSize({ disabled, size, setSize }: Props) {
     const { t } = useTranslation(namespace);
 
     const handleChange = useCallback(
-        (event: React.MouseEvent<HTMLElement>, direction: ('increase' | 'decrease')[]) => {
+        (_: React.MouseEvent<HTMLElement>, direction: ('increase' | 'decrease')[]) => {
             if (direction[0] === 'increase') {
                 setSize(size + RATE);
             } else {

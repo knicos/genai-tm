@@ -62,10 +62,10 @@ export function useP2PModel(
             return;
         }
         const peer = new Peer('', {
-            host: process.env.REACT_APP_PEER_SERVER,
-            secure: process.env.REACT_APP_PEER_SECURE === '1',
-            key: process.env.REACT_APP_PEER_KEY || 'peerjs',
-            port: process.env.REACT_APP_PEER_PORT ? parseInt(process.env.REACT_APP_PEER_PORT) : 443,
+            host: import.meta.env.VITE_APP_PEER_SERVER,
+            secure: import.meta.env.VITE_APP_PEER_SECURE === '1',
+            key: import.meta.env.VITE_APP_PEER_KEY || 'peerjs',
+            port: import.meta.env.VITE_APP_PEER_PORT ? parseInt(import.meta.env.VITE_APP_PEER_PORT) : 443,
             config: { iceServers: ice.iceServers, sdpSemantics: 'unified-plan' },
         });
         peer.on('error', (err: any) => {

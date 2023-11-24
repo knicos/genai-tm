@@ -1,7 +1,8 @@
+import { describe, it } from 'vitest';
 import { extractNodesFromElements, generateLines, IConnection, INode } from './lines';
 
 describe('extractNodesFromElements()', () => {
-    it('can extract tagged elements', () => {
+    it('can extract tagged elements', async ({ expect }) => {
         const node = document.createElement('div');
 
         const child1 = document.createElement('div');
@@ -18,7 +19,7 @@ describe('extractNodesFromElements()', () => {
         expect(result.has('c2')).toBe(true);
     });
 
-    it('ignores non-tagged children', () => {
+    it('ignores non-tagged children', async ({ expect }) => {
         const node = document.createElement('div');
 
         const child1 = document.createElement('div');
@@ -33,7 +34,7 @@ describe('extractNodesFromElements()', () => {
         expect(result.size).toBe(1);
     });
 
-    it('enters container children', () => {
+    it('enters container children', async ({ expect }) => {
         const node = document.createElement('div');
 
         const child1 = document.createElement('div');
@@ -51,7 +52,7 @@ describe('extractNodesFromElements()', () => {
 });
 
 describe('generateLines()', () => {
-    it('will create a right to left line', () => {
+    it('will create a right to left line', async ({ expect }) => {
         const nodes = new Map<string, INode[]>();
         nodes.set('c1', [{ x: 10, y: 10, width: 100, height: 100 }]);
         nodes.set('c2', [{ x: 200, y: 10, width: 100, height: 100 }]);

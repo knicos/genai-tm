@@ -9,13 +9,7 @@ import Skeleton from '@mui/material/Skeleton';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import UploadFileIcon from '@mui/icons-material/UploadFile';
-import {
-    canvasFromDataTransfer,
-    canvasFromFile,
-    canvasFromImage,
-    canvasFromURL,
-    canvasesFromFiles,
-} from '../../util/canvas';
+import { canvasFromDataTransfer, canvasesFromFiles } from '../../util/canvas';
 import { Button } from '../button/Button';
 import { useDrop } from 'react-dnd';
 import { NativeTypes } from 'react-dnd-html5-backend';
@@ -58,7 +52,7 @@ export default function Input(props: Props) {
     }, [setP2PEnabled]);
 
     const doChangeTab = useCallback(
-        (event: React.SyntheticEvent, newValue: number) => {
+        (_: React.SyntheticEvent, newValue: number) => {
             setTabIndex(newValue);
             setFile(null);
             setRemoteInput(null);
@@ -125,7 +119,7 @@ export default function Input(props: Props) {
     });
 
     const changeWebcamToggle = useCallback(
-        (event: React.ChangeEvent<HTMLInputElement>, checked: boolean) => {
+        (_: React.ChangeEvent<HTMLInputElement>, checked: boolean) => {
             setEnableInput(checked);
         },
         [setEnableInput]

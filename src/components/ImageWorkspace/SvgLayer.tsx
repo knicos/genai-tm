@@ -1,4 +1,3 @@
-import React from 'react';
 import style from './TeachableMachine.module.css';
 
 export interface ILine {

@@ -7,7 +7,7 @@ import { ThemeProvider } from '@mui/material/styles';
 import { theme } from '../../style/theme';
 import { usePeerSender } from '../Collection/usePeerSender';
 import randomId from '../../util/randomId';
-import Sample, { SampleState, SampleStateValue } from '../../components/ImageGrid/Sample';
+import Sample, { SampleState } from '../../components/ImageGrid/Sample';
 import UploadFileIcon from '@mui/icons-material/UploadFile';
 import { canvasesFromFiles, canvasFromDataTransfer } from '../../util/canvas';
 import { useTranslation } from 'react-i18next';
@@ -28,9 +28,9 @@ export function Component() {
 
     const doError = useCallback(() => {}, []);
 
-    const doSampleState = useCallback((id: string, state: SampleStateValue) => {}, []);
+    const doSampleState = useCallback(() => {}, []);
 
-    const doSamplesUpdate = useCallback((samples: Set<string>[]) => {}, []);
+    const doSamplesUpdate = useCallback(() => {}, []);
 
     const { sender, state, type: candidateType } = usePeerSender(code || '', doError, doSampleState, doSamplesUpdate);
 

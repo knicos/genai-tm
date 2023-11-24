@@ -1,3 +1,4 @@
+import { describe, it } from 'vitest';
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import Preview from './Preview';
@@ -6,7 +7,7 @@ import { MutableSnapshot } from 'recoil';
 import { prediction } from '../../state';
 
 describe('Preview component', () => {
-    it('renders with no model', async () => {
+    it('renders with no model', async ({ expect }) => {
         function NoPredWrapper({ children }: React.PropsWithChildren) {
             return (
                 <TestWrapper
@@ -22,7 +23,7 @@ describe('Preview component', () => {
         expect(screen.getByText('model.labels.mustTrain')).toBeInTheDocument();
     });
 
-    it('renders with model a model but no predictions', async () => {
+    it('renders with model a model but no predictions', async ({ expect }) => {
         function NoPredWrapper({ children }: React.PropsWithChildren) {
             return (
                 <TestWrapper
@@ -38,7 +39,7 @@ describe('Preview component', () => {
         expect(screen.queryByText('model.labels.mustTrain')).not.toBeInTheDocument();
     });
 
-    it('shows 2 predictions', async () => {
+    it('shows 2 predictions', async ({ expect }) => {
         function PredWrapper({ children }: React.PropsWithChildren) {
             return (
                 <TestWrapper

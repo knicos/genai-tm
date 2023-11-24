@@ -1,17 +1,17 @@
-import React from 'react';
+import { describe, it, vi } from 'vitest';
 import { act, render, screen, within } from '@testing-library/react';
 import EmbedBehaviour from './Embed';
 import userEvent from '@testing-library/user-event';
 
 describe('Embed behaviour component', () => {
-    it('renders without a behaviour', async () => {
-        const setBehaviour = jest.fn();
+    it('renders without a behaviour', async ({ expect }) => {
+        const setBehaviour = vi.fn();
         render(<EmbedBehaviour setBehaviour={setBehaviour} />);
         expect(within(screen.getByTestId('link-message')).getByDisplayValue('')).toBeInTheDocument();
     });
 
-    it('renders with an image link', async () => {
-        const setBehaviour = jest.fn();
+    it('renders with an image link', async ({ expect }) => {
+        const setBehaviour = vi.fn();
         render(
             <EmbedBehaviour
                 setBehaviour={setBehaviour}
@@ -26,8 +26,8 @@ describe('Embed behaviour component', () => {
         expect(screen.getByTestId('image-link-icon')).toBeVisible();
     });
 
-    it('can delete a behaviour', async () => {
-        const setBehaviour = jest.fn();
+    it('can delete a behaviour', async ({ expect }) => {
+        const setBehaviour = vi.fn();
         const user = userEvent.setup();
 
         render(

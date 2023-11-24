@@ -1,3 +1,4 @@
+import { describe, it, vi } from 'vitest';
 import React from 'react';
 import { render, screen, waitFor } from '@testing-library/react';
 import Input from './Input';
@@ -7,14 +8,14 @@ import { prediction, predictedIndex, modelState } from '../../state';
 import { TeachableModel } from '../../util/TeachableModel';
 import { MutableSnapshot } from 'recoil';
 
-jest.mock('@knicos/tm-image', () => ({
+vi.mock('@knicos/tm-image', () => ({
     Webcam: function () {
         return {
-            setup: jest.fn(),
-            play: jest.fn(),
-            pause: jest.fn(),
-            stop: jest.fn(),
-            update: jest.fn(),
+            setup: vi.fn(),
+            play: vi.fn(),
+            pause: vi.fn(),
+            stop: vi.fn(),
+            update: vi.fn(),
             canvas: global.document.createElement('canvas'),
             webcam: { paused: false },
         };
@@ -22,24 +23,24 @@ jest.mock('@knicos/tm-image', () => ({
 }));
 
 describe('Input component', () => {
-    it('renders', async () => {
+    it('renders', async ({ expect }) => {
         render(<Input />, { wrapper: TestWrapper });
         expect(screen.getByTestId('widget-input.labels.title')).toBeInTheDocument();
     });
 
-    it('can do predictions', async () => {
-        const onPredict = jest.fn();
+    it('can do predictions', async ({ expect }) => {
+        const onPredict = vi.fn();
 
         const model = {
-            predict: jest.fn(() => {
+            predict: vi.fn(() => {
                 return [{ className: 'Class 1', probability: 0.1 }];
             }),
-            isTrained: jest.fn(() => true),
-            getImageSize: jest.fn(() => 224),
-            getVariant: jest.fn(() => 'image'),
-            getLabels: jest.fn(() => ['Class 1']),
-            estimate: jest.fn(),
-            draw: jest.fn(),
+            isTrained: vi.fn(() => true),
+            getImageSize: vi.fn(() => 224),
+            getVariant: vi.fn(() => 'image'),
+            getLabels: vi.fn(() => ['Class 1']),
+            estimate: vi.fn(),
+            draw: vi.fn(),
         } as unknown as TeachableModel;
 
         function ModelWrapper({ children }: React.PropsWithChildren) {
@@ -71,23 +72,23 @@ describe('Input component', () => {
         expect(onPredict).toHaveBeenCalledWith([{ className: 'Class 1', probability: 0.1 }]);
     });
 
-    it('can select the best prediction', async () => {
-        const onPredict = jest.fn();
+    it('can select the best prediction', async ({ expect }) => {
+        const onPredict = vi.fn();
 
         const model = {
-            predict: jest.fn(() => [
+            predict: vi.fn(() => [
                 { className: 'Class 1', probability: 0.1 },
                 { className: 'Class 2', probability: 0.2 },
                 { className: 'Class 3', probability: 0.12 },
                 { className: 'Class 4', probability: 0.02 },
                 { className: 'Class 5', probability: 0.199 },
             ]),
-            isTrained: jest.fn(() => true),
-            getImageSize: jest.fn(() => 224),
-            getVariant: jest.fn(() => 'image'),
-            getLabels: jest.fn(() => ['Class 1']),
-            estimate: jest.fn(),
-            draw: jest.fn(),
+            isTrained: vi.fn(() => true),
+            getImageSize: vi.fn(() => 224),
+            getVariant: vi.fn(() => 'image'),
+            getLabels: vi.fn(() => ['Class 1']),
+            estimate: vi.fn(),
+            draw: vi.fn(),
         } as unknown as TeachableModel;
 
         function ModelWrapper({ children }: React.PropsWithChildren) {

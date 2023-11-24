@@ -115,7 +115,7 @@ export default function Sound({ behaviour, setBehaviour, dropping }: Props) {
     const doPlayStop = useCallback(() => (audio ? doStop() : doPlay()), [audio, doStop, doPlay]);
 
     const changeLoop = useCallback(
-        (event: React.ChangeEvent<HTMLInputElement>, checked: boolean) => {
+        (_: React.ChangeEvent<HTMLInputElement>, checked: boolean) => {
             if (behaviour) {
                 setBehaviour({ ...behaviour, loop: checked });
             }

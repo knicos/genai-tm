@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import MusicNoteIcon from '@mui/icons-material/MusicNote';
 
 interface Props {

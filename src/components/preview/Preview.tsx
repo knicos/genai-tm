@@ -1,4 +1,3 @@
-import React from 'react';
 import { Widget } from '../widget/Widget';
 import PercentageBar, { Colours } from '../PercentageBar/PercentageBar';
 import style from './Preview.module.css';

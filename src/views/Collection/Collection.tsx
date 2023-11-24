@@ -22,7 +22,7 @@ export function Component() {
     const [samples, setSamples] = useState<SampleState[]>([]);
     const [capturing, setCapturing] = useState(false);
     const [count, setCount] = useState(0);
-    const [loading, setLoading] = useState(false);
+    const [, setLoading] = useState(false);
     const [showDropError, setShowDropError] = useState(false);
     const buttonRef = useRef<HTMLButtonElement>(null);
     const fileRef = useRef<HTMLInputElement>(null);

@@ -1,4 +1,3 @@
-import React from 'react';
 import style from './PercentageBar.module.css';
 
 export type Colours = 'purple' | 'green' | 'blue' | 'red' | 'orange';

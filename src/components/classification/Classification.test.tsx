@@ -1,10 +1,10 @@
-import React from 'react';
+import { describe, it } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import { Classification } from './Classification';
 import TestWrapper from '../../util/TestWrapper';
 
 describe('Classification component', () => {
-    it('renders with no samples and inactive', async () => {
+    it('renders with no samples and inactive', async ({ expect }) => {
         render(
             <Classification
                 name="TestClass"

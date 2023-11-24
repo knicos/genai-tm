@@ -1,12 +1,11 @@
-import React, { useRef, useEffect, useCallback } from 'react';
+import { useRef, useEffect, useCallback } from 'react';
 import { BehaviourType } from '../Behaviour/Behaviour';
 import { generateBlob, ModelContents } from '../ImageWorkspace/saver';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import {
     behaviourState,
     classState,
     sessionCode,
-    sessionPassword,
     sharingActive,
     iceConfig,
     shareSamples,
@@ -74,7 +73,6 @@ interface CacheState {
 
 export default function PeerDeployer() {
     const [code, setCode] = useRecoilState(sessionCode);
-    const pwd = useRecoilValue(sessionPassword);
     const includeSamples = useRecoilValue(shareSamples);
     const [, setSharing] = useRecoilState(sharingActive);
     const [classes, setClassData] = useRecoilState(classState);
@@ -85,7 +83,7 @@ export default function PeerDeployer() {
     const cache = useRef<CacheState>({ model, behaviours });
     const blob = useRef<ModelContents | null>(null);
     const ice = useRecoilValue(iceConfig);
-    const [input, setInput] = useRecoilState(inputImage);
+    const setInput = useSetRecoilState(inputImage);
 
     useEffect(() => {
         if (channelRef.current) {
@@ -100,14 +98,14 @@ export default function PeerDeployer() {
         if (!ice) return;
 
         const peer = new Peer(code, {
-            host: process.env.REACT_APP_PEER_SERVER,
-            secure: process.env.REACT_APP_PEER_SECURE === '1',
-            key: process.env.REACT_APP_PEER_KEY || 'peerjs',
-            port: process.env.REACT_APP_PEER_PORT ? parseInt(process.env.REACT_APP_PEER_PORT) : 443,
+            host: import.meta.env.VITE_APP_PEER_SERVER,
+            secure: import.meta.env.VITE_APP_PEER_SECURE === '1',
+            key: import.meta.env.VITE_APP_PEER_KEY || 'peerjs',
+            port: import.meta.env.VITE_APP_PEER_PORT ? parseInt(import.meta.env.VITE_APP_PEER_PORT) : 443,
             config: { iceServers: ice.iceServers, sdpSemantics: 'unified-plan' },
         });
         channelRef.current = peer;
-        peer.on('open', (id: string) => {
+        peer.on('open', () => {
             setSharing(true);
         });
         peer.on('close', () => {

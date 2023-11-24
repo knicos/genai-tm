@@ -1,11 +1,11 @@
-import React from 'react';
+import { describe, it, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { TrainingData } from './TrainingData';
 import TestWrapper from '../../util/TestWrapper';
 
 describe('TrainingData component', () => {
-    it('renders with no data', () => {
+    it('renders with no data', async ({ expect }) => {
         render(
             <TrainingData
                 active={true}
@@ -19,9 +19,9 @@ describe('TrainingData component', () => {
         expect(linkElement).toBeInTheDocument();
     });
 
-    it('can add new classes', async () => {
+    it('can add new classes', async ({ expect }) => {
         const user = userEvent.setup();
-        const setData = jest.fn();
+        const setData = vi.fn();
         render(
             <TrainingData
                 active={true}
@@ -36,7 +36,7 @@ describe('TrainingData component', () => {
         expect(setData).toHaveBeenCalledTimes(1);
     });
 
-    it('renders with multiple data items but no samples', () => {
+    it('renders with multiple data items but no samples', async ({ expect }) => {
         const testData = [
             { label: 'Class1', samples: [] },
             { label: 'Class2', samples: [] },
@@ -54,7 +54,7 @@ describe('TrainingData component', () => {
         expect(screen.getByTestId('widget-Class2')).toBeInTheDocument();
     });
 
-    it('renders with samples', () => {
+    it('renders with samples', async ({ expect }) => {
         const canvas = document.createElement('canvas');
         canvas.setAttribute('data-testid', 'testcanvas');
         const testData = [{ label: 'Class1', samples: [{ data: canvas, id: '' }] }];

@@ -1,12 +1,12 @@
-import React from 'react';
+import { describe, it, vi } from 'vitest';
 import { act, render, screen, within } from '@testing-library/react';
 import Behaviour from './Behaviour';
 import userEvent from '@testing-library/user-event';
 import TestWrapper from '../../util/TestWrapper';
 
 describe('Behaviour component', () => {
-    it('renders without a behaviour', async () => {
-        const setBehaviour = jest.fn();
+    it('renders without a behaviour', async ({ expect }) => {
+        const setBehaviour = vi.fn();
         render(
             <Behaviour
                 index={0}
@@ -22,9 +22,9 @@ describe('Behaviour component', () => {
         expect(screen.getByTestId('text-option')).toBeInTheDocument();
     });
 
-    it('can change behaviour type', async () => {
+    it('can change behaviour type', async ({ expect }) => {
         const user = userEvent.setup();
-        const setBehaviour = jest.fn();
+        const setBehaviour = vi.fn();
         render(
             <Behaviour
                 index={0}
@@ -40,9 +40,9 @@ describe('Behaviour component', () => {
         expect(screen.getByTestId('text-message')).toBeInTheDocument();
     });
 
-    it('can set a text behaviour', async () => {
+    it('can set a text behaviour', async ({ expect }) => {
         const user = userEvent.setup();
-        const setBehaviour = jest.fn();
+        const setBehaviour = vi.fn();
         render(
             <Behaviour
                 index={0}

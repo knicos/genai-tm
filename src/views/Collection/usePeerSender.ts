@@ -51,10 +51,10 @@ export function usePeerSender(
         if (webRTC && ice) {
             if (peerRef.current && !peerRef.current.destroyed) return;
             peerRef.current = new Peer('', {
-                host: process.env.REACT_APP_PEER_SERVER,
-                secure: process.env.REACT_APP_PEER_SECURE === '1',
-                key: process.env.REACT_APP_PEER_KEY || 'peerjs',
-                port: process.env.REACT_APP_PEER_PORT ? parseInt(process.env.REACT_APP_PEER_PORT) : 443,
+                host: import.meta.env.VITE_APP_PEER_SERVER,
+                secure: import.meta.env.VITE_APP_PEER_SECURE === '1',
+                key: import.meta.env.VITE_APP_PEER_KEY || 'peerjs',
+                port: import.meta.env.VITE_APP_PEER_PORT ? parseInt(import.meta.env.VITE_APP_PEER_PORT) : 443,
                 config: { iceServers: ice.iceServers, sdpSemantics: 'unified-plan' },
             });
 
@@ -106,7 +106,7 @@ export function usePeerSender(
                 setStatus('disconnected');
             });
 
-            peer.on('open', (id: string) => {
+            peer.on('open', () => {
                 setStatus('connecting');
             });
         }

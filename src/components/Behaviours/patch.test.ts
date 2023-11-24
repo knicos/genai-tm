@@ -1,8 +1,9 @@
+import { describe, it } from 'vitest';
 import { BehaviourType } from './Behaviours';
 import { patchBehaviours } from './patch';
 
 describe('Behaviour patch', () => {
-    it('can work without labels', () => {
+    it('can work without labels', async ({ expect }) => {
         const behaviors = [{ text: { text: 'b1' } }, { text: { text: 'b2' } }] as BehaviourType[];
         const classes = ['c1', 'c2'];
 
@@ -15,7 +16,7 @@ describe('Behaviour patch', () => {
         expect(result[1].text?.text).toBe('b2');
     });
 
-    it('keeps perfect order if no name changes', () => {
+    it('keeps perfect order if no name changes', async ({ expect }) => {
         const behaviors = [
             { label: 'c1', text: { text: 'b1' } },
             { label: 'c2', text: { text: 'b2' } },
@@ -29,7 +30,7 @@ describe('Behaviour patch', () => {
         expect(result[1]).toBe(behaviors[1]);
     });
 
-    it('can swap in names are swapped', () => {
+    it('can swap in names are swapped', async ({ expect }) => {
         const behaviors = [
             { label: 'c1', text: { text: 'b1' } },
             { label: 'c2', text: { text: 'b2' } },
@@ -43,7 +44,7 @@ describe('Behaviour patch', () => {
         expect(result[1]).toBe(behaviors[0]);
     });
 
-    it('allows one class to be renamed', () => {
+    it('allows one class to be renamed', async ({ expect }) => {
         const behaviors = [
             { label: 'c1', text: { text: 'b1' } },
             { label: 'c2', text: { text: 'b2' } },
@@ -60,7 +61,7 @@ describe('Behaviour patch', () => {
         expect(result[2]).toBe(behaviors[2]);
     });
 
-    it('allows two classes to be renamed', () => {
+    it('allows two classes to be renamed', async ({ expect }) => {
         const behaviors = [
             { label: 'c1', text: { text: 'b1' } },
             { label: 'c2', text: { text: 'b2' } },
@@ -78,7 +79,7 @@ describe('Behaviour patch', () => {
         expect(result[2].text?.text).toBe('b3');
     });
 
-    it('allows a middle class to be removed', () => {
+    it('allows a middle class to be removed', async ({ expect }) => {
         const behaviors = [
             { label: 'c1', text: { text: 'b1' } },
             { label: 'c2', text: { text: 'b2' } },
@@ -93,7 +94,7 @@ describe('Behaviour patch', () => {
         expect(result[1]).toBe(behaviors[2]);
     });
 
-    it('allows a front class to be removed', () => {
+    it('allows a front class to be removed', async ({ expect }) => {
         const behaviors = [
             { label: 'c1', text: { text: 'b1' } },
             { label: 'c2', text: { text: 'b2' } },
@@ -108,7 +109,7 @@ describe('Behaviour patch', () => {
         expect(result[1]).toBe(behaviors[2]);
     });
 
-    it('allows a back class to be removed', () => {
+    it('allows a back class to be removed', async ({ expect }) => {
         const behaviors = [
             { label: 'c1', text: { text: 'b1' } },
             { label: 'c2', text: { text: 'b2' } },
@@ -123,7 +124,7 @@ describe('Behaviour patch', () => {
         expect(result[1]).toBe(behaviors[1]);
     });
 
-    it('allows a class to be added', () => {
+    it('allows a class to be added', async ({ expect }) => {
         const behaviors = [
             { label: 'c1', text: { text: 'b1' } },
             { label: 'c2', text: { text: 'b2' } },
@@ -139,7 +140,7 @@ describe('Behaviour patch', () => {
         expect(result[2]).toBe(behaviors[2]);
     });
 
-    it('handles duplicate labels', () => {
+    it('handles duplicate labels', async ({ expect }) => {
         const behaviors = [
             { label: 'c1', text: { text: 'b1' } },
             { label: 'c2', text: { text: 'b2' } },
@@ -155,7 +156,7 @@ describe('Behaviour patch', () => {
         expect(result[2]).toBe(behaviors[2]);
     });
 
-    it('handles new duplicate labels', () => {
+    it('handles new duplicate labels', async ({ expect }) => {
         const behaviors = [
             { label: 'c1', text: { text: 'b1' } },
             { label: 'c2', text: { text: 'b2' } },

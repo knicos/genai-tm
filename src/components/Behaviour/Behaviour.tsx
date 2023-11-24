@@ -132,7 +132,7 @@ export default function Behaviour({ classLabel, behaviour, setBehaviour, index, 
     }, [classLabel, behaviour, setBehaviour, index]);
 
     const handleChange = useCallback(
-        (event: React.MouseEvent<HTMLElement>, newType: BehaviourTypes | null) => {
+        (_: React.MouseEvent<HTMLElement>, newType: BehaviourTypes | null) => {
             if (newType !== null) setValue(newType);
         },
         [setValue]

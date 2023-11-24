@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useCallback, useRef } from 'react';
 import Accordion from '@mui/material/Accordion';
-import { IClassification, classState } from '../../state';
+import { classState } from '../../state';
 import BusyButton from '../BusyButton/BusyButton';
 import { Widget } from '../widget/Widget';
 import style from './trainer.module.css';
@@ -32,7 +32,7 @@ const HelpTooltip = styled(({ className, ...props }: TooltipProps) => (
         enterTouchDelay={300}
         classes={{ popper: className }}
     />
-))(({ theme }) => ({
+))(() => ({
     [`& .${tooltipClasses.tooltip}`]: {
         backgroundColor: 'rgba(0,0,0,0.8)',
         color: 'white',

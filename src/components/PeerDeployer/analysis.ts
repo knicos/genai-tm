@@ -8,7 +8,7 @@ export function createAnalysis(labels: string[], ref: number[], pred: number[]) 
         ++confusion[r][p];
     });
 
-    const accuracyPerClass = labels.map((l, ix) => {
+    const accuracyPerClass = labels.map((_, ix) => {
         const totalRow = confusion[ix].reduce((a, b) => a + b, 0);
 
         return {
@@ -17,7 +17,7 @@ export function createAnalysis(labels: string[], ref: number[], pred: number[]) 
         };
     });
 
-    const precisionPerClass = labels.map((l, ix) => {
+    const precisionPerClass = labels.map((_, ix) => {
         const totalCol = confusion.reduce((a, b) => a + b[ix], 0);
 
         return {
@@ -26,7 +26,7 @@ export function createAnalysis(labels: string[], ref: number[], pred: number[]) 
         };
     });
 
-    const accuracy = labels.reduce((a, v, ix) => a + confusion[ix][ix], 0) / ref.length;
+    const accuracy = labels.reduce((a, _, ix) => a + confusion[ix][ix], 0) / ref.length;
 
     return {
         labels,

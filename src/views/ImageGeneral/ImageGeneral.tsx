@@ -1,4 +1,3 @@
-import React from 'react';
 import { IVariantContext, VariantContext } from '../../util/variant';
 import _settings from './configuration.json';
 import { useSearchParams, useParams } from 'react-router-dom';

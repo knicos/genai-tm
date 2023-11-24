@@ -58,7 +58,7 @@ stages:
                       npm run build
                   displayName: 'Build'
 
-                - publish: $(System.DefaultWorkingDirectory)/build
+                - publish: $(System.DefaultWorkingDirectory)/dist
                   artifact: DistFolder
 
     - stage: Test
@@ -80,7 +80,7 @@ stages:
                 - script: |
                       echo -e "\n//npm.pkg.github.com/:_authToken=$(GITHUB_TOKEN)" >> ./.npmrc
                       npm ci
-                      CI=true npm test
+                      CI=true npm run ci:test
                   displayName: 'Test'
                 - task: PublishTestResults@2
                   displayName: Publish Test Results

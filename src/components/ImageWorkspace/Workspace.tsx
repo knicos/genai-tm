@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState, useCallback } from 'react';
+import { useRef, useEffect, useState, useCallback } from 'react';
 import SvgLayer, { ILine } from './SvgLayer';
 import { TrainingData } from '../trainingdata/TrainingData';
 import Trainer from '../trainer/Trainer';

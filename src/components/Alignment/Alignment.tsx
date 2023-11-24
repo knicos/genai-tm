@@ -20,7 +20,7 @@ export default function Alignment({ disabled, alignment, setAlignment }: Props) 
     const { t } = useTranslation(namespace);
 
     const handleAlignment = useCallback(
-        (event: React.MouseEvent<HTMLElement>, newAlignment: Align | null) => {
+        (_: React.MouseEvent<HTMLElement>, newAlignment: Align | null) => {
             setAlignment(newAlignment || alignment);
         },
         [alignment, setAlignment]

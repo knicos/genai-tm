@@ -31,7 +31,7 @@ interface Props extends React.PropsWithChildren {
 
 export default function Deployment({ model, behaviours, error, onActivated, children }: Props) {
     const [volume, setVolume] = useState(100);
-    const changeVolume = useCallback((event: Event, newValue: number | number[]) => {
+    const changeVolume = useCallback((_: Event, newValue: number | number[]) => {
         setVolume(newValue as number);
     }, []);
     const { namespace } = useVariant();

@@ -134,6 +134,7 @@ export class TeachableModel {
             tmmodel.setName('My Model');
         }
 
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         this.imageSize = (this.poseModel.getMetadata().modelSettings as any)?.posenet?.inputResolution || 257;
     }
 
@@ -496,7 +497,7 @@ export function useModelTrainer() {
                             batchSize: settings.batchSize,
                         },
                         {
-                            onEpochEnd: (epoch, logs) => {
+                            onEpochEnd: (epoch) => {
                                 setEpochs(epoch / 50);
                             },
                         }

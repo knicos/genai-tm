@@ -1,7 +1,7 @@
 import { createTheme } from '@mui/material/styles';
 import colours from './colours.module.css';
 
-const isTest = global?.process?.env?.NODE_ENV === 'test';
+const isTest = import.meta.env.NODE_ENV === 'test';
 
 export const theme = createTheme({
     palette: {

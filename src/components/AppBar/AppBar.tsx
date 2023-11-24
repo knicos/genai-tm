@@ -7,8 +7,8 @@ import { useVariant } from '../../util/variant';
 import SaveAltIcon from '@mui/icons-material/SaveAlt';
 import FileOpenIcon from '@mui/icons-material/FileOpen';
 import style from './AppBar.module.css';
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
-import { fileData, loadState, saveState, showOpenDialog } from '../../state';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { loadState, saveState, showOpenDialog } from '../../state';
 import SettingsIcon from '@mui/icons-material/Settings';
 import { IconButton, Link as MUILink, NativeSelect } from '@mui/material';
 import { createSearchParams, useNavigate, useSearchParams, Link } from 'react-router-dom';
@@ -30,7 +30,6 @@ export default function ApplicationBar({ showReminder, onSave }: Props) {
     const [params] = useSearchParams();
     const { namespace, showSettings, showSaveReminder } = useVariant();
     const { t, i18n } = useTranslation(namespace);
-    const [projectFile] = useRecoilState(fileData);
     const saving = useRecoilValue(saveState);
     const navigate = useNavigate();
     const saveButtonRef = useRef(null);

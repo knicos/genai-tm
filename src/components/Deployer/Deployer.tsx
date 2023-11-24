@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useCallback } from 'react';
+import { useRef, useEffect, useCallback } from 'react';
 import { ModelContents, generateBlob } from '../ImageWorkspace/saver';
 import { useRecoilValue, useRecoilState } from 'recoil';
 import { behaviourState, sessionCode, sharingActive } from '../../state';

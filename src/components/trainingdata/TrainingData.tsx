@@ -37,7 +37,7 @@ export function TrainingData({ active, data, setData, disabled, onFocused }: Pro
 
     const doActivate = useCallback((ix: number) => active && setActiveIndex(ix), [active, setActiveIndex]);
 
-    const doDelete = useCallback((ix: number) => setData(data.filter((v, index) => index !== ix)), [setData, data]);
+    const doDelete = useCallback((ix: number) => setData(data.filter((_, index) => index !== ix)), [setData, data]);
 
     const doSetActive = useCallback((a: boolean, ix: number) => setActiveIndex(a ? ix : -1), [setActiveIndex]);
 

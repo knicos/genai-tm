@@ -1,4 +1,3 @@
-import React from 'react';
 import style from './style.module.css';
 import AdsClickIcon from '@mui/icons-material/AdsClick';
 

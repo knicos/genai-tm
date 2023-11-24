@@ -32,7 +32,7 @@ export async function loadProject(file: File | Blob): Promise<Project> {
     const zip = await JSZip.loadAsync(file);
     const promises: Promise<void>[] = [];
 
-    zip.forEach((path: string, data: JSZip.JSZipObject) => {
+    zip.forEach((_: string, data: JSZip.JSZipObject) => {
         if (data.name === 'model.json') {
             promises.push(
                 data.async('string').then((r) => {
@@ -102,7 +102,7 @@ export async function loadProject(file: File | Blob): Promise<Project> {
                         canvas.style.height = '58px';
                         const ctx = canvas.getContext('2d');
                         const img = new Image();
-                        img.onload = (ev: Event) => {
+                        img.onload = () => {
                             ctx?.drawImage(img, 0, 0);
                             resolve(canvas);
                         };
@@ -151,7 +151,7 @@ function mapToURL(project: string) {
         return project;
     }
     if (project.length === 8 && /^[a-z0-9]+$/i.test(project)) {
-        return `${process.env.REACT_APP_APIURL}/model/${project}/project.zip`;
+        return `${import.meta.env.VITE_APP_APIURL}/model/${project}/project.zip`;
     }
 }
 

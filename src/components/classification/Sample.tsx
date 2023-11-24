@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useCallback } from 'react';
+import { useRef, useEffect, useCallback } from 'react';
 import style from './classification.module.css';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import MIconButton from '@mui/material/IconButton';
