@@ -12,7 +12,6 @@ import { useRecoilState, useSetRecoilState } from 'recoil';
 import { fileData, showOpenDialog } from '../../state';
 import { useSearchParams } from 'react-router-dom';
 import FileOpenIcon from '@mui/icons-material/FileOpen';
-import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 
 export default function OpenDialog() {
     const { namespace } = useVariant();
@@ -88,7 +87,6 @@ export default function OpenDialog() {
                     <Button
                         variant="contained"
                         onClick={doOpenCode}
-                        startIcon={<ContentCopyIcon />}
                         fullWidth
                         disabled={codeValue.length < 8}
                     >

@@ -25,7 +25,7 @@
         "code": "Syötä jaettu koodi",
         "actions": {
             "openFile": "Avaa tiedosto",
-            "openCode": "Kopio jaettu",
+            "openCode": "Käytä koodia",
             "cancel": "Peruuta"
         }
     },

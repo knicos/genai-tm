@@ -12,7 +12,7 @@
         "code": "Enter shared code",
         "actions": {
             "openFile": "Open File",
-            "openCode": "Copy Shared",
+            "openCode": "Use Code",
             "cancel": "Cancel"
         }
     },

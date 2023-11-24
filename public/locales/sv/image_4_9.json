@@ -25,7 +25,7 @@
         "code": "Ange delad kod",
         "actions": {
             "openFile": "Öppna",
-            "openCode": "Kopia delad",
+            "openCode": "Använd kod",
             "cancel": "avbryt"
         }
     },
