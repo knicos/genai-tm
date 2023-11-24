@@ -64,12 +64,33 @@
     font-size: 2rem;
     font-weight: bold;
     text-align: center;
+}
+
+.codeContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     margin-top: 1rem;
+    gap: 1rem;
+}
+
+.incImagesContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 0.5rem;
+    margin-bottom: 1rem;
 }
 
 .openColumn {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 1rem;
+}
+
+.spacer {
+    height: 2px;
+    width: 100%;
+    background-color: #eee;
+    margin: 1rem 0;
 }

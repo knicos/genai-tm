@@ -68,6 +68,9 @@ export default function ExportDialog({ open, onClose, ready }: Props) {
     const doCopy = useCallback(() => {
         navigator.clipboard.writeText(link);
     }, [link]);
+    const doCopyCode = useCallback(() => {
+        navigator.clipboard.writeText(code);
+    }, [code]);
 
     const doChangeSamples = useCallback(() => {
         setShareSamples((old) => !old);
@@ -82,15 +85,35 @@ export default function ExportDialog({ open, onClose, ready }: Props) {
             <DialogTitle>{t('share.labels.title')}</DialogTitle>
             {ready && (
                 <DialogContent>
+                    <p>{t(`${namespace}:share.labels.codeInstructions`)}</p>
+                    <div className={style.codeContainer}>
+                        <p className={style.codeShare}>{code}</p>
+                        <IconButton
+                            disabled={!navigator?.clipboard?.writeText}
+                            onClick={doCopyCode}
+                        >
+                            <ContentCopyIcon />
+                        </IconButton>
+                    </div>
+                    <div className={style.incImagesContainer}>
+                        <FormControlLabel
+                            control={
+                                <Checkbox
+                                    checked={samples}
+                                    onChange={doChangeSamples}
+                                />
+                            }
+                            label={t('share.labels.includeSamples')}
+                        />
+                    </div>
                     <p>
                         <Trans
-                            i18nKey={`${namespace}:share.labels.instructions`}
+                            i18nKey={`${namespace}:share.labels.linkInstructions`}
                             components={{
                                 scratchLink: <LinkText to="https://machinelearningforkids.co.uk/#!/pretrained" />,
                             }}
                         />
                     </p>
-                    <p className={style.codeShare}>{code}</p>
                     <TextField
                         inputRef={textRef}
                         sx={{ marginTop: '2rem' }}
@@ -111,15 +134,6 @@ export default function ExportDialog({ open, onClose, ready }: Props) {
                                 </InputAdornment>
                             ),
                         }}
-                    />
-                    <FormControlLabel
-                        control={
-                            <Checkbox
-                                checked={samples}
-                                onChange={doChangeSamples}
-                            />
-                        }
-                        label={t('share.labels.includeSamples')}
                     />
                 </DialogContent>
             )}

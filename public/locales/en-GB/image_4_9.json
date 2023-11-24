@@ -22,10 +22,10 @@
     },
     "load": {
         "title": "Open Classifier",
-        "code": "Share code",
-        "or": "Or",
+        "code": "Enter shared code",
         "actions": {
             "openFile": "Open File",
+            "openCode": "Copy Shared",
             "cancel": "Cancel"
         }
     },
@@ -197,7 +197,8 @@
         "labels": {
             "title": "Share",
             "includeSamples": "Include sample images",
-            "instructions": "Copy the link to use the classifier in other applications such as <scratchLink>Scratch</scratchLink>. The link will only work if you keep this browser tab open, or if you save your project and open in again later."
+            "codeInstructions": "Allow others to open a copy of your classifier using the code below.",
+            "linkInstructions": "Open a copy of the classifier by sharing the code below. Copy the link to use the classifier in other applications such as <scratchLink>Scratch</scratchLink>. The link will only work if you keep this browser tab open, or if you save your project and open in again later."
         }
     }
 }

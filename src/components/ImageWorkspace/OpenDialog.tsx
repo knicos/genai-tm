@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
@@ -9,8 +9,10 @@ import { useTranslation } from 'react-i18next';
 import TextField from '@mui/material/TextField';
 import style from './TeachableMachine.module.css';
 import { useRecoilState, useSetRecoilState } from 'recoil';
-import { fileData, loadState, showOpenDialog } from '../../state';
+import { fileData, showOpenDialog } from '../../state';
 import { useSearchParams } from 'react-router-dom';
+import FileOpenIcon from '@mui/icons-material/FileOpen';
+import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 
 export default function OpenDialog() {
     const { namespace } = useVariant();
@@ -18,6 +20,7 @@ export default function OpenDialog() {
     const [isopen, setShowOpenDialog] = useRecoilState(showOpenDialog);
     const setProject = useSetRecoilState(fileData);
     const [, setParams] = useSearchParams();
+    const [codeValue, setCodeValue] = useState<string>('');
 
     const doKeyCheck = useCallback(
         (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -29,6 +32,15 @@ export default function OpenDialog() {
         },
         [setShowOpenDialog, setParams]
     );
+
+    const doOpenCode = useCallback(() => {
+        setParams({ project: codeValue });
+        setShowOpenDialog(false);
+    }, [setParams, setShowOpenDialog, codeValue]);
+
+    const doChangeCode = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+        setCodeValue(e.currentTarget.value);
+    }, []);
 
     const doClose = useCallback(() => setShowOpenDialog(false), [setShowOpenDialog]);
 
@@ -64,16 +76,30 @@ export default function OpenDialog() {
                     <div className={style.padded}>
                         <TextField
                             label={t<string>('load.code')}
-                            variant="filled"
+                            variant="outlined"
                             fullWidth
                             onKeyDown={doKeyCheck}
+                            value={codeValue}
+                            onChange={doChangeCode}
                             spellCheck={false}
+                            color={codeValue.length === 8 ? 'success' : codeValue.length > 0 ? 'error' : 'primary'}
                         />
                     </div>
-                    <p>or</p>
+                    <Button
+                        variant="contained"
+                        onClick={doOpenCode}
+                        startIcon={<ContentCopyIcon />}
+                        fullWidth
+                        disabled={codeValue.length < 8}
+                    >
+                        {t('load.actions.openCode')}
+                    </Button>
+                    <div className={style.spacer} />
                     <Button
                         variant="contained"
                         onClick={openFile}
+                        startIcon={<FileOpenIcon />}
+                        fullWidth
                     >
                         {t('load.actions.openFile')}
                     </Button>

@@ -22,10 +22,10 @@
     },
     "load": {
         "title": "Avaa",
-        "code": "Share code",
-        "or": "tai",
+        "code": "Syötä jaettu koodi",
         "actions": {
             "openFile": "Avaa tiedosto",
+            "openCode": "Kopio jaettu",
             "cancel": "Peruuta"
         }
     },
@@ -192,12 +192,13 @@
     },
     "share": {
         "actions": {
-            "close": "Close"
+            "close": "Sulje"
         },
         "labels": {
-            "title": "Share",
-            "includeSamples": "Include sample images",
-            "instructions": "Copy the link to use the classifier in other applications such as <scratchLink>Scratch</scratchLink>. The link will only work if you keep this browser tab open, or if you save your project and open in again later."
+            "title": "Jaa",
+            "includeSamples": "Liitä opetuskuvat mukaan",
+            "codeInstructions": "Anna muiden avata kopio luokittimestasi alla olevan koodin avulla.",
+            "linkInstructions": "Kopioimalla linkin luokittelijaasi voi käyttää muissa sovelluksissa kuten <scratchLink>Scratch</scratchLink>. Linkki toimii niin kauan kuin tämä välilehti on auki, tai jos talletat projektin ja avaat sen myöhemmin uudelleen."
         }
     }
 }

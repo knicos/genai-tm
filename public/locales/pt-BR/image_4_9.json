@@ -22,10 +22,10 @@
     },
     "load": {
         "title": "Carregar",
-        "code": "Share code",
-        "or": "ou",
+        "code": "Coloque o código",
         "actions": {
             "openFile": "Carregar",
+            "openCode": "Cópia compartilhada",
             "cancel": "Cancelar"
         }
     },
@@ -196,8 +196,9 @@
         },
         "labels": {
             "title": "Compartilhar",
-            "includeSamples": "Include sample images",
-            "instructions": "Copie o link para usar o classificador em outras aplicações como o <scratchLink>Scratch</scratchLink>. O link só funcionará se você mantiver esta aba do navegador aberta, ou se você salvar seu projeto e abri-lo novamente mais tarde."
+            "includeSamples": "Incluir imagens de amostra",
+            "codeInstructions": "Permita que outras pessoas abram uma cópia do seu classificador usando o código abaixo.",
+            "linkInstructions": "Copie o link para usar o classificador em outras aplicações como o <scratchLink>Scratch</scratchLink>. O link só funcionará se você mantiver esta aba do navegador aberta, ou se você salvar seu projeto e abri-lo novamente mais tarde."
         }
     }
 }

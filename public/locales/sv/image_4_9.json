@@ -22,10 +22,10 @@
     },
     "load": {
         "title": "Öppna",
-        "code": "Share code",
-        "or": "eller",
+        "code": "Ange delad kod",
         "actions": {
             "openFile": "Öppna",
+            "openCode": "Kopia delad",
             "cancel": "avbryt"
         }
     },
@@ -196,7 +196,8 @@
         "labels": {
             "title": "Dela",
             "includeSamples": "Ikludera provbilder",
-            "instructions": "Kopiera länken för att använda klassificeraren i andra applikationer så som <scratchLink>Scratch</scratchLink>. Länken fungerar endast om du håller denna flik i webbläsaren öpppen, eller om du sparar ditt projekt och öppnar det igen senare."
+            "codeInstructions": "Tillåt andra att öppna en kopia av din klassificerare med koden nedan.",
+            "linkInstructions": "Kopiera länken för att använda klassificeraren i andra applikationer så som <scratchLink>Scratch</scratchLink>. Länken fungerar endast om du håller denna flik i webbläsaren öpppen, eller om du sparar ditt projekt och öppnar det igen senare."
         }
     }
 }

@@ -6,13 +6,6 @@
     gap: 1rem;
 }
 
-@media only screen and (max-width: 700px), (max-height: 500px) {
-    .trainingcontainer {
-        max-width: 390px;
-        width: 100%;
-    }
-}
-
 .containerDisabled {
     composes: trainingcontainer;
     pointer-events: none;
@@ -27,4 +20,14 @@
 .containerDisabled h1 {
     color: #444;
     margin: 0;
+}
+
+@media only screen and (max-width: 700px), (max-height: 500px) {
+    .trainingcontainer {
+        max-width: 390px;
+        width: 100%;
+    }
+    .trainingcontainer > h1 {
+        margin-left: 1rem;
+    }
 }
