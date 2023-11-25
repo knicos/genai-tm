@@ -107,14 +107,6 @@ stages:
                       skip_api_build: true
                       skip_app_build: true
                       azure_static_web_apps_api_token: $(deployment_token)
-          #- job: Github
-          #  displayName: Github Mirror
-          #  steps:
-          #      - script: |
-          #            git config user.name "Nicolas Pope"
-          #            git config user.email "npope@uef.fi"
-          #            git fetch --unshallow origin
-          #            git push --prune $(git_token) +refs/remotes/origin/*:refs/heads/* +refs/tags/*:refs/tags/*
 
     - stage: DeployStaging
       displayName: Deploy Staging
@@ -129,10 +121,9 @@ stages:
                 - task: AzureStaticWebApp@0
                   inputs:
                       app_location: 'DistFolder'
-                      api_location: 's/api'
                       output_location: 'DistFolder'
                       cwd: $(Pipeline.Workspace)
-                      skip_api_build: false
+                      skip_api_build: true
                       skip_app_build: true
                       azure_static_web_apps_api_token: $(deployment_token)
                       deployment_environment: staging

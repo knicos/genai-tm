@@ -1,7 +1,6 @@
 import React from 'react';
 
 import './App.css';
-import Home from './views/Home/Home';
 import {
     RouterProvider,
     Route,
@@ -21,6 +20,7 @@ import About from './views/About/About';
 function ErrorComponent() {
     const error = useRouteError();
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     if ((error as any).status === 404) {
         return (
             <section className="errorView">
@@ -86,10 +86,6 @@ const router = createBrowserRouter(
             <Route
                 path="about"
                 element={<About />}
-            />
-            <Route
-                path="home"
-                element={<Home />}
             />
             <Route
                 path=":kind/:variant"
