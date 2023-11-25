@@ -25,7 +25,7 @@
         "code": "Syötä jaettu koodi",
         "actions": {
             "openFile": "Avaa tiedosto",
-            "openCode": "Käytä koodia",
+            "openCode": "Käytä koodi",
             "cancel": "Peruuta"
         }
     },
@@ -197,7 +197,7 @@
         "labels": {
             "title": "Jaa",
             "includeSamples": "Liitä opetuskuvat mukaan",
-            "codeInstructions": "Anna muiden avata kopio luokittimestasi alla olevan koodin avulla.",
+            "codeInstructions": "Anna muiden avata kopio luokittelijastasi alla olevan koodin avulla.",
             "linkInstructions": "Kopioimalla linkin luokittelijaasi voi käyttää muissa sovelluksissa kuten <scratchLink>Scratch</scratchLink>. Linkki toimii niin kauan kuin tämä välilehti on auki, tai jos talletat projektin ja avaat sen myöhemmin uudelleen."
         }
     }
