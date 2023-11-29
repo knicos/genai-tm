@@ -44,7 +44,7 @@ export function canvasFromFile(file: File, size = 224) {
             img.src = reader.result as string;
 
             // Note: Here to integration tests. "onload" is not called in jest.
-            if (global?.process?.env?.NODE_ENV === 'test') img.onload(new Event('onload'));
+            if (import.meta.env.NODE_ENV === 'test') img.onload(new Event('onload'));
         };
         reader.readAsDataURL(file);
     });
