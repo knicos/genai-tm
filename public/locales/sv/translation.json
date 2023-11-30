@@ -1,13 +1,15 @@
 {
     "deploy": {
         "actions": {
-            "copy": "Kopiera"
+            "copy": "Kopiera",
+            "close": "Stäng"
         },
         "labels": {
             "notFound": "Klassificeraren hittas inte.",
             "dropHere": "Släpp bilden här",
             "errorInfo": "Denna sida existerar endast om du håller klassificerarn öppen i en flik i webbläsaren. Det kan också finnas säkerhetsbegränsningar som gör att den inte kan hittas.",
-            "share": "Dela till andra enheter"
+            "share": "Dela till andra enheter",
+            "qrExpand": "Click the QR code to expand it."
         }
     },
     "collect": {

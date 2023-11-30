@@ -92,7 +92,10 @@ export default function ClassMenu({ hasSamples, index, onDeleteClass, onRemoveSa
                             </BusyButton>
                         )}
                         {sharing && (
-                            <QRCode url={`${window.location.origin}/collect/${code}/${index}?lng=${i18n.language}`} />
+                            <QRCode
+                                size="small"
+                                url={`${window.location.origin}/collect/${code}/${index}?lng=${i18n.language}`}
+                            />
                         )}
                         {index === 0 && (
                             <Alert

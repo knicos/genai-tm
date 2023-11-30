@@ -1,13 +1,15 @@
 {
     "deploy": {
         "actions": {
-            "copy": "Copiar"
+            "copy": "Copiar",
+            "close": "Fechar"
         },
         "labels": {
             "notFound": "Não foi possível encontrar o classificador.",
             "dropHere": "Arraste a imagem para cá",
             "errorInfo": "Esta página só existe se você mantiver seu classificador aberto em uma aba do navegador. Também podem existir restrições de segurança que impedem sua localização.",
-            "share": "Compartilhar com outros dispositivos"
+            "share": "Compartilhar com outros dispositivos",
+            "qrExpand": "Click the QR code to expand it."
         }
     },
     "testInput": {

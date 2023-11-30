@@ -63,7 +63,7 @@
             "dropFiles": "eller dra bilder hit från en webbsida eller fil",
             "needsMore": "Fler prover behövs",
             "dropError": "Endast bilder kan släppas här",
-            "qrMessage": "Du kan använda telefon eller surfplatta för att lägga till bilder"
+            "qrMessage": "Du kan använda telefon eller surfplatta för att lägga till bilder. Klicka på QR-koden för att expandera den."
         },
         "aria": {
             "sample": "uppladdade prover",

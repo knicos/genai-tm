@@ -1,0 +1,17 @@
+@value primary, primaryHover from "../../style/colours.module.css";
+
+.container {
+    display: flex;
+    align-items: center;
+}
+
+.canvas {
+    cursor: pointer;
+    margin: 2px;
+}
+
+.canvas:focus {
+    border: 2px solid primary;
+    margin: 0;
+    border-radius: 4px;
+}

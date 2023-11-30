@@ -1,13 +1,15 @@
 {
     "deploy": {
         "actions": {
-            "copy": "Copy"
+            "copy": "Copy",
+            "close": "Sulje"
         },
         "labels": {
             "notFound": "Could not find classifier.",
             "dropHere": "Drop image here",
             "errorInfo": "This page only exists if you keep your classifier open in a browser tab. There might also be security restrictions that prevent it from being found.",
-            "share": "Share to other devices"
+            "share": "Share to other devices",
+            "qrExpand": "Click the QR code to expand it."
         }
     },
     "testInput": {

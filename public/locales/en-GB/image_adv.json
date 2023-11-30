@@ -63,7 +63,7 @@
             "dropFiles": "or drag images here from a website or file",
             "needsMore": "More samples are needed",
             "dropError": "Only images can be dropped here",
-            "qrMessage": "You can use a phone or tablet to add images"
+            "qrMessage": "You can use a phone or tablet to add images. Click the QR code to expand it."
         },
         "aria": {
             "sample": "uploaded sample",

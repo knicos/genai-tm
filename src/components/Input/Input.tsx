@@ -67,7 +67,6 @@ export default function Input(props: Props) {
             }
             fileImageRef.current.appendChild(file);
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [file, fileImageRef.current]);
 
     useEffect(() => {
@@ -77,7 +76,6 @@ export default function Input(props: Props) {
             }
             remoteImageRef.current.appendChild(remoteInput);
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [remoteInput, remoteImageRef.current]);
 
     const doPrediction = useCallback(
@@ -273,7 +271,12 @@ export default function Input(props: Props) {
                                     {t('trainingdata.actions.collaborate')}
                                 </BusyButton>
                             )}
-                            {sharing && <QRCode url={`${window.location.origin}/input/${code}?lng=${i18n.language}`} />}
+                            {sharing && (
+                                <QRCode
+                                    size="small"
+                                    url={`${window.location.origin}/input/${code}?lng=${i18n.language}`}
+                                />
+                            )}
                         </div>
                         {!!remoteInput && (
                             <div
