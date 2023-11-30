@@ -85,6 +85,11 @@ export const webrtcActive = atom<boolean>({
     default: false,
 });
 
+export const fatalWebcam = atom<boolean>({
+    key: 'fatalWebcam',
+    default: false,
+});
+
 export const iceConfig = selector<any>({
     key: 'iceConfig',
     get: async () => {

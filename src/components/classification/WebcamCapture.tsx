@@ -9,6 +9,8 @@ import WebcamSettings, { IWebcamSettings } from './WebcamSettings';
 import { useTranslation } from 'react-i18next';
 import { useVariant } from '../../util/variant';
 import { useTeachableModel } from '../../util/TeachableModel';
+import { useRecoilValue } from 'recoil';
+import { fatalWebcam } from '@genaitm/state';
 
 interface Props {
     visible?: boolean;
@@ -21,6 +23,7 @@ export default function WebcamCapture({ visible, onCapture, onClose }: Props) {
     const { t } = useTranslation(namespace);
     const [capturing, setCapturing] = useState(false);
     const [showSettings, setShowSettings] = useState(false);
+    const fatal = useRecoilValue(fatalWebcam);
     const [settings, setSettings] = useState<IWebcamSettings>({
         interval: 1,
         delay: 6,
@@ -55,6 +58,10 @@ export default function WebcamCapture({ visible, onCapture, onClose }: Props) {
             buttonRef.current.addEventListener('touchstart', startTouchCapture, { passive: false });
         }
     }, [buttonRef, startTouchCapture]);
+
+    useEffect(() => {
+        if (fatal) onClose();
+    }, [fatal, onClose]);
 
     return visible ? (
         <div

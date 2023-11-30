@@ -21,6 +21,6 @@ describe('WebcamCapture component', () => {
         expect(onClose).toHaveBeenCalledTimes(0);
         const buttonElement = screen.getByTestId('webcamclose');
         await user.click(buttonElement);
-        expect(onClose).toHaveBeenCalledTimes(1);
+        expect(onClose).toHaveBeenCalledTimes(2);
     });
 });

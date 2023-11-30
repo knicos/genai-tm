@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { useVariant } from '../../util/variant';
 import QRCode from '../QRCode/QRCode';
 import { useRecoilState, useRecoilValue } from 'recoil';
-import { p2pActive, sessionCode, sharingActive } from '../../state';
+import { fatalWebcam, p2pActive, sessionCode, sharingActive } from '../../state';
 import Alert from '@mui/material/Alert';
 import style from './classification.module.css';
 import BusyButton from '../BusyButton/BusyButton';
@@ -26,6 +26,7 @@ export default function ClassMenu({ hasSamples, index, onDeleteClass, onRemoveSa
     const { namespace, disabledClassRemove, enabledP2PData, enableCollaboration } = useVariant();
     const { t, i18n } = useTranslation(namespace);
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+    const fatal = useRecoilValue(fatalWebcam);
     const open = Boolean(anchorEl);
     const handleClick = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorEl(event.currentTarget);
@@ -79,7 +80,7 @@ export default function ClassMenu({ hasSamples, index, onDeleteClass, onRemoveSa
                 >
                     {t('trainingdata.actions.removeAll')}
                 </MenuItem>
-                {enabledP2PData && enableCollaboration && (
+                {enabledP2PData && enableCollaboration && !fatal && (
                     <div className={style.shareBox}>
                         {!sharing && (
                             <BusyButton

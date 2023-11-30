@@ -18,7 +18,7 @@ import WebcamInput from './WebcamInput';
 import { useTabActive } from '../../util/useTabActive';
 import AlertModal from '../AlertModal/AlertModal';
 import { useTeachableModel } from '../../util/TeachableModel';
-import { inputImage, p2pActive, sessionCode, sharingActive } from '../../state';
+import { fatalWebcam, inputImage, p2pActive, sessionCode, sharingActive } from '../../state';
 import { useRecoilValue, useRecoilState } from 'recoil';
 import BusyButton from '../BusyButton/BusyButton';
 import QRCode from '../QRCode/QRCode';
@@ -44,8 +44,13 @@ export default function Input(props: Props) {
     const code = useRecoilValue(sessionCode);
     const sharing = useRecoilValue(sharingActive);
     const [p2penabled, setP2PEnabled] = useRecoilState(p2pActive);
+    const fatal = useRecoilValue(fatalWebcam);
 
     const enableInput = isActive && enableInputSwitch;
+
+    useEffect(() => {
+        if (fatal) setTabIndex(1);
+    }, [fatal]);
 
     const doCollab = useCallback(() => {
         setP2PEnabled(true);
@@ -186,7 +191,7 @@ export default function Input(props: Props) {
                         variant="fullWidth"
                     >
                         <Tab
-                            disabled={!canPredict}
+                            disabled={!canPredict || fatal}
                             label={t<string>('input.labels.webcam')}
                             id="input-tab-0"
                             aria-controls="input-panel-0"
@@ -198,7 +203,7 @@ export default function Input(props: Props) {
                             aria-controls="input-panel-1"
                         />
                         <Tab
-                            disabled={!canPredict}
+                            disabled={!canPredict || fatal}
                             label={t<string>('input.labels.device')}
                             id="input-tab-2"
                             aria-controls="input-panel-2"

@@ -6,8 +6,8 @@ import { useTranslation } from 'react-i18next';
 import { useVariant } from '../../util/variant';
 import { IconButton } from '@mui/material';
 import CameraswitchIcon from '@mui/icons-material/Cameraswitch';
-import { useRecoilState } from 'recoil';
-import { webrtcActive } from '../../state';
+import { useRecoilState, useSetRecoilState } from 'recoil';
+import { fatalWebcam, webrtcActive } from '../../state';
 
 interface Props {
     interval?: number;
@@ -44,6 +44,7 @@ export function Webcam({
     const [multiple, setMultiple] = useState(false);
     const [facing, setFacing] = useState(false);
     const [, setWebtRTCActive] = useRecoilState(webrtcActive);
+    const setFatalWebcam = useSetRecoilState(fatalWebcam);
 
     useEffect(() => {
         loopRef.current = async (timestamp: number) => {
@@ -105,7 +106,7 @@ export function Webcam({
         newWebcam.webcam.onsuspend = () => newWebcam.play();
         setWebcam(newWebcam);
 
-        if (!!navigator.mediaDevices?.enumerateDevices) {
+        if (navigator.mediaDevices?.enumerateDevices) {
             try {
                 const devices = await navigator.mediaDevices.enumerateDevices();
                 const videoDev = devices.filter((d) => d.kind === 'videoinput');
@@ -129,13 +130,13 @@ export function Webcam({
         initWebcam().catch((e) => {
             if (onActivated) onActivated(false);
             console.error('No webcam', e);
+            setFatalWebcam(true);
         });
         return () => {
             if (webcam?.webcam.srcObject) {
                 webcam.stop();
             }
         };
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [facing, onActivated]);
 
     useEffect(() => {

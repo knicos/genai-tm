@@ -9,7 +9,8 @@
             "dropHere": "Drop image here",
             "errorInfo": "This page only exists if you keep your classifier open in a browser tab. There might also be security restrictions that prevent it from being found.",
             "share": "Share to other devices",
-            "qrExpand": "Click the QR code to expand it."
+            "qrExpand": "Click the QR code to expand it.",
+            "noWebcam": "Camera access is required for classifier sharing."
         }
     },
     "testInput": {

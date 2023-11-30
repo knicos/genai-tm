@@ -5,7 +5,7 @@ import style from './Output.module.css';
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import { useVariant } from '../../util/variant';
 import { useRecoilState, useRecoilValue } from 'recoil';
-import { predictedIndex, sessionCode, sessionPassword, behaviourState, p2pActive } from '../../state';
+import { predictedIndex, sessionCode, sessionPassword, behaviourState, p2pActive, fatalWebcam } from '../../state';
 import RawOutput from './RawOutput';
 import Slider from '@mui/material/Slider';
 import VolumeDown from '@mui/icons-material/VolumeDown';
@@ -30,6 +30,7 @@ export default function Output(props: Props) {
     const { namespace, allowDeploy, usep2p, enableCollaboration } = useVariant();
     const { t } = useTranslation(namespace);
     const predicted = useRecoilValue(predictedIndex);
+    const fatal = useRecoilValue(fatalWebcam);
 
     const doDeployClick = useCallback(() => {
         setP2PEnabled(true);
@@ -42,7 +43,8 @@ export default function Output(props: Props) {
             className={style.widget}
             {...props}
             menu={
-                allowDeploy && (
+                allowDeploy &&
+                !fatal && (
                     <a
                         className={style.deployLink}
                         href={`/deploy/${usep2p ? 'p' : 'b'}/${code}?p=${pwd}&qr=${enableCollaboration ? '1' : '0'}`}

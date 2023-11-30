@@ -10,6 +10,9 @@ import { Alert, IconButton } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import { useVariant } from '../../util/variant';
 import { useTranslation } from 'react-i18next';
+import { useRecoilValue } from 'recoil';
+import { fatalWebcam } from '@genaitm/state';
+import AlertModal from '@genaitm/components/AlertModal/AlertModal';
 
 export function Component() {
     const { code } = useParams();
@@ -21,6 +24,7 @@ export function Component() {
     const [showQR, setShowQR] = useState(query.get('qr') === '1');
     const { namespace } = useVariant();
     const { t } = useTranslation(namespace);
+    const fatal = useRecoilValue(fatalWebcam);
 
     const closeQR = useCallback(() => setShowQR(false), [setShowQR]);
 
@@ -82,6 +86,15 @@ export function Component() {
                         </IconButton>
                     </div>
                 </div>
+            )}
+            {fatal && (
+                <AlertModal
+                    open={true}
+                    severity="error"
+                    onClose={() => {}}
+                >
+                    {t('deploy.labels.noWebcam')}
+                </AlertModal>
             )}
         </>
     );

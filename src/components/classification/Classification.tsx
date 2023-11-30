@@ -1,6 +1,6 @@
 import React, { useCallback, useRef, useState } from 'react';
 import style from './classification.module.css';
-import { IClassification } from '../../state';
+import { IClassification, fatalWebcam } from '../../state';
 import { VerticalButton } from '../button/Button';
 import { Widget } from '../widget/Widget';
 import Sample from './Sample';
@@ -17,6 +17,7 @@ import { canvasFromDataTransfer, canvasesFromFiles } from '../../util/canvas';
 import DnDAnimation from '../DnDAnimation/DnDAnimation';
 import AlertPara from '../AlertPara/AlertPara';
 import AlertModal from '../AlertModal/AlertModal';
+import { useRecoilValue } from 'recoil';
 
 const SAMPLEMIN = 2;
 
@@ -39,6 +40,7 @@ export function Classification({ name, active, data, index, setData, onActivate,
     const [loading, setLoading] = useState(false);
     const [showTip, setShowTip] = useState(false);
     const [showDropError, setShowDropError] = useState(false);
+    const fatal = useRecoilValue(fatalWebcam);
 
     const doShowTip = useCallback(() => data.samples.length === 0 && setShowTip(true), [data, setShowTip]);
 
@@ -228,6 +230,7 @@ export function Classification({ name, active, data, index, setData, onActivate,
                                     variant="outlined"
                                     startIcon={<VideocamIcon />}
                                     onClick={doActivate}
+                                    disabled={fatal}
                                 >
                                     {t('trainingdata.actions.webcam')}
                                 </VerticalButton>

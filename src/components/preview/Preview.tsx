@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { useVariant } from '../../util/variant';
 import Alert from '@mui/material/Alert';
 import { useRecoilValue } from 'recoil';
-import { prediction } from '../../state';
+import { fatalWebcam, prediction } from '../../state';
 import { Button } from '../button/Button';
 import ShareIcon from '@mui/icons-material/Share';
 
@@ -19,6 +19,7 @@ export default function Preview({ onExport }: Props) {
     const { namespace, usep2p, allowModelSharing } = useVariant();
     const { t } = useTranslation(namespace);
     const preds = useRecoilValue(prediction);
+    const fatal = useRecoilValue(fatalWebcam);
 
     const model = preds.length > 0;
 
@@ -28,7 +29,7 @@ export default function Preview({ onExport }: Props) {
             title={t<string>('model.labels.title')}
             className={style.widget}
             menu={
-                onExport && usep2p && allowModelSharing ? (
+                onExport && usep2p && !fatal && allowModelSharing ? (
                     <Button
                         disabled={!model}
                         onClick={onExport}
