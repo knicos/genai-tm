@@ -4,8 +4,6 @@ import { useP2PModel } from './useRemoteModel';
 import { useSearchParams, useParams } from 'react-router-dom';
 import QRCode from '../../components/QRCode/QRCode';
 import style from './style.module.css';
-import { Button } from '../../components/button/Button';
-import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import { Alert, IconButton } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import { useVariant } from '../../util/variant';
@@ -29,10 +27,6 @@ export function Component() {
     const closeQR = useCallback(() => setShowQR(false), [setShowQR]);
 
     const closeError = useCallback(() => setHadError(false), [setHadError]);
-
-    const doCopy = useCallback(() => {
-        navigator.clipboard.writeText(window.location.href);
-    }, []);
 
     const doActivated = useCallback(
         (available: boolean) => {
@@ -65,14 +59,6 @@ export function Component() {
                     />
                     <div className={style.shareText}>
                         <span>{t('deploy.labels.share')}</span>
-                        <Button
-                            disabled={!navigator?.clipboard?.writeText}
-                            onClick={doCopy}
-                            variant="outlined"
-                            startIcon={<ContentCopyIcon />}
-                        >
-                            {t('deploy.actions.copy')}
-                        </Button>
                         <Alert severity="info">
                             <p>{t('deploy.labels.qrExpand')}</p>
                         </Alert>

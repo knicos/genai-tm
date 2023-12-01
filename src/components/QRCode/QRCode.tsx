@@ -1,4 +1,4 @@
-import { useRef, useEffect, useState, KeyboardEvent } from 'react';
+import { useRef, useEffect, useState, KeyboardEvent, Suspense } from 'react';
 import qr from 'qrcode';
 import style from './style.module.css';
 import DialogQR from './DialogQR';
@@ -34,11 +34,13 @@ export default function QRCode({ url, size }: Props) {
                     if (e.key === 'Enter') setOpen(true);
                 }}
             />
-            <DialogQR
-                url={url}
-                open={open}
-                onClose={() => setOpen(false)}
-            />
+            <Suspense>
+                <DialogQR
+                    url={url}
+                    open={open}
+                    onClose={() => setOpen(false)}
+                />
+            </Suspense>
         </div>
     );
 }

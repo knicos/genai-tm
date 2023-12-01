@@ -1,16 +1,16 @@
 {
     "deploy": {
         "actions": {
-            "copy": "Copy",
+            "copy": "Kopioi",
             "close": "Sulje"
         },
         "labels": {
-            "notFound": "Could not find classifier.",
-            "dropHere": "Drop image here",
-            "errorInfo": "This page only exists if you keep your classifier open in a browser tab. There might also be security restrictions that prevent it from being found.",
-            "share": "Share to other devices",
-            "qrExpand": "Click the QR code to expand it.",
-            "noWebcam": "Camera access is required for classifier sharing."
+            "notFound": "Luokittelijaa ei löytynyt.",
+            "dropHere": "Pudota kuva tänne",
+            "errorInfo": "Tämä sivu on olemassa vain silloin kun tekemäsi luokittelija on avoinna selaimen ikkunassa tai välilehdellä.  Joissakin tapauksissa turva-asetukset verkossa tai omalla laitteella estävät appisi jakamisen.",
+            "share": "Jaa muille laitteille",
+            "qrExpand": "Laajenna QR-koodi napsauttamalla sitä.",
+            "noWebcam": "Luokittimen jakamiseen tarvitaan kameran käyttöoikeus."
         }
     },
     "testInput": {
@@ -22,35 +22,35 @@
             "upload": "Lataa"
         },
         "sampleCount": "{{count}} kuvaa",
-        "connecting": "Connecting...",
-        "disconnected": "Disconnected",
-        "failed": "Failed",
-        "failedMessage": "This classifier could not be accessed from your device",
-        "dropError": "Only images can be dropped here",
-        "relayWarning": "Your data is being sent through our server. You may wish to use another WiFi connection to avoid this."
+        "connecting": "Yhdistää...",
+        "disconnected": "Yhteys katkaistu",
+        "failed": "Epäonnistui",
+        "failedMessage": "Tähän luokittelijaan ei saa yhteyttä laitteeltasi",
+        "dropError": "Tähän voi pudottaa vain kuvia",
+        "relayWarning": "Tieto laitteiden välillä kulkee tällä hetkellä palvelimemme kautta.  Voit kokeilla vaihtaa Wifi-yhteyttä toiseen jotta laitteet voisivat keskustella suoraan ilman välikäsiä."
     },
     "about": {
-        "back": "Back",
-        "title": "About",
-        "privacyTitle": "Privacy Notice",
-        "privacy": "We do not collect or store any personal data about your use of this application. Cookies are not used by this application and there is no tracking of activity. Your sample data and models remain on your device unless you choose to share them. When sharing, the data is not stored in our servers and becomes unavailable to others if you close your browser tab."
+        "back": "Takaisin",
+        "title": "Tietoa",
+        "privacyTitle": "Tietoturvaselvitys",
+        "privacy": "Emme kerää tai tallenna mitään henkilökohtaisia tietoja tämän sovelluksen käytöstä. Sovellus ei käytä evästeitä eikä seuraa käyttötoimintaa. Luomasi esimerkit ja luokittelija pysyvät vain omalla laitteellasi, ellet päätä jakaa niitä. Jaettaessa tietoja ei tallenneta palvelimillemme ja ne muuttuvat muiden saavuttamattomiksi, jos suljet selainikkunan."
     },
     "settings": {
-        "title": "Settings",
+        "title": "Asetukset",
         "actions": {
             "save": "Tallenna",
-            "reset": "Reset",
+            "reset": "Tyhjennä",
             "cancel": "Peruuta"
         },
         "labels": {
-            "language": "Language",
-            "model": "Model",
-            "variant": "Interface Variant",
+            "language": "Kieli",
+            "model": "Luokittimen tyyppi",
+            "variant": "Käyttöliittymävaihtoehto",
             "advanced": "Lisäasetukset"
         },
         "values": {
-            "models": ["Image (MobileNet)", "Pose (PoseNet)"],
-            "variants": ["General Use", "Classroom"]
+            "models": ["Kuva (MobileNet)", "Asento (PoseNet)"],
+            "variants": ["Kaikkeen käyttöön", "Luokkahuoneeseen"]
         }
     }
 }
