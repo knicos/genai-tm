@@ -4,6 +4,7 @@ import { Dialog, DialogActions, DialogContent } from '@mui/material';
 import { Button } from '../button/Button';
 import { useTranslation } from 'react-i18next';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
+import style from './style.module.css';
 
 interface Props {
     url: string;
@@ -16,7 +17,7 @@ export default function DialogQR({ url, open, onClose }: Props) {
     const canvas = useRef<HTMLCanvasElement>(null);
 
     const doCopy = useCallback(() => {
-        navigator.clipboard.writeText(window.location.href);
+        navigator.clipboard.writeText(url);
     }, []);
 
     useEffect(() => {
@@ -30,6 +31,7 @@ export default function DialogQR({ url, open, onClose }: Props) {
             open={open}
             onClose={onClose}
             keepMounted
+            className={style.dialog}
         >
             <DialogContent>
                 <a

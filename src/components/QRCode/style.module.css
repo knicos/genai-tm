@@ -15,3 +15,15 @@
     margin: 0;
     border-radius: 4px;
 }
+
+.dialog {
+    margin: 0;
+}
+
+.dialog :global .MuiDialog-paper {
+    margin: 0;
+}
+
+.dialog :global .MuiDialogContent-root {
+    padding: 0;
+}

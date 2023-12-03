@@ -89,6 +89,15 @@
     align-items: flex-start;
 }
 
+@media only screen and (max-width: 700px) {
+    .qrcode {
+        padding: 0.5rem;
+    }
+    .shareText :global .MuiAlert-standard {
+        display: none;
+    }
+}
+
 .qrclose {
     align-self: flex-start;
     margin-left: auto;
