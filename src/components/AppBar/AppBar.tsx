@@ -24,6 +24,7 @@ export const LANGS = [
     { name: 'fi-FI', label: 'Suomi' },
     { name: 'pt-BR', label: 'Português Brasileiro' },
     { name: 'sv', label: 'Svenska' },
+    { name: 'ua-UA', label: 'українська мова' },
 ];
 
 export default function ApplicationBar({ showReminder, onSave }: Props) {
