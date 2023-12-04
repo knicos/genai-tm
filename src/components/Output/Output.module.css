@@ -16,13 +16,14 @@
     position: absolute;
     color: white;
     text-shadow: 2px 2px 5px #666;
-    padding: 1rem;
-    text-align: center;
+    padding: 0.8rem;
+    /*text-align: center;*/
     overflow: hidden;
-    width: 100%;
+    /*width: 100%;*/
     box-sizing: border-box;
     white-space: pre-wrap;
     max-height: 100%;
+    line-height: 1em;
 }
 
 .widget {
