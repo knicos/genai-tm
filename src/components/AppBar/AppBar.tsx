@@ -20,6 +20,7 @@ interface Props {
 }
 
 export const LANGS = [
+    { name: 'de-DE', label: 'Deutsch' },
     { name: 'en-GB', label: 'English' },
     { name: 'fi-FI', label: 'Suomi' },
     { name: 'pt-BR', label: 'Português Brasileiro' },
