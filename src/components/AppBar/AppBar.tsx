@@ -24,7 +24,7 @@ export const LANGS = [
     { name: 'fi-FI', label: 'Suomi' },
     { name: 'pt-BR', label: 'Português Brasileiro' },
     { name: 'sv', label: 'Svenska' },
-    { name: 'ua-UA', label: 'українська мова' },
+    { name: 'ua-UA', label: 'Українська' },
 ];
 
 export default function ApplicationBar({ showReminder, onSave }: Props) {
@@ -58,6 +58,7 @@ export default function ApplicationBar({ showReminder, onSave }: Props) {
         onSave();
     }, [setReminder, onSave]);
 
+    // @ts-ignore
     return (
         <AppBar
             component="nav"
