@@ -59,7 +59,6 @@ export default function ApplicationBar({ showReminder, onSave }: Props) {
         onSave();
     }, [setReminder, onSave]);
 
-    // @ts-ignore
     return (
         <AppBar
             component="nav"
