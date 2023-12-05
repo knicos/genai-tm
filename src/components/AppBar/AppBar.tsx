@@ -20,11 +20,12 @@ interface Props {
 }
 
 export const LANGS = [
+    { name: 'de-DE', label: 'Deutsch' },
     { name: 'en-GB', label: 'English' },
     { name: 'fi-FI', label: 'Suomi' },
     { name: 'pt-BR', label: 'Português Brasileiro' },
     { name: 'sv', label: 'Svenska' },
-    { name: 'ua-UA', label: 'українська мова' },
+    { name: 'ua-UA', label: 'Українська' },
 ];
 
 export default function ApplicationBar({ showReminder, onSave }: Props) {

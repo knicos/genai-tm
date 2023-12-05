@@ -1,0 +1,204 @@
+{
+    "app": {
+        "title": "GenAI Teachable Machine",
+        "about": "Über uns",
+        "save": "Speichern",
+        "load": "Öffnen",
+        "language": "Sprache",
+        "reminder": "Denk daran, deinen Klassifikator zu speichern."
+    },
+    "load": {
+        "title": "Klassifikator öffnen",
+        "code": "Gemeinsamen Code eingeben",
+        "actions": {
+            "openFile": "Datei öffnen",
+            "openCode": "Code verwenden",
+            "cancel": "Abbrechen"
+        }
+    },
+    "save": {
+        "title": "Klassifikator speichern",
+        "noModel": "Du musst zuerst einen Klassifikator erstellen.",
+        "message": "Lade den Inhalt deines Klassifikators in eine Datei herunter. Wenn du deinen Klassifikator oder deine App mit anderen teilen möchtest, musst du sie auf einen anderen File-Sharing-Dienst hochladen.",
+        "saveSamples": "Beispiele speichern",
+        "saveClassifier": "Klassifikator speichern",
+        "saveBehaviours": "Verhaltensweisen speichern",
+        "name": "Name",
+        "actions": {
+            "save": "Speichern",
+            "cancel": "Abbrechen"
+        }
+    },
+    "alignment": {
+        "aria": {
+            "left": "links ausrichten",
+            "center": "zentriert ausrichten",
+            "right": "rechts ausrichten",
+            "align": "Textausrichtung"
+        }
+    },
+    "fontsize": {
+        "aria": {
+            "title": "Textgröße ändern",
+            "increase": "erhöhen",
+            "decrease": "verringern"
+        }
+    },
+    "trainingdata": {
+        "actions": {
+            "addClass": "Eine Klasse hinzufügen",
+            "webcam": "Webcam",
+            "upload": "Hochladen",
+            "deleteClass": "Klasse löschen",
+            "removeAll": "Alle Beispiele entfernen",
+            "capture": "Zum Aufnehmen anhalten",
+            "collaborate": "Zusammenarbeiten"
+        },
+        "labels": {
+            "title": "Trainingsdaten",
+            "addSamples": "Bildbeispiele hinzufügen",
+            "imageSamples": "{{count}} Bildbeispiele",
+            "class": "Klasse",
+            "wait": "Erfassen...",
+            "dropFiles": "oder ziehe Bilder von einer Website oder Datei hierher",
+            "needsMore": "Es werden mehr Beispiele benötigt",
+            "dropError": "Hier können nur Bilder abgelegt werden",
+            "qrMessage": "Du kannst ein Telefon oder Tablet benutzen, um Bilder hinzuzufügen. Klicke auf den QR-Code, um ihn zu vergrößern."
+        },
+        "aria": {
+            "sample": "hochgeladenes Beispiel",
+            "delete": "Beispiel löschen",
+            "more": "mehr Optionen",
+            "close": "Schließen",
+            "classCard": "Trainingsdaten für {{name}}"
+        }
+    },
+    "training": {
+        "actions": {
+            "train": "Klassifikator trainieren"
+        },
+        "labels": {
+            "title": "Training",
+            "addMore": "Füge zuerst weitere Beispiele oder Klassen hinzu",
+            "needsTraining": "Der Klassifikator muss trainiert werden",
+            "advanced": "Fortgeschritten",
+            "epochs": "Epochen",
+            "learningRate": "Lernrate",
+            "batchSize": "Stapelgröße",
+            "loading": "Klassifikator laden",
+            "prepairing": "Vorbereiten von Beispielen...",
+            "training": "Den Klassifikator trainieren",
+            "complete": "Training abgeschlossen"
+        },
+        "tooltips": {
+            "epochs": "Die Häufigkeit, mit der jedes Beispiel für das Training verwendet wird.",
+            "learningRate": "Nimm hier nur kleine Anpassungen vor. Der Wert sollte kleiner als 0,1 sein.",
+            "batchSize": "Hat minimale Auswirkungen auf das Training. Es ist die Anzahl der Beispiele, die bei jeder Iteration des Trainings verwendet werden."
+        }
+    },
+    "input": {
+        "labels": {
+            "title": "Eingabe",
+            "webcam": "Webcam",
+            "file": "Datei",
+            "device": "Gerät",
+            "switchOn": "Ein",
+            "switchOff": "Aus",
+            "upload": "Datei hier hochladen oder ablegen"
+        },
+        "aria": {
+            "switch": "Eingangsquelle aktivieren"
+        }
+    },
+    "model": {
+        "actions": {
+            "export": "Teilen"
+        },
+        "labels": {
+            "title": "Klassifikator",
+            "mustTrain": "Du musst deinen Klassifikator zuerst trainieren"
+        }
+    },
+    "output": {
+        "labels": {
+            "title": "Output",
+            "deploy": "Bereitstellen"
+        },
+        "aria": {
+            "volume": "Volume",
+            "image": "Klasse {{index}} Ausgabe",
+            "display": "Ausgabe für Klasse {{index}}",
+            "expand": "Fenster vergrößern"
+        }
+    },
+    "behaviours": {
+        "actions": {
+            "upload": "Hochladen",
+            "delete": "Löschen",
+            "record": "Aufzeichnung",
+            "stop": "Stop"
+        },
+        "labels": {
+            "title": "Aktionen",
+            "message": "Nachricht",
+            "link": "Link",
+            "linkError": "Dieser Link wird nicht unterstützt",
+            "embedInfo": "Zeige Videos und Bilder von einem Link. Nur einige Links funktionieren, zum Beispiel YouTube, Vimeo, SoundCloud, Videodateien oder Bilder.",
+            "voiceRecording": "Sprachaufzeichnung",
+            "dropError": "Hier können nur Bilder oder Töne abgelegt werden",
+            "loop": "Schleife"
+        },
+        "aria": {
+            "message": "Text für die Ausgabe",
+            "image": "Bildverhalten",
+            "sound": "Tonverhalten",
+            "text": "Textverhalten",
+            "embed": "Link-Verhalten einbetten",
+            "imageOutput": "Hochgeladenes Bild",
+            "noImage": "Bild-Platzhalter",
+            "stop": "stop",
+            "play": "abspielen",
+            "behaviourCard": "Verhalten für {{name}}",
+            "loop": "Schleife"
+        }
+    },
+    "stepper": {
+        "actions": {
+            "next": "Weiter"
+        },
+        "aria": {
+            "step": "Aufgabenschritte"
+        }
+    },
+    "webcam": {
+        "aria": {
+            "video": "Live-Webcam-Video",
+            "flip": "Auf andere Kamera umschalten"
+        }
+    },
+    "widget": {
+        "aria": {
+            "editTitle": "Titel bearbeiten",
+            "editTitleInput": "{{value}} Feld bearbeiten"
+        },
+        "labels": {
+            "titlePlaceholder": "Name"
+        }
+    },
+    "fontcolor": {
+        "aria": {
+            "title": "Schriftfarbe auswählen"
+        }
+    },
+    "share": {
+        "actions": {
+            "close": "Schließen"
+        },
+        "labels": {
+            "title": "Teilen",
+            "includeSamples": "Beispielbilder einbeziehen",
+            "codeInstructions": "Erlaube anderen, eine Kopie deines Klassifizierers mit dem unten stehenden Code zu öffnen.",
+            "linkInstructions": "Kopiere den Link, um den Klassifikator in anderen Anwendungen wie <scratchLink>Scratch</scratchLink> zu verwenden. Der Link funktioniert nur, wenn du diesen Browser-Tab geöffnet lässt oder wenn du dein Projekt speicherst und später wieder öffnest."
+        }
+    }
+}
