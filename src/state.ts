@@ -94,7 +94,7 @@ export const iceConfig = selector<any>({
     key: 'iceConfig',
     get: async () => {
         try {
-            const response = await fetch(`${import.meta.env.VITE_APP_APIURL}/rtcconfig`);
+            const response = await fetch(`${import.meta.env.VITE_APP_APIURL}/rtcconfig?appName=tm`);
             if (response.ok) {
                 return response.json();
             } else {
