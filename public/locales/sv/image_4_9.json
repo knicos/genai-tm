@@ -10,7 +10,7 @@
     "save": {
         "title": "Spara Klassificerare",
         "noModel": "Du måste skapa en klassificerare först.",
-        "message": "Ladda ner innehållet för din klassificerare till en fil. Om du vill dela din klassificerare eller applikation med andra måste du ladda upp den till en annan fildelningstjänst.",
+        "message": "Ladda ner innehållet för din klassificerare till en fil.",
         "saveSamples": "Spara Prover",
         "saveClassifier": "Spara Klassificerare",
         "saveBehaviours": "Spara Beteende",

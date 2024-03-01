@@ -10,7 +10,7 @@
     "save": {
         "title": "Save Classifier",
         "noModel": "You need to create a classifier first.",
-        "message": "Download the contents of your classifier to a file. If you wish to share your classifier or app with others then you will need to upload it to another file sharing service.",
+        "message": "Download the contents of your classifier to a file.",
         "saveSamples": "Save Samples",
         "saveClassifier": "Save Classifier",
         "saveBehaviours": "Save Behaviors",

@@ -19,7 +19,7 @@
     "save": {
         "title": "Klassifikator speichern",
         "noModel": "Du musst zuerst einen Klassifikator erstellen.",
-        "message": "Lade den Inhalt deines Klassifikators in eine Datei herunter. Wenn du deinen Klassifikator oder deine App mit anderen teilen möchtest, musst du sie auf einen anderen File-Sharing-Dienst hochladen.",
+        "message": "Lade den Inhalt deines Klassifikators in eine Datei herunter.",
         "saveSamples": "Beispiele speichern",
         "saveClassifier": "Klassifikator speichern",
         "saveBehaviours": "Verhaltensweisen speichern",

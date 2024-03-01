@@ -10,7 +10,7 @@
     "save": {
         "title": "Tallenna luokittelija",
         "noModel": "Opeta luokittelija ensiksi.",
-        "message": "Lataa luokittelija tiedostoksi. Jos haluat jakaa luokittelijan tai sovelluksen, niin lataa se erilliseen palveluun",
+        "message": "Lataa luokittelija tiedostoksi.",
         "saveSamples": "Tallenna esimerkit",
         "saveClassifier": "Tallenna luokittelija",
         "saveBehaviours": "Tallenna toiminnot",

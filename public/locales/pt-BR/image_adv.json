@@ -10,7 +10,7 @@
     "save": {
         "title": "Salvar Classificador",
         "noModel": "Você precisa criar um classificador primeiro.",
-        "message": "Baixe o conteúdo do seu classificador para um arquivo. Se desejar compartilhar seu classificador ou aplicativo com outras pessoas, precisará enviá-lo para outro serviço de compartilhamento de arquivos.",
+        "message": "Baixe o conteúdo do seu classificador para um arquivo.",
         "saveSamples": "Salvar Amostras",
         "saveClassifier": "Salvar Classificador",
         "saveBehaviours": "Salvar Comportamentos",
