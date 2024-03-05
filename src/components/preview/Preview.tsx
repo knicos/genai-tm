@@ -8,6 +8,7 @@ import { useRecoilValue } from 'recoil';
 import { fatalWebcam, prediction } from '../../state';
 import { Button } from '../button/Button';
 import ShareIcon from '@mui/icons-material/Share';
+import { useActiveNode } from '@genaitm/util/nodes';
 
 interface Props {
     onExport?: () => void;
@@ -22,6 +23,9 @@ export default function Preview({ onExport }: Props) {
     const fatal = useRecoilValue(fatalWebcam);
 
     const model = preds.length > 0;
+
+    useActiveNode('widget-model-in', true);
+    useActiveNode('widget-model-out', model);
 
     return (
         <Widget

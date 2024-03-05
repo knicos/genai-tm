@@ -54,8 +54,8 @@ describe('extractNodesFromElements()', () => {
 describe('generateLines()', () => {
     it('will create a right to left line', async ({ expect }) => {
         const nodes = new Map<string, INode[]>();
-        nodes.set('c1', [{ x: 10, y: 10, width: 100, height: 100 }]);
-        nodes.set('c2', [{ x: 200, y: 10, width: 100, height: 100 }]);
+        nodes.set('c1', [{ x: 10, y: 10, width: 100, height: 100, id: '' }]);
+        nodes.set('c2', [{ x: 200, y: 10, width: 100, height: 100, id: '' }]);
 
         const connections: IConnection[] = [{ start: 'c1', startPoint: 'right', end: 'c2', endPoint: 'left' }];
 

@@ -18,6 +18,7 @@ import DnDAnimation from '../DnDAnimation/DnDAnimation';
 import AlertPara from '../AlertPara/AlertPara';
 import AlertModal from '../AlertModal/AlertModal';
 import { useRecoilValue } from 'recoil';
+import { useActiveNode } from '@genaitm/util/nodes';
 
 const SAMPLEMIN = 2;
 
@@ -41,6 +42,8 @@ export function Classification({ name, active, data, index, setData, onActivate,
     const [showTip, setShowTip] = useState(false);
     const [showDropError, setShowDropError] = useState(false);
     const fatal = useRecoilValue(fatalWebcam);
+
+    useActiveNode(`widget-class-${index}-out`, Math.max(0, data.samples.length - SAMPLEMIN + 1));
 
     const doShowTip = useCallback(() => data.samples.length === 0 && setShowTip(true), [data, setShowTip]);
 
@@ -171,6 +174,7 @@ export function Classification({ name, active, data, index, setData, onActivate,
             title={name}
             aria-label={t<string>('trainingdata.aria.classCard', { name })}
             dataWidget="class"
+            id={`class-${index}`}
             setTitle={disableClassNameEdit ? undefined : setTitle}
             menu={
                 <ClassMenu

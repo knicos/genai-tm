@@ -121,3 +121,13 @@ export const showOpenDialog = atom<boolean>({
     key: 'showOpenDialog',
     default: false,
 });
+
+export const enableCamInput = atom<boolean>({
+    key: 'enableInput',
+    default: true,
+});
+
+export const activeNodes = atom<Set<string>>({
+    key: 'activeNodes',
+    default: new Set<string>(),
+});

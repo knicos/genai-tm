@@ -16,6 +16,9 @@ import { useTranslation } from 'react-i18next';
 import { useDrop } from 'react-dnd';
 import { NativeTypes } from 'react-dnd-html5-backend';
 import AlertModal from '../AlertModal/AlertModal';
+import { useRecoilValue } from 'recoil';
+import { predictedIndex } from '@genaitm/state';
+import { useActiveNode } from '@genaitm/util/nodes';
 
 type BehaviourTypes = 'image' | 'sound' | 'speech' | 'text' | 'embed';
 
@@ -44,6 +47,10 @@ export default function Behaviour({ classLabel, behaviour, setBehaviour, index, 
     const [value, setValue] = useState<BehaviourTypes>('text');
     const prevLabel = useRef(classLabel);
     const [showDropError, setShowDropError] = useState(false);
+    const predicted = useRecoilValue(predictedIndex);
+
+    useActiveNode(`widget-behaviour${index}-in`, predicted === index);
+    useActiveNode(`widget-behaviour${index}-out`, predicted === index);
 
     const patchBehaviour = useCallback(
         (newBehaviour: Partial<BehaviourType>) => {
@@ -172,6 +179,7 @@ export default function Behaviour({ classLabel, behaviour, setBehaviour, index, 
         <Widget
             active={dropProps.hovered}
             dataWidget="behaviour"
+            id={`behaviour${index}`}
             title={classLabel}
             className={style.widget}
             aria-label={t<string>('behaviours.aria.behaviourCard', { name: classLabel })}

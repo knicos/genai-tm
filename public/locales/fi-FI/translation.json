@@ -10,7 +10,8 @@
             "errorInfo": "Tämä sivu on olemassa vain silloin kun tekemäsi luokittelija on avoinna selaimen ikkunassa tai välilehdellä.  Joissakin tapauksissa turva-asetukset verkossa tai omalla laitteella estävät appisi jakamisen.",
             "share": "Jaa muille laitteille",
             "qrExpand": "Laajenna QR-koodi napsauttamalla sitä.",
-            "noWebcam": "Luokittimen jakamiseen tarvitaan kameran käyttöoikeus."
+            "noWebcam": "Luokittimen jakamiseen tarvitaan kameran käyttöoikeus.",
+            "switch": " Ota webkamera käytöön"
         }
     },
     "testInput": {

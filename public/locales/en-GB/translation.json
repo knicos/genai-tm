@@ -10,7 +10,8 @@
             "errorInfo": "This page only exists if you keep your classifier open in a browser tab. There might also be security restrictions that prevent it from being found.",
             "share": "Share app to other devices",
             "qrExpand": "Click the QR code to expand it.",
-            "noWebcam": "Camera access is required for classifier sharing."
+            "noWebcam": "Camera access is required for classifier sharing.",
+            "switch": "Enable input source"
         }
     },
     "testInput": {

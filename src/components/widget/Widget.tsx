@@ -18,6 +18,7 @@ interface Props extends React.PropsWithChildren {
     dataWidget?: string;
     'aria-label'?: string;
     active?: boolean;
+    id?: string;
 }
 
 const TextField = styled(MTextField)({
@@ -37,6 +38,7 @@ export function Widget({
     className,
     hidden,
     dataWidget,
+    id,
     active,
     ...props
 }: Props) {
@@ -102,6 +104,7 @@ export function Widget({
             data-testid={`widget-${title}`}
             ref={ref}
             data-widget={dataWidget}
+            id={`widget-${id || dataWidget || 'none'}`}
             style={{ display: hidden ? 'none' : 'initial' }}
             aria-hidden={!!hidden}
             className={classToUse + (className ? ` ${className}` : '')}

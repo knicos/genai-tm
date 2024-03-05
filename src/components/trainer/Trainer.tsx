@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useCallback, useRef } from 'react';
 import Accordion from '@mui/material/Accordion';
-import { classState } from '../../state';
+import { activeNodes, classState } from '../../state';
 import BusyButton from '../BusyButton/BusyButton';
 import { Widget } from '../widget/Widget';
 import style from './trainer.module.css';
@@ -17,7 +17,8 @@ import { useTranslation } from 'react-i18next';
 import { useVariant } from '../../util/variant';
 import TrainingAnimation from '../TrainingAnimation/TrainingAnimation';
 import { useModelTrainer } from '../../util/TeachableModel';
-import { useRecoilValue } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { useActiveNode } from '@genaitm/util/nodes';
 
 interface Props {
     onTrained?: () => void;
@@ -53,9 +54,13 @@ export default function Trainer({ onTrained, editing, ...props }: Props) {
     const [prompt, setPrompt] = useState(false);
     const { stage, epochs, clearTraining, train } = useModelTrainer();
     const data = useRecoilValue(classState);
+    const setActive = useSetRecoilState(activeNodes);
 
     const sampleMin = Math.min(...data.map((v) => v.samples.length));
     const isTrainable = data.length >= 2 && sampleMin >= 2;
+
+    useActiveNode('widget-trainer-in', isTrainable);
+    useActiveNode('widget-trainer-out', training);
 
     useEffect(() => {
         clearTraining();
@@ -76,12 +81,22 @@ export default function Trainer({ onTrained, editing, ...props }: Props) {
     }, [stage, editing, isTrainable]);
 
     useEffect(() => {
-        if (training)
+        if (training) {
             train(data, { batchSize: settingBatch, epochs: settingEpochs, learningRate: settingRate }).then(() => {
                 setTraining(false);
                 if (onTrained) onTrained();
             });
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+        } else {
+            setActive((old) => {
+                const nset = new Set(old);
+                nset.forEach((i) => {
+                    if (i.startsWith('widget-class')) {
+                        nset.delete(i);
+                    }
+                });
+                return nset;
+            });
+        }
     }, [training]);
 
     const doStartTraining = useCallback(() => setTraining(true), [setTraining]);

@@ -5,6 +5,7 @@ export interface INode {
     y: number;
     width: number;
     height: number;
+    id: string;
 }
 
 export function extractNodesFromElements(div: HTMLElement, initial?: Map<string, INode[]>) {
@@ -21,7 +22,9 @@ export function extractNodesFromElements(div: HTMLElement, initial?: Map<string,
             const width = child.offsetWidth;
             const height = child.offsetHeight;
             if (width > 0 && height > 0) {
-                result.get(widgetType)?.push({ x: child.offsetLeft, y: child.offsetTop, width, height });
+                result
+                    .get(widgetType)
+                    ?.push({ x: child.offsetLeft, y: child.offsetTop, width, height, id: child.id || 'noid' });
             }
         }
     }
@@ -45,6 +48,8 @@ export function generateLines(data: Map<string, INode[]>, connections: IConnecti
         for (const input of ins) {
             for (const output of outs) {
                 lines.push({
+                    id1: input.id,
+                    id2: output.id,
                     x1:
                         connection.startPoint === 'left'
                             ? input.x

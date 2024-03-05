@@ -153,6 +153,8 @@ export default function Deployment({ model, behaviours, error, onActivated, chil
                         color="inherit"
                         onClick={doPause}
                         disabled={error}
+                        aria-label={t<string>('deploy.labels.switch')}
+                        aria-pressed={paused}
                     >
                         {!paused && <VideocamIcon fontSize="large" />}
                         {paused && <VideocamOffIcon fontSize="large" />}

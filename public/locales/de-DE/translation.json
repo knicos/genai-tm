@@ -10,7 +10,8 @@
             "errorInfo": "Diese Seite existiert nur, wenn du deinen Klassifikator in einem Browser-Tab geöffnet hast. Möglicherweise gibt es auch Sicherheitseinschränkungen, die verhindern, dass sie gefunden wird.",
             "share": "App für andere Geräte freigeben",
             "qrExpand": "Klicke auf den QR-Code, um ihn zu erweitern.",
-            "noWebcam": "Für die Freigabe des Klassifizierers ist der Zugriff auf die Kamera erforderlich."
+            "noWebcam": "Für die Freigabe des Klassifizierers ist der Zugriff auf die Kamera erforderlich.",
+            "switch": "Eingangsquelle aktivieren"
         }
     },
     "testInput": {

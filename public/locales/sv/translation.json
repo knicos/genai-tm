@@ -10,7 +10,8 @@
             "errorInfo": "Denna sida existerar endast om du håller klassificerarn öppen i en flik i webbläsaren. Det kan också finnas säkerhetsbegränsningar som gör att den inte kan hittas.",
             "share": "Dela till andra enheter",
             "qrExpand": "Click the QR code to expand it.",
-            "noWebcam": "Camera access is required for classifier sharing."
+            "noWebcam": "Camera access is required for classifier sharing.",
+            "switch": "Aktivera källa för inmatning"
         }
     },
     "collect": {

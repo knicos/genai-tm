@@ -10,6 +10,7 @@ import RawOutput from './RawOutput';
 import Slider from '@mui/material/Slider';
 import VolumeDown from '@mui/icons-material/VolumeDown';
 import VolumeUp from '@mui/icons-material/VolumeUp';
+import { useActiveNode } from '@genaitm/util/nodes';
 
 interface Props {
     focus?: boolean;
@@ -31,6 +32,8 @@ export default function Output(props: Props) {
     const { t } = useTranslation(namespace);
     const predicted = useRecoilValue(predictedIndex);
     const fatal = useRecoilValue(fatalWebcam);
+
+    useActiveNode('widget-output-in', true);
 
     const doDeployClick = useCallback(() => {
         setP2PEnabled(true);

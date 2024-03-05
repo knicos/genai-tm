@@ -18,10 +18,11 @@ import WebcamInput from './WebcamInput';
 import { useTabActive } from '../../util/useTabActive';
 import AlertModal from '../AlertModal/AlertModal';
 import { useTeachableModel } from '../../util/TeachableModel';
-import { fatalWebcam, inputImage, p2pActive, sessionCode, sharingActive } from '../../state';
+import { enableCamInput, fatalWebcam, inputImage, p2pActive, sessionCode, sharingActive } from '../../state';
 import { useRecoilValue, useRecoilState } from 'recoil';
 import BusyButton from '../BusyButton/BusyButton';
 import QRCode from '../QRCode/QRCode';
+import { useActiveNode } from '@genaitm/util/nodes';
 
 interface Props {
     disabled?: boolean;
@@ -31,7 +32,7 @@ interface Props {
 export default function Input(props: Props) {
     const { namespace, enableFileInput } = useVariant();
     const { t, i18n } = useTranslation(namespace);
-    const [enableInputSwitch, setEnableInput] = useState(true);
+    const [enableInputSwitch, setEnableInput] = useRecoilState(enableCamInput);
     const [tabIndex, setTabIndex] = useState(0);
     const fileRef = useRef<HTMLInputElement>(null);
     const fileImageRef = useRef<HTMLDivElement>(null);
@@ -47,6 +48,8 @@ export default function Input(props: Props) {
     const fatal = useRecoilValue(fatalWebcam);
 
     const enableInput = isActive && enableInputSwitch;
+
+    useActiveNode('widget-input-out', enableInput);
 
     useEffect(() => {
         if (fatal) setTabIndex(1);
@@ -170,6 +173,7 @@ export default function Input(props: Props) {
                                 onChange={changeWebcamToggle}
                                 data-testid="webcam-switch"
                                 aria-label={t<string>('input.aria.switch')}
+                                color="error"
                             />
                         }
                         hidden
