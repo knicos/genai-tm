@@ -10,14 +10,6 @@
     font-size: 16pt;
 }
 
-.versionBox {
-    position: absolute;
-    bottom: 2px;
-    right: 20px;
-    color: #666;
-    font-size: 6pt;
-}
-
 .errorView {
     margin: auto;
     width: 100%;

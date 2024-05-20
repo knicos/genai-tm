@@ -21,7 +21,7 @@
     flex-wrap: nowrap;
     overflow: auto;
     gap: 3rem;
-    padding: 1rem;
+    padding: 2rem;
     box-sizing: border-box;
     position: relative;
     width: max-content;

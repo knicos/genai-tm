@@ -4,6 +4,5 @@ import App from './App';
 
 it('renders app', async ({ expect }) => {
     render(<App />);
-    const linkElement = screen.getByText(/Version/i);
-    expect(linkElement).toBeInTheDocument();
+    expect(screen.getByTestId('versionlink')).toBeInTheDocument();
 });

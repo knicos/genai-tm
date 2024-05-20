@@ -29,9 +29,8 @@
     },
     "about": {
         "back": "Tillbaka",
-        "title": "Om",
-        "privacyTitle": "Integritetsmeddelande",
-        "privacy": "We samlar inte in och sparar inte personlig information om din användning av denna applikation. Kakor används inte i denna applikation och din aktivitet spåras inte på något sätt. Din provdata och dina modeller förblir på din enhet huruvida du inte väljer att dela dem. Vid delning lagras data inte i våra servrar och blir otillgänglig för andra om du stänger fliken i din webbläsare."
+        "title": "Generation AI",
+        "privacyTitle": "Integritetsmeddelande"
     },
     "settings": {
         "title": "Inställningar",

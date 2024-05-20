@@ -32,9 +32,8 @@
     },
     "about": {
         "back": "Takaisin",
-        "title": "Tietoa",
-        "privacyTitle": "Tietoturvaselvitys",
-        "privacy": "Emme kerää tai tallenna mitään henkilökohtaisia tietoja tämän sovelluksen käytöstä. Sovellus ei käytä evästeitä eikä seuraa käyttötoimintaa. Luomasi esimerkit ja luokittelija pysyvät vain omalla laitteellasi, ellet päätä jakaa niitä. Jaettaessa tietoja ei tallenneta palvelimillemme ja ne muuttuvat muiden saavuttamattomiksi, jos suljet selainikkunan."
+        "title": "Generation AI",
+        "privacyTitle": "Tietoturvaselvitys"
     },
     "settings": {
         "title": "Asetukset",

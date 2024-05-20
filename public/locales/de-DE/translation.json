@@ -32,9 +32,8 @@
     },
     "about": {
         "back": "Zurück",
-        "title": "Über uns",
-        "privacyTitle": "Datenschutzhinweis",
-        "privacy": "Wir sammeln und speichern keine persönlichen Daten über deine Nutzung dieser Anwendung. Diese Anwendung verwendet keine Cookies und es findet keine Nachverfolgung von Aktivitäten statt. Deine Probendaten und Modelle bleiben auf deinem Gerät, es sei denn, du entscheidest dich, sie zu teilen. Wenn du sie teilst, werden die Daten nicht auf unseren Servern gespeichert und sind für andere nicht mehr verfügbar, wenn du deinen Browser-Tab schließt."
+        "title": "Generation AI",
+        "privacyTitle": "Datenschutzhinweis"
     },
     "settings": {
         "title": "Einstellungen",

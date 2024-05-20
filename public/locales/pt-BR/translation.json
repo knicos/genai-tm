@@ -32,9 +32,8 @@
     },
     "about": {
         "back": "Voltar",
-        "title": "Sobre",
-        "privacyTitle": "Aviso de Privacidade",
-        "privacy": "Não coletamos nem armazenamos qualquer dado pessoal sobre o uso desta aplicação. Cookies não são usados por esta aplicação e não há rastreamento de atividade. Seus dados de amostra e modelos permanecem em seu dispositivo, a menos que você opte por compartilhá-los. Ao compartilhar, os dados não são armazenados em nossos servidores e ficam indisponíveis para outros se você fechar a aba do seu navegador."
+        "title": "Generation AI",
+        "privacyTitle": "Aviso de Privacidade"
     },
     "settings": {
         "title": "Settings",

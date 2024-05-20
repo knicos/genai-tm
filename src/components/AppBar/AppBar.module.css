@@ -55,6 +55,14 @@
     composes: langBar;
 }
 
+.logo {
+    gap: 0.8rem;
+    display: flex;
+    align-items: center;
+    color: white;
+    text-decoration: none;
+}
+
 @media only screen and (max-width: 850px) {
     :global .AppBar h1 {
         display: none;
@@ -81,12 +89,8 @@
     :global .AppBar h1 {
         display: none;
     }
-}
 
-.logo {
-    gap: 0.8rem;
-    display: flex;
-    align-items: center;
-    color: white;
-    text-decoration: none;
+    .logo {
+        display: none;
+    }
 }

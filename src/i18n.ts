@@ -20,6 +20,9 @@ i18n.use(detector)
         },
         fallbackLng: 'en-GB',
         supportedLngs: ['de-DE', 'en-GB', 'fi-FI', 'sv', 'pt-BR', 'ru-RU', 'ua-UA'],
+        detection: {
+            caches: [],
+        },
     });
 
 export default i18n;

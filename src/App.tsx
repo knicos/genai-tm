@@ -9,13 +9,13 @@ import {
     useRouteError,
     Navigate,
 } from 'react-router-dom';
-import gitInfo from './generatedGitInfo.json';
 import GenerateCustom from './views/GenerateCustom/GenerateCustom';
 import { RecoilRoot } from 'recoil';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { StyledEngineProvider } from '@mui/material/styles';
 import About from './views/About/About';
+import Privacy from './components/Privacy/Privacy';
 
 function ErrorComponent() {
     const error = useRouteError();
@@ -102,19 +102,7 @@ function App() {
                 <DndProvider backend={HTML5Backend}>
                     <StyledEngineProvider injectFirst>
                         <RouterProvider router={router} />
-                        <div
-                            aria-hidden
-                            className="versionBox"
-                        >
-                            Version:{' '}
-                            <a
-                                href={`https://github.com/knicos/genai-tm/releases/tag/${gitInfo.gitTag}`}
-                                target="_blank"
-                                rel="noreferrer"
-                            >
-                                {gitInfo.gitTag}
-                            </a>
-                        </div>
+                        <Privacy />
                     </StyledEngineProvider>
                 </DndProvider>
             </RecoilRoot>

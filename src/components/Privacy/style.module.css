@@ -1,0 +1,38 @@
+.policy {
+    color: #444;
+    background: white;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    border-top-right-radius: 20px;
+    align-items: center;
+    gap: 1rem;
+    padding-right: 15px;
+    max-width: 200px;
+    display: flex;
+    font-size: 0.7rem;
+    box-sizing: border-box;
+    box-shadow: 0 0 6px #ddd;
+    overflow: hidden;
+}
+
+.policy a {
+    color: #444;
+}
+
+.policy a:visited {
+    color: #444;
+}
+
+.versionBox {
+    font-size: 6pt;
+    border-top-right-radius: 20px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-left: 5px;
+    padding-right: 8px;
+    background: #444;
+    box-sizing: border-box;
+}

@@ -12,6 +12,13 @@
     font-style: normal;
 }
 
+@font-face {
+    font-family: 'Tektur';
+    src: URL('https://store.gen-ai.fi/fonts/Tektur-Bold.ttf') format('truetype');
+    font-weight: 700;
+    font-style: normal;
+}
+
 body {
     margin: 0;
     /*font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
