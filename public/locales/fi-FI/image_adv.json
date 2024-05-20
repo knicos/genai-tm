@@ -112,12 +112,14 @@
     },
     "model": {
         "actions": {
-            "export": "Vie"
+            "export": "Vie Scratchille",
+            "clone": "Jaa kopio"
         },
         "labels": {
             "title": "Luokittelija",
             "mustTrain": "Sinun pitää opettaa luokittelija ensin"
-        }
+        },
+        "aria": { "more": "Lisää asetuksia" }
     },
     "output": {
         "labels": {

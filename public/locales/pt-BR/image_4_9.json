@@ -112,12 +112,14 @@
     },
     "model": {
         "actions": {
-            "export": "Exportar"
+            "export": "Exportar para Scratch",
+            "clone": "Compartilhe uma cópia"
         },
         "labels": {
             "title": "Classificador",
             "mustTrain": "Você deve treinar seu classificador primeiro"
-        }
+        },
+        "aria": { "more": "mais opções" }
     },
     "output": {
         "labels": {

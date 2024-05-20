@@ -21,6 +21,7 @@ import DeployWrapper from './DeployWrapper';
 import ExportDialog from './ExportDialog';
 import { useModelCreator } from '../../util/TeachableModel';
 import OpenDialog from './OpenDialog';
+import CloneDialog from './CloneDialog';
 
 const SAVE_PERIOD = 5 * 60 * 1000; // 5 mins
 
@@ -63,6 +64,7 @@ export default function Workspace({ step, visitedStep, onComplete, saveTrigger, 
     const setSaving = useSetRecoilState(saveState);
     const [editingData, setEditingData] = useState(false);
     const [showShare, setShowShare] = useState(false);
+    const [showClone, setShowClone] = useState(false);
     const sharing = useRecoilValue(sharingActive);
     const [, setP2PEnabled] = useRecoilState(p2pActive);
 
@@ -72,6 +74,10 @@ export default function Workspace({ step, visitedStep, onComplete, saveTrigger, 
     const doCloseShare = useCallback(() => setShowShare(false), [setShowShare]);
     const doShare = useCallback(() => {
         setShowShare(true);
+        setP2PEnabled(true);
+    }, [setShowShare, setP2PEnabled]);
+    const doClone = useCallback(() => {
+        setShowClone(true);
         setP2PEnabled(true);
     }, [setShowShare, setP2PEnabled]);
 
@@ -204,7 +210,10 @@ export default function Workspace({ step, visitedStep, onComplete, saveTrigger, 
                     data-widget="container"
                 >
                     <Input />
-                    <Preview onExport={doShare} />
+                    <Preview
+                        onExport={doShare}
+                        onClone={doClone}
+                    />
                 </div>
                 <Behaviours
                     hidden={visitedStep < 1}
@@ -222,6 +231,11 @@ export default function Workspace({ step, visitedStep, onComplete, saveTrigger, 
             <ExportDialog
                 open={showShare}
                 onClose={doCloseShare}
+                ready={sharing}
+            />
+            <CloneDialog
+                open={showClone}
+                onClose={() => setShowClone(false)}
                 ready={sharing}
             />
             <Snackbar

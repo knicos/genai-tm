@@ -112,12 +112,14 @@
     },
     "model": {
         "actions": {
-            "export": "Share"
+            "export": "Export for Scratch",
+            "clone": "Share a copy"
         },
         "labels": {
             "title": "Classifier",
             "mustTrain": "You must train your classifier first"
-        }
+        },
+        "aria": { "more": "more options" }
     },
     "output": {
         "labels": {

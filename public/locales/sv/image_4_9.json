@@ -111,12 +111,14 @@
     },
     "model": {
         "actions": {
-            "export": "Dela"
+            "export": "Exportera för Scratch",
+            "clone": "Dela en kopia"
         },
         "labels": {
             "title": "Klassificerare",
             "mustTrain": "Du måst träna din klassificerare först"
-        }
+        },
+        "aria": { "more": "fler alternativ" }
     },
     "output": {
         "labels": {

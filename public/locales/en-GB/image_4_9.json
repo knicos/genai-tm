@@ -112,12 +112,14 @@
     },
     "model": {
         "actions": {
-            "export": "Share"
+            "export": "Export for Scratch",
+            "clone": "Share a copy"
         },
         "labels": {
             "title": "Classifier",
             "mustTrain": "You must train your classifier first"
-        }
+        },
+        "aria": { "more": "more options" }
     },
     "output": {
         "labels": {
@@ -195,7 +197,6 @@
             "close": "Close"
         },
         "labels": {
-            "title": "Share",
             "includeSamples": "Include sample images",
             "codeInstructions": "Allow others to open a copy of your classifier using the code below.",
             "linkInstructions": "Open a copy of the classifier by sharing the code below. Copy the link to use the classifier in other applications such as <scratchLink>Scratch</scratchLink>. The link will only work if you keep this browser tab open, or if you save your project and open in again later."

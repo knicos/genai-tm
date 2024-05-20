@@ -7,14 +7,11 @@ import { Button } from '../button/Button';
 import { useVariant } from '../../util/variant';
 import { useTranslation, Trans } from 'react-i18next';
 import TextField from '@mui/material/TextField';
-import { useRecoilState, useRecoilValue } from 'recoil';
-import { sessionCode, shareSamples, sharingActive } from '../../state';
+import { useRecoilValue } from 'recoil';
+import { sessionCode, sharingActive } from '../../state';
 import InputAdornment from '@mui/material/InputAdornment';
 import { CircularProgress, IconButton } from '@mui/material';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
-import Checkbox from '@mui/material/Checkbox';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import style from './TeachableMachine.module.css';
 
 export interface SaveProperties {
     samples: boolean;
@@ -47,7 +44,6 @@ function LinkText(props: LinkProps) {
 export default function ExportDialog({ open, onClose, ready }: Props) {
     const code = useRecoilValue(sessionCode);
     const sharing = useRecoilValue(sharingActive);
-    const [samples, setShareSamples] = useRecoilState(shareSamples);
     const { namespace } = useVariant();
     const { t } = useTranslation(namespace);
     const textRef = useRef<HTMLInputElement>(null);
@@ -68,13 +64,6 @@ export default function ExportDialog({ open, onClose, ready }: Props) {
     const doCopy = useCallback(() => {
         navigator.clipboard.writeText(link);
     }, [link]);
-    const doCopyCode = useCallback(() => {
-        navigator.clipboard.writeText(code);
-    }, [code]);
-
-    const doChangeSamples = useCallback(() => {
-        setShareSamples((old) => !old);
-    }, [setShareSamples]);
 
     return sharing ? (
         <Dialog
@@ -82,30 +71,9 @@ export default function ExportDialog({ open, onClose, ready }: Props) {
             onClose={onClose}
             maxWidth="xs"
         >
-            <DialogTitle>{t('share.labels.title')}</DialogTitle>
+            <DialogTitle>{t('model.actions.export')}</DialogTitle>
             {ready && (
                 <DialogContent>
-                    <p>{t(`${namespace}:share.labels.codeInstructions`)}</p>
-                    <div className={style.codeContainer}>
-                        <p className={style.codeShare}>{code}</p>
-                        <IconButton
-                            disabled={!navigator?.clipboard?.writeText}
-                            onClick={doCopyCode}
-                        >
-                            <ContentCopyIcon />
-                        </IconButton>
-                    </div>
-                    <div className={style.incImagesContainer}>
-                        <FormControlLabel
-                            control={
-                                <Checkbox
-                                    checked={samples}
-                                    onChange={doChangeSamples}
-                                />
-                            }
-                            label={t('share.labels.includeSamples')}
-                        />
-                    </div>
                     <p>
                         <Trans
                             i18nKey={`${namespace}:share.labels.linkInstructions`}
