@@ -3,6 +3,7 @@ import _settings from './configuration.json';
 import { useSearchParams, useParams } from 'react-router-dom';
 import { decompressFromEncodedURIComponent } from 'lz-string';
 import ImageClassifier from '../../components/ImageClassifier/ImageClassifier';
+import Privacy from '@genaitm/components/Privacy/Privacy';
 
 export type VARIANTS = keyof typeof _settings;
 export type VariantConfiguration = Record<VARIANTS, IVariantContext>;
@@ -33,6 +34,7 @@ export function Component() {
     return (
         <VariantContext.Provider value={merged}>
             <ImageClassifier />
+            <Privacy position="bottomLeft" />
         </VariantContext.Provider>
     );
 }

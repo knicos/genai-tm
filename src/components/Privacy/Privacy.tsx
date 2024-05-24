@@ -2,11 +2,23 @@ import style from './style.module.css';
 import { useTranslation } from 'react-i18next';
 import gitInfo from '../../generatedGitInfo.json';
 
-export default function Privacy() {
+interface Props {
+    position?: 'bottomLeft' | 'topRight';
+}
+
+export default function Privacy({ position = 'bottomLeft' }: Props) {
     const { t } = useTranslation();
 
     return (
-        <section className={style.policy}>
+        <section className={`${style.policy} ${style[position]}`}>
+            {position === 'topRight' && (
+                <a
+                    href="/about"
+                    target="_blank"
+                >
+                    {t('about.privacyTitle')}
+                </a>
+            )}
             <div
                 aria-hidden
                 className={style.versionBox}
@@ -25,12 +37,14 @@ export default function Privacy() {
                     />
                 </a>
             </div>
-            <a
-                href="/about"
-                target="_blank"
-            >
-                {t('about.privacyTitle')}
-            </a>
+            {position === 'bottomLeft' && (
+                <a
+                    href="/about"
+                    target="_blank"
+                >
+                    {t('about.privacyTitle')}
+                </a>
+            )}
         </section>
     );
 }

@@ -15,7 +15,6 @@ import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { StyledEngineProvider } from '@mui/material/styles';
 import About from './views/About/About';
-import Privacy from './components/Privacy/Privacy';
 
 function ErrorComponent() {
     const error = useRouteError();
@@ -48,61 +47,63 @@ function ErrorComponent() {
     );
 }
 
-const router = createBrowserRouter(
-    createRoutesFromElements(
+export const routes = createRoutesFromElements(
+    <Route
+        path="/"
+        ErrorBoundary={ErrorComponent}
+    >
         <Route
-            path="/"
-            ErrorBoundary={ErrorComponent}
-        >
-            <Route
-                index
-                element={
-                    <Navigate
-                        replace
-                        to="/image/general"
-                    />
-                }
-            />
-            <Route
-                path="settings"
-                element={<GenerateCustom />}
-            />
-            <Route
-                path="deploy/b/:code"
-                lazy={() => import('./views/Deployment/TabDeployment')}
-            />
-            <Route
-                path="deploy/p/:code"
-                lazy={() => import('./views/Deployment/PeerDeployment')}
-            />
-            <Route
-                path="collect/:code/:classIndex"
-                lazy={() => import('./views/Collection/Collection')}
-            />
-            <Route
-                path="input/:code"
-                lazy={() => import('./views/Input/Input')}
-            />
-            <Route
-                path="about"
-                element={<About />}
-            />
-            <Route
-                path=":kind/:variant"
-                lazy={() => import('./views/ImageGeneral/ImageGeneral')}
-            />
-        </Route>
-    )
+            index
+            element={
+                <Navigate
+                    replace
+                    to="/image/general"
+                />
+            }
+        />
+        <Route
+            path="settings"
+            element={<GenerateCustom />}
+        />
+        <Route
+            path="deploy/b/:code"
+            lazy={() => import('./views/Deployment/TabDeployment')}
+        />
+        <Route
+            path="deploy/p/:code"
+            lazy={() => import('./views/Deployment/PeerDeployment')}
+        />
+        <Route
+            path="collect/:code/:classIndex"
+            lazy={() => import('./views/Collection/Collection')}
+        />
+        <Route
+            path="input/:code"
+            lazy={() => import('./views/Input/Input')}
+        />
+        <Route
+            path="about"
+            element={<About />}
+        />
+        <Route
+            path=":kind/:variant"
+            lazy={() => import('./views/ImageGeneral/ImageGeneral')}
+        />
+    </Route>
 );
+const defaultRouter = createBrowserRouter(routes);
 
-function App() {
+interface Props {
+    router?: typeof defaultRouter;
+}
+
+function App({ router }: Props) {
     return (
         <React.Suspense fallback={<div></div>}>
             <RecoilRoot>
                 <DndProvider backend={HTML5Backend}>
                     <StyledEngineProvider injectFirst>
-                        <RouterProvider router={router} />
-                        <Privacy />
+                        <RouterProvider router={router || defaultRouter} />
                     </StyledEngineProvider>
                 </DndProvider>
             </RecoilRoot>

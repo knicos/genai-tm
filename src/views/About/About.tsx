@@ -16,7 +16,7 @@ export default function About() {
 
     return (
         <div className={style.container}>
-            <main>
+            <main data-testid="about-main">
                 <header>
                     <img
                         src="/logo192_bw.png"

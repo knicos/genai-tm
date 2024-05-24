@@ -11,6 +11,7 @@ import { useTranslation } from 'react-i18next';
 import { useRecoilValue } from 'recoil';
 import { fatalWebcam } from '@genaitm/state';
 import AlertModal from '@genaitm/components/AlertModal/AlertModal';
+import Privacy from '@genaitm/components/Privacy/Privacy';
 
 export function Component() {
     const { code } = useParams();
@@ -82,6 +83,7 @@ export function Component() {
                     {t('deploy.labels.noWebcam')}
                 </AlertModal>
             )}
+            <Privacy position="topRight" />
         </>
     );
 }
