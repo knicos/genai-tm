@@ -7,7 +7,7 @@ import Workspace from '../../components/ImageWorkspace/Workspace';
 import { ThemeProvider } from '@mui/material/styles';
 import { useVariant } from '../../util/variant';
 import Fab from '@mui/material/Fab';
-import { theme } from '../../style/theme';
+import { theme } from '@knicos/genai-base';
 
 export default function ImageClassifier() {
     const { namespace } = useVariant();
@@ -59,7 +59,7 @@ export default function ImageClassifier() {
             />
             <nav
                 className={visited < 1 ? style.stepButton : style.stepButtonHidden}
-                aria-label={t<string>('stepper.aria.step')}
+                aria-label={t('stepper.aria.step')}
             >
                 <Fab
                     variant="extended"

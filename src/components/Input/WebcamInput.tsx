@@ -1,5 +1,8 @@
-import { Webcam } from '../webcam/Webcam';
+import { fatalWebcam } from '@genaitm/state';
+import { Webcam } from '@knicos/genai-base';
 import Skeleton from '@mui/material/Skeleton';
+import { useCallback } from 'react';
+import { useSetRecoilState } from 'recoil';
 
 interface Props {
     enabled?: boolean;
@@ -10,6 +13,9 @@ interface Props {
 }
 
 export default function WebcamInput({ size, enabled, enableInput, doPrediction, doPostProcess }: Props) {
+    const setFatal = useSetRecoilState(fatalWebcam);
+    const doFatal = useCallback(() => setFatal(true), [setFatal]);
+
     return (
         <>
             {enabled && (
@@ -21,6 +27,7 @@ export default function WebcamInput({ size, enabled, enableInput, doPrediction, 
                     onCapture={doPrediction}
                     onPostprocess={doPostProcess}
                     size={size}
+                    onFatal={doFatal}
                 />
             )}
             {!enabled && (

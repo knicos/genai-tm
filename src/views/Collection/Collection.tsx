@@ -1,21 +1,21 @@
 import React, { useState, useCallback, useEffect, useRef } from 'react';
 import style from './style.module.css';
 import { useParams } from 'react-router-dom';
-import { Webcam } from '../../components/webcam/Webcam';
 import { VerticalButton } from '../../components/button/Button';
 import { ThemeProvider } from '@mui/material/styles';
-import { theme } from '../../style/theme';
 import { usePeerSender } from './usePeerSender';
 import randomId from '../../util/randomId';
 import { SampleState, SampleStateValue } from '../../components/ImageGrid/Sample';
 import ImageGrid from '../../components/ImageGrid/ImageGrid';
 import UploadFileIcon from '@mui/icons-material/UploadFile';
-import { canvasesFromFiles, canvasFromDataTransfer } from '../../util/canvas';
 import { useTranslation } from 'react-i18next';
 import { Alert } from '@mui/material';
 import { useDrop } from 'react-dnd';
 import { NativeTypes } from 'react-dnd-html5-backend';
 import AlertModal from '../../components/AlertModal/AlertModal';
+import { canvasesFromFiles, canvasFromDataTransfer, ConnectionMonitor, theme, Webcam } from '@knicos/genai-base';
+import { useSetRecoilState } from 'recoil';
+import { fatalWebcam } from '@genaitm/state';
 
 export function Component() {
     const { code, classIndex } = useParams();
@@ -27,10 +27,9 @@ export function Component() {
     const buttonRef = useRef<HTMLButtonElement>(null);
     const fileRef = useRef<HTMLInputElement>(null);
     const { t } = useTranslation();
+    const setFatal = useSetRecoilState(fatalWebcam);
 
     const index = parseInt(classIndex || '0');
-
-    const doError = useCallback(() => {}, []);
 
     const doSampleState = useCallback(
         (id: string, state: SampleStateValue) => {
@@ -53,13 +52,11 @@ export function Component() {
         [setSamples, index]
     );
 
-    const {
-        sender,
-        deleter,
-        state,
-        classNames,
-        type: candidateType,
-    } = usePeerSender(code || '', doError, doSampleState, doSamplesUpdate);
+    const { sender, deleter, state, classNames, ready, error } = usePeerSender(
+        code || '',
+        doSampleState,
+        doSamplesUpdate
+    );
 
     const doDelete = useCallback(
         (ix: number) => {
@@ -108,6 +105,7 @@ export function Component() {
     const [dropProps, drop] = useDrop(
         {
             accept: [NativeTypes.URL, NativeTypes.HTML, NativeTypes.FILE],
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             async drop(items: any) {
                 setLoading(true);
                 try {
@@ -166,9 +164,11 @@ export function Component() {
         }
     }, [buttonRef, startTouchCapture]);
 
-    const connected = state === 'connected';
+    const connected = ready;
 
     const doDropErrorClose = useCallback(() => setShowDropError(false), [setShowDropError]);
+
+    const doFatal = useCallback(() => setFatal(true), [setFatal]);
 
     return (
         <ThemeProvider theme={theme}>
@@ -177,17 +177,7 @@ export function Component() {
                 ref={drop}
             >
                 <header>
-                    <h1>
-                        {connected
-                            ? classNames.length > index
-                                ? classNames[index]
-                                : ''
-                            : state === 'disconnected'
-                            ? t('collect.disconnected')
-                            : state === 'failed'
-                            ? t('collect.failed')
-                            : t('collect.connecting')}
-                    </h1>
+                    <h1>{classNames.length > index ? classNames[index] : ''}</h1>
                     <div className={style.sampleCount}>{t('collect.sampleCount', { count })}</div>
                 </header>
                 {state !== 'failed' && (
@@ -209,14 +199,6 @@ export function Component() {
                 >
                     {t('collect.dropError')}
                 </AlertModal>
-                {samples.length === 0 && !dropProps.hovered && candidateType === 'relay' && (
-                    <Alert
-                        severity="warning"
-                        style={{ maxWidth: '80%', border: '1px solid #ed6c02', marginBottom: '1rem' }}
-                    >
-                        {t('collect.relayWarning')}
-                    </Alert>
-                )}
                 <div className={style.capture}>
                     <input
                         hidden
@@ -233,6 +215,7 @@ export function Component() {
                             onCapture={doCapture}
                             capture={capturing}
                             disable={!connected}
+                            onFatal={doFatal}
                         />
                     </div>
                     <div className={style.column}>
@@ -263,6 +246,13 @@ export function Component() {
                     </div>
                 </div>
             </main>
+            <ConnectionMonitor
+                api={import.meta.env.VITE_APP_APIURL}
+                appName="tm"
+                ready={ready}
+                status={state}
+                error={error}
+            />
         </ThemeProvider>
     );
 }

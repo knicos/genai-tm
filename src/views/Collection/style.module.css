@@ -1,4 +1,4 @@
-@value primary from "../../style/colours.module.css";
+@value primary from "@knicos/genai-base/dist/colours.module.css";
 
 .main {
     display: flex;
@@ -20,6 +20,10 @@
     box-shadow: 0 0 6px #bbb;
     z-index: 2;
     box-sizing: border-box;
+}
+
+.main header h1 {
+    color: white;
 }
 
 .sampleCount {
@@ -120,6 +124,10 @@
 
     .main header {
         background: white;
+        color: #444;
+    }
+
+    .main header h1 {
         color: #444;
     }
 }

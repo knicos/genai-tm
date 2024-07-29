@@ -74,7 +74,7 @@ export default function OpenDialog() {
                 <div className={style.openColumn}>
                     <div className={style.padded}>
                         <TextField
-                            label={t<string>('load.code')}
+                            label={t('load.code')}
                             variant="outlined"
                             fullWidth
                             onKeyDown={doKeyCheck}

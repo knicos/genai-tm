@@ -73,7 +73,7 @@ export default function SaveDialog({ trigger, onSave }: Props) {
                 <p>{hasModel ? t('save.message') : t('save.noModel')}</p>
                 <div className={style.padded}>
                     <TextField
-                        label={t<string>('save.name')}
+                        label={t('save.name')}
                         variant="filled"
                         fullWidth
                         value={name}

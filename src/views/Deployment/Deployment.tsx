@@ -9,14 +9,15 @@ import IconButton from '@mui/material/IconButton';
 import VideocamIcon from '@mui/icons-material/Videocam';
 import VideocamOffIcon from '@mui/icons-material/VideocamOff';
 import FileUploadIcon from '@mui/icons-material/FileUpload';
-import { canvasFromFile } from '../../util/canvas';
 import { useDrop } from 'react-dnd';
 import { NativeTypes } from 'react-dnd-html5-backend';
-import { Webcam } from '../../components/webcam/Webcam';
 import Display, { WrappedInput } from './Display';
 import Alert from '@mui/material/Alert';
 import { BehaviourType } from '../../components/Behaviour/Behaviour';
 import { TeachableModel } from '../../util/TeachableModel';
+import { canvasFromFile, Webcam } from '@knicos/genai-base';
+import { useSetRecoilState } from 'recoil';
+import { fatalWebcam } from '@genaitm/state';
 
 const WIDTH = 400;
 const HEIGHT = 350;
@@ -40,6 +41,7 @@ export default function Deployment({ model, behaviours, error, onActivated, chil
     const fileRef = useRef<HTMLInputElement>(null);
     const inputRef = useRef<HTMLDivElement>(null);
     const [input, setInput] = useState<WrappedInput | null>(null);
+    const setFatal = useSetRecoilState(fatalWebcam);
 
     const scaleFactor = Math.min((window.innerHeight - 200 - 164) / HEIGHT, (window.innerWidth - 40) / WIDTH);
 
@@ -57,6 +59,7 @@ export default function Deployment({ model, behaviours, error, onActivated, chil
 
     const [dropProps, drop] = useDrop({
         accept: [NativeTypes.FILE, NativeTypes.URL],
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         drop(items: any) {
             onDrop(items.files);
         },
@@ -99,6 +102,8 @@ export default function Deployment({ model, behaviours, error, onActivated, chil
     }, [setPaused, paused]);
     const doUpload = useCallback(() => fileRef.current?.click(), [fileRef]);
 
+    const doFatal = useCallback(() => setFatal(true), [setFatal]);
+
     return (
         <div
             className={dropProps.hovered ? style.dropContainer : style.container}
@@ -110,7 +115,7 @@ export default function Deployment({ model, behaviours, error, onActivated, chil
                 volume={volume}
                 model={model}
                 input={input}
-                error={error ? t<string>('deploy.labels.notFound') : undefined}
+                error={error ? t('deploy.labels.notFound') : undefined}
             >
                 {children}
                 {error && (
@@ -148,12 +153,13 @@ export default function Deployment({ model, behaviours, error, onActivated, chil
                         direct
                         size={model?.getImageSize() || 224}
                         onActivated={onActivated}
+                        onFatal={doFatal}
                     />
                     <IconButton
                         color="inherit"
                         onClick={doPause}
                         disabled={error}
-                        aria-label={t<string>('deploy.labels.switch')}
+                        aria-label={t('deploy.labels.switch')}
                         aria-pressed={paused}
                     >
                         {!paused && <VideocamIcon fontSize="large" />}
@@ -170,7 +176,7 @@ export default function Deployment({ model, behaviours, error, onActivated, chil
                 <div className={style.volumeContainer}>
                     <VolumeDown />
                     <Slider
-                        aria-label={t<string>('output.aria.volume')}
+                        aria-label={t('output.aria.volume')}
                         value={volume}
                         onChange={changeVolume}
                         disabled={error}

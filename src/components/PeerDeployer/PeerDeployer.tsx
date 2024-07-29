@@ -7,17 +7,15 @@ import {
     classState,
     sessionCode,
     sharingActive,
-    iceConfig,
     shareSamples,
     IClassification,
     inputImage,
     //p2pActive,
 } from '../../state';
-import { Peer } from 'peerjs';
-import randomId from '../../util/randomId';
 import { TeachableModel, useTeachableModel } from '../../util/TeachableModel';
 import { createAnalysis, createModelStats } from './analysis';
-import { canvasFromURL } from '../../util/canvas';
+import { canvasFromURL, ConnectionMonitor, usePeer } from '@knicos/genai-base';
+import { DataConnection } from 'peerjs';
 
 type ProjectKind = 'image';
 
@@ -72,172 +70,121 @@ interface CacheState {
 }
 
 export default function PeerDeployer() {
-    const [code, setCode] = useRecoilState(sessionCode);
+    const [code] = useRecoilState(sessionCode);
     const includeSamples = useRecoilValue(shareSamples);
     const [, setSharing] = useRecoilState(sharingActive);
     const [classes, setClassData] = useRecoilState(classState);
-    const channelRef = useRef<Peer>();
     const { model } = useTeachableModel();
     const behaviours = useRecoilValue(behaviourState);
     //const enableP2P = useRecoilValue(p2pActive);
     const cache = useRef<CacheState>({ model, behaviours });
     const blob = useRef<ModelContents | null>(null);
-    const ice = useRecoilValue(iceConfig);
     const setInput = useSetRecoilState(inputImage);
 
-    useEffect(() => {
-        if (channelRef.current) {
-            channelRef.current.destroy();
-            channelRef.current = undefined;
-        }
-    }, [code]);
-
-    const getChannel = useCallback(() => {
-        if (channelRef.current !== undefined) return channelRef.current;
-
-        if (!ice) return;
-
-        const peer = new Peer(code, {
-            host: import.meta.env.VITE_APP_PEER_SERVER,
-            secure: import.meta.env.VITE_APP_PEER_SECURE === '1',
-            key: import.meta.env.VITE_APP_PEER_KEY || 'peerjs',
-            port: import.meta.env.VITE_APP_PEER_PORT ? parseInt(import.meta.env.VITE_APP_PEER_PORT) : 443,
-            config: { iceServers: ice.iceServers, sdpSemantics: 'unified-plan' },
-        });
-        channelRef.current = peer;
-        peer.on('open', () => {
-            setSharing(true);
-        });
-        peer.on('close', () => {
-            setSharing(false);
-        });
-        peer.on('connection', (conn) => {
-            conn.on('data', async (data: unknown) => {
-                const ev = data as DeployEventRequest;
-                if (ev?.event === 'request') {
-                    if (blob.current === null) {
-                        blob.current = await generateBlob(
-                            code,
-                            cache.current.model,
-                            cache.current.behaviours,
-                            cache.current?.rawSamples ? cache.current.rawSamples : undefined
-                        );
-                    }
-                    switch (ev.entity || 'project') {
-                        case 'metadata':
-                            conn.send({ event: 'model', component: 'metadata', data: blob.current.metadata });
-                            break;
-                        case 'model':
-                            conn.send({ event: 'model', component: 'model', data: blob.current.model });
-                            break;
-                        case 'weights':
-                            conn.send({ event: 'model', component: 'weights', data: blob.current.weights });
-                            break;
-                        case 'project':
-                            conn.send({ event: 'project', project: blob.current.zip, kind: 'image' });
-                            break;
-                    }
-                } else if (ev?.event === 'request_class') {
-                    if (cache.current.classNames) {
-                        conn.send({ event: 'class', labels: cache.current.classNames, samples: cache.current.samples });
-                    }
-                } else if (ev?.event === 'add_sample') {
-                    const sev = data as AddSampleEvent;
-                    const newImage = await canvasFromURL(sev.data);
-                    if (sev.index === -1) {
-                        setInput(newImage);
-                    } else {
-                        setClassData((old) => {
-                            let newData = [...old];
-                            if (newData.length > sev.index) {
-                                newData[sev.index] = {
-                                    samples: [{ data: newImage, id: sev.id }, ...newData[sev.index].samples],
-                                    label: old[sev.index].label,
-                                };
-                                conn.send({ event: 'sample_state', state: 'added', id: sev.id });
-                            }
-                            return newData;
-                        });
-                    }
-                } else if (ev?.event === 'delete_sample') {
-                    const sev = data as DeleteSampleEvent;
-                    setClassData((old) => {
-                        if (old.length > sev.index) {
-                            const newData = [...old];
-                            newData[sev.index] = {
-                                label: old[sev.index].label,
-                                samples: old[sev.index].samples.filter((s) => s.id !== sev.id),
-                            };
-                            conn.send({ event: 'sample_state', state: 'deleted', id: sev.id });
-                            return newData;
-                        }
-                        return old;
-                    });
-                } else if (ev?.event === 'analyse') {
-                    if (cache.current?.model) {
-                        if (cache.current.reference === undefined || cache.current.predictions === undefined) {
-                            const { reference, predictions } = await cache.current.model.calculateAccuracy();
-                            const cvtReference = (await reference.array()) as number[];
-                            const cvtPredictions = (await predictions.array()) as number[];
-                            cache.current.reference = cvtReference;
-                            cache.current.predictions = cvtPredictions;
-                        }
-                        conn.send({
-                            event: 'analysis',
-                            ...createAnalysis(
-                                cache.current.model.getLabels(),
-                                cache.current.reference,
-                                cache.current.predictions
-                            ),
-                            ...createModelStats(cache.current.model),
-                        });
-                    }
-                }
-            });
-            conn.on('error', (err: Error) => {
-                console.error('Peer connection error', err);
-            });
-        });
-
-        peer.on('error', (err: any) => {
-            const type: string = err.type;
-            console.error('Peer', type, err);
-            switch (type) {
-                case 'disconnected':
-                case 'network':
-                    setTimeout(() => peer.reconnect(), 1000);
-                    setSharing(false);
-                    break;
-                case 'server-error':
-                    setTimeout(() => peer.reconnect(), 5000);
-                    setSharing(false);
-                    break;
-                case 'unavailable-id':
-                    setCode(randomId(8));
-                    peer.destroy();
-                    channelRef.current = undefined;
-                    break;
-                case 'browser-incompatible':
-                    setSharing(false);
-                    console.error('Your browser does not support WebRTC');
-                    break;
-                default:
-                    peer.destroy();
-                    setSharing(false);
-                    channelRef.current = undefined;
+    const dataHandler = useCallback(async (data: unknown, conn: DataConnection) => {
+        const ev = data as DeployEventRequest;
+        if (ev?.event === 'request') {
+            if (blob.current === null) {
+                blob.current = await generateBlob(
+                    code,
+                    cache.current.model,
+                    cache.current.behaviours,
+                    cache.current?.rawSamples ? cache.current.rawSamples : undefined
+                );
             }
-        });
-        return channelRef.current;
-    }, [code, setCode, setSharing, setClassData, ice]);
+            switch (ev.entity || 'project') {
+                case 'metadata':
+                    conn.send({ event: 'model', component: 'metadata', data: blob.current.metadata });
+                    break;
+                case 'model':
+                    conn.send({ event: 'model', component: 'model', data: blob.current.model });
+                    break;
+                case 'weights':
+                    conn.send({ event: 'model', component: 'weights', data: blob.current.weights });
+                    break;
+                case 'project':
+                    conn.send({ event: 'project', project: blob.current.zip, kind: 'image' });
+                    break;
+            }
+        } else if (ev?.event === 'request_class') {
+            if (cache.current.classNames) {
+                conn.send({ event: 'class', labels: cache.current.classNames, samples: cache.current.samples });
+            }
+        } else if (ev?.event === 'add_sample') {
+            const sev = data as AddSampleEvent;
+            const newImage = await canvasFromURL(sev.data);
+            if (sev.index === -1) {
+                setInput(newImage);
+            } else {
+                setClassData((old) => {
+                    const newData = [...old];
+                    if (newData.length > sev.index) {
+                        newData[sev.index] = {
+                            samples: [{ data: newImage, id: sev.id }, ...newData[sev.index].samples],
+                            label: old[sev.index].label,
+                        };
+                        conn.send({ event: 'sample_state', state: 'added', id: sev.id });
+                    }
+                    return newData;
+                });
+            }
+        } else if (ev?.event === 'delete_sample') {
+            const sev = data as DeleteSampleEvent;
+            setClassData((old) => {
+                if (old.length > sev.index) {
+                    const newData = [...old];
+                    newData[sev.index] = {
+                        label: old[sev.index].label,
+                        samples: old[sev.index].samples.filter((s) => s.id !== sev.id),
+                    };
+                    conn.send({ event: 'sample_state', state: 'deleted', id: sev.id });
+                    return newData;
+                }
+                return old;
+            });
+        } else if (ev?.event === 'analyse') {
+            if (cache.current?.model) {
+                if (cache.current.reference === undefined || cache.current.predictions === undefined) {
+                    const { reference, predictions } = await cache.current.model.calculateAccuracy();
+                    const cvtReference = (await reference.array()) as number[];
+                    const cvtPredictions = (await predictions.array()) as number[];
+                    cache.current.reference = cvtReference;
+                    cache.current.predictions = cvtPredictions;
+                }
+                conn.send({
+                    event: 'analysis',
+                    ...createAnalysis(
+                        cache.current.model.getLabels(),
+                        cache.current.reference,
+                        cache.current.predictions
+                    ),
+                    ...createModelStats(cache.current.model),
+                });
+            }
+        }
+    }, []);
+
+    const { ready, status, error } = usePeer({
+        host: import.meta.env.VITE_APP_PEER_SERVER,
+        secure: import.meta.env.VITE_APP_PEER_SECURE === '1',
+        key: import.meta.env.VITE_APP_PEER_KEY || 'peerjs',
+        port: import.meta.env.VITE_APP_PEER_PORT ? parseInt(import.meta.env.VITE_APP_PEER_PORT) : 443,
+        code: `tm-${code}`,
+        onData: dataHandler,
+        onClose: () => {},
+    });
 
     useEffect(() => {
-        getChannel();
+        setSharing(ready);
+    }, [ready]);
+
+    useEffect(() => {
         blob.current = null;
         cache.current.model = model;
         cache.current.behaviours = behaviours;
         cache.current.predictions = undefined;
         cache.current.reference = undefined;
-    }, [model, behaviours, getChannel]);
+    }, [model, behaviours]);
 
     useEffect(() => {
         // Reset the blob data if samples are included or excluded.
@@ -249,14 +196,13 @@ export default function PeerDeployer() {
         cache.current.samples = classes.map((c) => c.samples.map((s) => s.id));
     }, [classes, includeSamples]);
 
-    useEffect(() => {
-        return () => {
-            if (channelRef.current) {
-                channelRef.current.destroy();
-                channelRef.current = undefined;
-            }
-        };
-    }, []);
-
-    return null;
+    return (
+        <ConnectionMonitor
+            api={import.meta.env.VITE_APP_APIURL}
+            appName="tm"
+            ready={ready}
+            status={status}
+            error={error}
+        />
+    );
 }

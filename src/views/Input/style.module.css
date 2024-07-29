@@ -1,4 +1,4 @@
-@value primary from "../../style/colours.module.css";
+@value primary from "@knicos/genai-base/dist/colours.module.css";
 
 .main {
     display: flex;
@@ -26,6 +26,7 @@
     margin: 0.5rem;
     margin-left: 1rem;
     font-size: 1.5rem;
+    color: white;
 }
 
 .webcam {
@@ -121,6 +122,10 @@
 
     .main header {
         background: white;
+        color: #444;
+    }
+
+    .main header h1 {
         color: #444;
     }
 }

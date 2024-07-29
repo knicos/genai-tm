@@ -34,19 +34,19 @@ export default function FontSize({ disabled, size, setSize }: Props) {
     return (
         <ToggleButtonGroup
             onChange={handleChange}
-            aria-label={t<string>('fontsize.aria.title')}
+            aria-label={t('fontsize.aria.title')}
             disabled={disabled}
             size="small"
         >
             <ToggleButton
                 value="increase"
-                aria-label={t<string>('fontsize.aria.increase')}
+                aria-label={t('fontsize.aria.increase')}
             >
                 <TextIncreaseIcon />
             </ToggleButton>
             <ToggleButton
                 value="decrease"
-                aria-label={t<string>('fontsize.aria.decrease')}
+                aria-label={t('fontsize.aria.decrease')}
             >
                 <TextDecreaseIcon />
             </ToggleButton>

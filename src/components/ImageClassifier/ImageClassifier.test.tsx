@@ -29,18 +29,28 @@ i18n.use(initReactI18next).init({
 const mockLabels = ['class 1', 'class 2'];
 
 vi.mock('@tensorflow/tfjs');
-vi.mock('@knicos/tm-image', () => ({
-    Webcam: function () {
-        return {
-            setup: vi.fn(),
-            play: vi.fn(),
-            pause: vi.fn(),
-            stop: vi.fn(),
-            update: vi.fn(),
-            canvas: global.document.createElement('canvas'),
-            webcam: { paused: false },
-        };
+
+vi.mock('@knicos/genai-base', async (importOriginal) => ({
+    ...(await importOriginal<typeof import('@knicos/genai-base')>()),
+    Webcam: function ({
+        onCapture,
+        onPostprocess,
+    }: {
+        onCapture: (img: HTMLCanvasElement) => void;
+        onPostprocess: (img: HTMLCanvasElement) => void;
+    }) {
+        setTimeout(() => {
+            const canvas = document.createElement('canvas');
+            canvas.width = 224;
+            canvas.height = 224;
+            onCapture(canvas);
+            onPostprocess(canvas);
+        }, 10);
+        return <div data-testid="webcam"></div>;
     },
+}));
+
+vi.mock('@knicos/tm-image', () => ({
     createTeachable: function () {
         return {
             setLabels: vi.fn(),

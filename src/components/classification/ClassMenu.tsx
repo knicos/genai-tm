@@ -5,12 +5,11 @@ import MenuItem from '@mui/material/MenuItem';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { useTranslation } from 'react-i18next';
 import { useVariant } from '../../util/variant';
-import QRCode from '../QRCode/QRCode';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { fatalWebcam, p2pActive, sessionCode, sharingActive } from '../../state';
 import Alert from '@mui/material/Alert';
 import style from './classification.module.css';
-import BusyButton from '../BusyButton/BusyButton';
+import { BusyButton, QRCode } from '@knicos/genai-base';
 
 interface Props {
     index: number;
@@ -42,7 +41,7 @@ export default function ClassMenu({ hasSamples, index, onDeleteClass, onRemoveSa
     return (
         <div>
             <IconButton
-                aria-label={t<string>('trainingdata.aria.more')}
+                aria-label={t('trainingdata.aria.more')}
                 id={`class-menu-button-${index}`}
                 aria-controls={open ? `class-menu-${index}` : undefined}
                 aria-expanded={open ? 'true' : undefined}
@@ -94,6 +93,7 @@ export default function ClassMenu({ hasSamples, index, onDeleteClass, onRemoveSa
                         )}
                         {sharing && (
                             <QRCode
+                                dialog
                                 size="small"
                                 url={`${window.location.origin}/collect/${code}/${index}?lng=${i18n.language}`}
                             />

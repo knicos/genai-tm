@@ -41,14 +41,14 @@ export default function Sample({ image, index, onDelete }: Props) {
             data-testid={`sample-${index}`}
         >
             <IconButton
-                aria-label={t<string>('trainingdata.aria.delete')}
+                aria-label={t('trainingdata.aria.delete')}
                 onClick={doClick}
             >
                 <DeleteForeverIcon />
             </IconButton>
             <img
                 ref={ref}
-                alt={t<string>('trainingdata.aria.sample')}
+                alt={t('trainingdata.aria.sample')}
             />
         </li>
     );

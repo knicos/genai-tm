@@ -54,7 +54,7 @@ export default function RawOutput({ scaleFactor, behaviours, predicted, volume, 
             }}
         >
             <div
-                aria-label={t<string>('output.aria.display', { index: predicted + 1 })}
+                aria-label={t('output.aria.display', { index: predicted + 1 })}
                 className={style.container}
                 style={{
                     transform: `scale(${realScaleFactor})`,
@@ -75,7 +75,7 @@ export default function RawOutput({ scaleFactor, behaviours, predicted, volume, 
                                     aria-hidden={ix !== predicted}
                                     data-testid="image-output"
                                     src={behaviour.image.uri}
-                                    alt={t<string>('output.aria.image', { index: predicted + 1 })}
+                                    alt={t('output.aria.image', { index: predicted + 1 })}
                                     style={{ display: ix === predicted ? 'initial' : 'none' }}
                                 />
                             )}

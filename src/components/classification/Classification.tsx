@@ -13,12 +13,11 @@ import { useDrop } from 'react-dnd';
 import { useVariant } from '../../util/variant';
 import { NativeTypes } from 'react-dnd-html5-backend';
 import UploadIcon from '@mui/icons-material/Upload';
-import { canvasFromDataTransfer, canvasesFromFiles } from '../../util/canvas';
 import DnDAnimation from '../DnDAnimation/DnDAnimation';
-import AlertPara from '../AlertPara/AlertPara';
 import AlertModal from '../AlertModal/AlertModal';
 import { useRecoilValue } from 'recoil';
 import { useActiveNode } from '@genaitm/util/nodes';
+import { AlertPara, canvasesFromFiles, canvasFromDataTransfer } from '@knicos/genai-base';
 
 const SAMPLEMIN = 2;
 
@@ -74,6 +73,7 @@ export function Classification({ name, active, data, index, setData, onActivate,
     const [dropProps, drop] = useDrop(
         {
             accept: [NativeTypes.URL, NativeTypes.HTML, NativeTypes.FILE],
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             async drop(items: any) {
                 setLoading(true);
                 try {
@@ -172,7 +172,7 @@ export function Classification({ name, active, data, index, setData, onActivate,
         <Widget
             active={dropProps.hovered}
             title={name}
-            aria-label={t<string>('trainingdata.aria.classCard', { name })}
+            aria-label={t('trainingdata.aria.classCard', { name })}
             dataWidget="class"
             id={`class-${index}`}
             setTitle={disableClassNameEdit ? undefined : setTitle}

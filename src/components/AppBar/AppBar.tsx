@@ -1,6 +1,5 @@
 import React, { useCallback, useRef, useState } from 'react';
 import AppBar from '@mui/material/AppBar';
-import BusyButton from '../BusyButton/BusyButton';
 import Toolbar from '@mui/material/Toolbar';
 import { useTranslation } from 'react-i18next';
 import { useVariant } from '../../util/variant';
@@ -13,6 +12,7 @@ import SettingsIcon from '@mui/icons-material/Settings';
 import { IconButton, Link as MUILink, NativeSelect } from '@mui/material';
 import { createSearchParams, useNavigate, useSearchParams, Link } from 'react-router-dom';
 import Suggestion from '../Suggestion/Suggestion';
+import { BusyButton } from '@knicos/genai-base';
 
 interface Props {
     showReminder?: boolean;
@@ -115,7 +115,7 @@ export default function ApplicationBar({ showReminder, onSave }: Props) {
                         onChange={doChangeLanguage}
                         variant="outlined"
                         data-testid="select-lang"
-                        inputProps={{ 'aria-label': t<string>('app.language') }}
+                        inputProps={{ 'aria-label': t('app.language') }}
                     >
                         {LANGS.map((lng) => (
                             <option

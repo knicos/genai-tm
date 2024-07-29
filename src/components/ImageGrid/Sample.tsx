@@ -55,7 +55,7 @@ export default function Sample({ image, index, onDelete, status, disabled }: Pro
         >
             {onDelete && (
                 <IconButton
-                    aria-label={t<string>('trainingdata.aria.delete')}
+                    aria-label={t('trainingdata.aria.delete')}
                     onClick={doClick}
                     disabled={disabled}
                 >

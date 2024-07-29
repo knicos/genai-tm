@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useCallback, useRef } from 'react';
 import Accordion from '@mui/material/Accordion';
 import { activeNodes, classState } from '../../state';
-import BusyButton from '../BusyButton/BusyButton';
 import { Widget } from '../widget/Widget';
 import style from './trainer.module.css';
 import AccordionDetails from '@mui/material/AccordionDetails';
@@ -19,6 +18,7 @@ import TrainingAnimation from '../TrainingAnimation/TrainingAnimation';
 import { useModelTrainer } from '../../util/TeachableModel';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { useActiveNode } from '@genaitm/util/nodes';
+import { BusyButton } from '@knicos/genai-base';
 
 interface Props {
     onTrained?: () => void;
@@ -125,7 +125,7 @@ export default function Trainer({ onTrained, editing, ...props }: Props) {
     return (
         <Widget
             dataWidget="trainer"
-            title={t<string>('training.labels.title')}
+            title={t('training.labels.title')}
             className={style.widget}
             {...props}
         >
@@ -214,7 +214,7 @@ export default function Trainer({ onTrained, editing, ...props }: Props) {
                                 onChange={changeEpochs}
                             />
                             <HelpTooltip
-                                title={t<string>('training.tooltips.epochs')}
+                                title={t('training.tooltips.epochs')}
                                 placement="left"
                             >
                                 <HelpOutlineIcon
@@ -236,7 +236,7 @@ export default function Trainer({ onTrained, editing, ...props }: Props) {
                                 onChange={changeLRate}
                             />
                             <HelpTooltip
-                                title={t<string>('training.tooltips.learningRate')}
+                                title={t('training.tooltips.learningRate')}
                                 placement="left"
                             >
                                 <HelpOutlineIcon
@@ -258,7 +258,7 @@ export default function Trainer({ onTrained, editing, ...props }: Props) {
                                 onChange={changeBatch}
                             />
                             <HelpTooltip
-                                title={t<string>('training.tooltips.batchSize')}
+                                title={t('training.tooltips.batchSize')}
                                 placement="left"
                             >
                                 <HelpOutlineIcon

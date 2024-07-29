@@ -31,25 +31,25 @@ export default function Alignment({ disabled, alignment, setAlignment }: Props) 
             value={alignment}
             exclusive
             onChange={handleAlignment}
-            aria-label={t<string>('alignment.aria.align')}
+            aria-label={t('alignment.aria.align')}
             disabled={disabled}
             size="small"
         >
             <ToggleButton
                 value="left"
-                aria-label={t<string>('alignment.aria.left')}
+                aria-label={t('alignment.aria.left')}
             >
                 <FormatAlignLeftIcon />
             </ToggleButton>
             <ToggleButton
                 value="center"
-                aria-label={t<string>('alignment.aria.center')}
+                aria-label={t('alignment.aria.center')}
             >
                 <FormatAlignCenterIcon />
             </ToggleButton>
             <ToggleButton
                 value="right"
-                aria-label={t<string>('alignment.aria.right')}
+                aria-label={t('alignment.aria.right')}
             >
                 <FormatAlignRightIcon />
             </ToggleButton>

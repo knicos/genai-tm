@@ -68,6 +68,7 @@ export default function Behaviour({ classLabel, behaviour, setBehaviour, index, 
 
     const [dropProps, drop] = useDrop({
         accept: [NativeTypes.FILE, NativeTypes.URL, NativeTypes.HTML],
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         async drop(items: any) {
             if (items.html) {
                 const root = document.createElement('html');
@@ -182,7 +183,7 @@ export default function Behaviour({ classLabel, behaviour, setBehaviour, index, 
             id={`behaviour${index}`}
             title={classLabel}
             className={style.widget}
-            aria-label={t<string>('behaviours.aria.behaviourCard', { name: classLabel })}
+            aria-label={t('behaviours.aria.behaviourCard', { name: classLabel })}
             {...props}
         >
             <div
@@ -200,7 +201,7 @@ export default function Behaviour({ classLabel, behaviour, setBehaviour, index, 
                 >
                     <ToggleButton
                         value="text"
-                        aria-label={t<string>('behaviours.aria.text')}
+                        aria-label={t('behaviours.aria.text')}
                         data-testid="text-option"
                     >
                         <TextSnippetIcon />
@@ -208,7 +209,7 @@ export default function Behaviour({ classLabel, behaviour, setBehaviour, index, 
                     {soundBehaviours && (
                         <ToggleButton
                             value="sound"
-                            aria-label={t<string>('behaviours.aria.sound')}
+                            aria-label={t('behaviours.aria.sound')}
                             data-testid="audio-option"
                         >
                             <MusicNoteIcon />
@@ -217,7 +218,7 @@ export default function Behaviour({ classLabel, behaviour, setBehaviour, index, 
                     {imageBehaviours && (
                         <ToggleButton
                             value="image"
-                            aria-label={t<string>('behaviours.aria.image')}
+                            aria-label={t('behaviours.aria.image')}
                             data-testid="image-option"
                         >
                             <ImageIcon />
@@ -226,7 +227,7 @@ export default function Behaviour({ classLabel, behaviour, setBehaviour, index, 
                     {embedBehaviours && (
                         <ToggleButton
                             value="embed"
-                            aria-label={t<string>('behaviours.aria.embed')}
+                            aria-label={t('behaviours.aria.embed')}
                             data-testid="embed-option"
                         >
                             <LinkIcon />

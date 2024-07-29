@@ -9,7 +9,6 @@ import Skeleton from '@mui/material/Skeleton';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import UploadFileIcon from '@mui/icons-material/UploadFile';
-import { canvasFromDataTransfer, canvasesFromFiles } from '../../util/canvas';
 import { Button } from '../button/Button';
 import { useDrop } from 'react-dnd';
 import { NativeTypes } from 'react-dnd-html5-backend';
@@ -20,9 +19,8 @@ import AlertModal from '../AlertModal/AlertModal';
 import { useTeachableModel } from '../../util/TeachableModel';
 import { enableCamInput, fatalWebcam, inputImage, p2pActive, sessionCode, sharingActive } from '../../state';
 import { useRecoilValue, useRecoilState } from 'recoil';
-import BusyButton from '../BusyButton/BusyButton';
-import QRCode from '../QRCode/QRCode';
 import { useActiveNode } from '@genaitm/util/nodes';
+import { BusyButton, canvasesFromFiles, canvasFromDataTransfer, QRCode } from '@knicos/genai-base';
 
 interface Props {
     disabled?: boolean;
@@ -105,6 +103,7 @@ export default function Input(props: Props) {
 
     const [dropProps, drop] = useDrop({
         accept: [NativeTypes.FILE, NativeTypes.URL, NativeTypes.HTML],
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         async drop(items: any) {
             const canvases = await canvasFromDataTransfer(items);
 
@@ -161,7 +160,7 @@ export default function Input(props: Props) {
         <Widget
             active={dropProps.hovered}
             dataWidget="input"
-            title={t<string>('input.labels.title')}
+            title={t('input.labels.title')}
             menu={
                 <div className={style.inputControls}>
                     <FormControlLabel
@@ -172,12 +171,12 @@ export default function Input(props: Props) {
                                 checked={enableInput}
                                 onChange={changeWebcamToggle}
                                 data-testid="webcam-switch"
-                                aria-label={t<string>('input.aria.switch')}
+                                aria-label={t('input.aria.switch')}
                                 color="error"
                             />
                         }
                         hidden
-                        label={t<string>(enableInput ? 'input.labels.switchOn' : 'input.labels.switchOff')}
+                        label={t(enableInput ? 'input.labels.switchOn' : 'input.labels.switchOff')}
                     />
                 </div>
             }
@@ -196,19 +195,19 @@ export default function Input(props: Props) {
                     >
                         <Tab
                             disabled={!canPredict || fatal}
-                            label={t<string>('input.labels.webcam')}
+                            label={t('input.labels.webcam')}
                             id="input-tab-0"
                             aria-controls="input-panel-0"
                         />
                         <Tab
                             disabled={!canPredict}
-                            label={t<string>('input.labels.file')}
+                            label={t('input.labels.file')}
                             id="input-tab-1"
                             aria-controls="input-panel-1"
                         />
                         <Tab
                             disabled={!canPredict || fatal}
-                            label={t<string>('input.labels.device')}
+                            label={t('input.labels.device')}
                             id="input-tab-2"
                             aria-controls="input-panel-2"
                         />
@@ -250,7 +249,7 @@ export default function Input(props: Props) {
                         {!!file && (
                             <div
                                 role="img"
-                                aria-label={t<string>('input.aria.imageFile')}
+                                aria-label={t('input.aria.imageFile')}
                                 ref={fileImageRef}
                                 className={style.fileImage}
                             />
@@ -282,6 +281,7 @@ export default function Input(props: Props) {
                             )}
                             {sharing && (
                                 <QRCode
+                                    dialog
                                     size="small"
                                     url={`${window.location.origin}/input/${code}?lng=${i18n.language}`}
                                 />
@@ -290,7 +290,7 @@ export default function Input(props: Props) {
                         {!!remoteInput && (
                             <div
                                 role="img"
-                                aria-label={t<string>('input.aria.imageFile')}
+                                aria-label={t('input.aria.imageFile')}
                                 ref={remoteImageRef}
                                 className={style.fileImage}
                             />

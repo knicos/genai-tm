@@ -29,7 +29,7 @@ export default function Preview({ onExport, onClone }: Props) {
     return (
         <Widget
             dataWidget="model"
-            title={t<string>('model.labels.title')}
+            title={t('model.labels.title')}
             className={style.widget}
             menu={
                 <PreviewMenu

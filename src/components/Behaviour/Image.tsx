@@ -87,7 +87,7 @@ export default function Image({ behaviour, setBehaviour, dropping }: Props) {
                 {behaviour && (
                     <IconImage
                         role="img"
-                        aria-label={t<string>('behaviours.aria.imageOutput')}
+                        aria-label={t('behaviours.aria.imageOutput')}
                         src={behaviour.uri}
                         onDelete={doDelete}
                     />
@@ -99,7 +99,7 @@ export default function Image({ behaviour, setBehaviour, dropping }: Props) {
                         width={58}
                         height={58}
                         role="img"
-                        aria-label={t<string>('behaviours.aria.noImage')}
+                        aria-label={t('behaviours.aria.noImage')}
                     />
                 )}
                 {dropping && (

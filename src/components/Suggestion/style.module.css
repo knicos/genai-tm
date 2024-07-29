@@ -1,4 +1,4 @@
-@value secondary from "../../style/colours.module.css";
+@value secondary from "@knicos/genai-base/dist/colours.module.css";
 
 .content {
     background: secondary;

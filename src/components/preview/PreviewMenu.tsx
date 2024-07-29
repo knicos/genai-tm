@@ -33,7 +33,7 @@ export default function PreviewMenu({ disabled, onExport, onClone }: Props) {
     return (
         <div>
             <IconButton
-                aria-label={t<string>('model.aria.more')}
+                aria-label={t('model.aria.more')}
                 id={`preview-menu-button`}
                 aria-controls={open ? `preview-menu` : undefined}
                 aria-expanded={open ? 'true' : undefined}

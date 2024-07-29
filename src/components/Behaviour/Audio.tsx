@@ -79,7 +79,6 @@ export default function Sound({ behaviour, setBehaviour, dropping }: Props) {
     );
 
     useEffect(doStop, [doStop, behaviour]);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     useEffect(() => () => doStop(), []);
 
     const doDelete = useCallback(() => {
@@ -103,7 +102,7 @@ export default function Sound({ behaviour, setBehaviour, dropping }: Props) {
                 if (e.target?.result) {
                     setBehaviour({
                         uri: e.target.result as string,
-                        name: t<string>('behaviours.labels.voiceRecording'),
+                        name: t('behaviours.labels.voiceRecording'),
                     });
                 }
             };
@@ -155,7 +154,7 @@ export default function Sound({ behaviour, setBehaviour, dropping }: Props) {
                 <div className={style.audio}>
                     {!dropping && (
                         <IconButton
-                            aria-label={t<string>(!audio ? 'behaviours.aria.play' : 'behaviours.aria.stop')}
+                            aria-label={t(!audio ? 'behaviours.aria.play' : 'behaviours.aria.stop')}
                             data-testid="audio-play"
                             disabled={!behaviour}
                             color="primary"
@@ -181,11 +180,11 @@ export default function Sound({ behaviour, setBehaviour, dropping }: Props) {
                             checked={behaviour?.loop}
                             onChange={changeLoop}
                             data-testid="loop-switch"
-                            aria-label={t<string>('behaviours.aria.loop')}
+                            aria-label={t('behaviours.aria.loop')}
                         />
                     }
                     hidden
-                    label={t<string>('behaviours.labels.loop')}
+                    label={t('behaviours.labels.loop')}
                 />
             </div>
         </>

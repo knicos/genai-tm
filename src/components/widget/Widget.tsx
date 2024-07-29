@@ -118,8 +118,8 @@ export function Widget({
                             <TextField
                                 ref={editRef}
                                 hiddenLabel
-                                name={t<string>('widget.aria.editTitleInput', { value: title })}
-                                placeholder={t<string>('widget.labels.titlePlaceholder')}
+                                name={t('widget.aria.editTitleInput', { value: title })}
+                                placeholder={t('widget.labels.titlePlaceholder')}
                                 size="small"
                                 variant="outlined"
                                 onBlur={doEndEdit}
@@ -131,7 +131,7 @@ export function Widget({
                     </h1>
                     {setTitle && (
                         <IconButton
-                            aria-label={t<string>('widget.aria.editTitle')}
+                            aria-label={t('widget.aria.editTitle')}
                             size="small"
                             onClick={doStartEdit}
                         >

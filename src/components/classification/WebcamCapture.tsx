@@ -3,14 +3,14 @@ import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 // import SettingsIcon from '@mui/icons-material/Settings';
 import { Button } from '../button/Button';
-import { Webcam } from '../webcam/Webcam';
 import style from './classification.module.css';
 import WebcamSettings, { IWebcamSettings } from './WebcamSettings';
 import { useTranslation } from 'react-i18next';
 import { useVariant } from '../../util/variant';
 import { useTeachableModel } from '../../util/TeachableModel';
-import { useRecoilValue } from 'recoil';
+import { useRecoilState } from 'recoil';
 import { fatalWebcam } from '@genaitm/state';
+import { Webcam } from '@knicos/genai-base';
 
 interface Props {
     visible?: boolean;
@@ -23,7 +23,7 @@ export default function WebcamCapture({ visible, onCapture, onClose }: Props) {
     const { t } = useTranslation(namespace);
     const [capturing, setCapturing] = useState(false);
     const [showSettings, setShowSettings] = useState(false);
-    const fatal = useRecoilValue(fatalWebcam);
+    const [fatal, setFatal] = useRecoilState(fatalWebcam);
     const [settings, setSettings] = useState<IWebcamSettings>({
         interval: 1,
         delay: 6,
@@ -63,6 +63,8 @@ export default function WebcamCapture({ visible, onCapture, onClose }: Props) {
         if (fatal) onClose();
     }, [fatal, onClose]);
 
+    const doFatal = useCallback(() => setFatal(true), [setFatal]);
+
     return visible ? (
         <div
             data-testid="webcamwindow"
@@ -89,7 +91,7 @@ export default function WebcamCapture({ visible, onCapture, onClose }: Props) {
                         <h2>{t('trainingdata.actions.webcam')}</h2>
                         <IconButton
                             data-testid="webcamclose"
-                            aria-label={t<string>('trainingdata.aria.close')}
+                            aria-label={t('trainingdata.aria.close')}
                             onClick={onClose}
                             color="primary"
                             size="small"
@@ -104,6 +106,7 @@ export default function WebcamCapture({ visible, onCapture, onClose }: Props) {
                             interval={200}
                             onPostprocess={doPostProcess}
                             size={imageSize}
+                            onFatal={doFatal}
                         />
                     </div>
                     <div className={style.webcambuttoncontainer}>

@@ -54,10 +54,10 @@ export default function TextColour({ disabled, colour, setColour }: Props) {
                 value="colour"
                 selected={false}
                 onChange={doSelect}
-                aria-label={t<string>('fontcolor.aria.title')}
+                aria-label={t('fontcolor.aria.title')}
                 id="colour-button"
-                aria-controls={!!element ? 'colour-menu' : undefined}
-                aria-expanded={!!element ? 'true' : undefined}
+                aria-controls={element ? 'colour-menu' : undefined}
+                aria-expanded={element ? 'true' : undefined}
                 aria-haspopup="true"
             >
                 <FormatColorTextIcon />

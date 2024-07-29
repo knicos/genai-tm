@@ -14,6 +14,11 @@ export default defineConfig({
             provider: 'v8',
             reporter: ['cobertura', 'html'],
         },
+        server: {
+            deps: {
+                inline: ['@knicos/genai-base'],
+            },
+        },
     },
     resolve: {
         alias: {

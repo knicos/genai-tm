@@ -1,20 +1,20 @@
 import React, { useState, useCallback, useEffect, useRef } from 'react';
 import style from './style.module.css';
 import { useParams } from 'react-router-dom';
-import { Webcam } from '../../components/webcam/Webcam';
 import { VerticalButton } from '../../components/button/Button';
 import { ThemeProvider } from '@mui/material/styles';
-import { theme } from '../../style/theme';
 import { usePeerSender } from '../Collection/usePeerSender';
 import randomId from '../../util/randomId';
 import Sample, { SampleState } from '../../components/ImageGrid/Sample';
 import UploadFileIcon from '@mui/icons-material/UploadFile';
-import { canvasesFromFiles, canvasFromDataTransfer } from '../../util/canvas';
 import { useTranslation } from 'react-i18next';
 import { Alert } from '@mui/material';
 import { useDrop } from 'react-dnd';
 import { NativeTypes } from 'react-dnd-html5-backend';
 import AlertModal from '../../components/AlertModal/AlertModal';
+import { canvasesFromFiles, canvasFromDataTransfer, ConnectionMonitor, theme, Webcam } from '@knicos/genai-base';
+import { useSetRecoilState } from 'recoil';
+import { fatalWebcam } from '@genaitm/state';
 
 export function Component() {
     const { code } = useParams();
@@ -25,14 +25,13 @@ export function Component() {
     const buttonRef = useRef<HTMLButtonElement>(null);
     const fileRef = useRef<HTMLInputElement>(null);
     const { t } = useTranslation();
-
-    const doError = useCallback(() => {}, []);
+    const setFatal = useSetRecoilState(fatalWebcam);
 
     const doSampleState = useCallback(() => {}, []);
 
     const doSamplesUpdate = useCallback(() => {}, []);
 
-    const { sender, state, type: candidateType } = usePeerSender(code || '', doError, doSampleState, doSamplesUpdate);
+    const { sender, state, ready, error } = usePeerSender(code || '', doSampleState, doSamplesUpdate);
 
     const doCapture = useCallback(
         (img: HTMLCanvasElement) => {
@@ -67,9 +66,10 @@ export function Component() {
         [sender, setSamples]
     );
 
-    const [dropProps, drop] = useDrop(
+    const [, drop] = useDrop(
         {
             accept: [NativeTypes.URL, NativeTypes.HTML, NativeTypes.FILE],
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             async drop(items: any) {
                 setLoading(true);
                 try {
@@ -128,9 +128,11 @@ export function Component() {
         }
     }, [buttonRef, startTouchCapture]);
 
-    const connected = state === 'connected';
+    const connected = ready;
 
     const doDropErrorClose = useCallback(() => setShowDropError(false), [setShowDropError]);
+
+    const doFatal = useCallback(() => setFatal(true), [setFatal]);
 
     return (
         <ThemeProvider theme={theme}>
@@ -139,15 +141,7 @@ export function Component() {
                 ref={drop}
             >
                 <header>
-                    <h1>
-                        {connected
-                            ? t('testInput.title')
-                            : state === 'disconnected'
-                            ? t('collect.disconnected')
-                            : state === 'failed'
-                            ? t('collect.failed')
-                            : t('collect.connecting')}
-                    </h1>
+                    <h1>{t('testInput.title')}</h1>
                 </header>
                 {state === 'failed' && (
                     <div className={style.failedContainer}>
@@ -161,14 +155,6 @@ export function Component() {
                 >
                     {t('collect.dropError')}
                 </AlertModal>
-                {samples.length === 0 && !dropProps.hovered && candidateType === 'relay' && (
-                    <Alert
-                        severity="warning"
-                        style={{ maxWidth: '80%', border: '1px solid #ed6c02', marginBottom: '1rem' }}
-                    >
-                        {t('collect.relayWarning')}
-                    </Alert>
-                )}
                 <div className={style.sampleContainer}>
                     <Sample
                         image={samples[0]?.data}
@@ -192,6 +178,7 @@ export function Component() {
                             onCapture={doCapture}
                             capture={capturing}
                             disable={!connected}
+                            onFatal={doFatal}
                         />
                     </div>
                     <div className={style.column}>
@@ -222,6 +209,13 @@ export function Component() {
                     </div>
                 </div>
             </main>
+            <ConnectionMonitor
+                api={import.meta.env.VITE_APP_APIURL}
+                appName="tm"
+                ready={ready}
+                status={state}
+                error={error}
+            />
         </ThemeProvider>
     );
 }

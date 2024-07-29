@@ -21,11 +21,12 @@ import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { ThemeProvider } from '@mui/material/styles';
-import { theme } from '../../style/theme';
+import { theme } from '@knicos/genai-base';
 
 const DEFAULTS = _settings as VariantConfiguration;
 
 function delta(data: IVariantContext, template: VARIANTS): Partial<IVariantContext> {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const result: any = {};
     const keys = Object.keys(data) as Array<keyof IVariantContext>;
     const merged = {
@@ -115,7 +116,7 @@ function SettingsForm() {
                             labelId="language-select"
                             onChange={doLanguageChange}
                             value={i18n.language}
-                            label={t<string>('settings.labels.language')}
+                            label={t('settings.labels.language')}
                             name="namespace"
                         >
                             {LANGS.map((lng, ix) => (
@@ -134,7 +135,7 @@ function SettingsForm() {
                             labelId="model-select"
                             onChange={doSelectChange}
                             value={state.modelVariant}
-                            label={t<string>('settings.labels.model')}
+                            label={t('settings.labels.model')}
                             name="modelVariant"
                         >
                             <MenuItem value="image">{t('settings.values.models.0')}</MenuItem>
@@ -147,7 +148,7 @@ function SettingsForm() {
                             labelId="template-select"
                             onChange={doChangeTemplate}
                             value={template}
-                            label={t<string>('settings.labels.variant')}
+                            label={t('settings.labels.variant')}
                         >
                             <MenuItem value="general">{t('settings.values.variants.0')}</MenuItem>
                             <MenuItem value="classroom">{t('settings.values.variants.1')}</MenuItem>

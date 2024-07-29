@@ -2,7 +2,6 @@ import { useState, useCallback, useEffect } from 'react';
 import Deployment from './Deployment';
 import { useP2PModel } from './useRemoteModel';
 import { useSearchParams, useParams } from 'react-router-dom';
-import QRCode from '../../components/QRCode/QRCode';
 import style from './style.module.css';
 import { Alert, IconButton } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
@@ -11,7 +10,8 @@ import { useTranslation } from 'react-i18next';
 import { useRecoilValue } from 'recoil';
 import { fatalWebcam } from '@genaitm/state';
 import AlertModal from '@genaitm/components/AlertModal/AlertModal';
-import Privacy from '@genaitm/components/Privacy/Privacy';
+import { ConnectionMonitor, Privacy, QRCode } from '@knicos/genai-base';
+import gitInfo from '../../generatedGitInfo.json';
 
 export function Component() {
     const { code } = useParams();
@@ -19,7 +19,7 @@ export function Component() {
     const [hadError, setHadError] = useState(false);
     const [enableWebRTC, setEnableWebRTC] = useState(false);
     const onError = useCallback(() => setHadError(true), [setHadError]);
-    const [model, behaviours] = useP2PModel(code || '', onError, enableWebRTC);
+    const [model, behaviours, ready, status, error] = useP2PModel(code || '', onError, !enableWebRTC);
     const [showQR, setShowQR] = useState(query.get('qr') === '1');
     const { namespace } = useVariant();
     const { t } = useTranslation(namespace);
@@ -55,6 +55,7 @@ export function Component() {
             {showQR && (
                 <div className={style.qrcode}>
                     <QRCode
+                        dialog
                         size="small"
                         url={window.location.href}
                     />
@@ -83,7 +84,18 @@ export function Component() {
                     {t('deploy.labels.noWebcam')}
                 </AlertModal>
             )}
-            <Privacy position="topRight" />
+            <ConnectionMonitor
+                api={import.meta.env.VITE_APP_APIURL}
+                appName="tm"
+                ready={ready}
+                status={status}
+                error={error}
+            />
+            <Privacy
+                position="topRight"
+                appName="tm"
+                tag={gitInfo.gitTag || 'notag'}
+            />
         </>
     );
 }

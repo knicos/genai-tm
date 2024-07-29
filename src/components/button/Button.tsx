@@ -1,9 +1,8 @@
 import MButton from '@mui/material/Button';
 import { styled } from '@mui/material/styles';
+import { Button as BButton } from '@knicos/genai-base';
 
-export const Button = styled(MButton)({
-    textTransform: 'none',
-});
+export const Button = BButton;
 
 export const VerticalButton = styled(MButton)({
     flexDirection: 'column',

@@ -1,17 +1,22 @@
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import randomId from '../../util/randomId';
 import { sendData } from '../../util/comms';
 import { DeployEventData } from '../../components/PeerDeployer/PeerDeployer';
 import { loadProject } from '../../components/ImageWorkspace/loader';
 import { BehaviourType } from '../../components/Behaviour/Behaviour';
-import { Peer } from 'peerjs';
 import { useSearchParams } from 'react-router-dom';
 import { TeachableModel } from '../../util/TeachableModel';
-import { iceConfig, webrtcActive } from '../../state';
-import { useRecoilValue } from 'recoil';
+import { BuiltinEvent, PeerErrorType, PeerEvent, PeerStatus, usePeer, useRandom } from '@knicos/genai-base';
 
 const TIMEOUT_LOCAL = 5000;
-const TIMEOUT_P2P = 30000;
+
+interface RequestEvent extends PeerEvent {
+    event: 'request';
+    channel: string;
+    password: string | null;
+}
+
+type EventProtocol = BuiltinEvent | RequestEvent;
 
 export function useTabModel(code: string, onError?: () => void): [TeachableModel | null, BehaviourType[]] {
     const channel = useRef<BroadcastChannel>();
@@ -48,71 +53,48 @@ export function useTabModel(code: string, onError?: () => void): [TeachableModel
 export function useP2PModel(
     code: string,
     onError?: () => void,
-    enabled?: boolean
-): [TeachableModel | null, BehaviourType[]] {
+    disable?: boolean
+): [TeachableModel | null, BehaviourType[], boolean, PeerStatus, PeerErrorType] {
     const [model, setModel] = useState<TeachableModel | null>(null);
     const [behaviours, setBehaviours] = useState<BehaviourType[]>([]);
-    const timeoutRef = useRef<number>(-1);
     const [params] = useSearchParams();
-    const webRTC = useRecoilValue(webrtcActive);
-    const ice = useRecoilValue(iceConfig);
+    const MYCODE = useRandom(8);
+    const [enabled, setEnabled] = useState(true);
+
+    const dataHandler = useCallback(async (data: unknown) => {
+        const ev = data as DeployEventData;
+
+        if (ev?.event === 'project' && ev.project instanceof Uint8Array) {
+            try {
+                const project = await loadProject(ev.project);
+                if (project.model)
+                    setModel(new TeachableModel('image', project.metadata, project.model, project.weights));
+                console.log('Loaded model');
+                if (project.behaviours) setBehaviours(project.behaviours);
+            } catch (e) {
+                if (onError) onError();
+                console.log('Error', e);
+            }
+            setEnabled(false);
+        }
+    }, []);
+
+    const { ready, send, status, error } = usePeer<EventProtocol>({
+        disabled: !enabled || disable,
+        host: import.meta.env.VITE_APP_PEER_SERVER,
+        secure: import.meta.env.VITE_APP_PEER_SECURE === '1',
+        key: import.meta.env.VITE_APP_PEER_KEY || 'peerjs',
+        port: import.meta.env.VITE_APP_PEER_PORT ? parseInt(import.meta.env.VITE_APP_PEER_PORT) : 443,
+        server: `tm-${code}`,
+        code: `tm-${MYCODE}`,
+        onData: dataHandler,
+    });
 
     useEffect(() => {
-        if (!enabled || !webRTC || !ice) {
-            return;
+        if (ready && send) {
+            send({ event: 'request', channel: MYCODE, password: params.get('p') });
         }
-        const peer = new Peer('', {
-            host: import.meta.env.VITE_APP_PEER_SERVER,
-            secure: import.meta.env.VITE_APP_PEER_SECURE === '1',
-            key: import.meta.env.VITE_APP_PEER_KEY || 'peerjs',
-            port: import.meta.env.VITE_APP_PEER_PORT ? parseInt(import.meta.env.VITE_APP_PEER_PORT) : 443,
-            config: { iceServers: ice.iceServers, sdpSemantics: 'unified-plan' },
-        });
-        peer.on('error', (err: any) => {
-            console.error(err);
-            if (timeoutRef.current >= 0) {
-                clearTimeout(timeoutRef.current);
-            }
-            if (onError) onError();
-            peer.destroy();
-        });
-        peer.on('open', (id: string) => {
-            const conn = peer.connect(code, { reliable: true });
-            conn.on('data', async (data: unknown) => {
-                const ev = data as DeployEventData;
+    }, [ready, send]);
 
-                if (ev?.event === 'project' && ev.project instanceof ArrayBuffer) {
-                    if (timeoutRef.current >= 0) {
-                        clearTimeout(timeoutRef.current);
-                    }
-
-                    try {
-                        const project = await loadProject(ev.project);
-                        if (project.model)
-                            setModel(new TeachableModel('image', project.metadata, project.model, project.weights));
-                        if (project.behaviours) setBehaviours(project.behaviours);
-                    } catch (e) {
-                        if (onError) onError();
-                    }
-                    conn.close();
-                    peer.destroy();
-                }
-            });
-            conn.on('open', () => {
-                if (onError) {
-                    if (timeoutRef.current >= 0) {
-                        clearTimeout(timeoutRef.current);
-                    }
-                    timeoutRef.current = window.setTimeout(() => {
-                        conn.close();
-                        peer.destroy();
-                        onError();
-                    }, TIMEOUT_P2P);
-                }
-                conn.send({ event: 'request', channel: id, password: params.get('p') });
-            });
-        });
-    }, [code, onError, params, enabled, webRTC, ice]);
-
-    return [model, behaviours];
+    return [model, behaviours, ready, status, error];
 }

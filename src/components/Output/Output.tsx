@@ -42,7 +42,7 @@ export default function Output(props: Props) {
     return (
         <Widget
             dataWidget={'output'}
-            title={t<string>('output.labels.title')}
+            title={t('output.labels.title')}
             className={style.widget}
             {...props}
             menu={
@@ -52,7 +52,7 @@ export default function Output(props: Props) {
                         className={style.deployLink}
                         href={`/deploy/${usep2p ? 'p' : 'b'}/${code}?p=${pwd}&qr=${enableCollaboration ? '1' : '0'}`}
                         target="_blank"
-                        aria-label={t<string>('output.aria.expand')}
+                        aria-label={t('output.aria.expand')}
                         rel="noreferrer"
                         onClick={doDeployClick}
                     >
@@ -71,7 +71,7 @@ export default function Output(props: Props) {
             <div className={style.volumeContainer}>
                 <VolumeDown />
                 <Slider
-                    aria-label={t<string>('output.aria.volume')}
+                    aria-label={t('output.aria.volume')}
                     value={volume}
                     onChange={changeVolume}
                 />
