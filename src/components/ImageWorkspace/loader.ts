@@ -89,7 +89,7 @@ export async function loadProject(file: File | Blob): Promise<Project> {
         const model = new TeachableModel('image', meta, parsedModel, project.modelWeights);
         await model.ready();
 
-        let samplePromises: Promise<HTMLCanvasElement>[] = [];
+        const samplePromises: Promise<HTMLCanvasElement>[] = [];
 
         for (const item of project.samples) {
             for (const s of item) {

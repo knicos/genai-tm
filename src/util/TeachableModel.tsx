@@ -92,7 +92,11 @@ export class TeachableModel {
     private async loadImage(metadata?: ImageMetadata, model?: tf.io.ModelJSON, weights?: ArrayBuffer) {
         await tf.ready();
         if (metadata && model && weights) {
-            const tmmodel = await createImage(metadata, { version: 2, alpha: 0.35 });
+            const tmmodel = await createImage(metadata, {
+                version: 2,
+                alpha: 0.35,
+                modelBaseUrl: 'https://tmstore.blob.core.windows.net/models',
+            });
             tmmodel.model = await tf.loadLayersModel({
                 load: async () => {
                     return {

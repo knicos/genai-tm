@@ -4,8 +4,15 @@ import react from '@vitejs/plugin-react-swc';
 import path from 'path';
 
 // https://vitejs.dev/config/
-export default defineConfig({
+export default defineConfig(({ mode }) => ({
     plugins: [react()],
+    build: {
+        rollupOptions: {
+            output: {
+                inlineDynamicImports: mode === 'robot',
+            },
+        },
+    },
     test: {
         environment: 'jsdom',
         setupFiles: './src/setupTests.ts',
@@ -25,4 +32,4 @@ export default defineConfig({
             '@genaitm': path.resolve(__dirname, './src'),
         },
     },
-});
+}));
