@@ -290,7 +290,7 @@ export class CAM {
         });
 
         const resized = tf.tidy(() => {
-            const finalSum = upscaledCAM.resizeBilinear([224, 224]);
+            const finalSum = upscaledCAM.resizeBilinear([224, 224], false, true);
             //const finalMin = finalSum.min();
             const finalMax = finalSum.max();
             const final = finalSum.div(finalMax);
