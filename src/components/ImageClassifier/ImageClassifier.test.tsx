@@ -58,7 +58,7 @@ vi.mock('@knicos/tm-image', () => ({
             getLabels: vi.fn(() => mockLabels),
             setSeed: vi.fn(),
             addExample: vi.fn(),
-            train: vi.fn(),
+            train: vi.fn(async () => {}),
             getMetadata: vi.fn(() => ({
                 imageSize: 224,
             })),
@@ -67,6 +67,11 @@ vi.mock('@knicos/tm-image', () => ({
                 { className: 'class 2', probability: 0.4 },
             ]),
         };
+    },
+}));
+vi.mock('../../util/xai.ts', () => ({
+    CAM: function () {
+        return {};
     },
 }));
 

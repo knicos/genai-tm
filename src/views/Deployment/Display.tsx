@@ -3,12 +3,7 @@ import { BehaviourType } from '../../components/Behaviour/Behaviour';
 import RawOutput from '../../components/Output/RawOutput';
 import { useRecoilState } from 'recoil';
 import { predictedIndex } from '../../state';
-import { TeachableModel } from '../../util/TeachableModel';
-
-interface Predictions {
-    className: string;
-    probability: number;
-}
+import { ExplainedPredictionsOutput, TeachableModel } from '../../util/TeachableModel';
 
 export interface WrappedInput {
     element: HTMLCanvasElement;
@@ -28,15 +23,17 @@ export default function Display({ input, behaviours, scaleFactor, volume, model,
 
     useEffect(() => {
         async function update() {
-            let predictions: Predictions[] = [];
+            let predictions: ExplainedPredictionsOutput = { predictions: [] };
 
             if (model && input) {
                 predictions = await model.predict(input.element);
             }
 
-            if (predictions.length > 0) {
-                const nameOfMax = predictions.reduce((prev, val) => (val.probability > prev.probability ? val : prev));
-                setPredictionIndex(predictions.indexOf(nameOfMax));
+            if (predictions.predictions.length > 0) {
+                const nameOfMax = predictions.predictions.reduce((prev, val) =>
+                    val.probability > prev.probability ? val : prev
+                );
+                setPredictionIndex(predictions.predictions.indexOf(nameOfMax));
             } else {
                 setPredictionIndex(-1);
             }

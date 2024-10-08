@@ -35,6 +35,7 @@ export interface IVariantContext {
     enabledP2PData?: boolean;
     enableCollaboration?: boolean;
     allowModelSharing?: boolean;
+    allowHeatmap?: boolean;
 }
 
 export const VariantContext = React.createContext<IVariantContext>({

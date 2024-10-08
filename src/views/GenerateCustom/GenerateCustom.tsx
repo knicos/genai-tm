@@ -435,6 +435,16 @@ function SettingsForm() {
                                 }
                                 label="Allow model sharing"
                             />
+                            <FormControlLabel
+                                control={
+                                    <Checkbox
+                                        checked={state.allowHeatmap}
+                                        name="allowHeatmap"
+                                        onChange={doCheckChange}
+                                    />
+                                }
+                                label="Allow XAI Heatmap"
+                            />
                         </AccordionDetails>
                     </Accordion>
                     <div className={style.buttonBar}>

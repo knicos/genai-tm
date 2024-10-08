@@ -13,12 +13,19 @@ import * as tf from '@tensorflow/tfjs';
 import { IClassification, modelState, predictedIndex, prediction } from '../state';
 import { useRecoilState, useSetRecoilState, useRecoilValue } from 'recoil';
 import { useCallback, useEffect, useState, useRef } from 'react';
+import { renderHeatmap } from './heatmap';
+import { CAM } from './xai';
 
 export type TMType = 'image' | 'pose';
 
-interface PredictionsOutput {
+export interface PredictionsOutput {
     className: string;
     probability: number;
+}
+
+export interface ExplainedPredictionsOutput {
+    predictions: PredictionsOutput[];
+    heatmap?: number[][];
 }
 
 interface TrainingParameters extends ImageTrainingParams, PoseTrainingParams {}
@@ -37,6 +44,8 @@ export class TeachableModel {
     private busy = false;
     private imageSize = 224;
     private variant: TMType = 'image';
+    public explained?: HTMLCanvasElement;
+    private CAMModel?: CAM;
 
     constructor(type: TMType, metadata?: Metadata, model?: tf.io.ModelJSON, weights?: ArrayBuffer) {
         this._ready = new Promise((resolve) => {
@@ -52,7 +61,9 @@ export class TeachableModel {
             this.variant = atype;
 
             if (atype === 'image') {
-                this.loadImage(metadata, model, weights).then(() => resolve(true));
+                this.loadImage(metadata, model, weights).then(() => {
+                    resolve(true);
+                });
             } else if (atype === 'pose') {
                 this.loadPose(metadata, model, weights).then(() => resolve(true));
             } else {
@@ -214,28 +225,41 @@ export class TeachableModel {
         }
     }
 
-    public async predict(image: HTMLCanvasElement): Promise<PredictionsOutput[]> {
-        if (!this.trained) return [];
+    /* Preechakul et al., Improved image classification explainability with high-accuracy heatmaps, iScience 25, March 18, 2022. https://doi.org/10.1016/j.isci.2022.103933 */
+
+    public async predict(image: HTMLCanvasElement): Promise<ExplainedPredictionsOutput> {
+        if (!this.trained) return { predictions: [] };
 
         if (this.imageModel) {
-            const predictions = await this.imageModel.predict(image);
-            return predictions;
+            if (this.explained && this.CAMModel) {
+                const camResult = await this.CAMModel.createCAM(image);
+                renderHeatmap(image, this.explained, camResult.heatmapData);
+                return { predictions: camResult.predictions };
+            } else {
+                const predictions = await this.imageModel.predict(image);
+                return { predictions };
+            }
         } else if (this.poseModel) {
             // Force an estimate if we are not generating one already
             if (!this.busy) {
                 // Note: doesn't wait for estimate promise.
                 this.estimate(image);
             }
-            if (!this.lastPoseOut) return [];
-            return this.poseModel.predict(this.lastPoseOut);
+            if (!this.lastPoseOut) return { predictions: [] };
+            return { predictions: await this.poseModel.predict(this.lastPoseOut) };
         }
-        return [];
+        return { predictions: [] };
     }
 
     public async train(params: TrainingParameters, callbacks: tf.CustomCallbackArgs) {
         this.trained = true;
         if (this.imageModel) {
-            return this.imageModel.train(params, callbacks);
+            return this.imageModel.train(params, callbacks).then((m) => {
+                if (this.imageModel) {
+                    this.CAMModel = new CAM(this.imageModel);
+                }
+                return m;
+            });
         } else if (this.poseModel) {
             return this.poseModel.train(params, callbacks);
         }
@@ -368,10 +392,12 @@ export function useTeachableModel() {
                 if (model && model.isTrained()) {
                     try {
                         const p = await model.predict(image);
-                        if (p.length === 0) return;
-                        setPredictions(p);
-                        const nameOfMax = p.reduce((prev, val) => (val.probability > prev.probability ? val : prev));
-                        setIndex(p.indexOf(nameOfMax));
+                        if (p.predictions.length === 0) return;
+                        setPredictions(p.predictions);
+                        const nameOfMax = p.predictions.reduce((prev, val) =>
+                            val.probability > prev.probability ? val : prev
+                        );
+                        setIndex(p.predictions.indexOf(nameOfMax));
                     } catch (e) {
                         console.error('Prediction failed', e);
                         setPredictions([]);

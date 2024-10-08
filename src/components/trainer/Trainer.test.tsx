@@ -16,10 +16,15 @@ vi.mock('@knicos/tm-image', () => ({
             setLabels: vi.fn(),
             setSeed: vi.fn(),
             addExample: vi.fn(),
-            train: vi.fn(),
+            train: vi.fn(async () => {}),
             setName: vi.fn(),
             getMetadata: vi.fn(() => ({})),
         };
+    },
+}));
+vi.mock('../../util/xai.ts', () => ({
+    CAM: function () {
+        return {};
     },
 }));
 
@@ -122,6 +127,7 @@ describe('Trainer component', () => {
             { wrapper: PredWrapper }
         );
 
+        await waitFor(() => expect(setModel).toHaveBeenCalledTimes(1));
         await user.click(screen.getByTestId('train-button'));
         await waitFor(() => expect(setModel).toHaveBeenCalledTimes(2));
         rerender(<Trainer />);

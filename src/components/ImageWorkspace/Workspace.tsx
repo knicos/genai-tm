@@ -22,6 +22,7 @@ import ExportDialog from './ExportDialog';
 import { useModelCreator } from '../../util/TeachableModel';
 import OpenDialog from './OpenDialog';
 import CloneDialog from './CloneDialog';
+import Heatmap from '../Heatmap/Heatmap';
 
 const SAVE_PERIOD = 5 * 60 * 1000; // 5 mins
 
@@ -31,6 +32,7 @@ const connections: IConnection[] = [
     { start: 'model', end: 'behaviour', startPoint: 'right', endPoint: 'left' },
     { start: 'behaviour', end: 'output', startPoint: 'right', endPoint: 'left' },
     { start: 'input', end: 'model', startPoint: 'bottom', endPoint: 'top' },
+    { start: 'model', end: 'heatmap', startPoint: 'bottom', endPoint: 'top' },
 ];
 
 interface Props {
@@ -56,7 +58,7 @@ function addCloseAlert() {
 }
 
 export default function Workspace({ step, visitedStep, onComplete, saveTrigger, onSkip, onSaveRemind }: Props) {
-    const { namespace, resetOnLoad, modelVariant } = useVariant();
+    const { namespace, resetOnLoad, modelVariant, allowHeatmap } = useVariant();
     const { t } = useTranslation(namespace);
     const [data, setData] = useRecoilState(classState);
     const [lines, setLines] = useState<ILine[]>([]);
@@ -214,6 +216,7 @@ export default function Workspace({ step, visitedStep, onComplete, saveTrigger, 
                         onExport={doShare}
                         onClone={doClone}
                     />
+                    {allowHeatmap && <Heatmap />}
                 </div>
                 <Behaviours
                     hidden={visitedStep < 1}

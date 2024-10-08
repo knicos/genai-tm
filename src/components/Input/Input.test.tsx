@@ -39,7 +39,7 @@ describe('Input component', () => {
 
         const model = {
             predict: vi.fn(() => {
-                return [{ className: 'Class 1', probability: 0.1 }];
+                return { predictions: [{ className: 'Class 1', probability: 0.1 }] };
             }),
             isTrained: vi.fn(() => true),
             getImageSize: vi.fn(() => 224),
@@ -82,13 +82,15 @@ describe('Input component', () => {
         const onPredict = vi.fn();
 
         const model = {
-            predict: vi.fn(() => [
-                { className: 'Class 1', probability: 0.1 },
-                { className: 'Class 2', probability: 0.2 },
-                { className: 'Class 3', probability: 0.12 },
-                { className: 'Class 4', probability: 0.02 },
-                { className: 'Class 5', probability: 0.199 },
-            ]),
+            predict: vi.fn(() => ({
+                predictions: [
+                    { className: 'Class 1', probability: 0.1 },
+                    { className: 'Class 2', probability: 0.2 },
+                    { className: 'Class 3', probability: 0.12 },
+                    { className: 'Class 4', probability: 0.02 },
+                    { className: 'Class 5', probability: 0.199 },
+                ],
+            })),
             isTrained: vi.fn(() => true),
             getImageSize: vi.fn(() => 224),
             getVariant: vi.fn(() => 'image'),
