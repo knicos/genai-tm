@@ -110,6 +110,11 @@ export const enableCamInput = atom<boolean>({
     default: true,
 });
 
+export const modelTraining = atom<boolean>({
+    key: 'training',
+    default: false,
+});
+
 export const activeNodes = atom<Set<string>>({
     key: 'activeNodes',
     default: new Set<string>(),

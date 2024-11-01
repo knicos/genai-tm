@@ -50,27 +50,27 @@ function hslToRgb(hue: number, saturation: number, lightness: number) {
     return [Math.round(red * 255), Math.round(green * 255), Math.round(blue * 255)];
 }
 
-export function renderHeatmap(input: HTMLCanvasElement, output: HTMLCanvasElement, data: number[][]) {
+export async function renderHeatmap(input: HTMLCanvasElement, output: HTMLCanvasElement, data: number[][]) {
     if (!output) return;
     const ctx = output.getContext('2d');
     if (ctx) {
         ctx.drawImage(input, 0, 0);
-        const imageData = ctx.getImageData(0, 0, 224, 224);
+        const imageData = ctx.createImageData(data.length, data.length);
         let ix = 0;
-        for (let y = 0; y < 224; ++y) {
-            for (let x = 0; x < 224; ++x) {
+        for (let y = 0; y < data.length; ++y) {
+            for (let x = 0; x < data.length; ++x) {
                 const v = data[y][x];
                 const [r, g, b] = hslToRgb((1 - v) * 240, 1, 0.5);
-                imageData.data[ix] = 0.5 * imageData.data[ix] + 0.5 * r;
+                imageData.data[ix] = r;
                 ++ix;
-                imageData.data[ix] = 0.5 * imageData.data[ix] + 0.5 * g;
+                imageData.data[ix] = g;
                 ++ix;
-                imageData.data[ix] = 0.5 * imageData.data[ix] + 0.5 * b;
+                imageData.data[ix] = b;
                 ++ix;
-                imageData.data[ix] = 255;
+                imageData.data[ix] = 128;
                 ++ix;
             }
         }
-        ctx.putImageData(imageData, 0, 0);
+        ctx.drawImage(await createImageBitmap(imageData), 0, 0);
     }
 }

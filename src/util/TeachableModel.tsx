@@ -252,16 +252,21 @@ export class TeachableModel {
     }
 
     public async train(params: TrainingParameters, callbacks: tf.CustomCallbackArgs) {
-        this.trained = true;
+        this.trained = false;
         if (this.imageModel) {
             return this.imageModel.train(params, callbacks).then((m) => {
                 if (this.imageModel) {
+                    if (this.CAMModel) this.CAMModel.dispose();
                     this.CAMModel = new CAM(this.imageModel);
                 }
+                this.trained = true;
                 return m;
             });
         } else if (this.poseModel) {
-            return this.poseModel.train(params, callbacks);
+            return this.poseModel.train(params, callbacks).then((m) => {
+                this.trained = true;
+                return m;
+            });
         }
     }
 
@@ -303,6 +308,9 @@ export class TeachableModel {
             } else {
                 this.poseModel.model?.dispose();
             }
+        }
+        if (this.CAMModel) {
+            this.CAMModel.dispose();
         }
         this.imageModel = undefined;
         this.poseModel = undefined;

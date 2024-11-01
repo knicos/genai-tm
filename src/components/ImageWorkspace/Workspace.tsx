@@ -216,7 +216,7 @@ export default function Workspace({ step, visitedStep, onComplete, saveTrigger, 
                         onExport={doShare}
                         onClone={doClone}
                     />
-                    {allowHeatmap && <Heatmap />}
+                    {allowHeatmap && modelVariant === 'image' && <Heatmap />}
                 </div>
                 <Behaviours
                     hidden={visitedStep < 1}

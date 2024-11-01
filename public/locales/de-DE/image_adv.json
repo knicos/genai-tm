@@ -73,6 +73,9 @@
             "classCard": "Trainingsdaten für {{name}}"
         }
     },
+    "heatmap": {
+        "title": "Erläuterung"
+    },
     "training": {
         "actions": {
             "train": "Klassifikator trainieren"

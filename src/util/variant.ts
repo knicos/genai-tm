@@ -4,7 +4,7 @@ import { TMType } from './TeachableModel';
 export type Features = 'advancedMenu';
 
 export interface IVariantContext {
-    namespace: 'translation' | 'image_4_9' | 'image_adv';
+    namespace: 'translation' | 'image_adv';
     advancedMenu?: boolean;
     modelSelect?: boolean;
     modelThreshold?: boolean;

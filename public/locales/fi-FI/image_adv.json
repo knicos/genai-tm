@@ -73,6 +73,9 @@
             "classCard": "Opetusdata {{name}}lle"
         }
     },
+    "heatmap": {
+        "title": "Selitys"
+    },
     "training": {
         "actions": {
             "train": "Opeta luokittelija"

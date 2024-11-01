@@ -38,3 +38,11 @@
     font-weight: bold;
     color: #008297;
 }
+
+.settingsTitle {
+    margin-top: 1.5rem;
+    margin-bottom: 0.5rem;
+    border-bottom: 1px solid #eee;
+    font-weight: bold;
+    color: #444;
+}

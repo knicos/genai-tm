@@ -1,5 +1,5 @@
 import { useState, useCallback, FormEvent, useEffect } from 'react';
-import { IVariantContext, VariantContext } from '../../util/variant';
+import { IVariantContext, useVariant, VariantContext } from '../../util/variant';
 import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
@@ -44,6 +44,7 @@ function delta(data: IVariantContext, template: VARIANTS): Partial<IVariantConte
 
 function SettingsForm() {
     const navigate = useNavigate();
+    const variant = useVariant();
     const { i18n, t } = useTranslation();
     const [state, setState] = useState<IVariantContext>(DEFAULTS.base);
     const [template, setTemplate] = useState<VARIANTS>('general');
@@ -55,6 +56,10 @@ function SettingsForm() {
             ...DEFAULTS[template],
         }));
     }, [template]);
+
+    useEffect(() => {
+        setState((old) => ({ ...old, ...variant }));
+    }, [variant]);
 
     const doChangeTemplate = useCallback(
         (event: SelectChangeEvent) => {
@@ -162,19 +167,38 @@ function SettingsForm() {
                             <span className={style.advancedTitle}>{t('settings.labels.advanced')}</span>
                         </AccordionSummary>
                         <AccordionDetails>
-                            <FormControl fullWidth>
-                                <InputLabel id="langlevel-select">Language Level</InputLabel>
-                                <Select
-                                    labelId="langlevel-select"
-                                    onChange={doSelectChange}
-                                    value={state.namespace}
-                                    label="Language Level"
-                                    name="namespace"
-                                >
-                                    <MenuItem value="image_adv">Advanced</MenuItem>
-                                    <MenuItem value="image_4_9">Grade 4-9</MenuItem>
-                                </Select>
-                            </FormControl>
+                            <div className={style.settingsTitle}>Interface</div>
+                            <FormControlLabel
+                                control={
+                                    <Checkbox
+                                        checked={state.disableSaveSamples}
+                                        name="disableSaveSamples"
+                                        onChange={doCheckChange}
+                                    />
+                                }
+                                label="Disable sample saving option"
+                            />
+                            <FormControlLabel
+                                control={
+                                    <Checkbox
+                                        checked={state.showSettings}
+                                        name="showSettings"
+                                        onChange={doCheckChange}
+                                    />
+                                }
+                                label="Show settings"
+                            />
+                            <FormControlLabel
+                                control={
+                                    <Checkbox
+                                        checked={state.showSaveReminder}
+                                        name="showSaveReminder"
+                                        onChange={doCheckChange}
+                                    />
+                                }
+                                label="Show Save Reminder"
+                            />
+                            <div className={style.settingsTitle}>Workflow</div>
                             <FormControlLabel
                                 control={
                                     <Checkbox
@@ -184,26 +208,6 @@ function SettingsForm() {
                                     />
                                 }
                                 label="Show Advanced Training Menu"
-                            />
-                            <FormControlLabel
-                                control={
-                                    <Checkbox
-                                        checked={state.modelSelect}
-                                        name="modelSelect"
-                                        onChange={doCheckChange}
-                                    />
-                                }
-                                label="Allow model selection"
-                            />
-                            <FormControlLabel
-                                control={
-                                    <Checkbox
-                                        checked={state.modelThreshold}
-                                        name="modelThreshold"
-                                        onChange={doCheckChange}
-                                    />
-                                }
-                                label="Enable threshold output"
                             />
                             <FormControlLabel
                                 control={
@@ -315,16 +319,7 @@ function SettingsForm() {
                                 }
                                 label="Allow multiple behaviours"
                             />
-                            <FormControlLabel
-                                control={
-                                    <Checkbox
-                                        checked={state.disableSaveSamples}
-                                        name="disableSaveSamples"
-                                        onChange={doCheckChange}
-                                    />
-                                }
-                                label="Disable sample saving option"
-                            />
+
                             <FormControlLabel
                                 control={
                                     <Checkbox
@@ -355,6 +350,7 @@ function SettingsForm() {
                                 }
                                 label="Enable input from files"
                             />
+                            <div className={style.settingsTitle}>Collaboration</div>
                             <FormControlLabel
                                 control={
                                     <Checkbox
@@ -368,16 +364,6 @@ function SettingsForm() {
                             <FormControlLabel
                                 control={
                                     <Checkbox
-                                        checked={state.showDragTip}
-                                        name="showDragTip"
-                                        onChange={doCheckChange}
-                                    />
-                                }
-                                label="Show Drag & Drop animation tip"
-                            />
-                            <FormControlLabel
-                                control={
-                                    <Checkbox
                                         checked={state.usep2p}
                                         name="usep2p"
                                         onChange={doCheckChange}
@@ -385,26 +371,7 @@ function SettingsForm() {
                                 }
                                 label="Enable Peer-2-Peer feature"
                             />
-                            <FormControlLabel
-                                control={
-                                    <Checkbox
-                                        checked={state.showSettings}
-                                        name="showSettings"
-                                        onChange={doCheckChange}
-                                    />
-                                }
-                                label="Show settings"
-                            />
-                            <FormControlLabel
-                                control={
-                                    <Checkbox
-                                        checked={state.showSaveReminder}
-                                        name="showSaveReminder"
-                                        onChange={doCheckChange}
-                                    />
-                                }
-                                label="Show Save Reminder"
-                            />
+
                             <FormControlLabel
                                 control={
                                     <Checkbox
@@ -435,6 +402,7 @@ function SettingsForm() {
                                 }
                                 label="Allow model sharing"
                             />
+                            <div className={style.settingsTitle}>Experimental</div>
                             <FormControlLabel
                                 control={
                                     <Checkbox
@@ -443,7 +411,7 @@ function SettingsForm() {
                                         onChange={doCheckChange}
                                     />
                                 }
-                                label="Allow XAI Heatmap"
+                                label="Show XAI Heatmap"
                             />
                         </AccordionDetails>
                     </Accordion>

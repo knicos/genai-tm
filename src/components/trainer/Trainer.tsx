@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useCallback, useRef } from 'react';
 import Accordion from '@mui/material/Accordion';
-import { activeNodes, classState } from '../../state';
+import { activeNodes, classState, modelTraining } from '../../state';
 import { Widget } from '../widget/Widget';
 import style from './trainer.module.css';
 import AccordionDetails from '@mui/material/AccordionDetails';
@@ -16,7 +16,7 @@ import { useTranslation } from 'react-i18next';
 import { useVariant } from '../../util/variant';
 import TrainingAnimation from '../TrainingAnimation/TrainingAnimation';
 import { useModelTrainer } from '../../util/TeachableModel';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import { useActiveNode } from '@genaitm/util/nodes';
 import { BusyButton } from '@knicos/genai-base';
 
@@ -46,7 +46,7 @@ const HelpTooltip = styled(({ className, ...props }: TooltipProps) => (
 export default function Trainer({ onTrained, editing, ...props }: Props) {
     const { namespace, advancedMenu, showTrainingAnimation } = useVariant();
     const { t } = useTranslation(namespace);
-    const [training, setTraining] = useState(false);
+    const [training, setTraining] = useRecoilState(modelTraining);
     const [settingEpochs, setSettingEpochs] = useState(50);
     const [settingRate, setSettingRate] = useState(0.001);
     const [settingBatch, setSettingBatch] = useState(16);

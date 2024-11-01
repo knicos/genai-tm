@@ -28,7 +28,8 @@
         "showSaveReminder": false,
         "enabledP2PData": true,
         "enableCollaboration": true,
-        "allowModelSharing": true
+        "allowModelSharing": true,
+        "allowHeatmap": false
     },
     "image": {
         "modelVariant": "image"
@@ -38,7 +39,7 @@
     },
     "general": {},
     "classroom": {
-        "namespace": "image_4_9",
+        "namespace": "image_adv",
         "embedBehaviours": false,
         "showSettings": false,
         "showSaveReminder": true

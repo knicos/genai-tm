@@ -73,6 +73,9 @@
             "classCard": "Träningsdata för {{namn}}"
         }
     },
+    "heatmap": {
+        "title": "Förklaring"
+    },
     "training": {
         "actions": {
             "train": "Träna klassificerare"

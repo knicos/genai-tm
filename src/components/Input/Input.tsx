@@ -17,7 +17,15 @@ import WebcamInput from './WebcamInput';
 import { useTabActive } from '../../util/useTabActive';
 import AlertModal from '../AlertModal/AlertModal';
 import { useTeachableModel } from '../../util/TeachableModel';
-import { enableCamInput, fatalWebcam, inputImage, p2pActive, sessionCode, sharingActive } from '../../state';
+import {
+    enableCamInput,
+    fatalWebcam,
+    inputImage,
+    modelTraining,
+    p2pActive,
+    sessionCode,
+    sharingActive,
+} from '../../state';
 import { useRecoilValue, useRecoilState } from 'recoil';
 import { useActiveNode } from '@genaitm/util/nodes';
 import { BusyButton, canvasesFromFiles, canvasFromDataTransfer, QRCode } from '@knicos/genai-base';
@@ -44,8 +52,9 @@ export default function Input(props: Props) {
     const sharing = useRecoilValue(sharingActive);
     const [p2penabled, setP2PEnabled] = useRecoilState(p2pActive);
     const fatal = useRecoilValue(fatalWebcam);
+    const training = useRecoilValue(modelTraining);
 
-    const enableInput = isActive && enableInputSwitch;
+    const enableInput = isActive && enableInputSwitch && !training;
 
     useActiveNode('widget-input-out', enableInput);
 
@@ -167,7 +176,7 @@ export default function Input(props: Props) {
                         labelPlacement="start"
                         control={
                             <Switch
-                                disabled={!canPredict}
+                                disabled={!canPredict || training}
                                 checked={enableInput}
                                 onChange={changeWebcamToggle}
                                 data-testid="webcam-switch"
