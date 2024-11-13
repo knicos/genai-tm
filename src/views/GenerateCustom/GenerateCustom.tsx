@@ -83,7 +83,8 @@ function SettingsForm() {
 
     const doCheckChange = useCallback(
         (event: FormEvent<HTMLInputElement>) => {
-            setState((old) => ({ ...old, [event.currentTarget.name]: event.currentTarget.checked }));
+            const target = event.currentTarget || event.target;
+            setState((old) => ({ ...old, [target.name]: target.checked }));
         },
         [setState]
     );
