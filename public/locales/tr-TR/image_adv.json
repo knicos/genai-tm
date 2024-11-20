@@ -1,0 +1,205 @@
+{
+    "app": {
+        "title": "GenAI Öğretilebilir Makine",
+        "about": "Hakkında",
+        "save": "Kaydet",
+        "load": "Aç",
+        "language": "Dil",
+        "reminder": "Sınıflandırıcınızı kaydetmeyi unutmayın."
+    },
+    "save": {
+        "title": "Sınıflandırıcıyı Kaydet",
+        "noModel": "Öncelikle bir sınıflandırıcı oluşturmanız gerekiyor.",
+        "message": "Sınıflandırıcınızın içeriğini bir dosyaya indirin.",
+        "saveSamples": "Örnekleri Kaydet",
+        "saveClassifier": "Sınıflandırıcıyı Kaydet",
+        "saveBehaviours": "Davranışları Kaydet",
+        "name": "İsim",
+        "actions": {
+            "save": "Kaydet",
+            "cancel": "İptal"
+        }
+    },
+    "load": {
+        "title": "Sınıflandırıcıyı Aç",
+        "code": "Paylaşılan kodu girin",
+        "actions": {
+            "openFile": "Dosya Aç",
+            "openCode": "Kodu Kullan",
+            "cancel": "İptal"
+        }
+    },
+    "alignment": {
+        "aria": {
+            "left": "sola hizala",
+            "center": "ortala",
+            "right": "sağa hizala",
+            "align": "metin hizalama"
+        }
+    },
+    "fontsize": {
+        "aria": {
+            "title": "metin boyutunu değiştir",
+            "increase": "artır",
+            "decrease": "azalt"
+        }
+    },
+    "trainingdata": {
+        "actions": {
+            "addClass": "Bir Sınıf Ekle",
+            "webcam": "Webcam",
+            "upload": "Yükle",
+            "deleteClass": "Sınıfı Sil",
+            "removeAll": "Tüm Örnekleri Kaldır",
+            "capture": "Yakalamak İçin Basılı Tutun",
+            "collaborate": "İş Birliği Yap"
+        },
+        "labels": {
+            "title": "Eğitim Verisi",
+            "addSamples": "Görsel Örnekler Ekle",
+            "imageSamples": "{{count}} görsel örnekler",
+            "class": "Sınıf",
+            "wait": "Yakalanıyor...",
+            "dropFiles": "ya da bir web sitesinden veya dosyadan görselleri buraya sürükleyin",
+            "needsMore": "Daha fazla örneğe ihtiyaç var",
+            "dropError": "Buraya yalnızca görseller bırakılabilir",
+            "qrMessage": "Görseller eklemek için bir telefon veya tablet kullanabilirsiniz. QR kodunu genişletmek için üzerine tıklayın."
+        },
+        "aria": {
+            "sample": "yüklenen örnek",
+            "delete": "örneği sil",
+            "more": "daha fazla seçenek",
+            "close": "Kapat",
+            "classCard": "{{name}} için eğitim verisi"
+        }
+    },
+    "training": {
+        "actions": {
+            "train": "Sınıflandırıcıyı Eğit"
+        },
+        "labels": {
+            "title": "Eğitim",
+            "addMore": "Öncelikle daha fazla örnek veya sınıf ekleyin",
+            "needsTraining": "Sınıflandırıcının eğitilmesi gerekiyor",
+            "advanced": "Gelişmiş",
+            "epochs": "Epoklar",
+            "learningRate": "Öğrenme Hızı",
+            "batchSize": "Yığın Boyutu",
+            "loading": "Sınıflandırıcı Yükleniyor",
+            "prepairing": "Örnekler Hazırlanıyor...",
+            "training": "Sınıflandırıcı Eğitiliyor",
+            "complete": "Eğitim Tamamlandı"
+        },
+        "tooltips": {
+            "epochs": "Her bir örneğin eğitimde kullanılma sayısı.",
+            "learningRate": "Buna yalnızca küçük ayarlamalar yapın, 0.1'den küçük olmalıdır.",
+            "batchSize": "Eğitim üzerinde minimum etkisi vardır. Bu, eğitim sırasında her bir yinelemede kullanılan örnek sayısını ifade eder."
+        }
+    },
+    "input": {
+        "labels": {
+            "title": "Giriş",
+            "webcam": "Webcam",
+            "file": "Dosya",
+            "device": "Cihaz",
+            "switchOn": "Açık",
+            "switchOff": "Kapalı",
+            "upload": "Dosya yükleyin veya buraya bırakın"
+        },
+        "aria": {
+            "switch": "Giriş kaynağını etkinleştir"
+        }
+    },
+    "model": {
+        "actions": {
+            "export": "Scratch için Dışa Aktar",
+            "clone": "Bir Kopya Paylaş"
+        },
+        "labels": {
+            "title": "Sınıflandırıcı",
+            "mustTrain": "Öncelikle sınıflandırıcınızı eğitmeniz gerekmektedir"
+        },
+        "aria": { "more": "Daha Fazla Seçenek" }
+    },
+    "output": {
+        "labels": {
+            "title": "Çıktı",
+            "deploy": "Modeli Yayınla"
+        },
+        "aria": {
+            "volume": "Hacim",
+            "image": "sınıf {{index}} çıktısı",
+            "display": "sınıf {{index}} için çıktı",
+            "expand": "pencere boyutunu genişlet"
+        }
+    },
+    "behaviours": {
+        "actions": {
+            "upload": "Yükle",
+            "delete": "Sil",
+            "record": "Kaydet",
+            "stop": "Dur"
+        },
+        "labels": {
+            "title": "Eylemler",
+            "message": "Mesaj",
+            "link": "Bağlantı",
+            "linkError": "Bu bağlantı desteklenmiyor",
+            "embedInfo": "Bir bağlantıdan video ve görselleri göster. Yalnızca bazı bağlantılar çalışacaktır, örneğin YouTube, Vimeo, SoundCloud, video dosyaları veya görseller.",
+            "voiceRecording": "Ses Kaydı",
+            "dropError": "Buraya yalnızca görseller veya sesler bırakılabilir",
+            "loop": "Döngü"
+        },
+        "aria": {
+            "message": "Çıktı için metin",
+            "image": "görsel davranışı",
+            "sound": "ses davranışı",
+            "text": "metin davranışı",
+            "embed": "bağlantı yerleştirme davranışı",
+            "imageOutput": "Yüklenen görsel",
+            "noImage": "Görsel yer tutucu",
+            "stop": "dur",
+            "play": "oynat",
+            "behaviourCard": "{{name}} için davranış",
+            "loop": "Döngü"
+        }
+    },
+    "stepper": {
+        "actions": {
+            "next": "Sonraki"
+        },
+        "aria": {
+            "step": "görev adımları"
+        }
+    },
+    "webcam": {
+        "aria": {
+            "video": "canlı webcam videosu",
+            "flip": "Farklı kameraya geç"
+        }
+    },
+    "widget": {
+        "aria": {
+            "editTitle": "başlığı düzenle",
+            "editTitleInput": "{{value}} düzenleme kutusu"
+        },
+        "labels": {
+            "titlePlaceholder": "İsim"
+        }
+    },
+    "fontcolor": {
+        "aria": {
+            "title": "yazı tipi rengini seç"
+        }
+    },
+    "share": {
+        "actions": {
+            "close": "Kapat"
+        },
+        "labels": {
+            "includeSamples": "Örnek görselleri dahil et",
+            "codeInstructions": "Başkalarının aşağıdaki kodu kullanarak sınıflandırıcınızın bir kopyasını açmasına izin verin.",
+            "linkInstructions": "Aşağıdaki kodu paylaşarak sınıflandırıcının bir kopyasını açın. Kodu, <scratchLink>Scratch</scratchLink> gibi diğer uygulamalarda sınıflandırıcıyı kullanmak için kopyalayın. Bağlantı yalnızca bu tarayıcı sekmesini açık tutarsanız veya projeyi kaydedip daha sonra tekrar açarsanız çalışır."
+        }
+    }
+}
