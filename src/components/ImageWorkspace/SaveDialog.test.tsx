@@ -6,7 +6,7 @@ import TestWrapper from '../../util/TestWrapper';
 
 vi.mock('../../util/TeachableModel', () => ({
     useTeachableModel: function () {
-        return { hasModel: true };
+        return { hasModel: true, canPredict: true };
     },
 }));
 

@@ -27,7 +27,7 @@ interface Props {
 export default function SaveDialog({ trigger, onSave }: Props) {
     const { namespace, disableSaveSamples } = useVariant();
     const { t } = useTranslation(namespace);
-    const { hasModel } = useTeachableModel();
+    const { canPredict } = useTeachableModel();
     const [saveSamples, setSaveSamples] = useState(!disableSaveSamples);
     const [saveBehaviours, setSaveBehaviours] = useState(true);
     const [name, setName] = useState('My Model');
@@ -70,7 +70,7 @@ export default function SaveDialog({ trigger, onSave }: Props) {
         >
             <DialogTitle>{t('save.title')}</DialogTitle>
             <DialogContent>
-                <p>{hasModel ? t('save.message') : t('save.noModel')}</p>
+                <p>{canPredict ? t('save.message') : t('save.noModel')}</p>
                 <div className={style.padded}>
                     <TextField
                         label={t('save.name')}
@@ -105,7 +105,7 @@ export default function SaveDialog({ trigger, onSave }: Props) {
                     control={
                         <Checkbox
                             data-testid="check-save-behaviours"
-                            disabled={!hasModel}
+                            disabled={!canPredict}
                             checked={saveBehaviours}
                             onChange={changeBehaviours}
                         />
@@ -116,7 +116,7 @@ export default function SaveDialog({ trigger, onSave }: Props) {
             <DialogActions>
                 <Button
                     variant="contained"
-                    disabled={!hasModel}
+                    disabled={!canPredict}
                     onClick={doSave}
                     data-testid="save-save"
                 >
