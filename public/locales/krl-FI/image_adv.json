@@ -1,0 +1,209 @@
+{
+    "app": {
+        "title": "GenAI: Opastettavu koneh",
+        "about": "Tieduo sobivutukseh näh",
+        "save": "Tallenda",
+        "load": "Avua",
+        "language": "Kieli",
+        "reminder": "Musta tallendua luokittelii."
+    },
+    "save": {
+        "title": "Tallenda luokittelii",
+        "noModel": "Opasta luokittelii ezmäi.",
+        "message": "Tallenda luokittelii iččes laittehele.",
+        "saveSamples": "Tallenda ezimerkit",
+        "saveClassifier": "Tallenda luokittelii",
+        "saveBehaviours": "Tallenda toimindot",
+        "name": "Nimi",
+        "actions": {
+            "save": "Tallenda",
+            "cancel": "Perävytä"
+        }
+    },
+    "load": {
+        "title": "Avua",
+        "code": "Anna juattu koudu",
+        "actions": {
+            "openFile": "Avua tiijosto",
+            "openCode": "Käytä koudua",
+            "cancel": "Perävytä"
+        }
+    },
+    "alignment": {
+        "aria": {
+            "left": "tazua huruah",
+            "center": "tazua keskeh",
+            "right": "tazua oigieh",
+            "align": "tekstan tazuandu"
+        }
+    },
+    "fontsize": {
+        "aria": {
+            "title": "vaihta tekstan suuruttu",
+            "increase": "suurenda",
+            "decrease": "pienendä"
+        }
+    },
+    "trainingdata": {
+        "actions": {
+            "addClass": "Ližiä luokku",
+            "webcam": "Webkameru",
+            "upload": "Lad'd'ua",
+            "deleteClass": "Iärestä luokku",
+            "removeAll": "Iärestä kai tiijot",
+            "capture": "Pie nybläine painetunnu",
+            "collaborate": "Rua yhtes"
+        },
+        "labels": {
+            "title": "Opastusdata",
+            "addSamples": "Ližiä kuvua",
+            "imageSamples": "{{count}} kuvua",
+            "class": "Luokku",
+            "wait": "Otetah kuvua...",
+            "dropFiles": "libo vie kuvua täh nettusaitoilpäi libo tiijostoloispäi",
+            "needsMore": "Ližiä opastusdatua pidäy",
+            "dropError": "Täh voibi pakuttua vaiku kuvua",
+            "qrMessage": "Voit ližätä kuvua telefonači libo tablietači. Suurenda QR-koudu plikaten sidä."
+        },
+        "aria": {
+            "sample": "lad'd'attu opastusdata",
+            "delete": "iärestä opastusdata",
+            "more": "Ližiä azetustu",
+            "close": "Salbua",
+            "classCard": "Opastusdata luokale {{name}}"
+        }
+    },
+    "heatmap": {
+        "title": "Sellitändy"
+    },
+    "training": {
+        "actions": {
+            "train": "Opasta luokittelii"
+        },
+        "labels": {
+            "title": "Opastandu",
+            "addMore": "Ližiä opastusdatua libo uuttu luokkua",
+            "needsTraining": "Luokittelii pidäy opastua ezmäi",
+            "advanced": "Ližäazetukset",
+            "epochs": "Epochs",
+            "learningRate": "Learning Rate",
+            "batchSize": "Batch Size",
+            "loading": "Luokittelijua lad'd'atah",
+            "prepairing": "Varustetah ezimerkilöi...",
+            "training": "Opastetah luokittelijua",
+            "complete": "Luokittelii opastettu"
+        },
+        "tooltips": {
+            "epochs": "Äijängo kerdua midägi koitehtu käytetäh opastandah..",
+            "learningRate": "Azu täh vaiku piendy muutostu, tämä pidäy olla vähem 0,1.",
+            "batchSize": "Vaikuttau opastandah vaiku pikoivähäzel. Tämä on jogahizes iteracies käytettylöin koittehien miäry."
+        }
+    },
+    "input": {
+        "labels": {
+            "title": "Syöteh",
+            "webcam": "Webkameru",
+            "file": "Tiijosto",
+            "device": "Laiteh",
+            "switchOn": "Käytä",
+            "switchOff": "Älä käytä",
+            "upload": "lad'd'ua libo pakuta tiijosto täh"
+        },
+        "aria": {
+            "switch": " Avua webkameru"
+        }
+    },
+    "model": {
+        "actions": {
+            "export": "Vie Scratchah",
+            "clone": "Jua koupii"
+        },
+        "labels": {
+            "title": "Luokittelii",
+            "mustTrain": "Sinul pidäy opastua luokittelii ezmäi"
+        },
+        "aria": { "more": "Ližiä azetustu" }
+    },
+    "output": {
+        "labels": {
+            "title": "Tulos",
+            "deploy": "Ozuta"
+        },
+        "aria": {
+            "volume": "Iänen lujus",
+            "image": "luokan {{index}} tulos",
+            "display": "tulos luokale {{index}}",
+            "expand": "suurenda"
+        }
+    },
+    "behaviours": {
+        "actions": {
+            "upload": "Lad'd'ua",
+            "delete": "Iärestä",
+            "record": "Iänitä",
+            "stop": "Lope"
+        },
+        "labels": {
+            "title": "Toimindu:",
+            "message": "Tekstu",
+            "link": "Linku",
+            "linkError": "Linkua ei tugieta",
+            "embedInfo": "Ozuta kuva libo video linkaspäi. (Ezimerkikse Youtube, Vimeo, SoundCloud)",
+            "voiceRecording": "Iänitallendeh",
+            "dropError": "Täh voit pakuttua vaiku kuvua libo iändy",
+            "loop": "Toista"
+        },
+        "aria": {
+            "message": "tuloksen tekstu",
+            "image": "kuvan toimindo",
+            "sound": "iänen toimindo",
+            "text": "tekstan toimindo",
+            "embed": "upotetun linkin toimindo",
+            "imageOutput": "Lad'd'attu kuva",
+            "noImage": "kuvan kohtumerki",
+            "stop": "azeta",
+            "play": "zavedi",
+            "behaviourCard": "toimindo luokale {{name}}le",
+            "loop": "Toista"
+        }
+    },
+    "stepper": {
+        "actions": {
+            "next": "Ielleh"
+        },
+        "aria": {
+            "step": "tulii vaihe"
+        }
+    },
+    "webcam": {
+        "aria": {
+            "video": "webkameran syöteh",
+            "flip": "Vaihta kamerua"
+        }
+    },
+    "widget": {
+        "aria": {
+            "editTitle": "kohendele oččikkuo",
+            "editTitleInput": "{{value}} kohendele kodastu"
+        },
+        "labels": {
+            "titlePlaceholder": "Nimi"
+        }
+    },
+    "fontcolor": {
+        "aria": {
+            "title": "valliče fontan väri"
+        }
+    },
+    "share": {
+        "actions": {
+            "close": "Salbua"
+        },
+        "labels": {
+            "title": "Jua",
+            "includeSamples": "Liitä opastuskuvat keräle",
+            "codeInstructions": "Anna toizien avata koupii iččes luokittelijas al olijan koudan vuoh.",
+            "linkInstructions": "Kopiruimal linkan, luokittelijua voit käyttiä toizis moizis sobivutuksis, kui <scratchLink>Scratchas</scratchLink>. Linku ruadau sini, kuni tämä välilehti on avvoi, libo ku tallendanet projektan da avuat sen myöhembä uvvessah."
+        }
+    }
+}

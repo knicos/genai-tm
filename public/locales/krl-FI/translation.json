@@ -1,0 +1,56 @@
+{
+    "deploy": {
+        "actions": {
+            "copy": "Kopiiruiče",
+            "close": "Salbua"
+        },
+        "labels": {
+            "notFound": "Luokittelijua ei löydynyh.",
+            "dropHere": "Pakuta kuva tänne",
+            "errorInfo": "Tämä sivu on olemas vaiku sit, konzu sinun luajittu luokittelii on avvoi livaimen ikkunas libo välilehtel. Erähis tilandehis turvuazetukset verkos libo iččes laittehel estetäh sobivutuksen juandan.",
+            "share": "Jua toizile laittehile",
+            "qrExpand": "Suurenda QR-koudu plikaten sidä.",
+            "noWebcam": "Luokittimen juandah pidäy kameran käyttöoigevus.",
+            "switch": " Ota webkameru käyttöh"
+        }
+    },
+    "testInput": {
+        "title": "Syöteh"
+    },
+    "collect": {
+        "samplePrompt": "Ota kuvua libo lad'd'ua kuvua täs.",
+        "actions": {
+            "upload": "Lad'd'ua"
+        },
+        "sampleCount": "{{count}} kuvua",
+        "connecting": "Yhtistäy...",
+        "disconnected": "Yhtevys katkattu",
+        "failed": "Ei ozitunnuh",
+        "failedMessage": "Täh luokittelijah ei sua yhtevytty sinun laittehespäi",
+        "dropError": "Täh voibi pakuttua vaiku kuvua",
+        "relayWarning": "Tiedo laittehien välil kulgou juuri nygöi meijän palvelimeči. Voit oppie vaihtua Wifi-yhtevytty toizeh, ku laittehet voidas olla kontaktas kohti välikäzilöittäh."
+    },
+    "about": {
+        "back": "Järilleh",
+        "title": "Generation AI",
+        "privacyTitle": "Tiedoturvusellitändy"
+    },
+    "settings": {
+        "title": "Azetukset",
+        "actions": {
+            "save": "Tallenda",
+            "reset": "Tyhjendä",
+            "cancel": "Perävytä"
+        },
+        "labels": {
+            "language": "Kieli",
+            "model": "Luokittimen tiippu",
+            "variant": "Käyttöliittymyvariantu",
+            "advanced": "Ližäazetukset"
+        },
+        "values": {
+            "models": ["Kuva (MobileNet)", "Azendo (PoseNet)"],
+            "variants": ["Kaikkeh käyttöh", "Kluassupertih"]
+        }
+    }
+}
