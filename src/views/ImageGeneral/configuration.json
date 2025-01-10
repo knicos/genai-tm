@@ -29,7 +29,7 @@
         "enabledP2PData": true,
         "enableCollaboration": true,
         "allowModelSharing": true,
-        "allowHeatmap": false
+        "allowHeatmap": true
     },
     "image": {
         "modelVariant": "image"

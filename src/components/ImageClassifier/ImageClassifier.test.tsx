@@ -71,7 +71,13 @@ vi.mock('@knicos/tm-image', () => ({
 }));
 vi.mock('../../util/xai.ts', () => ({
     CAM: function () {
-        return {};
+        return {
+            createCAM: vi.fn(() => ({
+                predictions: [{ className: 'class 1', probability: 1.0 }],
+                classIndex: 0,
+                heatmapData: [],
+            })),
+        };
     },
 }));
 
