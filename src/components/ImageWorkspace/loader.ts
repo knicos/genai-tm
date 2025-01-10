@@ -180,7 +180,6 @@ export function ModelLoader({ onLoaded, onError }: Props) {
                             return;
                         }
                         const project = await loadProject(await result.blob());
-                        if (project.id) setCode(project.id);
                         setData(project.samples ? project.samples : []);
 
                         if (project.metadata && project.model && project.weights) {
