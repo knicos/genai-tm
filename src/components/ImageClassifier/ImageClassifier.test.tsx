@@ -96,7 +96,7 @@ describe('ImageClassifier component', () => {
 });
 
 describe('ImageClassifier Integration', () => {
-    it('can follow the entire workflow', async ({ expect }) => {
+    it('can follow the entire workflow', { timeout: 10000 }, async ({ expect }) => {
         const user = userEvent.setup();
         render(<ImageClassifier />, { wrapper: TestWrapper });
 

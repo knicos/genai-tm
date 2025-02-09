@@ -1,0 +1,132 @@
+{
+    "deploy": {
+        "actions": {
+            "copy": "コピー",
+            "close": "閉じる"
+        },
+        "labels": {
+            "notFound": "分類器が見つかりませんでした。",
+            "dropHere": "ここに画像をドロップ",
+            "errorInfo": "このページは、ブラウザタブで分類器を開いているときに使用できます。また、セキュリティ制限により見つからない可能性もあります。",
+            "share": "他のデバイスへアプリを共有",
+            "qrExpand": "QRコードをクリックすると拡大します。",
+            "noWebcam": "分類器の共有にはカメラアクセスが必要です。",
+            "switch": "入力ソースの切り替え"
+        }
+    },
+    "loader": {
+        "messages": {
+            "getIceConfig": "ネットワーク設定を取得中",
+            "cameraPermission": "デバイス間のダイレクトコネクションを許可するためには、一時的にカメラアクセスを許可することが必要です。",
+            "connecting": "接続しています...",
+            "signaling": "他のデバイスを探しています",
+            "disconnected": "相手のデバイスとの接続が切れました",
+            "retry": "接続を再試行しています...",
+            "content_load": "コンテンツを読み込み中",
+            "content_download": "コンテンツをダウンロード中",
+            "ready": "接続の準備ができました",
+            "content_none": "コンテンツの準備ができました",
+            "wifiNetwork": "同じWi-Fiネットワークを使用していないため、データはインターネットを経由で送信されます。",
+            "permNetwork": "カメラへのアクセスを許可していないため、データはインターネット経由で送信されます。"
+        },
+        "errors": {
+            "unknown": "接続上の問題が発生しました",
+            "id-in-use": "このコードはすでに誰かが使用しています",
+            "peer-not-found": "指定されたコードは見つかりませんでした",
+            "missing-ice": "設定が不足しています。",
+            "no-signaling": "サーバーが応答していません",
+            "bad-browser": "このアプリに対応していないブラウザまたはデバイスです",
+            "unknownContent": "メディアコンテンツに問題があります",
+            "load": "メディアコンテンツを読み込めませんでした",
+            "download": "メディアコンテンツをダウンロードできませんでした"
+        },
+        "titles": {
+            "iceConfig": "設定",
+            "permission": "権限",
+            "connecting": "接続",
+            "error": "問題",
+            "contentLoad": "メディアコンテンツ",
+            "networkType": "情報"
+        },
+        "actions": {
+            "close": "閉じる"
+        }
+    },
+    "testInput": {
+        "title": "入力"
+    },
+    "collect": {
+        "samplePrompt": "写真を撮るか、ここに画像をアップロードしてください。",
+        "actions": {
+            "upload": "アップロード"
+        },
+        "sampleCount": "{{count}} 個のサンプル",
+        "connecting": "接続中...",
+        "disconnected": "切断されました",
+        "failed": "失敗しました",
+        "failedMessage": "この分類器にはお使いのデバイスからアクセスできませんでした",
+        "dropError": "ここには画像のみドロップできます",
+        "relayWarning": "データは、このサービスのサーバーを経由して送信されています。これを回避するには、別のWi-Fi接続を利用してください。"
+    },
+    "about": {
+        "back": "戻る",
+        "title": "Generation AI",
+        "privacyTitle": "プライバシーに関するお知らせ",
+        "privacy": [
+            "Welcome to our Privacy Notice, designed to inform you about how we handle your personal data following the General Data Protection Regulation (GDPR) when you use our website featuring the GenAI Teachable Machine tool.",
+            "To make the subject matter of this notice clearer, let us define some terms from the GDPR. The \"controller\" refers to us, as we decide how and why your personal data is used, which also makes us responsible for protecting your personal data. \"Personal data\" includes any information that can identify you directly or indirectly, like your IP address. \"Processing\" covers all actions done with your data, such as collecting, storing, using, and deleting it.",
+            "It is important to read this notice to understand what data we collect from you, why we collect it, what we do with it, and what rights you have regarding your data.",
+            "If you have any questions about this notice, please reach out to the controller:",
+            "**Dr. Nicolas Pope**,",
+            "**Postal address:** University of Eastern Finland, Länsikatu 15, 80110 Joensuu, Finland.",
+            "**Email:** nicolas.pope@uef.fi",
+            "**Phone:** +358 505 288 449.",
+            "### 1. Data Processing Activity:",
+            "We log IP addresses.",
+            "However, we do not use cookies for tracking or analytics; instead, we provide content based solely on your inputs.",
+            "### 2. Purposes of Processing:",
+            "Logging IP addresses helps maintain website integrity and security by identifying and preventing malicious activities.",
+            "### 3. Legal Basis for Processing:",
+            "Primarily, we process IP addresses for security reasons, based on our legitimate interest in protecting our website and data as per Article 6(1)(f) GDPR. Again, we may also process data based on your consent under Article 6(1)(a) GDPR if you would like to exercise your right to access your logged IP address. In addition, we may process your personal data if we are instructed to do so by a competent court under Article 6(1)(c).",
+            "### 4. Legitimate Interests Pursued:",
+            "Our goal is to keep the website running by maintaining website integrity, and security, and preventing abuse.",
+            "### 5. Security:",
+            "We implement security measures to protect your IP addresses from unlawful access or damage. Your IP addresses are encrypted during any subsequent transfer.",
+            "### 6. Data Recipients:",
+            "Only authorized website personnel can access your IP address for security and maintenance purposes.",
+            "### 7. Data Transfers:",
+            "IP addresses may be transferred to Microsoft servers, but we ensure GDPR compliance for data protection.",
+            "### 8. Storage Limitation:",
+            "We keep IP addresses only as long as necessary, typically up to 7 days, unless required by law.",
+            "### 9. Your Rights:",
+            "Under GDPR, you have rights including",
+            "* Right to be informed: In addition to informing, you about processing purposes, retention periods, and to whom your data is shared, you have the right to be informed on how we collect. We collect your IP address when you visit our website.",
+            "* Right to access: you can request a copy of your logged IP address and associated log data.",
+            "* Right to rectification: if the logged data is inaccurate or incomplete, you can request rectification although IP address is not typically something that can be corrected in the same way as other data.",
+            "* Right to erasure: you can request deletion of your IP address within 7 days of your last visit to this website since your address is deleted automatically after 7 days.",
+            "* Right to object: you can object to the processing of your IP addresses.",
+            "* Right to lodge a complaint: you can lodge a complaint to the supervisory authority if you think that your data is not processed following GDPR provisions.",
+            "### 10. Updates to This Privacy Notice:",
+            "We may update this notice to reflect changes in our data processing practices or legal requirements. We will notify you of any changes.",
+            "We value your privacy and we are committed to protect your data and ensuring GDPR compliance. If you have questions or want to exercise your rights, contact us at nicolas.pope@uef.fi."
+        ]
+    },
+    "settings": {
+        "title": "設定",
+        "actions": {
+            "save": "保存",
+            "reset": "リセット",
+            "cancel": "キャンセル"
+        },
+        "labels": {
+            "language": "言語",
+            "model": "モデル",
+            "variant": "インタフェースのバリエーション",
+            "advanced": "詳細設定"
+        },
+        "values": {
+            "models": ["画像(MobileNet)", "姿勢(PoseNet)"],
+            "variants": ["一般的な使用", "教室"]
+        }
+    }
+}

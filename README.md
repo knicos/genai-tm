@@ -27,4 +27,4 @@ Steps to install and build:
 
 ## Development
 
-The app uses "vite". You can start a development server using `npm run dev` and use `npm test` to run the automated tests.
+The app uses "vite". You can start a development server using `npm start` and use `npm test` to run the automated tests.

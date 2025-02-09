@@ -1,0 +1,209 @@
+{
+    "app": {
+        "title": "GenAI Teachable Machine",
+        "about": "概要",
+        "save": "保存",
+        "load": "開く",
+        "language": "言語",
+        "reminder": "分類器の保存を忘れないでください。"
+    },
+    "load": {
+        "title": "分類器を開く",
+        "code": "共有コードを入力",
+        "actions": {
+            "openFile": "ファイルを開く",
+            "openCode": "コードを使用",
+            "cancel": "キャンセル"
+        }
+    },
+    "save": {
+        "title": "分類器を保存",
+        "noModel": "まずは分類器を作成する必要があります。",
+        "message": "分類器の内容をファイルにダウンロードします。",
+        "saveSamples": "サンプルを保存",
+        "saveClassifier": "分類器を保存",
+        "saveBehaviours": "動作を保存",
+        "name": "名前",
+        "actions": {
+            "save": "保存",
+            "cancel": "キャンセル"
+        }
+    },
+    "alignment": {
+        "aria": {
+            "left": "左揃え",
+            "center": "中央揃え",
+            "right": "右揃え",
+            "align": "テキストの整列"
+        }
+    },
+    "fontsize": {
+        "aria": {
+            "title": "文字サイズの変更",
+            "increase": "大きくする",
+            "decrease": "小さくする"
+        }
+    },
+    "trainingdata": {
+        "actions": {
+            "addClass": "クラスを追加",
+            "webcam": "ウェブカメラ",
+            "upload": "アップロード",
+            "deleteClass": "クラスを削除",
+            "removeAll": "すべてのサンプルを削除",
+            "capture": "押し続けてキャプチャ",
+            "collaborate": "共同作業"
+        },
+        "labels": {
+            "title": "トレーニングデータ",
+            "addSamples": "画像サンプルを追加",
+            "imageSamples": "{{count}} 個の画像サンプル",
+            "class": "クラス",
+            "wait": "キャプチャ中...",
+            "dropFiles": "または、ウェブサイトやファイルからの画像をドラッグして入れてください。",
+            "needsMore": "もっとサンプルが必要です。",
+            "dropError": "ここには画像のみドロップ可能です。",
+            "qrMessage": "画像を追加はスマホやタブレットでも可能です。QRコードをクリックすると拡大できます。"
+        },
+        "aria": {
+            "sample": "アップロードされたサンプル",
+            "delete": "サンプルを消す",
+            "more": "詳細オプション",
+            "close": "閉じる",
+            "classCard": "{{name}}のトレーニングデータ"
+        }
+    },
+    "heatmap": {
+        "title": "説明"
+    },
+    "training": {
+        "actions": {
+            "train": "分類器をトレーニング"
+        },
+        "labels": {
+            "title": "トレーニング",
+            "addMore": "最初にサンプルやクラスを追加してください。",
+            "needsTraining": "分類器にはトレーニングが必要です。",
+            "advanced": "詳細設定",
+            "epochs": "エポック数",
+            "learningRate": "学習率",
+            "batchSize": "バッチサイズ",
+            "loading": "分類器を読み込み中",
+            "prepairing": "サンプルを準備中...",
+            "training": "分類器のトレーニング中・・",
+            "complete": "トレーニング完了"
+        },
+        "tooltips": {
+            "epochs": "各サンプルがトレーニングに使われる回数です。",
+            "learningRate": "微調整が推奨です。0.1未満にしてください。",
+            "batchSize": "トレーニングごとのサンプル数です。影響は比較的少なめです。"
+        }
+    },
+    "input": {
+        "labels": {
+            "title": "入力",
+            "webcam": "ウェブカメラ",
+            "file": "ファイル",
+            "device": "デバイス",
+            "switchOn": "オン",
+            "switchOff": "オフ",
+            "upload": "ファイルをアップロード、または、ここにドロップ"
+        },
+        "aria": {
+            "switch": "入力ソースを有効にする"
+        }
+    },
+    "model": {
+        "actions": {
+            "export": "Scratch用のエクスポート",
+            "clone": "コピーを共有"
+        },
+        "labels": {
+            "title": "分類器",
+            "mustTrain": "最初に分類器のトレーニングをしてください。"
+        },
+        "aria": { "more": "詳細オプション" }
+    },
+    "output": {
+        "labels": {
+            "title": "出力",
+            "deploy": "デプロイ"
+        },
+        "aria": {
+            "volume": "音量",
+            "image": "クラス{{index}} の出力",
+            "display": "クラス {{index}}の出力内容",
+            "expand": "ウィンドウサイズを拡大"
+        }
+    },
+    "behaviours": {
+        "actions": {
+            "upload": "アップロード",
+            "delete": "削除",
+            "record": "記録",
+            "stop": "停止"
+        },
+        "labels": {
+            "title": "アクション",
+            "message": "メッセージ",
+            "link": "リンク",
+            "linkError": "このリンクはサポートされていません。",
+            "embedInfo": "リンク先の動画や画像を表示します(YouTube、Vimeo、SoundCloud、動画ファイル、画像など、一部のリンクのみ対応)",
+            "voiceRecording": "音声録音",
+            "dropError": "ここには画像または音声のみドロップ可能です。",
+            "loop": "ループ"
+        },
+        "aria": {
+            "message": "出力用テキスト",
+            "image": "画像の動作",
+            "sound": "音声の動作",
+            "text": "テキストの動作",
+            "embed": "リンク埋め込みの動作",
+            "imageOutput": "アップロードされた画像",
+            "noImage": "画像プレースホルダー",
+            "stop": "停止",
+            "play": "再生",
+            "behaviourCard": "{{name}}の動作設定",
+            "loop": "ループ"
+        }
+    },
+    "stepper": {
+        "actions": {
+            "next": "次へ"
+        },
+        "aria": {
+            "step": "タスクのステップ"
+        }
+    },
+    "webcam": {
+        "aria": {
+            "video": "ライブのウェブカメラ映像",
+            "flip": "別のカメラに切り替える"
+        }
+    },
+    "widget": {
+        "aria": {
+            "editTitle": "タイトルを編集",
+            "editTitleInput": "{{value}} の編集ボックス"
+        },
+        "labels": {
+            "titlePlaceholder": "名前"
+        }
+    },
+    "fontcolor": {
+        "aria": {
+            "title": "文字色を選択"
+        }
+    },
+    "share": {
+        "actions": {
+            "close": "閉じる"
+        },
+        "labels": {
+            "title": "共有",
+            "includeSamples": "サンプル画像を含める",
+            "codeInstructions": "以下のコードを使って、他の人が分類器のコピーを開けるようにします。",
+            "linkInstructions": "このリンクをコピーすると、<scratchLink>Scratch</scratchLink>など他のアプリで分類器を使用できます（ただし、このブラウザタブを開いたままにするか、プロジェクトを保存して再度開かないとリンクは機能しないので注意）。"
+        }
+    }
+}

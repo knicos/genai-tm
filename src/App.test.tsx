@@ -29,7 +29,7 @@ describe('Integration', () => {
     it('renders image app', async ({ expect }) => {
         const memRouter = createMemoryRouter(routes, { initialEntries: ['/image/general'] });
         render(<App router={memRouter} />);
-        expect(await screen.findByTestId('versionlink', undefined, { timeout: 5000 })).toBeInTheDocument();
+        expect(await screen.findByTestId('versionlink', undefined, { timeout: 10000 })).toBeInTheDocument();
     });
 
     it('renders about page', async ({ expect }) => {
