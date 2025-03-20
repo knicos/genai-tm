@@ -190,7 +190,7 @@ export class TeachableModel {
      *
      * @param image Image to draw the pose into.
      */
-    public async draw(image: HTMLCanvasElement): Promise<void> {
+    public draw(image: HTMLCanvasElement) {
         if (this.poseModel && this.lastPose) {
             const ctx = image.getContext('2d');
             if (this.lastPose && ctx) {
@@ -246,7 +246,8 @@ export class TeachableModel {
                 this.estimate(image);
             }
             if (!this.lastPoseOut) return { predictions: [] };
-            return { predictions: await this.poseModel.predict(this.lastPoseOut) };
+            const result = { predictions: await this.poseModel.predict(this.lastPoseOut) };
+            return result;
         }
         return { predictions: [] };
     }

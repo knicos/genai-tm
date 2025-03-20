@@ -9,13 +9,13 @@ import { SampleState, SampleStateValue } from '../../components/ImageGrid/Sample
 import ImageGrid from '../../components/ImageGrid/ImageGrid';
 import UploadFileIcon from '@mui/icons-material/UploadFile';
 import { useTranslation } from 'react-i18next';
-import { Alert } from '@mui/material';
 import { useDrop } from 'react-dnd';
 import { NativeTypes } from 'react-dnd-html5-backend';
 import AlertModal from '../../components/AlertModal/AlertModal';
-import { canvasesFromFiles, canvasFromDataTransfer, ConnectionMonitor, theme, Webcam } from '@knicos/genai-base';
+import { canvasesFromFiles, canvasFromDataTransfer, theme, Webcam } from '@knicos/genai-base';
 import { useSetRecoilState } from 'recoil';
 import { fatalWebcam } from '@genaitm/state';
+import ConnectionStatus from '@genaitm/components/ConnectionStatus/ConnectionStatus';
 
 export function Component() {
     const { code, classIndex } = useParams();
@@ -52,11 +52,7 @@ export function Component() {
         [setSamples, index]
     );
 
-    const { sender, deleter, state, classNames, ready, error } = usePeerSender(
-        code || '',
-        doSampleState,
-        doSamplesUpdate
-    );
+    const { sender, deleter, classNames, ready, peer } = usePeerSender(code || '', doSampleState, doSamplesUpdate);
 
     const doDelete = useCallback(
         (ix: number) => {
@@ -180,17 +176,12 @@ export function Component() {
                     <h1>{classNames.length > index ? classNames[index] : ''}</h1>
                     <div className={style.sampleCount}>{t('collect.sampleCount', { count })}</div>
                 </header>
-                {state !== 'failed' && (
+                {ready && (
                     <ImageGrid
                         samples={samples}
                         onDelete={doDelete}
                         showDrop={dropProps.hovered}
                     />
-                )}
-                {state === 'failed' && (
-                    <div className={style.failedContainer}>
-                        <Alert severity="error">{t('collect.failedMessage')}</Alert>
-                    </div>
                 )}
                 <AlertModal
                     open={showDropError}
@@ -246,12 +237,13 @@ export function Component() {
                     </div>
                 </div>
             </main>
-            <ConnectionMonitor
+            <ConnectionStatus
                 api={import.meta.env.VITE_APP_APIURL}
                 appName="tm"
                 ready={ready}
-                status={state}
-                error={error}
+                peer={peer}
+                noCheck
+                visibility={0}
             />
         </ThemeProvider>
     );

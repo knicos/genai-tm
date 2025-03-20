@@ -45,13 +45,6 @@ export default function WebcamCapture({ visible, onCapture, onClose }: Props) {
     );
     const stopCapture = useCallback(() => setCapturing(false), [setCapturing]);
 
-    const doPostProcess = useCallback(
-        (image: HTMLCanvasElement) => {
-            draw(image);
-        },
-        [draw]
-    );
-
     useEffect(() => {
         if (buttonRef.current) {
             buttonRef.current.focus();
@@ -104,7 +97,7 @@ export default function WebcamCapture({ visible, onCapture, onClose }: Props) {
                             capture={capturing}
                             onCapture={onCapture}
                             interval={200}
-                            onPostprocess={doPostProcess}
+                            onPostprocess={draw}
                             size={imageSize}
                             onFatal={doFatal}
                         />

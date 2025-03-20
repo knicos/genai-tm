@@ -6,7 +6,7 @@ import { loadProject } from '../../components/ImageWorkspace/loader';
 import { BehaviourType } from '../../components/Behaviour/Behaviour';
 import { useSearchParams } from 'react-router-dom';
 import { TeachableModel } from '../../util/TeachableModel';
-import { BuiltinEvent, PeerErrorType, PeerEvent, PeerStatus, usePeer, useRandom } from '@knicos/genai-base';
+import { BuiltinEvent, Peer2Peer, PeerEvent, usePeer, useRandom } from '@knicos/genai-base';
 
 const TIMEOUT_LOCAL = 5000;
 
@@ -34,7 +34,7 @@ export function useTabModel(code: string, onError?: () => void): [TeachableModel
         }
         channel.current = new BroadcastChannel(`deployment:${myCode}`);
         channel.current.onmessage = async (ev: MessageEvent<DeployEventData>) => {
-            if (ev.data.event === 'project') {
+            if (ev.data.event === 'project' && ev.data.project) {
                 if (timeoutRef.current >= 0) {
                     clearTimeout(timeoutRef.current);
                 }
@@ -54,7 +54,7 @@ export function useP2PModel(
     code: string,
     onError?: () => void,
     disable?: boolean
-): [TeachableModel | null, BehaviourType[], boolean, PeerStatus, PeerErrorType] {
+): [TeachableModel | null, BehaviourType[], boolean, Peer2Peer<EventProtocol> | undefined, boolean] {
     const [model, setModel] = useState<TeachableModel | null>(null);
     const [behaviours, setBehaviours] = useState<BehaviourType[]>([]);
     const [params] = useSearchParams();
@@ -79,7 +79,7 @@ export function useP2PModel(
         }
     }, []);
 
-    const { ready, send, status, error } = usePeer<EventProtocol>({
+    const { ready, send, peer } = usePeer<EventProtocol>({
         disabled: !enabled || disable,
         host: import.meta.env.VITE_APP_PEER_SERVER,
         secure: import.meta.env.VITE_APP_PEER_SECURE === '1',
@@ -96,5 +96,5 @@ export function useP2PModel(
         }
     }, [ready, send]);
 
-    return [model, behaviours, ready, status, error];
+    return [model, behaviours, ready, peer, enabled];
 }

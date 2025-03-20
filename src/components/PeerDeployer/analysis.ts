@@ -37,6 +37,8 @@ export function createAnalysis(labels: string[], ref: number[], pred: number[]) 
     };
 }
 
+export type AnalysisType = ReturnType<typeof createAnalysis>;
+
 export function createModelStats(model: TeachableModel) {
     return {
         totalSamples: model.getNumExamples(),
@@ -44,3 +46,5 @@ export function createModelStats(model: TeachableModel) {
         samplesPerClass: model.getExamplesPerClass(),
     };
 }
+
+export type ModelStatsType = ReturnType<typeof createModelStats>;

@@ -1,7 +1,6 @@
 import { useCallback, useRef, useState } from 'react';
-import { DataConnection } from 'peerjs';
 import { SampleStateValue } from '../../components/ImageGrid/Sample';
-import { BuiltinEvent, PeerErrorType, PeerEvent, PeerStatus, usePeer, useRandom } from '@knicos/genai-base';
+import { BuiltinEvent, Connection, Peer2Peer, PeerEvent, usePeer, useRandom } from '@knicos/genai-base';
 
 const POLLING = 5000;
 
@@ -17,9 +16,8 @@ interface ReturnObject {
     sender?: SampleSender;
     deleter?: SampleDelete;
     classNames: string[];
-    state: PeerStatus;
     ready: boolean;
-    error: PeerErrorType;
+    peer?: Peer2Peer<PeerEvent>;
 }
 
 interface ClassEvent extends PeerEvent {
@@ -34,7 +32,30 @@ interface SampleStateEvent extends PeerEvent {
     state: SampleStateValue;
 }
 
-type EventProtocol = BuiltinEvent | ClassEvent | SampleStateEvent;
+interface RequestClassEvent extends PeerEvent {
+    event: 'request_class';
+}
+
+interface AddSampleEvent extends PeerEvent {
+    event: 'add_sample';
+    data: string;
+    index: number;
+    id: string;
+}
+
+interface DeleteSampleEvent extends PeerEvent {
+    event: 'delete_sample';
+    index: number;
+    id: string;
+}
+
+type EventProtocol =
+    | BuiltinEvent
+    | ClassEvent
+    | SampleStateEvent
+    | RequestClassEvent
+    | AddSampleEvent
+    | DeleteSampleEvent;
 
 export function usePeerSender(
     code: string,
@@ -47,7 +68,7 @@ export function usePeerSender(
     const pollWaiting = useRef(false);
     const MYCODE = useRandom(8);
 
-    const dataHandler = useCallback(async (data: EventProtocol, conn: DataConnection) => {
+    const dataHandler = useCallback(async (data: EventProtocol, conn: Connection<EventProtocol>) => {
         if (data?.event === 'class') {
             pollWaiting.current = false;
             setClassLabels(data.labels);
@@ -65,7 +86,7 @@ export function usePeerSender(
         }
     }, []);
 
-    const openHandler = useCallback((conn: DataConnection) => {
+    const openHandler = useCallback((conn: Connection<EventProtocol>) => {
         conn.send({ event: 'request_class' });
         pollRef.current = window.setInterval(() => {
             if (pollWaiting.current) {
@@ -89,7 +110,7 @@ export function usePeerSender(
         pollWaiting.current = false;
     }, []);
 
-    const { ready, status, error } = usePeer<EventProtocol>({
+    const { ready, peer } = usePeer<EventProtocol>({
         host: import.meta.env.VITE_APP_PEER_SERVER,
         secure: import.meta.env.VITE_APP_PEER_SECURE === '1',
         key: import.meta.env.VITE_APP_PEER_KEY || 'peerjs',
@@ -105,8 +126,7 @@ export function usePeerSender(
         sender: sampleFuncs ? sampleFuncs.send : undefined,
         deleter: sampleFuncs ? sampleFuncs.delete : undefined,
         classNames: classLabels,
-        state: status,
         ready,
-        error,
+        peer,
     };
 }

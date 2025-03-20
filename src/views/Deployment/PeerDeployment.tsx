@@ -10,8 +10,9 @@ import { useTranslation } from 'react-i18next';
 import { useRecoilValue } from 'recoil';
 import { fatalWebcam } from '@genaitm/state';
 import AlertModal from '@genaitm/components/AlertModal/AlertModal';
-import { ConnectionMonitor, Privacy, QRCode } from '@knicos/genai-base';
+import { Privacy, QRCode } from '@knicos/genai-base';
 import gitInfo from '../../generatedGitInfo.json';
+import ConnectionStatus from '@genaitm/components/ConnectionStatus/ConnectionStatus';
 
 export function Component() {
     const { code } = useParams();
@@ -19,7 +20,7 @@ export function Component() {
     const [hadError, setHadError] = useState(false);
     const [enableWebRTC, setEnableWebRTC] = useState(false);
     const onError = useCallback(() => setHadError(true), [setHadError]);
-    const [model, behaviours, ready, status, error] = useP2PModel(code || '', onError, !enableWebRTC);
+    const [model, behaviours, ready, peer, enabledP2P] = useP2PModel(code || '', onError, !enableWebRTC);
     const [showQR, setShowQR] = useState(query.get('qr') === '1');
     const { namespace } = useVariant();
     const { t } = useTranslation(namespace);
@@ -84,13 +85,16 @@ export function Component() {
                     {t('deploy.labels.noWebcam')}
                 </AlertModal>
             )}
-            <ConnectionMonitor
-                api={import.meta.env.VITE_APP_APIURL}
-                appName="tm"
-                ready={ready}
-                status={status}
-                error={error}
-            />
+            {enabledP2P && (
+                <ConnectionStatus
+                    api={import.meta.env.VITE_APP_APIURL}
+                    appName="tm"
+                    ready={ready}
+                    peer={peer}
+                    visibility={0}
+                    noCheck
+                />
+            )}
             <Privacy
                 position="topRight"
                 appName="tm"

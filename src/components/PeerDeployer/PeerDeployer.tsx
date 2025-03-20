@@ -13,13 +13,13 @@ import {
     //p2pActive,
 } from '../../state';
 import { TeachableModel, useTeachableModel } from '../../util/TeachableModel';
-import { createAnalysis, createModelStats } from './analysis';
-import { canvasFromURL, ConnectionMonitor, usePeer } from '@knicos/genai-base';
-import { DataConnection } from 'peerjs';
+import { AnalysisType, createAnalysis, createModelStats, ModelStatsType } from './analysis';
+import { canvasFromURL, Connection, PeerEvent, usePeer } from '@knicos/genai-base';
+import ConnectionStatus from '../ConnectionStatus/ConnectionStatus';
 
 type ProjectKind = 'image';
 
-export interface DeployEvent {
+export interface DeployEvent extends PeerEvent {
     event: 'request' | 'project' | 'model' | 'add_sample' | 'request_class' | 'delete_sample';
 }
 
@@ -49,15 +49,42 @@ export interface DeployEventRequest extends DeployEvent {
 
 export interface DeployEventData extends DeployEvent {
     event: 'project';
-    project: Blob;
+    project?: Blob;
     kind: ProjectKind;
 }
 
 export interface ModelEventData extends DeployEvent {
     event: 'model';
     component: 'model' | 'metadata' | 'weights';
-    data: Blob;
+    data?: string | ArrayBuffer;
 }
+
+export interface ClassEvent extends PeerEvent {
+    event: 'class';
+    labels: string[];
+    samples?: string[][];
+}
+
+export interface SampleStateEvent extends PeerEvent {
+    event: 'sample_state';
+    state: 'added' | 'deleted';
+    id: string;
+}
+
+export interface AnalysisEvent extends PeerEvent, AnalysisType, ModelStatsType {
+    event: 'analysis';
+}
+
+type EventProtocol =
+    | DeployEventRequest
+    | DeployEventData
+    | ModelEventData
+    | AddSampleEvent
+    | DeleteSampleEvent
+    | ClassEvent
+    | SampleStateEvent
+    | AnalysisEvent
+    | RequestClassEvent;
 
 interface CacheState {
     model?: TeachableModel;
@@ -81,7 +108,7 @@ export default function PeerDeployer() {
     const blob = useRef<ModelContents | null>(null);
     const setInput = useSetRecoilState(inputImage);
 
-    const dataHandler = useCallback(async (data: unknown, conn: DataConnection) => {
+    const dataHandler = useCallback(async (data: EventProtocol, conn: Connection<EventProtocol>) => {
         const ev = data as DeployEventRequest;
         if (ev?.event === 'request') {
             if (blob.current === null) {
@@ -164,7 +191,7 @@ export default function PeerDeployer() {
         }
     }, []);
 
-    const { ready, status, error } = usePeer({
+    const { ready, peer } = usePeer({
         host: import.meta.env.VITE_APP_PEER_SERVER,
         secure: import.meta.env.VITE_APP_PEER_SECURE === '1',
         key: import.meta.env.VITE_APP_PEER_KEY || 'peerjs',
@@ -197,12 +224,12 @@ export default function PeerDeployer() {
     }, [classes, includeSamples]);
 
     return (
-        <ConnectionMonitor
+        <ConnectionStatus
             api={import.meta.env.VITE_APP_APIURL}
             appName="tm"
             ready={ready}
-            status={status}
-            error={error}
+            peer={peer}
+            visibility={0}
         />
     );
 }
