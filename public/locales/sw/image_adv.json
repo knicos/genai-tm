@@ -1,0 +1,209 @@
+{
+    "app": {
+        "title": "Machine Inayofundishwa ya GenAI",
+        "about": "Kuhusu",
+        "save": "Hifadhi",
+        "load": "Fungua",
+        "language": "Lugha",
+        "reminder": "Kumbuka kuhifadhi kichanganuzi chako."
+    },
+    "load": {
+        "title": "Fungua Kichanganuzi",
+        "code": "Weka msimbo ulioshirikishwa",
+        "actions": {
+            "openFile": "Fungua Faili",
+            "openCode": "Tumia Msimbo",
+            "cancel": "Ghairi"
+        }
+    },
+    "save": {
+        "title": "Hifadhi Kichanganuzi",
+        "noModel": "Unatakiwa kutengeneza kichanganuzi kwanza.",
+        "message": "Pakua maudhui ya kichanganuzi chako kwenye faili.",
+        "saveSamples": "Hifadhi Sampuli",
+        "saveClassifier": "Hifadhi Kichanganuzi",
+        "saveBehaviours": "Hifadhi Tabia",
+        "name": "Jina",
+        "actions": {
+            "save": "Hifadhi",
+            "cancel": "Ghairi"
+        }
+    },
+    "alignment": {
+        "aria": {
+            "left": "panga kushoto",
+            "center": "panga katikati",
+            "right": "panga kulia",
+            "align": "mpangilio wa maandishi"
+        }
+    },
+    "fontsize": {
+        "aria": {
+            "title": "badilisha ukubwa wa maandishi",
+            "increase": "ongeza",
+            "decrease": "punguza"
+        }
+    },
+    "trainingdata": {
+        "actions": {
+            "addClass": "Ongeza kundi",
+            "webcam": "Kamera ya wavuti",
+            "upload": "Pakia",
+            "deleteClass": "Futa Kundi",
+            "removeAll": "Ondoa sampuli zote",
+            "capture": "Shikilia kupiga picha",
+            "collaborate": "Shirikiana"
+        },
+        "labels": {
+            "title": "Takwimu za Mafunzo",
+            "addSamples": "Ongeza sampuli za picha",
+            "imageSamples": "Sampuli za picha {{count}}",
+            "class": "Kundi",
+            "wait": "Inapiga picha...",
+            "dropFiles": "au buruta picha hapa kutoka tovuti au faili",
+            "needsMore": "Sampuli zinahitajika zaidi",
+            "dropError": "Ni picha pekee zinaruhusiwa",
+            "qrMessage": "Unaweza kutumia simu au kishikwambi kuongeza picha. Bofya msimbo wa QR ili kupanua."
+        },
+        "aria": {
+            "sample": "sampuli zilizopakiwa",
+            "delete": "futa sampuli",
+            "more": "chaguzi zaidi",
+            "close": "Funga",
+            "classCard": "Takwimu za mafunzo kwa {{Name}}"
+        }
+    },
+    "heatmap": {
+        "title": "Ufafanuzi"
+    },
+    "training": {
+        "actions": {
+            "train": "Fundisha kichanganuzi"
+        },
+        "labels": {
+            "title": "Mafunzo",
+            "addMore": "Ongeza sampuli zaidi au makundi kwanza",
+            "needsTraining": "Kichanganuzi kinahitaji kufundishwa",
+            "advanced": "Ya juu",
+            "epochs": "Awamu",
+            "learningRate": "Kiwango cha kujifunza",
+            "batchSize": "Ukubwa wa kundi",
+            "loading": "Inapakia kichanganuzi",
+            "prepairing": "Inatayarisha mifano...",
+            "training": "Inafundisha kichanganuzi",
+            "complete": "Mafunzo yamekamilika"
+        },
+        "tooltips": {
+            "epochs": "Ni mara ngapi kila sampuli inatumika kwenye mafunzo .",
+            "learningRate": "Fanya marekebisho kidogo, haipaswi kuwa zaidi ya 0.1.",
+            "batchSize": "Ina athari ndogo kwenye mafunzo. Ni idadi ya sampuli zinazotumiwa katika kila mzunguko wa mafunzo."
+        }
+    },
+    "input": {
+        "labels": {
+            "title": "Ingizo",
+            "webcam": "Kamera ya wavuti",
+            "file": "Faili",
+            "device": "Kifaa",
+            "switchOn": "Washa",
+            "switchOff": "Zima",
+            "upload": "Pakia au buruta faili hapa"
+        },
+        "aria": {
+            "switch": "Washa chanzo cha ingizo"
+        }
+    },
+    "model": {
+        "actions": {
+            "export": "Hamisha kwa ajili ya Scratch",
+            "clone": "Shiriki nakala"
+        },
+        "labels": {
+            "title": "kichanganuzi",
+            "mustTrain": "Unapaswa kufundisha kichanganuzi chako kwanza"
+        },
+        "aria": { "zaidi": "chaguzi zaidi" }
+    },
+    "output": {
+        "labels": {
+            "title": "Matokeo",
+            "deploy": "Peleka"
+        },
+        "aria": {
+            "volume": "Kiasi cha sauti",
+            "image": "matokeo ya kundi {{index}}",
+            "display": "matokeo kwa kundi {{index}}",
+            "expand": "panua ukubwa wa dirisha"
+        }
+    },
+    "behaviours": {
+        "actions": {
+            "upload": "Pakia",
+            "delete": "Futa",
+            "record": "Rekodi",
+            "stop": "Simanisha"
+        },
+        "labels": {
+            "title": "Vitendo",
+            "message": "Ujumbe",
+            "link": "Kiungo",
+            "linkError": "Kiungo hicho hakihitilafiani",
+            "embedInfo": "Onyesha video na picha kutoka kwenye kiungo. Viungo vichache tuu vitafanya kazi, mfano YouTube, Vimeo, SoundCloud, faili za video au picha.",
+            "voiceRecording": "Rekodi ya Sauti",
+            "dropError": "Ni picha au sauti pekee zinakubaliwa",
+            "loop": "Rudia"
+        },
+        "aria": {
+            "message": "Maandishi ya matokeo",
+            "image": "tabia ya picha",
+            "sound": "tabia ya sauti",
+            "text": "tabia ya maandishi",
+            "embed": "tabia ya kiungo",
+            "imageOutput": "Picha iliyopakiwa",
+            "noImage": "Sehemu ya picha",
+            "stop": "simamisha",
+            "play": "cheza",
+            "behaviourCard": "Tabia kwa {{name}}",
+            "loop": "Rudia"
+        }
+    },
+    "stepper": {
+        "actions": {
+            "next": "Inayofuata"
+        },
+        "aria": {
+            "step": "hatua za kazi"
+        }
+    },
+    "webcam": {
+        "aria": {
+            "video": "Video ya moja kwa moja ya kamera ya wavuti",
+            "flip": "Geuza kamera nyingine"
+        }
+    },
+    "widget": {
+        "aria": {
+            "editTitle": "hariri kichwa",
+            "editTitleInput": "{{value}} kisanduku cha kuhariri"
+        },
+        "labels": {
+            "titlePlaceholder": "Jina"
+        }
+    },
+    "fontcolor": {
+        "aria": {
+            "title": "chagua rangi ya maandishi"
+        }
+    },
+    "share": {
+        "actions": {
+            "close": "Funga"
+        },
+        "labels": {
+            "title": "Shiriki",
+            "includeSamples": "Jumuisha sampuli za picha",
+            "codeInstructions": "Ruhusu wengine kufungua nakala ya kichanganuzi chako kwa kutumia msimbo hapa chini.",
+            "linkInstructions": "Nakili kiungo ili kutumia kichanganuzi katika programu zingine kama<scratchLink>Scratch</scratchLink>. Kiungo kitafanya kazi tu ikiwa utaendelea kuweka tabo hii wazi au ikiwa utahifadhi kazi yako na kuifungua tena baadaye."
+        }
+    }
+}

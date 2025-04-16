@@ -44,7 +44,7 @@
         "build:robot": "npm run git-info && tsc && vite build --mode robot",
         "lint": "eslint --max-warnings=0 ./src/**/*.ts ./src/**/*.tsx",
         "test": "vitest",
-        "ci:test": "vitest --coverage --reporter=junit --outputFile=junit.xml",
+        "ci:test": "vitest run --coverage --reporter=junit --outputFile=junit.xml",
         "coverage": "vitest run --coverage",
         "clean": "rm -rf ./node_modules && rm -rf ./dist",
         "preview": "vite preview"
@@ -89,14 +89,14 @@
         "@types/react-dom": "^18.0.0",
         "@types/smoothscroll-polyfill": "^0.3.1",
         "@typescript-eslint/eslint-plugin": "^6.12.0",
-        "@vitejs/plugin-react-swc": "^3.8.0",
-        "@vitest/coverage-v8": "^3.0.5",
+        "@vitejs/plugin-react-swc": "^3.9.0",
+        "@vitest/coverage-v8": "^3.1.1",
         "eslint-config-prettier": "^8.7.0",
         "jsdom": "^22.1.0",
         "prettier": "^2.8.4",
         "source-map-explorer": "^2.5.3",
         "typescript": "^5.7.3",
-        "vite": "^6.1.0",
-        "vitest": "^3.0.5"
+        "vite": "^6.2.6",
+        "vitest": "^3.1.1"
     }
 }

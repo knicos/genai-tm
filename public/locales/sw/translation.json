@@ -1,0 +1,137 @@
+{
+    "deploy": {
+        "actions": {
+            "copy": "Nakili",
+            "close": "Funga"
+        },
+        "labels": {
+            "notFound": "Kichanganuzi hakijapatikana.",
+            "dropHere": "Weka picha hapa",
+            "errorInfo": "Ukurasa huu upo tu ikiwa kichanganuzi chako kimefunguliwa kwenye tabo ya kivinjari. Pia, huenda kuna vikwazo vya kiusalama vinavyokizuia kupatikana.",
+            "share": "Sambaza programu kwenye vifaa vingine",
+            "qrExpand": "Bonyeza msimbo wa QR ili kuupanua.",
+            "noWebcam": "Upatikanaji wa kamera unahitajika ili kushiriki kichanganuzi.",
+            "switch": "Washa chanzo cha ingizo"
+        }
+    },
+    "loader": {
+        "messages": {
+            "getIceConfig": "Inachukua mipangilio ya mtandao",
+            "cameraPermission": "Ili kuruhusu muunganisho wa moja kwa moja kati ya vifaa, ruhusu upatikanaji wa muda wa kamera.",
+            "connecting": "Inaunganisha...",
+            "signaling": "Inatafuta vifaa vingine",
+            "disconnected": "Imekatika kutoka kifaa kingine",
+            "retry": "Inaunganisha tena...",
+            "content_load": "Inapakia maudhui",
+            "content_download": "Inapakua maudhui",
+            "ready": "Muunganisho uko tayari",
+            "content_none": "Maudhui yako tayari",
+            "wifiNetwork": "Taarifa zako zinatumwa kwa njia ya mtandao kwa kuwa haupo kwenye mtandao mmoja wa Wi-Fi.",
+            "permNetwork": "Taarifa zako zimetumwa kwenye mtandao kwa sababu hukuruhusu upatikanaji wa kamera.",
+            "quality0": "Inakagua...",
+            "quality1": "Muunganisho hafifu",
+            "quality2": "Imeunganishwa",
+            "quality3": "Imeunganishwa",
+            "failed": "Hakuna muunganisho"
+        },
+        "errors": {
+            "unknown": "Tatizo la muunganisho limetokea",
+            "id-in-use": "Mtu mwingine tayari anatumia msimbo huu",
+            "peer-not-found": "Msimbo haukuweza kupatikana",
+            "missing-ice": "Mipangilio haipo",
+            "no-signaling": "Seva yetu haijibu",
+            "bad-browser": "Kifaa chako hakiungi mkono programu hii",
+            "unknownContent": "Kuna tatizo na maudhui ya Mfumo",
+            "load": "Haikuweza kupakia maudhui ya Mfumo",
+            "download": "Haikuweza kupakua maudhui ya Mfumo "
+        },
+        "titles": {
+            "iceConfig": "Inasanidi",
+            "permission": "Ruhusa",
+            "connecting": "Muunganisho",
+            "error": "Tatizo",
+            "contentLoad": "Maudhui ya mfumo",
+            "networkType": "Taarifa"
+        },
+        "actions": {
+            "close": "Funga"
+        }
+    },
+    "testInput": {
+        "title": "Ingizo"
+    },
+    "collect": {
+        "samplePrompt": "Piga picha au pakia picha hapa.",
+        "actions": {
+            "upload": "Pakia"
+        },
+        "sampleCount": "{{count}} sampuli",
+        "connecting": "Inaunganisha...",
+        "disconnected": "Imekatika",
+        "failed": "Imeshindikana",
+        "failedMessage": "Kichanganuzi hiki hakiwezi kufikiwa kwenye kifaa chako",
+        "dropError": "Ni picha pekee ndizo zinaruhusiwa hapa",
+        "relayWarning": "Takwimu zako zinatumwa kupitia seva yetu. Unaweza kutumia muunganisho mwingine wa Wi-Fi ili kuepuka hili ."
+    },
+    "about": {
+        "back": "Rudi",
+        "title": "Generation AI",
+        "privacyTitle": "Ilani ya Faragha",
+        "privacy": [
+            "Karibu kwenye Ilani yetu ya Faragha, iliyoundwa kukujulisha jinsi tunavyoshughulikia taarifa zako binafsi kwa mujibu wa Kanuni za Ulinzi wa Takwimu za Jumla (GDPR) unapotumia tovuti yetu yenye zana ya GenAI Teachable Machine.",
+            "Ili kufafanua maudhui ya taarifa hii, hebu tuelezee baadhi ya maneno kutoka GDPR. \"Mdhibiti\" ni sisi, kwa kuwa sisi ndio tunaamua jinsi na kwa nini tarifa zako binafsi zinatumika, jambo linalotufanya kuwajibika kwa ulinzi wake. \"Taarifa binafsi\" ni taarifa yoyote inayoweza kukutambulisha moja kwa moja au kwa njia isiyo ya moja kwa moja, kama vile anwani ya IP. \"Uchakataji\" unahusisha hatua zote zinazofanyika kwenye taarifa zako, kama vile kukusanya, kuhifadhi, kutumia au kuzifuta.",
+            "Ni muhimu usome taarifa hii ili kuelewa ni tarifa gani tunayokusanya kutoka kwako, kwa nini tunaihitaji, jinsi tunavyoiendesha, na haki zako kuhusu taarifa hizo.",
+            "Ikiwa una maswali yoyote kuhusu taarifa hii, tafadhali wasiliana na mdhibiti:",
+            "**Dkt. Nicolas Pope**,",
+            "**Anuani ya posta:** Chuo Kikuu cha Mashariki mwa Finland, Länsikatu 15, 80110 Joensuu, Finland.",
+            "**Barua pepe:** nicolas.pope@uef.fi",
+            "**Simu:** +358 505 288 449.",
+            "### 1. Shughuli za Uchakataji Taarifa:",
+            "Tunarekodi anwani za IP.",
+            "Hata hivyo, hatutumii vidakuzi kwa ufuatiliaji au uchambuzi; tunatoa maudhui kulingana na maingizo yako pekee.",
+            "### 2. Madhumuni ya Uchakataji:",
+            "Kurekodi anwani za IP husaidia kudumisha uadilifu na usalama wa tovuti kwa kutambua na kuzuia shughuli hatarishi.",
+            "### 3. Msingi wa Kisheria wa Uchakataji:",
+            "Kwa kiasi kikubwa, tunachakata anwani za IP kwa sababu za kiusalama, kulingana na maslahi yetu halali ya kulinda tovuti na taarifa zetu kwa mujibu wa Kifungu cha 6(1)(f) cha GDPR. Pia tunaweza kuchakata taarifa kulingana na idhini yako chini ya Kifungu cha 6(1)(a) kama utapenda kutumia haki yako ya kupata anwani yako ya IP iliyorekodiwa. Zaidi ya hayo, tunaweza kuchakata tarifa zako binafsi endapo tutaelekezwa na mahakama yenye mamlaka chini ya Kifungu cha 6(1)(c).",
+            "### 4. Maslahi Halali Tunayofuata:",
+            "Lengo letu ni kuhakikisha tovuti inafanya kazi kwa uadilifu, usalama, na kuzuia matumizi mabaya.",
+            "### 5. Usalama:",
+            "Tunatekeleza hatua za kiusalama kulinda anwani zako za IP dhidi ya upatikanaji usio halali au uharibifu. Anwani zako za IP zimesimbwa kwa njia fiche wakati wa uhamishaji wowote wa baadae.",
+            "### 6. Wapokeaji wa Taarifa:",
+            "Ni watendaji waliothibitishwa pekee wa tovuti wanaoweza kufikia anwani zako za IP kwa ajili ya usalama na matengenezo.",
+            "### 7. Uhamisho wa Taarifa:",
+            "Anwani za IP zinaweza kuhamishiwa kwenye seva za Microsoft, lakini tunahakikisha ulinganifu na GDPR kwa ajili ya ulinzi wa tarifa.",
+            "### 8. Muda wa Kuhifadhi:",
+            "Tunahifadhi anwani za IP kwa muda tu unaohitajika, kwa kawaida hadi siku 7, isipokuwa sheria itahitaji vinginevyo.",
+            "### 9. Haki Zako:",
+            "Chini ya GDPR, una haki zifuatazo:",
+            "* Haki ya kufahamishwa: Mbali na kujulishwa kuhusu madhumuni ya uchakataji, muda wa kuhifadhi, na wanaoshiriki tarifa yako, una haki ya kufahamu jinsi tunavyokusanya. Tunakusanya anwani yako ya IP unapozuru tovuti yetu.",
+            "* Haki ya kupata: Unaweza kuomba nakala ya anwani yako ya IP iliyorekodiwa na taarifa iliyohusiana nayo.",
+            "* Haki ya kurekebisha: Ikiwa tariff iliyorekodiwa si sahihi au haijakamilika, unaweza kuomba irekebishwe, japokuwa anwani ya IP si taarifa inayoweza kurekebishwa kama nyingine.",
+            "* Haki ya kufutwa: Unaweza kuomba kufutwa kwa anwani yako ya IP ndani ya siku 7 baada ya kutembelea tovuti hii, kwa kuwa anwani hiyo hufutwa kiotomatiki baada ya muda huo.",
+            "* Haki ya kupinga: Unaweza kupinga uchakataji wa anwani zako za IP.",
+            "* Haki ya kukata rufaa: Unaweza kuwasilisha malalamiko kwa mamlaka ya usimamizi ikiwa unaamini data zako hazichakatwi kwa mujibu wa masharti ya GDPR.",
+            "### 10. Mabadiliko ya Taarifa Hii ya Faragha:",
+            "Tunaweza kusasisha taarifa hii ili kuonyesha mabadiliko ya taratibu zetu za uchakataji wa tarifa au masharti ya kisheria. Tutakujulisha kuhusu mabadiliko hayo.",
+            "Tunathamini faragha yako na tumejizatiti kulinda taarifa zako na kuhakikisha ulinganifu na GDPR. Ikiwa una maswali au unataka kutumia haki zako, wasiliana nasi kupitia barua pepe: nicolas.pope@uef.fi."
+        ]
+    },
+    "settings": {
+        "title": "Mipangilio",
+        "actions": {
+            "save": "Hifadhi",
+            "reset": "Rejesha",
+            "cancel": "Ghairi"
+        },
+        "labels": {
+            "language": "Lugha",
+            "model": "Kielelezo",
+            "variant": "Toleo la Kiolesura",
+            "advanced": "Ya Juu"
+        },
+        "values": {
+            "models": ["Picha (MobileNet)", "Mkao wa Mwili (PoseNet)"],
+            "variants": ["Matumizi ya Kawaida", "Kundi"]
+        }
+    }
+}

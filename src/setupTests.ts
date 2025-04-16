@@ -3,12 +3,12 @@
 // expect(element).toHaveTextContent(/react/i)
 // learn more: https://github.com/testing-library/jest-dom
 import '@testing-library/jest-dom/vitest';
-import crypto from 'crypto';
+// import crypto from 'crypto';
 import mockReact from 'react';
 import { vi, afterEach } from 'vitest';
 import { cleanup } from '@testing-library/react';
 
-global.crypto = crypto.webcrypto as Crypto;
+// global.crypto = crypto.webcrypto as Crypto;
 
 class BC {
     onmessage: ((ev: MessageEvent<any>) => any) | null = null;
