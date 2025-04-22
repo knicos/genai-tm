@@ -1,0 +1,209 @@
+{
+    "app": {
+        "title": "GenAI 학습 머신",
+        "about": "대하여여",
+        "save": "저장",
+        "load": "열기",
+        "language": "언어",
+        "reminder": "분류기를 저장하는 것을 기억하세요."
+    },
+    "load": {
+        "title": "분류기 열기",
+        "code": "공유된 코드를 입력하세요",
+        "actions": {
+            "openFile": "파일 열기",
+            "openCode": "코드 사용",
+            "cancel": "취소"
+        }
+    },
+    "save": {
+        "title": "분류기 저장하기",
+        "noModel": "먼저 분류기를 생성해야 합니다.",
+        "message": "분류기 콘텐츠를 파일로 내려받기",
+        "saveSamples": "샘플 저장",
+        "saveClassifier": "분류기 저장",
+        "saveBehaviours": "행동 저장장",
+        "name": "이름",
+        "actions": {
+            "save": "저장",
+            "cancel": "취소"
+        }
+    },
+    "alignment": {
+        "aria": {
+            "left": "좌측 정렬",
+            "center": "중앙 정렬",
+            "right": "우측 정렬",
+            "align": "글자 정렬"
+        }
+    },
+    "fontsize": {
+        "aria": {
+            "title": "글자 크기 변경",
+            "increase": "크게",
+            "decrease": "작게"
+        }
+    },
+    "trainingdata": {
+        "actions": {
+            "addClass": "클래스 추가",
+            "webcam": "웹캡",
+            "upload": "업로드",
+            "deleteClass": "클래스 삭제",
+            "removeAll": "모든 샘플 삭제",
+            "capture": "캡처를 위해 홀드하세요요",
+            "collaborate": "협업업"
+        },
+        "labels": {
+            "title": "데이터 학습시키기",
+            "addSamples": "이미지 샘플 추가",
+            "imageSamples": "{{count}} 이미지 샘플",
+            "class": "클래스",
+            "wait": "진행 중...",
+            "dropFiles": "웹사이트나 파일에서 이미지 파일을 드래그하세요",
+            "needsMore": "더 많은 샘플이 필요합니다",
+            "dropError": "이미지만 가능합니다",
+            "qrMessage": "이미지를 추가하기 위해 휴대폰이나 태블릿을 사용할 수 있습니다. QR 코드를 누르면 확장됩니다."
+        },
+        "aria": {
+            "sample": "업로드 된 샘플",
+            "delete": "샘플 삭제",
+            "more": "추가 옵션",
+            "close": "닫기",
+            "classCard": "{{name}}을 위해 데이터 학습시키기"
+        }
+    },
+    "heatmap": {
+        "title": "설명"
+    },
+    "training": {
+        "actions": {
+            "train": "분류기 학습"
+        },
+        "labels": {
+            "title": "학습",
+            "addMore": "먼저 샘플이나 클래스를 추가하세요",
+            "needsTraining": "분류기는 학습되어야 합니다.",
+            "advanced": "향상된",
+            "epochs": "Epochs",
+            "learningRate": "Learning Rate",
+            "batchSize": "Batch Size",
+            "loading": "분류기 로딩",
+            "prepairing": "예시 준비 중...",
+            "training": "분류기 학습",
+            "complete": "학습 완료"
+        },
+        "tooltips": {
+            "epochs": "각 샘플이 학습에 사용되는 횟수.",
+            "learningRate": "이 값은 0.1보다 작은 범위 내에서 약간만 조정하세요.",
+            "batchSize": "학습에 최소한의 영향을 줍니다. 학습 내 각 iteration(반복)에 사용되는 샘플의 수."
+        }
+    },
+    "input": {
+        "labels": {
+            "title": "입력",
+            "webcam": "웹캠",
+            "file": "파일",
+            "device": "기기",
+            "switchOn": "켜기",
+            "switchOff": "끄기",
+            "upload": "이곳에 파일을 업로드하거나 드래그 하세요"
+        },
+        "aria": {
+            "switch": "입력 소스 허용"
+        }
+    },
+    "model": {
+        "actions": {
+            "export": "Scratch로 내보내기",
+            "clone": "복사본 공유"
+        },
+        "labels": {
+            "title": "분류기",
+            "mustTrain": "분류기를 먼저 학습시켜야 합니다"
+        },
+        "aria": { "more": "추가 옵션" }
+    },
+    "output": {
+        "labels": {
+            "title": "결과",
+            "deploy": "배포"
+        },
+        "aria": {
+            "volume": "부피",
+            "image": "클래스 {{index}} 결과",
+            "display": "클래스 {{index}} 결과",
+            "expand": "창 넓히기"
+        }
+    },
+    "behaviours": {
+        "actions": {
+            "upload": "업로드",
+            "delete": "삭제",
+            "record": "녹화",
+            "stop": "중단"
+        },
+        "labels": {
+            "title": "Actions",
+            "message": "메세지",
+            "link": "링크",
+            "linkError": "지원되지 않는 링크입니다",
+            "embedInfo": "링크의 비디오나 이미지 보기. YouTube, Vimeo, SoundCloud, video 파일이나 이미지 등 일부 링크만 가능합니다.",
+            "voiceRecording": "음성 녹음",
+            "dropError": "이미지나 소리만 놓을 수 있습니다",
+            "loop": "반복"
+        },
+        "aria": {
+            "message": "결과를 위한 텍스트",
+            "image": "이미지 동작",
+            "sound": "소리 동작",
+            "text": "글 동작",
+            "embed": "임베드 링크 동작",
+            "imageOutput": "업로드 된 이미지",
+            "noImage": "이미지 자리 표시자",
+            "stop": "중단",
+            "play": "시작",
+            "behaviourCard": "{{name}}를 위한 동작",
+            "loop": "반복"
+        }
+    },
+    "stepper": {
+        "actions": {
+            "next": "다음"
+        },
+        "aria": {
+            "step": "작업 단계"
+        }
+    },
+    "webcam": {
+        "aria": {
+            "video": "실시간 웹캠 비디오",
+            "flip": "다른 카메라로 전환"
+        }
+    },
+    "widget": {
+        "aria": {
+            "editTitle": "제목 수정",
+            "editTitleInput": "{{value}} 박스 수정"
+        },
+        "labels": {
+            "titlePlaceholder": "이름"
+        }
+    },
+    "fontcolor": {
+        "aria": {
+            "title": "폰트 색 선택"
+        }
+    },
+    "share": {
+        "actions": {
+            "close": "닫기"
+        },
+        "labels": {
+            "title": "공유",
+            "includeSamples": "샘플 이미지 포함",
+            "codeInstructions": "하단의 코드를 통해 다른 사람들이 내 분류기의 복사본을 열 수 있도록 허가.",
+            "linkInstructions": "<scratchLink>Scratch</scratchLink>와 같은 다른 어플리케이션에서 분류기를 이용할 수 있는 링크 복사하기. 이 브라우저 탭을 열어두거나, 프로젝트를 저장한 후 나중에 다시 열 경우에만 링크가 작동합니다."
+        }
+    }
+}
