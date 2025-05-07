@@ -120,7 +120,8 @@
         },
         "labels": {
             "title": "Classifier",
-            "mustTrain": "You must train your classifier first"
+            "mustTrain": "You must train your classifier first",
+            "failedTensorflow": "Your device or browser could not run our classifier"
         },
         "aria": { "more": "more options" }
     },

@@ -10,7 +10,7 @@
     "dependencies": {
         "@emotion/react": "^11.14.0",
         "@emotion/styled": "^11.14.0",
-        "@knicos/genai-base": "^2.1.8",
+        "@knicos/genai-base": "^2.1.9",
         "@knicos/tm-image": "^0.9.2",
         "@knicos/tm-pose": "^0.9.2",
         "@mui/icons-material": "^6.4.0",

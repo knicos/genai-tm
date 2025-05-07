@@ -29,6 +29,11 @@ export const prediction = atom<IPrediction[]>({
     default: [],
 });
 
+export const predictionError = atom<boolean>({
+    key: 'predictionError',
+    default: false,
+});
+
 export const predictionHeatmap = atom<number[][] | null>({
     key: 'predictionheatmap',
     default: null,

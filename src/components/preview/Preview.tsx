@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { useVariant } from '../../util/variant';
 import Alert from '@mui/material/Alert';
 import { useRecoilValue } from 'recoil';
-import { prediction } from '../../state';
+import { prediction, predictionError } from '../../state';
 import { useActiveNode } from '@genaitm/util/nodes';
 import PreviewMenu from './PreviewMenu';
 
@@ -20,6 +20,7 @@ export default function Preview({ onExport, onClone }: Props) {
     const { namespace } = useVariant();
     const { t } = useTranslation(namespace);
     const preds = useRecoilValue(prediction);
+    const hasError = useRecoilValue(predictionError);
 
     const model = preds.length > 0;
 
@@ -39,7 +40,7 @@ export default function Preview({ onExport, onClone }: Props) {
                 />
             }
         >
-            {model && (
+            {model && !hasError && (
                 <div className={style.previewContainer}>
                     <table className={style.table}>
                         <tbody>
@@ -64,6 +65,11 @@ export default function Preview({ onExport, onClone }: Props) {
             {!model && (
                 <div className={style.buttonContainer}>
                     <Alert severity="info">{t('model.labels.mustTrain')}</Alert>
+                </div>
+            )}
+            {model && hasError && (
+                <div className={style.buttonContainer}>
+                    <Alert severity="error">{t('model.labels.failedTensorflow')}</Alert>
                 </div>
             )}
         </Widget>

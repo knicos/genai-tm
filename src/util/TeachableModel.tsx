@@ -10,7 +10,7 @@ import {
     createTeachable as createPose,
 } from '@knicos/tm-pose';
 import * as tf from '@tensorflow/tfjs';
-import { IClassification, modelState, predictedIndex, prediction } from '../state';
+import { IClassification, modelState, predictedIndex, prediction, predictionError } from '../state';
 import { useRecoilState, useSetRecoilState, useRecoilValue } from 'recoil';
 import { useCallback, useEffect, useState, useRef } from 'react';
 import { renderHeatmap } from './heatmap';
@@ -388,6 +388,7 @@ export function usePredictions() {
 export function useTeachableModel() {
     const model = useRecoilValue(modelState);
     const setPredictions = useSetRecoilState(prediction);
+    const setError = useSetRecoilState(predictionError);
     const setIndex = useSetRecoilState(predictedIndex);
 
     return {
@@ -402,6 +403,10 @@ export function useTeachableModel() {
                     try {
                         const p = await model.predict(image);
                         if (p.predictions.length === 0) return;
+                        if (p.predictions.some((p) => isNaN(p.probability))) {
+                            setError(true);
+                            return;
+                        }
                         setPredictions(p.predictions);
                         const nameOfMax = p.predictions.reduce((prev, val) =>
                             val.probability > prev.probability ? val : prev
@@ -411,6 +416,7 @@ export function useTeachableModel() {
                         console.error('Prediction failed', e);
                         setPredictions([]);
                         setIndex(-1);
+                        setError(true);
                     }
                 }
             },
