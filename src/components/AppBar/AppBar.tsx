@@ -32,6 +32,7 @@ export const LANGS = [
     { name: 'ru-RU', label: 'русский язык' },
     { name: 'tr-TR', label: 'Türkçe' },
     { name: 'ua-UA', label: 'Українська' },
+    { name: 'si-LK', label: 'සිංහල' } // ✅ Sinhala added here
 ];
 
 export default function ApplicationBar({ showReminder, onSave }: Props) {
