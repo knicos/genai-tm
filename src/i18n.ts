@@ -9,14 +9,14 @@ i18n.on('languageChanged', (lng) => {
 
 i18n.use(detector)
     .use(Backend)
-    .use(initReactI18next) // passes i18n down to react-i18next
+    .use(initReactI18next)
     .init({
-        ns: [],
+        ns: [], // empty because namespaces are loaded on demand
         backend: {
             loadPath: '/locales/{{lng}}/{{ns}}.json',
         },
         interpolation: {
-            escapeValue: false, // react already safes from xss
+            escapeValue: false,
         },
         fallbackLng: 'en-GB',
         supportedLngs: [
@@ -32,6 +32,7 @@ i18n.use(detector)
             'tr-TR',
             'ua-UA',
             'sw',
+            'si-LK' // ✅ Add Sinhala here
         ],
         detection: {
             caches: [],
