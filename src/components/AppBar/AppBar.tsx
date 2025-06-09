@@ -27,6 +27,7 @@ export const LANGS = [
     { name: 'ja-JP', label: '日本語' },
     { name: 'kr-KR', label: '한국어' },
     { name: 'krl-FI', label: 'Karjala' },
+    { name: 'si-LK', label: 'සිංහල' },
     { name: 'sv', label: 'Svenska' },
     { name: 'sw', label: 'Swahili' },
     { name: 'ru-RU', label: 'русский язык' },
