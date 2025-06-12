@@ -1,4 +1,4 @@
-@value primary, primaryHover from "@knicos/genai-base/css/colours.module.css";
+@value primary, primaryHover from "@genai-fi/base/css/colours.module.css";
 
 .widget {
     /*width: 100%;*/

@@ -1,4 +1,4 @@
-import { ConnectionStatus as ConnStat, Peer2Peer, PeerEvent } from '@knicos/genai-base';
+import { ConnectionStatus as ConnStat, Peer2Peer, PeerEvent } from '@genai-fi/base';
 import style from './style.module.css';
 
 interface Props {

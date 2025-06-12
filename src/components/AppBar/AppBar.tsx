@@ -6,13 +6,13 @@ import { useVariant } from '../../util/variant';
 import SaveAltIcon from '@mui/icons-material/SaveAlt';
 import FileOpenIcon from '@mui/icons-material/FileOpen';
 import style from './AppBar.module.css';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { useAtomValue, useSetAtom } from 'jotai';
 import { loadState, saveState, showOpenDialog } from '../../state';
 import SettingsIcon from '@mui/icons-material/Settings';
 import { IconButton, Link as MUILink, NativeSelect } from '@mui/material';
 import { createSearchParams, useNavigate, useSearchParams, Link } from 'react-router-dom';
 import Suggestion from '../Suggestion/Suggestion';
-import { BusyButton } from '@knicos/genai-base';
+import { BusyButton } from '@genai-fi/base';
 
 interface Props {
     showReminder?: boolean;
@@ -39,12 +39,12 @@ export default function ApplicationBar({ showReminder, onSave }: Props) {
     const [params] = useSearchParams();
     const { namespace, showSettings, showSaveReminder } = useVariant();
     const { t, i18n } = useTranslation(namespace);
-    const saving = useRecoilValue(saveState);
+    const saving = useAtomValue(saveState);
     const navigate = useNavigate();
     const saveButtonRef = useRef(null);
     const [reminder, setReminder] = useState(true);
-    const setShowOpenDialog = useSetRecoilState(showOpenDialog);
-    const isloading = useRecoilValue(loadState);
+    const setShowOpenDialog = useSetAtom(showOpenDialog);
+    const isloading = useAtomValue(loadState);
 
     const openFile = useCallback(() => {
         setShowOpenDialog(true);

@@ -1,9 +1,10 @@
 import React, { useEffect } from 'react';
 import { BehaviourType } from '../../components/Behaviour/Behaviour';
 import RawOutput from '../../components/Output/RawOutput';
-import { useRecoilState } from 'recoil';
+import { useAtom } from 'jotai';
 import { predictedIndex } from '../../state';
-import { ExplainedPredictionsOutput, TeachableModel } from '../../util/TeachableModel';
+import { ExplainedPredictionsOutput } from '../../util/TeachableModel';
+import { TeachableModel } from '@genai-fi/classifier';
 
 export interface WrappedInput {
     element: HTMLCanvasElement;
@@ -19,7 +20,7 @@ interface Props extends React.PropsWithChildren {
 }
 
 export default function Display({ input, behaviours, scaleFactor, volume, model, error, children }: Props) {
-    const [predicted, setPredictionIndex] = useRecoilState(predictedIndex);
+    const [predicted, setPredictionIndex] = useAtom(predictedIndex);
 
     useEffect(() => {
         async function update() {

@@ -1,9 +1,9 @@
 import { activeNodes } from '@genaitm/state';
 import { useEffect } from 'react';
-import { useSetRecoilState } from 'recoil';
+import { useSetAtom } from 'jotai';
 
 export function useActiveNode(id: string, state: boolean | number) {
-    const setActive = useSetRecoilState(activeNodes);
+    const setActive = useSetAtom(activeNodes);
 
     useEffect(() => {
         setActive((old) => {

@@ -5,7 +5,7 @@ import MenuItem from '@mui/material/MenuItem';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { useTranslation } from 'react-i18next';
 import { useVariant } from '../../util/variant';
-import { useRecoilValue } from 'recoil';
+import { useAtomValue } from 'jotai';
 import { fatalWebcam } from '@genaitm/state';
 import { ListItemIcon, ListItemText } from '@mui/material';
 import ShareIcon from '@mui/icons-material/Share';
@@ -20,7 +20,7 @@ interface Props {
 export default function PreviewMenu({ disabled, onExport, onClone }: Props) {
     const { namespace, usep2p, allowModelSharing } = useVariant();
     const { t } = useTranslation(namespace);
-    const fatal = useRecoilValue(fatalWebcam);
+    const fatal = useAtomValue(fatalWebcam);
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
     const handleClick = (event: React.MouseEvent<HTMLElement>) => {

@@ -1,7 +1,6 @@
 import { useRef, useEffect, useCallback } from 'react';
 import { BehaviourType } from '../Behaviour/Behaviour';
-import { generateBlob, ModelContents } from '../ImageWorkspace/saver';
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
+import { useAtom, useAtomValue, useSetAtom } from 'jotai';
 import {
     behaviourState,
     classState,
@@ -12,10 +11,11 @@ import {
     inputImage,
     //p2pActive,
 } from '../../state';
-import { TeachableModel, useTeachableModel } from '../../util/TeachableModel';
+import { useTeachableModel } from '../../util/TeachableModel';
 import { AnalysisType, createAnalysis, createModelStats, ModelStatsType } from './analysis';
-import { canvasFromURL, Connection, PeerEvent, usePeer } from '@knicos/genai-base';
+import { canvasFromURL, Connection, PeerEvent, usePeer } from '@genai-fi/base';
 import ConnectionStatus from '../ConnectionStatus/ConnectionStatus';
+import ClassifierApp, { TeachableModel } from '@genai-fi/classifier';
 
 type ProjectKind = 'image';
 
@@ -97,29 +97,32 @@ interface CacheState {
 }
 
 export default function PeerDeployer() {
-    const [code] = useRecoilState(sessionCode);
-    const includeSamples = useRecoilValue(shareSamples);
-    const [, setSharing] = useRecoilState(sharingActive);
-    const [classes, setClassData] = useRecoilState(classState);
+    const [code] = useAtom(sessionCode);
+    const includeSamples = useAtomValue(shareSamples);
+    const [, setSharing] = useAtom(sharingActive);
+    const [classes, setClassData] = useAtom(classState);
     const { model } = useTeachableModel();
-    const behaviours = useRecoilValue(behaviourState);
-    //const enableP2P = useRecoilValue(p2pActive);
+    const behaviours = useAtomValue(behaviourState);
+    //const enableP2P = useAtomValue(p2pActive);
     const cache = useRef<CacheState>({ model, behaviours });
-    const blob = useRef<ModelContents | null>(null);
-    const setInput = useSetRecoilState(inputImage);
+    const blob = useRef<Blob | null>(null);
+    const setInput = useSetAtom(inputImage);
 
     const dataHandler = useCallback(async (data: EventProtocol, conn: Connection<EventProtocol>) => {
         const ev = data as DeployEventRequest;
         if (ev?.event === 'request') {
-            if (blob.current === null) {
-                blob.current = await generateBlob(
-                    code,
-                    cache.current.model,
-                    cache.current.behaviours,
-                    cache.current?.rawSamples ? cache.current.rawSamples : undefined
+            if (blob.current === null && cache.current.model) {
+                const app = new ClassifierApp(
+                    cache.current.model.getVariant(),
+                    model,
+                    behaviours,
+                    cache.current.rawSamples?.map((s) => s.samples)
                 );
+                app.projectId = code;
+                blob.current = await app.save();
             }
-            switch (ev.entity || 'project') {
+            // FIXME: Get the individual components as blobs.
+            /*switch (ev.entity || 'project') {
                 case 'metadata':
                     conn.send({ event: 'model', component: 'metadata', data: blob.current.metadata });
                     break;
@@ -132,7 +135,7 @@ export default function PeerDeployer() {
                 case 'project':
                     conn.send({ event: 'project', project: blob.current.zip, kind: 'image' });
                     break;
-            }
+            }*/
         } else if (ev?.event === 'request_class') {
             if (cache.current.classNames) {
                 conn.send({ event: 'class', labels: cache.current.classNames, samples: cache.current.samples });

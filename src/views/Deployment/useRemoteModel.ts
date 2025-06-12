@@ -5,8 +5,8 @@ import { DeployEventData } from '../../components/PeerDeployer/PeerDeployer';
 import { loadProject } from '../../components/ImageWorkspace/loader';
 import { BehaviourType } from '../../components/Behaviour/Behaviour';
 import { useSearchParams } from 'react-router-dom';
-import { TeachableModel } from '../../util/TeachableModel';
-import { BuiltinEvent, Peer2Peer, PeerEvent, usePeer, useRandom } from '@knicos/genai-base';
+import { BuiltinEvent, Peer2Peer, PeerEvent, usePeer, useRandom } from '@genai-fi/base';
+import { TeachableModel } from '@genai-fi/classifier';
 
 const TIMEOUT_LOCAL = 5000;
 
@@ -19,7 +19,7 @@ interface RequestEvent extends PeerEvent {
 type EventProtocol = BuiltinEvent | RequestEvent;
 
 export function useTabModel(code: string, onError?: () => void): [TeachableModel | null, BehaviourType[]] {
-    const channel = useRef<BroadcastChannel>();
+    const channel = useRef<BroadcastChannel>(undefined);
     const [model, setModel] = useState<TeachableModel | null>(null);
     const [behaviours, setBehaviours] = useState<BehaviourType[]>([]);
     const [myCode] = useState(() => randomId(8));
@@ -39,9 +39,19 @@ export function useTabModel(code: string, onError?: () => void): [TeachableModel
                     clearTimeout(timeoutRef.current);
                 }
                 const project = await loadProject(ev.data.project);
-                if (project.model)
-                    setModel(new TeachableModel('image', project.metadata, project.model, project.weights));
-                if (project.behaviours) setBehaviours(project.behaviours);
+
+                /*setData(
+                            project.samples
+                                ? project.samples.map((s, i) => ({ label: project.labels?.[i] || '', samples: s }))
+                                : []
+                        );*/
+
+                if (project.model) {
+                    setModel(project.model);
+                }
+                if (project.behaviours) {
+                    setBehaviours(project.behaviours);
+                }
             }
         };
         sendData(`model:${code}`, { event: 'request', channel: `deployment:${myCode}` });
@@ -67,10 +77,19 @@ export function useP2PModel(
         if (ev?.event === 'project' && ev.project instanceof Uint8Array) {
             try {
                 const project = await loadProject(ev.project);
-                if (project.model)
-                    setModel(new TeachableModel('image', project.metadata, project.model, project.weights));
-                console.log('Loaded model');
-                if (project.behaviours) setBehaviours(project.behaviours);
+
+                /*setData(
+                            project.samples
+                                ? project.samples.map((s, i) => ({ label: project.labels?.[i] || '', samples: s }))
+                                : []
+                        );*/
+
+                if (project.model) {
+                    setModel(project.model);
+                }
+                if (project.behaviours) {
+                    setBehaviours(project.behaviours);
+                }
             } catch (e) {
                 if (onError) onError();
                 console.log('Error', e);

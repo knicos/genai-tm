@@ -1,4 +1,4 @@
-import { useState, useCallback, useRef, useEffect } from 'react';
+import { useState, useCallback, useRef, useEffect, RefObject } from 'react';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 // import SettingsIcon from '@mui/icons-material/Settings';
@@ -8,9 +8,9 @@ import WebcamSettings, { IWebcamSettings } from './WebcamSettings';
 import { useTranslation } from 'react-i18next';
 import { useVariant } from '../../util/variant';
 import { useTeachableModel } from '../../util/TeachableModel';
-import { useRecoilState } from 'recoil';
+import { useAtom } from 'jotai';
 import { fatalWebcam } from '@genaitm/state';
-import { Webcam } from '@knicos/genai-base';
+import { Webcam } from '@genai-fi/base';
 
 interface Props {
     visible?: boolean;
@@ -23,7 +23,7 @@ export default function WebcamCapture({ visible, onCapture, onClose }: Props) {
     const { t } = useTranslation(namespace);
     const [capturing, setCapturing] = useState(false);
     const [showSettings, setShowSettings] = useState(false);
-    const [fatal, setFatal] = useRecoilState(fatalWebcam);
+    const [fatal, setFatal] = useAtom(fatalWebcam);
     const [settings, setSettings] = useState<IWebcamSettings>({
         interval: 1,
         delay: 6,
@@ -104,7 +104,7 @@ export default function WebcamCapture({ visible, onCapture, onClose }: Props) {
                     </div>
                     <div className={style.webcambuttoncontainer}>
                         <Button
-                            ref={buttonRef}
+                            ref={buttonRef as RefObject<HTMLButtonElement>}
                             sx={{ flexGrow: 1 }}
                             variant="contained"
                             onMouseDown={startCapture}

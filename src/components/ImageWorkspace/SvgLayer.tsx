@@ -1,4 +1,4 @@
-import { useRecoilValue } from 'recoil';
+import { useAtomValue } from 'jotai';
 import style from './TeachableMachine.module.css';
 import { activeNodes } from '@genaitm/state';
 
@@ -19,7 +19,7 @@ interface Props {
 const CURVE = 20;
 
 export default function SvgLayer({ lines }: Props) {
-    const activeLines = useRecoilValue(activeNodes);
+    const activeLines = useAtomValue(activeNodes);
 
     return (
         <svg

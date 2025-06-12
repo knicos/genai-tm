@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useRef, useEffect } from 'react';
+import React, { useState, useCallback, useRef, useEffect, RefObject } from 'react';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
 import { Widget } from '../widget/Widget';
@@ -26,9 +26,9 @@ import {
     sessionCode,
     sharingActive,
 } from '../../state';
-import { useRecoilValue, useRecoilState } from 'recoil';
+import { useAtomValue, useAtom } from 'jotai';
 import { useActiveNode } from '@genaitm/util/nodes';
-import { BusyButton, canvasesFromFiles, canvasFromDataTransfer, QRCode } from '@knicos/genai-base';
+import { BusyButton, canvasesFromFiles, canvasFromDataTransfer, QRCode } from '@genai-fi/base';
 
 interface Props {
     disabled?: boolean;
@@ -38,7 +38,7 @@ interface Props {
 export default function Input(props: Props) {
     const { namespace, enableFileInput } = useVariant();
     const { t, i18n } = useTranslation(namespace);
-    const [enableInputSwitch, setEnableInput] = useRecoilState(enableCamInput);
+    const [enableInputSwitch, setEnableInput] = useAtom(enableCamInput);
     const [tabIndex, setTabIndex] = useState(0);
     const fileRef = useRef<HTMLInputElement>(null);
     const fileImageRef = useRef<HTMLDivElement>(null);
@@ -47,12 +47,12 @@ export default function Input(props: Props) {
     const isActive = useTabActive();
     const [showDropError, setShowDropError] = useState(false);
     const { predict, canPredict, draw, imageSize } = useTeachableModel();
-    const [remoteInput, setRemoteInput] = useRecoilState(inputImage);
-    const code = useRecoilValue(sessionCode);
-    const sharing = useRecoilValue(sharingActive);
-    const [p2penabled, setP2PEnabled] = useRecoilState(p2pActive);
-    const fatal = useRecoilValue(fatalWebcam);
-    const training = useRecoilValue(modelTraining);
+    const [remoteInput, setRemoteInput] = useAtom(inputImage);
+    const code = useAtomValue(sessionCode);
+    const sharing = useAtomValue(sharingActive);
+    const [p2penabled, setP2PEnabled] = useAtom(p2pActive);
+    const fatal = useAtomValue(fatalWebcam);
+    const training = useAtomValue(modelTraining);
 
     const enableInput = isActive && enableInputSwitch && !training;
 
@@ -194,7 +194,7 @@ export default function Input(props: Props) {
             {enableFileInput && (
                 <div
                     className={style.container}
-                    ref={drop}
+                    ref={drop as unknown as RefObject<HTMLDivElement>}
                 >
                     <Tabs
                         value={tabIndex}

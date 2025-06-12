@@ -30,8 +30,8 @@ const mockLabels = ['class 1', 'class 2'];
 
 vi.mock('@tensorflow/tfjs');
 
-vi.mock('@knicos/genai-base', async (importOriginal) => ({
-    ...(await importOriginal<typeof import('@knicos/genai-base')>()),
+vi.mock('@genai-fi/base', async (importOriginal) => ({
+    ...(await importOriginal<typeof import('@genai-fi/base')>()),
     Webcam: function ({
         onCapture,
         onPostprocess,
@@ -50,35 +50,31 @@ vi.mock('@knicos/genai-base', async (importOriginal) => ({
     },
 }));
 
-vi.mock('@knicos/tm-image', () => ({
-    createTeachable: function () {
-        return {
-            setLabels: vi.fn(),
-            setName: vi.fn(),
-            getLabels: vi.fn(() => mockLabels),
-            setSeed: vi.fn(),
-            addExample: vi.fn(),
-            train: vi.fn(async () => {}),
-            getMetadata: vi.fn(() => ({
-                imageSize: 224,
-            })),
-            predict: vi.fn(() => [
+vi.mock('@genai-fi/classifier', () => ({
+    TeachableModel: vi.fn(function (this: any) {
+        this.setLabels = vi.fn();
+        this.setName = vi.fn();
+        this.getLabels = vi.fn(() => mockLabels);
+        this.setSeed = vi.fn();
+        this.addExample = vi.fn();
+        this.train = vi.fn(async () => {});
+        this.getMetadata = vi.fn(() => ({
+            imageSize: 224,
+        }));
+        this.predict = vi.fn(() => ({
+            predictions: [
                 { className: 'class 1', probability: 0.2 },
                 { className: 'class 2', probability: 0.4 },
-            ]),
-        };
-    },
-}));
-vi.mock('../../util/xai.ts', () => ({
-    CAM: function () {
-        return {
-            createCAM: vi.fn(() => ({
-                predictions: [{ className: 'class 1', probability: 1.0 }],
-                classIndex: 0,
-                heatmapData: [],
-            })),
-        };
-    },
+            ],
+        }));
+        this.ready = vi.fn(async () => true);
+        this.isTrained = vi.fn(() => true);
+        this.getImageSize = vi.fn(() => 224);
+        this.getVariant = vi.fn(() => 'image');
+        this.dispose = vi.fn();
+        this.estimate = vi.fn();
+        this.draw = vi.fn();
+    }),
 }));
 
 describe('ImageClassifier component', () => {

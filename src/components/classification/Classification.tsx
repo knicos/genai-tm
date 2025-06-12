@@ -1,4 +1,4 @@
-import React, { useCallback, useRef, useState } from 'react';
+import React, { RefObject, useCallback, useRef, useState } from 'react';
 import style from './classification.module.css';
 import { IClassification, fatalWebcam } from '../../state';
 import { VerticalButton } from '../button/Button';
@@ -15,9 +15,9 @@ import { NativeTypes } from 'react-dnd-html5-backend';
 import UploadIcon from '@mui/icons-material/Upload';
 import DnDAnimation from '../DnDAnimation/DnDAnimation';
 import AlertModal from '../AlertModal/AlertModal';
-import { useRecoilValue } from 'recoil';
+import { useAtomValue } from 'jotai';
 import { useActiveNode } from '@genaitm/util/nodes';
-import { AlertPara, canvasesFromFiles, canvasFromDataTransfer } from '@knicos/genai-base';
+import { AlertPara, canvasesFromFiles, canvasFromDataTransfer } from '@genai-fi/base';
 
 const SAMPLEMIN = 2;
 
@@ -40,7 +40,7 @@ export function Classification({ name, active, data, index, setData, onActivate,
     const [loading, setLoading] = useState(false);
     const [showTip, setShowTip] = useState(false);
     const [showDropError, setShowDropError] = useState(false);
-    const fatal = useRecoilValue(fatalWebcam);
+    const fatal = useAtomValue(fatalWebcam);
 
     useActiveNode(`widget-class-${index}-out`, Math.max(0, data.samples.length - SAMPLEMIN + 1));
 
@@ -198,7 +198,7 @@ export function Classification({ name, active, data, index, setData, onActivate,
                 ) : null}
                 <div
                     className={style.listContainer}
-                    ref={drop}
+                    ref={drop as unknown as RefObject<HTMLDivElement>}
                 >
                     <input
                         data-testid={`file-${data.label}`}

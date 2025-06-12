@@ -1,18 +1,18 @@
 import { useRef, useEffect, useCallback } from 'react';
-import { ModelContents, generateBlob } from '../ImageWorkspace/saver';
-import { useRecoilValue, useRecoilState } from 'recoil';
+import { useAtomValue, useAtom } from 'jotai';
 import { behaviourState, sessionCode, sharingActive } from '../../state';
 import { sendData } from '../../util/comms';
 import { DeployEventRequest, DeployEventData } from '../PeerDeployer/PeerDeployer';
 import { useTeachableModel } from '../../util/TeachableModel';
+import ClassifierApp from '@genai-fi/classifier';
 
 export default function Deployer() {
-    const code = useRecoilValue(sessionCode);
-    const [, setSharing] = useRecoilState(sharingActive);
-    const channelRef = useRef<BroadcastChannel>();
-    const blob = useRef<ModelContents | null>(null);
+    const code = useAtomValue(sessionCode);
+    const [, setSharing] = useAtom(sharingActive);
+    const channelRef = useRef<BroadcastChannel>(undefined);
+    const blob = useRef<Blob | null>(null);
     const { model } = useTeachableModel();
-    const behaviours = useRecoilValue(behaviourState);
+    const behaviours = useAtomValue(behaviourState);
 
     const getChannel = useCallback(() => {
         if (channelRef.current !== undefined) return channelRef.current;
@@ -26,13 +26,15 @@ export default function Deployer() {
         blob.current = null;
         channel.onmessage = async (ev: MessageEvent<DeployEventRequest>) => {
             if (ev.data.event === 'request') {
-                if (blob.current === null) {
-                    blob.current = await generateBlob(code, model, behaviours);
+                if (blob.current === null && model) {
+                    const app = new ClassifierApp(model.getVariant(), model, behaviours);
+                    app.projectId = code;
+                    blob.current = await app.save();
                 }
-                if (blob.current.zip) {
+                if (blob.current) {
                     sendData<DeployEventData>(ev.data.channel || '', {
                         event: 'project',
-                        project: blob.current.zip,
+                        project: blob.current,
                         kind: 'image',
                     });
                 }

@@ -7,7 +7,7 @@ import { Button } from '../button/Button';
 import { useVariant } from '../../util/variant';
 import { useTranslation, Trans } from 'react-i18next';
 import TextField from '@mui/material/TextField';
-import { useRecoilValue } from 'recoil';
+import { useAtomValue } from 'jotai';
 import { sessionCode, sharingActive } from '../../state';
 import InputAdornment from '@mui/material/InputAdornment';
 import { CircularProgress, IconButton } from '@mui/material';
@@ -42,8 +42,8 @@ function LinkText(props: LinkProps) {
 }
 
 export default function ExportDialog({ open, onClose, ready }: Props) {
-    const code = useRecoilValue(sessionCode);
-    const sharing = useRecoilValue(sharingActive);
+    const code = useAtomValue(sessionCode);
+    const sharing = useAtomValue(sharingActive);
     const { namespace } = useVariant();
     const { t } = useTranslation(namespace);
     const textRef = useRef<HTMLInputElement>(null);

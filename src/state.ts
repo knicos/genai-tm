@@ -1,9 +1,8 @@
-import { atom } from 'recoil';
+import { atom } from 'jotai';
 import { BehaviourType } from './components/Behaviour/Behaviour';
 import { SaveProperties } from './components/ImageWorkspace/SaveDialog';
 import randomId from './util/randomId';
-import { TeachableModel } from './util/TeachableModel';
-
+import { TeachableModel } from '@genai-fi/classifier';
 export interface ISample {
     data: HTMLCanvasElement;
     id: string;
@@ -14,113 +13,49 @@ export interface IClassification {
     samples: ISample[];
 }
 
-export const fileData = atom<File | null>({
-    key: 'fileData',
-    default: null,
-});
+export const fileData = atom<File | null>(null);
 
 export interface IPrediction {
     className: string;
     probability: number;
 }
 
-export const prediction = atom<IPrediction[]>({
-    key: 'prediction',
-    default: [],
-});
+export const prediction = atom<IPrediction[]>([]);
 
-export const predictionError = atom<boolean>({
-    key: 'predictionError',
-    default: false,
-});
+export const predictionError = atom<boolean>(false);
 
-export const predictionHeatmap = atom<number[][] | null>({
-    key: 'predictionheatmap',
-    default: null,
-});
+export const predictionHeatmap = atom<number[][] | null>(null);
 
-export const predictedIndex = atom<number>({
-    key: 'predictedIndex',
-    default: -1,
-});
+export const predictedIndex = atom<number>(-1);
 
-export const behaviourState = atom<BehaviourType[]>({
-    key: 'behaviours',
-    default: [],
-});
+export const behaviourState = atom<BehaviourType[]>([]);
 
-export const classState = atom<IClassification[]>({
-    key: 'classes',
-    default: [],
-});
+export const classState = atom<IClassification[]>([]);
 
-export const modelState = atom<TeachableModel | undefined>({
-    key: 'model',
-    default: undefined,
-    dangerouslyAllowMutability: true,
-});
+export const modelState = atom<TeachableModel | undefined>(undefined);
 
-export const saveState = atom<SaveProperties | null>({
-    key: 'saving',
-    default: null,
-});
+export const saveState = atom<SaveProperties | null>(null);
 
-export const loadState = atom<boolean>({
-    key: 'loading',
-    default: false,
-});
+export const loadState = atom<boolean>(false);
 
-export const sessionCode = atom<string>({
-    key: 'sessionCode',
-    default: randomId(8),
-});
+export const sessionCode = atom<string>(randomId(8));
 
-export const sessionPassword = atom<string>({
-    key: 'sessionPassword',
-    default: randomId(20),
-});
+export const sessionPassword = atom<string>(randomId(20));
 
-export const sharingActive = atom<boolean>({
-    key: 'p2p',
-    default: false,
-});
+export const sharingActive = atom<boolean>(false);
 
-export const p2pActive = atom<boolean>({
-    key: 'enablep2p',
-    default: false,
-});
+export const p2pActive = atom<boolean>(false);
 
-export const fatalWebcam = atom<boolean>({
-    key: 'fatalWebcam',
-    default: false,
-});
+export const fatalWebcam = atom<boolean>(false);
 
-export const shareSamples = atom<boolean>({
-    key: 'shareSamples',
-    default: false,
-});
+export const shareSamples = atom<boolean>(false);
 
-export const inputImage = atom<HTMLCanvasElement | null>({
-    key: 'inputImage',
-    default: null,
-});
+export const inputImage = atom<HTMLCanvasElement | null>(null);
 
-export const showOpenDialog = atom<boolean>({
-    key: 'showOpenDialog',
-    default: false,
-});
+export const showOpenDialog = atom<boolean>(false);
 
-export const enableCamInput = atom<boolean>({
-    key: 'enableInput',
-    default: true,
-});
+export const enableCamInput = atom<boolean>(true);
 
-export const modelTraining = atom<boolean>({
-    key: 'training',
-    default: false,
-});
+export const modelTraining = atom<boolean>(false);
 
-export const activeNodes = atom<Set<string>>({
-    key: 'activeNodes',
-    default: new Set<string>(),
-});
+export const activeNodes = atom<Set<string>>(new Set<string>());

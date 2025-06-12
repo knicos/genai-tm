@@ -23,7 +23,7 @@ const MAXDURATION = 30;
 export default function AudioRecorder({ onData }: Props) {
     const { namespace } = useVariant();
     const { t } = useTranslation(namespace);
-    const recorder = useRef<MediaRecorder>();
+    const recorder = useRef<MediaRecorder>(undefined);
     const [ready, setReady] = useState(false);
     const [record, setRecord] = useState(false);
     const timeout = useRef(-1);

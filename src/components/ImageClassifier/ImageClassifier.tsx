@@ -7,7 +7,7 @@ import Workspace from '../../components/ImageWorkspace/Workspace';
 import { ThemeProvider } from '@mui/material/styles';
 import { useVariant } from '../../util/variant';
 import Fab from '@mui/material/Fab';
-import { theme } from '@knicos/genai-base';
+import { theme } from '@genai-fi/base';
 
 export default function ImageClassifier() {
     const { namespace } = useVariant();

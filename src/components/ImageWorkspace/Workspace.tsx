@@ -13,7 +13,7 @@ import { useVariant } from '../../util/variant';
 import Input from '../Input/Input';
 import SaveDialog, { SaveProperties } from './SaveDialog';
 import { ModelSaver } from './saver';
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
+import { useAtom, useAtomValue, useSetAtom } from 'jotai';
 import { ModelLoader } from './loader';
 import Alert from '@mui/material/Alert';
 import Snackbar from '@mui/material/Snackbar';
@@ -60,15 +60,15 @@ function addCloseAlert() {
 export default function Workspace({ step, visitedStep, onComplete, saveTrigger, onSkip, onSaveRemind }: Props) {
     const { namespace, resetOnLoad, modelVariant, allowHeatmap } = useVariant();
     const { t } = useTranslation(namespace);
-    const [data, setData] = useRecoilState(classState);
+    const [data, setData] = useAtom(classState);
     const [lines, setLines] = useState<ILine[]>([]);
     const [errMsg, setErrMsg] = useState<string | null>(null);
-    const setSaving = useSetRecoilState(saveState);
+    const setSaving = useSetAtom(saveState);
     const [editingData, setEditingData] = useState(false);
     const [showShare, setShowShare] = useState(false);
     const [showClone, setShowClone] = useState(false);
-    const sharing = useRecoilValue(sharingActive);
-    const [, setP2PEnabled] = useRecoilState(p2pActive);
+    const sharing = useAtomValue(sharingActive);
+    const [, setP2PEnabled] = useAtom(p2pActive);
 
     // Ensure an initial model exists
     useModelCreator(modelVariant);
@@ -83,7 +83,7 @@ export default function Workspace({ step, visitedStep, onComplete, saveTrigger, 
         setP2PEnabled(true);
     }, [setShowShare, setP2PEnabled]);
 
-    const observer = useRef<ResizeObserver>();
+    const observer = useRef<ResizeObserver>(undefined);
     const wkspaceRef = useRef<HTMLDivElement>(null);
     const saveTimer = useRef(-1);
 

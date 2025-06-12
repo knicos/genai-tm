@@ -1,6 +1,6 @@
 import { useCallback, useRef, useState } from 'react';
 import { SampleStateValue } from '../../components/ImageGrid/Sample';
-import { BuiltinEvent, Connection, Peer2Peer, PeerEvent, usePeer, useRandom } from '@knicos/genai-base';
+import { BuiltinEvent, Connection, Peer2Peer, PeerEvent, usePeer, useRandom } from '@genai-fi/base';
 
 const POLLING = 5000;
 

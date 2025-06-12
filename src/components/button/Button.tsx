@@ -1,6 +1,6 @@
 import MButton from '@mui/material/Button';
 import { styled } from '@mui/material/styles';
-import { Button as BButton } from '@knicos/genai-base';
+import { Button as BButton } from '@genai-fi/base';
 
 export const Button = BButton;
 

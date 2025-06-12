@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect, useRef } from 'react';
+import React, { useState, useCallback, useEffect, useRef, RefObject } from 'react';
 import style from './style.module.css';
 import { useParams } from 'react-router-dom';
 import { VerticalButton } from '../../components/button/Button';
@@ -11,8 +11,8 @@ import { useTranslation } from 'react-i18next';
 import { useDrop } from 'react-dnd';
 import { NativeTypes } from 'react-dnd-html5-backend';
 import AlertModal from '../../components/AlertModal/AlertModal';
-import { canvasesFromFiles, canvasFromDataTransfer, theme, Webcam } from '@knicos/genai-base';
-import { useSetRecoilState } from 'recoil';
+import { canvasesFromFiles, canvasFromDataTransfer, theme, Webcam } from '@genai-fi/base';
+import { useSetAtom } from 'jotai';
 import { fatalWebcam } from '@genaitm/state';
 import ConnectionStatus from '@genaitm/components/ConnectionStatus/ConnectionStatus';
 
@@ -25,7 +25,7 @@ export function Component() {
     const buttonRef = useRef<HTMLButtonElement>(null);
     const fileRef = useRef<HTMLInputElement>(null);
     const { t } = useTranslation();
-    const setFatal = useSetRecoilState(fatalWebcam);
+    const setFatal = useSetAtom(fatalWebcam);
 
     const doSampleState = useCallback(() => {}, []);
 
@@ -138,7 +138,7 @@ export function Component() {
         <ThemeProvider theme={theme}>
             <main
                 className={style.main}
-                ref={drop}
+                ref={drop as unknown as RefObject<HTMLDivElement>}
             >
                 <header>
                     <h1>{t('testInput.title')}</h1>

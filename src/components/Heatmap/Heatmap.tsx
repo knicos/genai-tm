@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { Widget } from '../widget/Widget';
-import { useRecoilValue } from 'recoil';
+import { useAtomValue } from 'jotai';
 import { modelState, modelTraining } from '@genaitm/state';
 import { FormControlLabel, Switch } from '@mui/material';
 import { useTranslation } from 'react-i18next';
@@ -12,8 +12,8 @@ export default function Heatmap() {
     const { namespace } = useVariant();
     const { t } = useTranslation(namespace);
     const canvasRef = useRef<HTMLCanvasElement>(null);
-    const model = useRecoilValue(modelState);
-    const training = useRecoilValue(modelTraining);
+    const model = useAtomValue(modelState);
+    const training = useAtomValue(modelTraining);
     const [enabled, setEnabled] = useState(true);
 
     useActiveNode('widget-heatmap-in', enabled);

@@ -1,4 +1,4 @@
-import { TeachableModel } from '../../util/TeachableModel';
+import { TeachableModel } from '@genai-fi/classifier';
 
 export function createAnalysis(labels: string[], ref: number[], pred: number[]) {
     const confusion = labels.map(() => labels.map(() => 0));

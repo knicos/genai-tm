@@ -16,9 +16,9 @@ import { useTranslation } from 'react-i18next';
 import { useVariant } from '../../util/variant';
 import TrainingAnimation from '../TrainingAnimation/TrainingAnimation';
 import { useModelTrainer } from '../../util/TeachableModel';
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
+import { useAtom, useAtomValue, useSetAtom } from 'jotai';
 import { useActiveNode } from '@genaitm/util/nodes';
-import { BusyButton } from '@knicos/genai-base';
+import { BusyButton } from '@genai-fi/base';
 
 interface Props {
     onTrained?: () => void;
@@ -46,15 +46,15 @@ const HelpTooltip = styled(({ className, ...props }: TooltipProps) => (
 export default function Trainer({ onTrained, editing, ...props }: Props) {
     const { namespace, advancedMenu, showTrainingAnimation } = useVariant();
     const { t } = useTranslation(namespace);
-    const [training, setTraining] = useRecoilState(modelTraining);
+    const [training, setTraining] = useAtom(modelTraining);
     const [settingEpochs, setSettingEpochs] = useState(50);
     const [settingRate, setSettingRate] = useState(0.001);
     const [settingBatch, setSettingBatch] = useState(16);
     const promptTimer = useRef(-1);
     const [prompt, setPrompt] = useState(false);
     const { stage, epochs, clearTraining, train } = useModelTrainer();
-    const data = useRecoilValue(classState);
-    const setActive = useSetRecoilState(activeNodes);
+    const data = useAtomValue(classState);
+    const setActive = useSetAtom(activeNodes);
 
     const sampleMin = Math.min(...data.map((v) => v.samples.length));
     const isTrainable = data.length >= 2 && sampleMin >= 2;

@@ -8,7 +8,7 @@ import { useVariant } from '../../util/variant';
 import { useTranslation } from 'react-i18next';
 import TextField from '@mui/material/TextField';
 import style from './TeachableMachine.module.css';
-import { useRecoilState, useSetRecoilState } from 'recoil';
+import { useAtom, useSetAtom } from 'jotai';
 import { fileData, showOpenDialog } from '../../state';
 import { useSearchParams } from 'react-router-dom';
 import FileOpenIcon from '@mui/icons-material/FileOpen';
@@ -16,8 +16,8 @@ import FileOpenIcon from '@mui/icons-material/FileOpen';
 export default function OpenDialog() {
     const { namespace } = useVariant();
     const { t } = useTranslation(namespace);
-    const [isopen, setShowOpenDialog] = useRecoilState(showOpenDialog);
-    const setProject = useSetRecoilState(fileData);
+    const [isopen, setShowOpenDialog] = useAtom(showOpenDialog);
+    const setProject = useSetAtom(fileData);
     const [, setParams] = useSearchParams();
     const [codeValue, setCodeValue] = useState<string>('');
 

@@ -10,7 +10,7 @@ import {
     Navigate,
 } from 'react-router-dom';
 import GenerateCustom from './views/GenerateCustom/GenerateCustom';
-import { RecoilRoot } from 'recoil';
+import { Provider } from 'jotai';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { StyledEngineProvider } from '@mui/material/styles';
@@ -100,13 +100,13 @@ interface Props {
 function App({ router }: Props) {
     return (
         <React.Suspense fallback={<div></div>}>
-            <RecoilRoot>
+            <Provider>
                 <DndProvider backend={HTML5Backend}>
                     <StyledEngineProvider injectFirst>
                         <RouterProvider router={router || defaultRouter} />
                     </StyledEngineProvider>
                 </DndProvider>
-            </RecoilRoot>
+            </Provider>
         </React.Suspense>
     );
 }

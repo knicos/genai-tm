@@ -6,7 +6,7 @@ import Behaviour, { BehaviourType } from '../Behaviour/Behaviour';
 import { useTeachableModel } from '../../util/TeachableModel';
 import { patchBehaviours } from './patch';
 import { behaviourState } from '../../state';
-import { useRecoilState } from 'recoil';
+import { useAtom } from 'jotai';
 
 export type { BehaviourType };
 
@@ -18,7 +18,7 @@ interface Props {
 }
 
 export default function Behaviours({ onChange, ...props }: Props) {
-    const [behaviours, setBehaviours] = useRecoilState(behaviourState);
+    const [behaviours, setBehaviours] = useAtom(behaviourState);
     const doSetBehaviours = useCallback(
         (nb: BehaviourType, ix: number) => {
             const newBehaviours = [...behaviours];

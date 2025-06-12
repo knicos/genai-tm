@@ -3,7 +3,7 @@ import _settings from './configuration.json';
 import { useSearchParams, useParams } from 'react-router-dom';
 import { decompressFromEncodedURIComponent } from 'lz-string';
 import ImageClassifier from '../../components/ImageClassifier/ImageClassifier';
-import { Privacy } from '@knicos/genai-base';
+import { Privacy } from '@genai-fi/base';
 import gitInfo from '../../generatedGitInfo.json';
 
 export type VARIANTS = keyof typeof _settings;

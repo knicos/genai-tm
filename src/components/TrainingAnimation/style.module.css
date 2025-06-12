@@ -1,4 +1,4 @@
-@value primary from "@knicos/genai-base/css/colours.module.css";
+@value primary from "@genai-fi/base/css/colours.module.css";
 
 .layer {
     stroke: primary;

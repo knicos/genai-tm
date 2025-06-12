@@ -6,7 +6,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import { Button } from '../button/Button';
 import { useVariant } from '../../util/variant';
 import { useTranslation } from 'react-i18next';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useAtom, useAtomValue } from 'jotai';
 import { sessionCode, shareSamples, sharingActive } from '../../state';
 import { CircularProgress, IconButton } from '@mui/material';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
@@ -27,9 +27,9 @@ interface Props {
 }
 
 export default function CloneDialog({ open, onClose, ready }: Props) {
-    const code = useRecoilValue(sessionCode);
-    const sharing = useRecoilValue(sharingActive);
-    const [samples, setShareSamples] = useRecoilState(shareSamples);
+    const code = useAtomValue(sessionCode);
+    const sharing = useAtomValue(sharingActive);
+    const [samples, setShareSamples] = useAtom(shareSamples);
     const { namespace } = useVariant();
     const { t } = useTranslation(namespace);
     const textRef = useRef<HTMLInputElement>(null);

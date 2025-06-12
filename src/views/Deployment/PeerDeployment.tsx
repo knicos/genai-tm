@@ -7,10 +7,10 @@ import { Alert, IconButton } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import { useVariant } from '../../util/variant';
 import { useTranslation } from 'react-i18next';
-import { useRecoilValue } from 'recoil';
+import { useAtomValue } from 'jotai';
 import { fatalWebcam } from '@genaitm/state';
 import AlertModal from '@genaitm/components/AlertModal/AlertModal';
-import { Privacy, QRCode } from '@knicos/genai-base';
+import { Privacy, QRCode } from '@genai-fi/base';
 import gitInfo from '../../generatedGitInfo.json';
 import ConnectionStatus from '@genaitm/components/ConnectionStatus/ConnectionStatus';
 
@@ -24,7 +24,7 @@ export function Component() {
     const [showQR, setShowQR] = useState(query.get('qr') === '1');
     const { namespace } = useVariant();
     const { t } = useTranslation(namespace);
-    const fatal = useRecoilValue(fatalWebcam);
+    const fatal = useAtomValue(fatalWebcam);
 
     const closeQR = useCallback(() => setShowQR(false), [setShowQR]);
 

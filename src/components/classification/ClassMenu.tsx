@@ -5,11 +5,11 @@ import MenuItem from '@mui/material/MenuItem';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { useTranslation } from 'react-i18next';
 import { useVariant } from '../../util/variant';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useAtom, useAtomValue } from 'jotai';
 import { fatalWebcam, p2pActive, sessionCode, sharingActive } from '../../state';
 import Alert from '@mui/material/Alert';
 import style from './classification.module.css';
-import { BusyButton, QRCode } from '@knicos/genai-base';
+import { BusyButton, QRCode } from '@genai-fi/base';
 
 interface Props {
     index: number;
@@ -19,13 +19,13 @@ interface Props {
 }
 
 export default function ClassMenu({ hasSamples, index, onDeleteClass, onRemoveSamples }: Props) {
-    const code = useRecoilValue(sessionCode);
-    const sharing = useRecoilValue(sharingActive);
-    const [p2penabled, setP2PEnabled] = useRecoilState(p2pActive);
+    const code = useAtomValue(sessionCode);
+    const sharing = useAtomValue(sharingActive);
+    const [p2penabled, setP2PEnabled] = useAtom(p2pActive);
     const { namespace, disabledClassRemove, enabledP2PData, enableCollaboration } = useVariant();
     const { t, i18n } = useTranslation(namespace);
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-    const fatal = useRecoilValue(fatalWebcam);
+    const fatal = useAtomValue(fatalWebcam);
     const open = Boolean(anchorEl);
     const handleClick = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorEl(event.currentTarget);

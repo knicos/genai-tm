@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import style from './Output.module.css';
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import { useVariant } from '../../util/variant';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useAtom, useAtomValue } from 'jotai';
 import { predictedIndex, sessionCode, sessionPassword, behaviourState, p2pActive, fatalWebcam } from '../../state';
 import RawOutput from './RawOutput';
 import Slider from '@mui/material/Slider';
@@ -19,10 +19,10 @@ interface Props {
 }
 
 export default function Output(props: Props) {
-    const code = useRecoilValue(sessionCode);
-    const pwd = useRecoilValue(sessionPassword);
-    const behaviours = useRecoilValue(behaviourState);
-    const [, setP2PEnabled] = useRecoilState(p2pActive);
+    const code = useAtomValue(sessionCode);
+    const pwd = useAtomValue(sessionPassword);
+    const behaviours = useAtomValue(behaviourState);
+    const [, setP2PEnabled] = useAtom(p2pActive);
     const [volume, setVolume] = useState(100);
     const changeVolume = useCallback((_: Event, newValue: number | number[]) => {
         setVolume(newValue as number);
@@ -30,8 +30,8 @@ export default function Output(props: Props) {
 
     const { namespace, allowDeploy, usep2p, enableCollaboration } = useVariant();
     const { t } = useTranslation(namespace);
-    const predicted = useRecoilValue(predictedIndex);
-    const fatal = useRecoilValue(fatalWebcam);
+    const predicted = useAtomValue(predictedIndex);
+    const fatal = useAtomValue(fatalWebcam);
 
     useActiveNode('widget-output-in', true);
 

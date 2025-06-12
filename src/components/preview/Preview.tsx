@@ -4,7 +4,7 @@ import style from './Preview.module.css';
 import { useTranslation } from 'react-i18next';
 import { useVariant } from '../../util/variant';
 import Alert from '@mui/material/Alert';
-import { useRecoilValue } from 'recoil';
+import { useAtomValue } from 'jotai';
 import { prediction, predictionError } from '../../state';
 import { useActiveNode } from '@genaitm/util/nodes';
 import PreviewMenu from './PreviewMenu';
@@ -19,8 +19,8 @@ const colourWheel: Colours[] = ['orange', 'purple', 'blue', 'green', 'red'];
 export default function Preview({ onExport, onClone }: Props) {
     const { namespace } = useVariant();
     const { t } = useTranslation(namespace);
-    const preds = useRecoilValue(prediction);
-    const hasError = useRecoilValue(predictionError);
+    const preds = useAtomValue(prediction);
+    const hasError = useAtomValue(predictionError);
 
     const model = preds.length > 0;
 

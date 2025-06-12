@@ -5,11 +5,11 @@ import Input from './Input';
 import TestWrapper from '../../util/TestWrapper';
 import RecoilObserver from '../../util/Observer';
 import { prediction, predictedIndex, modelState } from '../../state';
-import { TeachableModel } from '../../util/TeachableModel';
-import { MutableSnapshot } from 'recoil';
+import { TeachableModel } from '@genai-fi/classifier';
+import { createStore } from 'jotai';
 
-vi.mock('@knicos/genai-base', async (importOriginal) => ({
-    ...(await importOriginal<typeof import('@knicos/genai-base')>()),
+vi.mock('@genai-fi/base', async (importOriginal) => ({
+    ...(await importOriginal<typeof import('@genai-fi/base')>()),
     Webcam: function ({
         onCapture,
         onPostprocess,
@@ -49,17 +49,12 @@ describe('Input component', () => {
             draw: vi.fn(),
         } as unknown as TeachableModel;
 
+        const store = createStore();
+        store.set(modelState, model);
+        store.set(predictedIndex, -1);
+
         function ModelWrapper({ children }: React.PropsWithChildren) {
-            return (
-                <TestWrapper
-                    initializeState={(snap: MutableSnapshot) => {
-                        snap.set(predictedIndex, -1);
-                        snap.set(modelState, model);
-                    }}
-                >
-                    {children}
-                </TestWrapper>
-            );
+            return <TestWrapper initializeState={store}>{children}</TestWrapper>;
         }
 
         render(
@@ -99,17 +94,12 @@ describe('Input component', () => {
             draw: vi.fn(),
         } as unknown as TeachableModel;
 
+        const store = createStore();
+        store.set(modelState, model);
+        store.set(predictedIndex, -1);
+
         function ModelWrapper({ children }: React.PropsWithChildren) {
-            return (
-                <TestWrapper
-                    initializeState={(snap: MutableSnapshot) => {
-                        snap.set(predictedIndex, -1);
-                        snap.set(modelState, model);
-                    }}
-                >
-                    {children}
-                </TestWrapper>
-            );
+            return <TestWrapper initializeState={store}>{children}</TestWrapper>;
         }
 
         render(

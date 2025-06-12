@@ -21,7 +21,7 @@ import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { ThemeProvider } from '@mui/material/styles';
-import { theme } from '@knicos/genai-base';
+import { theme } from '@genai-fi/base';
 
 const DEFAULTS = _settings as VariantConfiguration;
 

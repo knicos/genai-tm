@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useRef, useEffect } from 'react';
+import React, { useState, useCallback, useRef, useEffect, RefObject } from 'react';
 import { Widget } from '../widget/Widget';
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
@@ -16,7 +16,7 @@ import { useTranslation } from 'react-i18next';
 import { useDrop } from 'react-dnd';
 import { NativeTypes } from 'react-dnd-html5-backend';
 import AlertModal from '../AlertModal/AlertModal';
-import { useRecoilValue } from 'recoil';
+import { useAtomValue } from 'jotai';
 import { predictedIndex } from '@genaitm/state';
 import { useActiveNode } from '@genaitm/util/nodes';
 
@@ -47,7 +47,7 @@ export default function Behaviour({ classLabel, behaviour, setBehaviour, index, 
     const [value, setValue] = useState<BehaviourTypes>('text');
     const prevLabel = useRef(classLabel);
     const [showDropError, setShowDropError] = useState(false);
-    const predicted = useRecoilValue(predictedIndex);
+    const predicted = useAtomValue(predictedIndex);
 
     useActiveNode(`widget-behaviour${index}-in`, predicted === index);
     useActiveNode(`widget-behaviour${index}-out`, predicted === index);
@@ -188,7 +188,7 @@ export default function Behaviour({ classLabel, behaviour, setBehaviour, index, 
         >
             <div
                 className={style.container}
-                ref={drop}
+                ref={drop as unknown as RefObject<HTMLDivElement>}
             >
                 <ToggleButtonGroup
                     value={value}

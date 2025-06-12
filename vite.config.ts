@@ -23,7 +23,7 @@ export default defineConfig(({ mode }) => ({
         },
         server: {
             deps: {
-                inline: ['@knicos/genai-base'],
+                inline: ['@genai-fi/base'],
             },
         },
     },

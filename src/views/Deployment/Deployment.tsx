@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState, useCallback } from 'react';
+import React, { useRef, useEffect, useState, useCallback, RefObject } from 'react';
 import style from './style.module.css';
 import Slider from '@mui/material/Slider';
 import VolumeDown from '@mui/icons-material/VolumeDown';
@@ -14,10 +14,10 @@ import { NativeTypes } from 'react-dnd-html5-backend';
 import Display, { WrappedInput } from './Display';
 import Alert from '@mui/material/Alert';
 import { BehaviourType } from '../../components/Behaviour/Behaviour';
-import { TeachableModel } from '../../util/TeachableModel';
-import { canvasFromFile, Webcam } from '@knicos/genai-base';
-import { useSetRecoilState } from 'recoil';
+import { canvasFromFile, Webcam } from '@genai-fi/base';
+import { useSetAtom } from 'jotai';
 import { fatalWebcam } from '@genaitm/state';
+import { TeachableModel } from '@genai-fi/classifier';
 
 const WIDTH = 400;
 const HEIGHT = 350;
@@ -41,7 +41,7 @@ export default function Deployment({ model, behaviours, error, onActivated, chil
     const fileRef = useRef<HTMLInputElement>(null);
     const inputRef = useRef<HTMLDivElement>(null);
     const [input, setInput] = useState<WrappedInput | null>(null);
-    const setFatal = useSetRecoilState(fatalWebcam);
+    const setFatal = useSetAtom(fatalWebcam);
 
     const scaleFactor = Math.min((window.innerHeight - 200 - 164) / HEIGHT, (window.innerWidth - 40) / WIDTH);
 
@@ -107,7 +107,7 @@ export default function Deployment({ model, behaviours, error, onActivated, chil
     return (
         <div
             className={dropProps.hovered ? style.dropContainer : style.container}
-            ref={drop}
+            ref={drop as unknown as RefObject<HTMLDivElement>}
         >
             <Display
                 behaviours={behaviours}
