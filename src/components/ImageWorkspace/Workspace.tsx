@@ -117,7 +117,8 @@ export default function Workspace({ step, visitedStep, onComplete, saveTrigger, 
         if (wkspaceRef.current) {
             observer.current = new ResizeObserver(() => {
                 if (wkspaceRef.current) {
-                    const nodes = extractNodesFromElements(wkspaceRef.current.children[0] as HTMLElement);
+                    const lastNode = wkspaceRef.current.children[wkspaceRef.current.children.length - 1] as HTMLElement;
+                    const nodes = extractNodesFromElements(lastNode);
                     setLines(generateLines(nodes, connections));
                 }
             });
