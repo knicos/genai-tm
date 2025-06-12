@@ -51,6 +51,7 @@ vi.mock('@genai-fi/base', async (importOriginal) => ({
 }));
 
 vi.mock('@genai-fi/classifier', () => ({
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     TeachableModel: vi.fn(function (this: any) {
         this.setLabels = vi.fn();
         this.setName = vi.fn();
@@ -74,6 +75,7 @@ vi.mock('@genai-fi/classifier', () => ({
         this.dispose = vi.fn();
         this.estimate = vi.fn();
         this.draw = vi.fn();
+        this.setXAICanvas = vi.fn();
     }),
 }));
 

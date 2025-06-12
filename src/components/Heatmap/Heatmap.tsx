@@ -20,8 +20,8 @@ export default function Heatmap() {
 
     useEffect(() => {
         if (canvasRef.current && model) {
-            if (enabled) {
-                model.explained = canvasRef.current;
+            if (enabled && model.isTrained()) {
+                model.setXAICanvas(canvasRef.current);
             } else {
                 model.explained = undefined;
             }
