@@ -18,18 +18,14 @@ The classifier uses a deep neural network called MobileNet (version 2) which has
 
 ## Installation
 
-This is a [React](https://react.dev/) web application that is developed within Node.js using `npm`. If you wish to build your own deployment you will need Node.js installed on your machine. Some of our dependencies are in the github registry which requires you to login using your own github personal access token (see: https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-npm-registry). The source code of these dependencies is here:
-
--   https://github.com/knicos/genai-base
--   https://github.com/knicos/teachablemachine-community
+This is a [React](https://react.dev/) web application that is developed within Node.js using `npm`. If you wish to build your own deployment you will need Node.js installed on your machine.
 
 Steps to install and build:
 
 1. Download the source code from Github.
-2. `npm login --scope=@knicos --auth-type=legacy --registry=https://npm.pkg.github.com`
-3. `npm install`
-4. `npm run build`
-5. Copy the contents of the `dist` folder to a web server.
+2. `npm install`
+3. `npm run build`
+4. Copy the contents of the `dist` folder to a web server.
 
 For the Peer-2-Peer functionality, some environment variables need to be configured to point to your own server. Please contact us if you need help creating your own server, based around the PeerJS package.
 

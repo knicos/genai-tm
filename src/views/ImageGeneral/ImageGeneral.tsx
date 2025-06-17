@@ -2,7 +2,7 @@ import { IVariantContext, VariantContext } from '../../util/variant';
 import _settings from './configuration.json';
 import { useSearchParams, useParams } from 'react-router-dom';
 import { decompressFromEncodedURIComponent } from 'lz-string';
-import ImageClassifier from '../../components/ImageClassifier/ImageClassifier';
+import ImageClassifier from './ImageClassifier';
 import { Privacy } from '@genai-fi/base';
 import gitInfo from '../../generatedGitInfo.json';
 

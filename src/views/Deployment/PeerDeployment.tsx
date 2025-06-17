@@ -1,6 +1,5 @@
 import { useState, useCallback, useEffect } from 'react';
 import Deployment from './Deployment';
-import { useP2PModel } from './useRemoteModel';
 import { useSearchParams, useParams } from 'react-router-dom';
 import style from './style.module.css';
 import { Alert, IconButton } from '@mui/material';
@@ -9,22 +8,25 @@ import { useVariant } from '../../util/variant';
 import { useTranslation } from 'react-i18next';
 import { useAtomValue } from 'jotai';
 import { fatalWebcam } from '@genaitm/state';
-import AlertModal from '@genaitm/components/AlertModal/AlertModal';
+import AlertModal from '@genaitm/components/AlertModal';
 import { Privacy, QRCode } from '@genai-fi/base';
 import gitInfo from '../../generatedGitInfo.json';
-import ConnectionStatus from '@genaitm/components/ConnectionStatus/ConnectionStatus';
+import RemoteModel from './RemoteModel';
+import { TeachableModel } from '@genai-fi/classifier';
+import { BehaviourType } from '@genaitm/workflow/Behaviour/Behaviour';
 
 export function Component() {
     const { code } = useParams();
     const [query, setQuery] = useSearchParams();
     const [hadError, setHadError] = useState(false);
-    const [enableWebRTC, setEnableWebRTC] = useState(false);
     const onError = useCallback(() => setHadError(true), [setHadError]);
-    const [model, behaviours, ready, peer, enabledP2P] = useP2PModel(code || '', onError, !enableWebRTC);
+    const [model, setModel] = useState<TeachableModel | null>(null);
+    const [behaviours, setBehaviours] = useState<BehaviourType[]>([]);
     const [showQR, setShowQR] = useState(query.get('qr') === '1');
     const { namespace } = useVariant();
     const { t } = useTranslation(namespace);
     const fatal = useAtomValue(fatalWebcam);
+    const [enableWebRTC, setEnableWebRTC] = useState(false);
 
     const closeQR = useCallback(() => setShowQR(false), [setShowQR]);
 
@@ -36,7 +38,7 @@ export function Component() {
             if (!available) setHadError(true);
             setEnableWebRTC(true);
         },
-        [setEnableWebRTC, setHadError]
+        [setHadError]
     );
 
     useEffect(() => {
@@ -85,16 +87,17 @@ export function Component() {
                     {t('deploy.labels.noWebcam')}
                 </AlertModal>
             )}
-            {enabledP2P && (
-                <ConnectionStatus
-                    api={import.meta.env.VITE_APP_APIURL}
-                    appName="tm"
-                    ready={ready}
-                    peer={peer}
-                    visibility={0}
-                    noCheck
+
+            {code && enableWebRTC && (
+                <RemoteModel
+                    code={code}
+                    onModel={setModel}
+                    onBehaviours={setBehaviours}
+                    onError={onError}
+                    onDone={() => setEnableWebRTC(false)}
                 />
             )}
+
             <Privacy
                 position="topRight"
                 appName="tm"

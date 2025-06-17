@@ -1,6 +1,6 @@
 import { atom } from 'jotai';
-import { BehaviourType } from './components/Behaviour/Behaviour';
-import { SaveProperties } from './components/ImageWorkspace/SaveDialog';
+import { BehaviourType } from './workflow/Behaviour/Behaviour';
+import { SaveProperties } from './workflow/ImageWorkspace/SaveDialog';
 import randomId from './util/randomId';
 import { TeachableModel } from '@genai-fi/classifier';
 export interface ISample {

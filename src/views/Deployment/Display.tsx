@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
-import { BehaviourType } from '../../components/Behaviour/Behaviour';
-import RawOutput from '../../components/Output/RawOutput';
+import { BehaviourType } from '../../workflow/Behaviour/Behaviour';
+import RawOutput from '../../workflow/Output/RawOutput';
 import { useAtom } from 'jotai';
 import { predictedIndex } from '../../state';
 import { ExplainedPredictionsOutput } from '../../util/TeachableModel';

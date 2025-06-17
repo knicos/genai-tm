@@ -13,7 +13,7 @@ import { useDrop } from 'react-dnd';
 import { NativeTypes } from 'react-dnd-html5-backend';
 import Display, { WrappedInput } from './Display';
 import Alert from '@mui/material/Alert';
-import { BehaviourType } from '../../components/Behaviour/Behaviour';
+import { BehaviourType } from '../../workflow/Behaviour/Behaviour';
 import { canvasFromFile, Webcam } from '@genai-fi/base';
 import { useSetAtom } from 'jotai';
 import { fatalWebcam } from '@genaitm/state';

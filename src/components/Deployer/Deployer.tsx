@@ -2,7 +2,7 @@ import { useRef, useEffect, useCallback } from 'react';
 import { useAtomValue, useAtom } from 'jotai';
 import { behaviourState, sessionCode, sharingActive } from '../../state';
 import { sendData } from '../../util/comms';
-import { DeployEventRequest, DeployEventData } from '../PeerDeployer/PeerDeployer';
+import { DeployEventRequest, DeployEventData } from '../PeerDeployer/events';
 import { useTeachableModel } from '../../util/TeachableModel';
 import ClassifierApp from '@genai-fi/classifier';
 

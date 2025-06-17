@@ -1,11 +1,9 @@
-import { ConnectionStatus as ConnStat, Peer2Peer, PeerEvent } from '@genai-fi/base';
+import { ConnectionStatus as ConnStat } from '@genai-fi/base';
 import style from './style.module.css';
 
 interface Props {
     api: string;
     appName: string;
-    ready?: boolean;
-    peer?: Peer2Peer<PeerEvent>;
     noCheck?: boolean;
     visibility?: number;
 }

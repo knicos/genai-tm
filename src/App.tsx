@@ -66,10 +66,6 @@ export const routes = createRoutesFromElements(
             element={<GenerateCustom />}
         />
         <Route
-            path="deploy/b/:code"
-            lazy={() => import('./views/Deployment/TabDeployment')}
-        />
-        <Route
             path="deploy/p/:code"
             lazy={() => import('./views/Deployment/PeerDeployment')}
         />
