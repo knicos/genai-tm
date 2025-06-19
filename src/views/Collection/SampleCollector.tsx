@@ -32,25 +32,25 @@ export function SampleCollector() {
 
     const index = parseInt(classIndex || '0');
 
-    const doSampleState = useCallback(
-        (id: string, state: SampleStateValue) => {
-            if (state === 'deleted') {
-                setSamples((old) => old.filter((o) => o.id !== id));
-            } else {
-                setSamples((old) => old.map((o) => (o.id === id ? { data: o.data, id: o.id, state } : o)));
-            }
-        },
-        [setSamples]
-    );
+    const doSampleState = useCallback((id: string, state: SampleStateValue) => {
+        if (state === 'deleted') {
+            setSamples((old) => old.filter((o) => o.id !== id));
+        } else {
+            setSamples((old) => old.map((o) => (o.id === id ? { ...o, state } : o)));
+        }
+    }, []);
 
     const doSamplesUpdate = useCallback(
         (samples: Set<string>[]) => {
             if (samples.length > index) {
-                setSamples((old) => old.filter((o) => o.state !== 'added' || samples[index].has(o.id)));
+                setSamples((old) => {
+                    const filtered = old.filter((o) => o.state !== 'added' || samples[index].has(o.id));
+                    return filtered;
+                });
                 setCount(samples[index].size);
             }
         },
-        [setSamples, index]
+        [index]
     );
 
     const sender = usePeerSender<EventProtocol>();

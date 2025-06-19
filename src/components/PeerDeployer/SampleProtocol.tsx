@@ -47,6 +47,8 @@ export default function SampleProtocol() {
                             samples: [{ data: newImage, id: sev.id }, ...newData[sev.index].samples],
                             label: old[sev.index].label,
                         };
+                        cache.current.classNames = newData.map((c) => c.label);
+                        cache.current.samples = newData.map((c) => c.samples.map((s) => s.id));
                         conn.send({ event: 'sample_state', state: 'added', id: sev.id });
                     }
                     return newData;
