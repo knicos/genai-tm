@@ -7,6 +7,7 @@ import { BehaviourType } from '../../workflow/Behaviour/Behaviour';
 import { behaviourState, classState, IClassification, sessionCode, shareSamples } from '@genaitm/state';
 import { useTeachableModel } from '@genaitm/util/TeachableModel';
 import { useAtom, useAtomValue } from 'jotai';
+import { ModelContents } from '@genaitm/workflow/ImageWorkspace/saver';
 
 interface CacheState {
     model?: TeachableModel;
@@ -21,14 +22,13 @@ export default function ShareProtocol() {
     const { model } = useTeachableModel();
     const behaviours = useAtomValue(behaviourState);
     const cache = useRef<CacheState>({ model, behaviours });
-    const blob = useRef<Blob | undefined>(undefined);
+    const blob = useRef<ModelContents | undefined>(undefined);
 
     cache.current.model = model;
     cache.current.behaviours = behaviours;
 
     usePeerData(async (data: EventProtocol, conn: Connection<EventProtocol>) => {
         if (data.event === 'request') {
-            console.log('ShareProtocol: Request for project', code, data);
             if (blob.current === undefined && cache.current.model) {
                 const app = new ClassifierApp(
                     cache.current.model.getVariant(),
@@ -37,23 +37,21 @@ export default function ShareProtocol() {
                     cache.current.rawSamples?.map((s) => s.samples)
                 );
                 app.projectId = code;
-                blob.current = await app.save();
-                app.model?.dispose();
+                blob.current = await app.saveComponents();
             }
-            // FIXME: Get the individual components as blobs.
+
             switch (data.entity || 'project') {
-                /*case 'metadata':
-                        conn.send({ event: 'model', component: 'metadata', data: blob.current.metadata });
-                        break;
-                    case 'model':
-                        conn.send({ event: 'model', component: 'model', data: blob.current.model });
-                        break;
-                    case 'weights':
-                        conn.send({ event: 'model', component: 'weights', data: blob.current.weights });
-                        break;*/
+                case 'metadata':
+                    conn.send({ event: 'model', component: 'metadata', data: blob.current?.metadata });
+                    break;
+                case 'model':
+                    conn.send({ event: 'model', component: 'model', data: blob.current?.model });
+                    break;
+                case 'weights':
+                    conn.send({ event: 'model', component: 'weights', data: blob.current?.weights });
+                    break;
                 case 'project':
-                    console.log('ShareProtocol: Sending project blob', code);
-                    conn.send({ event: 'project', project: blob.current, kind: 'image' });
+                    conn.send({ event: 'project', project: blob.current?.zip, kind: 'image' });
                     break;
             }
         }
