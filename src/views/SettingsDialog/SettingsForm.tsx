@@ -1,53 +1,36 @@
-import { useState, useCallback, FormEvent, useEffect } from 'react';
-import { IVariantContext, useVariant, VariantContext } from '../../util/variant';
-import FormControl from '@mui/material/FormControl';
-import InputLabel from '@mui/material/InputLabel';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
-import MenuItem from '@mui/material/MenuItem';
-import Checkbox from '@mui/material/Checkbox';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import style from './GenerateCustom.module.css';
-import { Button } from '../../components/button/Button';
-import { compressToEncodedURIComponent } from 'lz-string';
-import { useNavigate } from 'react-router-dom';
-import _settings from '../ImageGeneral/configuration.json';
-import { useSearchParams } from 'react-router-dom';
-import { decompressFromEncodedURIComponent } from 'lz-string';
+import { IVariantContext, useVariant } from '@genaitm/util/variant';
+import {
+    Accordion,
+    AccordionDetails,
+    AccordionSummary,
+    Checkbox,
+    FormControl,
+    FormControlLabel,
+    InputLabel,
+    MenuItem,
+    Select,
+    SelectChangeEvent,
+} from '@mui/material';
+import { FormEvent, useCallback, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { LANGS } from '../../components/AppBar/AppBar';
 import { VariantConfiguration, VARIANTS } from '../ImageGeneral/ImageGeneral';
-import Accordion from '@mui/material/Accordion';
-import AccordionSummary from '@mui/material/AccordionSummary';
-import AccordionDetails from '@mui/material/AccordionDetails';
+import style from './style.module.css';
+import _settings from '../ImageGeneral/configuration.json';
+import { LANGS } from '@genaitm/components/AppBar/AppBar';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { ThemeProvider } from '@mui/material/styles';
-import { theme } from '@genai-fi/base';
 
-const DEFAULTS = _settings as VariantConfiguration;
+export const DEFAULTS = _settings as VariantConfiguration;
 
-function delta(data: IVariantContext, template: VARIANTS): Partial<IVariantContext> {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const result: any = {};
-    const keys = Object.keys(data) as Array<keyof IVariantContext>;
-    const merged = {
-        ...DEFAULTS.base,
-        ...DEFAULTS[data.modelVariant],
-        ...DEFAULTS[template],
-    };
-    for (const k of keys) {
-        if (data[k] !== merged[k]) {
-            result[k] = data[k];
-        }
-    }
-    return result;
+interface Props {
+    state: IVariantContext;
+    setState: (f: (state: IVariantContext) => IVariantContext) => void;
 }
 
-function SettingsForm() {
-    const navigate = useNavigate();
+export default function SettingsForm({ state, setState }: Props) {
     const variant = useVariant();
     const { i18n, t } = useTranslation();
-    const [state, setState] = useState<IVariantContext>(DEFAULTS.base);
-    const [template, setTemplate] = useState<VARIANTS>('general');
+    //const [state, setState] = useState<IVariantContext>(DEFAULTS.base);
+    const template: VARIANTS = 'general';
 
     useEffect(() => {
         setState((old) => ({
@@ -60,26 +43,6 @@ function SettingsForm() {
     useEffect(() => {
         setState((old) => ({ ...old, ...variant }));
     }, [variant]);
-
-    const doChangeTemplate = useCallback(
-        (event: SelectChangeEvent) => {
-            setTemplate(event.target.value as VARIANTS);
-        },
-        [setTemplate]
-    );
-
-    const doSubmit = useCallback(
-        (event: FormEvent<HTMLFormElement>) => {
-            event.preventDefault();
-            const str = JSON.stringify(delta(state, template));
-            const urlCode = compressToEncodedURIComponent(str);
-            navigate(
-                str === '{}' ? `/${state.modelVariant}/${template}` : `/${state.modelVariant}/${template}?c=${urlCode}`,
-                { replace: false }
-            );
-        },
-        [state, navigate, template]
-    );
 
     const doCheckChange = useCallback(
         (event: FormEvent<HTMLInputElement>) => {
@@ -96,13 +59,13 @@ function SettingsForm() {
         [setState]
     );
 
-    const doCancel = useCallback(() => {
+    /*const doCancel = useCallback(() => {
         navigate(-1);
     }, [navigate]);
 
     const doReset = useCallback(() => {
         setState(DEFAULTS.base);
-    }, [setState]);
+    }, [setState]);*/
 
     const doLanguageChange = useCallback(
         (event: SelectChangeEvent) => {
@@ -112,62 +75,49 @@ function SettingsForm() {
     );
 
     return (
-        <ThemeProvider theme={theme}>
-            <div className={style.container}>
-                <h1>{t('settings.title')}</h1>
-                <form onSubmit={doSubmit}>
-                    <FormControl fullWidth>
-                        <InputLabel id="language-select">{t('settings.labels.language')}</InputLabel>
-                        <Select
-                            labelId="language-select"
-                            onChange={doLanguageChange}
-                            value={i18n.language}
-                            label={t('settings.labels.language')}
-                            name="namespace"
-                        >
-                            {LANGS.map((lng, ix) => (
-                                <MenuItem
-                                    key={ix}
-                                    value={lng.name}
-                                >
-                                    {lng.label}
-                                </MenuItem>
-                            ))}
-                        </Select>
-                    </FormControl>
-                    <FormControl fullWidth>
-                        <InputLabel id="model-select">{t('settings.labels.model')}</InputLabel>
-                        <Select
-                            labelId="model-select"
-                            onChange={doSelectChange}
-                            value={state.modelVariant}
-                            label={t('settings.labels.model')}
-                            name="modelVariant"
-                        >
-                            <MenuItem value="image">{t('settings.values.models.0')}</MenuItem>
-                            <MenuItem value="pose">{t('settings.values.models.1')}</MenuItem>
-                        </Select>
-                    </FormControl>
-                    <FormControl fullWidth>
-                        <InputLabel id="template-select">{t('settings.labels.variant')}</InputLabel>
-                        <Select
-                            labelId="template-select"
-                            onChange={doChangeTemplate}
-                            value={template}
-                            label={t('settings.labels.variant')}
-                        >
-                            <MenuItem value="general">{t('settings.values.variants.0')}</MenuItem>
-                            <MenuItem value="classroom">{t('settings.values.variants.1')}</MenuItem>
-                        </Select>
-                    </FormControl>
-                    <Accordion
-                        disableGutters
-                        sx={{ boxShadow: 'unset' }}
+        <div className={style.container}>
+            <form>
+                <FormControl fullWidth>
+                    <InputLabel id="language-select">{t('settings.labels.language')}</InputLabel>
+                    <Select
+                        labelId="language-select"
+                        onChange={doLanguageChange}
+                        value={i18n.language}
+                        label={t('settings.labels.language')}
+                        name="namespace"
                     >
-                        <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                            <span className={style.advancedTitle}>{t('settings.labels.advanced')}</span>
-                        </AccordionSummary>
-                        <AccordionDetails>
+                        {LANGS.map((lng, ix) => (
+                            <MenuItem
+                                key={ix}
+                                value={lng.name}
+                            >
+                                {lng.label}
+                            </MenuItem>
+                        ))}
+                    </Select>
+                </FormControl>
+                <FormControl fullWidth>
+                    <InputLabel id="model-select">{t('settings.labels.model')}</InputLabel>
+                    <Select
+                        labelId="model-select"
+                        onChange={doSelectChange}
+                        value={state.modelVariant}
+                        label={t('settings.labels.model')}
+                        name="modelVariant"
+                    >
+                        <MenuItem value="image">{t('settings.values.models.0')}</MenuItem>
+                        <MenuItem value="pose">{t('settings.values.models.1')}</MenuItem>
+                    </Select>
+                </FormControl>
+                <Accordion
+                    disableGutters
+                    sx={{ boxShadow: 'unset' }}
+                >
+                    <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                        <span className={style.advancedTitle}>{t('settings.labels.advanced')}</span>
+                    </AccordionSummary>
+                    <AccordionDetails>
+                        <div className={style.section}>
                             <div className={style.settingsTitle}>Interface</div>
                             <FormControlLabel
                                 control={
@@ -199,6 +149,8 @@ function SettingsForm() {
                                 }
                                 label="Show Save Reminder"
                             />
+                        </div>
+                        <div className={style.section}>
                             <div className={style.settingsTitle}>Workflow</div>
                             <FormControlLabel
                                 control={
@@ -351,6 +303,8 @@ function SettingsForm() {
                                 }
                                 label="Enable input from files"
                             />
+                        </div>
+                        <div className={style.section}>
                             <div className={style.settingsTitle}>Collaboration</div>
                             <FormControlLabel
                                 control={
@@ -403,6 +357,8 @@ function SettingsForm() {
                                 }
                                 label="Allow model sharing"
                             />
+                        </div>
+                        <div className={style.section}>
                             <div className={style.settingsTitle}>Experimental</div>
                             <FormControlLabel
                                 control={
@@ -414,47 +370,10 @@ function SettingsForm() {
                                 }
                                 label="Show XAI Heatmap"
                             />
-                        </AccordionDetails>
-                    </Accordion>
-                    <div className={style.buttonBar}>
-                        <Button
-                            variant="contained"
-                            type="submit"
-                        >
-                            {t('settings.actions.save')}
-                        </Button>
-                        <Button
-                            variant="outlined"
-                            onClick={doReset}
-                        >
-                            {t('settings.actions.reset')}
-                        </Button>
-                        <Button
-                            variant="outlined"
-                            onClick={doCancel}
-                        >
-                            {t('settings.actions.cancel')}
-                        </Button>
-                    </div>
-                </form>
-            </div>
-        </ThemeProvider>
-    );
-}
-
-export default function GenerateCustom() {
-    const [params] = useSearchParams();
-    const customStr = decompressFromEncodedURIComponent(params.get('c') || '');
-    const custom = (customStr ? JSON.parse(customStr) : {}) as IVariantContext;
-
-    const merged = {
-        ...DEFAULTS.base,
-        ...custom,
-    };
-
-    return (
-        <VariantContext.Provider value={merged}>
-            <SettingsForm />
-        </VariantContext.Provider>
+                        </div>
+                    </AccordionDetails>
+                </Accordion>
+            </form>
+        </div>
     );
 }

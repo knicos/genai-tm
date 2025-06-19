@@ -8,6 +8,7 @@ import { ThemeProvider } from '@mui/material/styles';
 import { useVariant } from '../../util/variant';
 import Fab from '@mui/material/Fab';
 import { theme } from '@genai-fi/base';
+import SettingsDialog from '../SettingsDialog/SettingsDialog';
 
 export default function ImageClassifier() {
     const { namespace } = useVariant();
@@ -57,6 +58,7 @@ export default function ImageClassifier() {
                 onSkip={doSkip}
                 onSaveRemind={doSaveRemind}
             />
+            <SettingsDialog />
             <nav
                 className={visited < 1 ? style.stepButton : style.stepButtonHidden}
                 aria-label={t('stepper.aria.step')}

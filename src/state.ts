@@ -59,3 +59,5 @@ export const enableCamInput = atom<boolean>(true);
 export const modelTraining = atom<boolean>(false);
 
 export const activeNodes = atom<Set<string>>(new Set<string>());
+
+export const menuShowSettings = atom<boolean>(false);

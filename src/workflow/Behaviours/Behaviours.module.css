@@ -7,6 +7,9 @@
     gap: 1rem;
     /*width: 305px;*/
     max-width: 100%;
+    background: #d7dce0;
+    padding: 1rem;
+    border-radius: 6px;
 }
 
 .container h1 {

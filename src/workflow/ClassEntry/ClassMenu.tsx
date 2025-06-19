@@ -2,7 +2,7 @@ import React, { useCallback } from 'react';
 import IconButton from '@mui/material/IconButton';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
+import MenuIcon from '@mui/icons-material/Menu';
 import { useTranslation } from 'react-i18next';
 import { useVariant } from '../../util/variant';
 import { useAtom, useAtomValue } from 'jotai';
@@ -49,7 +49,7 @@ export default function ClassMenu({ hasSamples, index, onDeleteClass, onRemoveSa
                 onClick={handleClick}
                 size="small"
             >
-                <MoreVertIcon fontSize="small" />
+                <MenuIcon fontSize="small" />
             </IconButton>
             <Menu
                 MenuListProps={{

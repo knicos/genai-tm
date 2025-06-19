@@ -9,7 +9,6 @@ import {
     useRouteError,
     Navigate,
 } from 'react-router-dom';
-import GenerateCustom from './views/GenerateCustom/GenerateCustom';
 import { Provider } from 'jotai';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
@@ -60,10 +59,6 @@ export const routes = createRoutesFromElements(
                     to="/image/general"
                 />
             }
-        />
-        <Route
-            path="settings"
-            element={<GenerateCustom />}
         />
         <Route
             path="deploy/p/:code"

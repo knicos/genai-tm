@@ -1,4 +1,3 @@
-import PercentageBar, { Colours } from '@genaitm/components/PercentageBar/PercentageBar';
 import style from './Preview.module.css';
 import { useTranslation } from 'react-i18next';
 import { useVariant } from '../../util/variant';
@@ -7,7 +6,8 @@ import { useAtomValue } from 'jotai';
 import { prediction, predictionError } from '../../state';
 import { useActiveNode } from '@genaitm/util/nodes';
 import PreviewMenu from './PreviewMenu';
-import { Widget } from '@genai-fi/base';
+import { PercentageBar, Widget } from '@genai-fi/base';
+import { Colours } from '@genai-fi/base/main/components/PercentageBar/PercentageBar';
 
 interface Props {
     onExport?: () => void;

@@ -4,6 +4,9 @@
     flex-direction: column;
     justify-content: flex-start;
     gap: 1rem;
+    background: #d7dce0;
+    padding: 1rem;
+    border-radius: 6px;
 }
 
 .containerDisabled {

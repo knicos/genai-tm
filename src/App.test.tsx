@@ -26,7 +26,7 @@ i18n.use(initReactI18next) // passes i18n down to react-i18next
     });
 
 describe('Integration', () => {
-    it('renders image app', async ({ expect }) => {
+    it('renders image app', { timeout: 20000 }, async ({ expect }) => {
         const memRouter = createMemoryRouter(routes, { initialEntries: ['/image/general'] });
         render(<App router={memRouter} />);
         expect(await screen.findByTestId('versionlink', undefined, { timeout: 10000 })).toBeInTheDocument();

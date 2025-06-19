@@ -4,7 +4,7 @@
 // learn more: https://github.com/testing-library/jest-dom
 import '@testing-library/jest-dom/vitest';
 // import crypto from 'crypto';
-import mockReact from 'react';
+import mockReact, { PropsWithChildren } from 'react';
 import { vi, afterEach } from 'vitest';
 import { cleanup } from '@testing-library/react';
 
@@ -33,6 +33,27 @@ vi.mock('react-dnd-html5-backend', () => ({
         URL: Symbol(1),
     },
     HTML5Backend: vi.fn(),
+}));
+
+vi.mock('react-i18next', () => ({
+    useTranslation: () => {
+        return {
+            t: (str: string, opt?: { returnObjects: boolean }) => (opt?.returnObjects ? [str] : str),
+            i18n: {
+                changeLanguage: () => new Promise(() => {}),
+            },
+        };
+    },
+    initReactI18next: {
+        type: '3rdParty',
+        init: () => {},
+    },
+    Trans: function Trans({ i18nKey }: { i18nKey: string }) {
+        return i18nKey;
+    },
+    I18nextProvider: function ({ children }: PropsWithChildren) {
+        return children;
+    },
 }));
 
 class ResizeObserver {

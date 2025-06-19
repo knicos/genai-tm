@@ -15,13 +15,17 @@
     justify-content: flex-start;
     align-items: flex-start;
     width: 100%;
-    max-width: 400px;
     box-sizing: border-box;
     background: white;
     border-radius: 6px;
     padding: 2rem;
     gap: 1rem;
     margin: 1rem auto;
+}
+
+.section {
+    display: flex;
+    flex-direction: column;
 }
 
 .buttonBar {

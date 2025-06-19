@@ -1,4 +1,4 @@
-@value primary, primaryHover from "@genai-fi/base/css/colours.module.css";
+@value primary, primaryHover, primaryLight from "@genai-fi/base/css/colours.module.css";
 
 .container {
     display: flex;
@@ -24,23 +24,6 @@
     white-space: pre-wrap;
     max-height: 100%;
     line-height: 1em;
-}
-
-.widget {
-    background-color: primary !important;
-    overflow: hidden;
-}
-
-.widget header {
-    color: white;
-}
-
-.widget h1 {
-    color: white;
-}
-
-.widget header button {
-    color: white;
 }
 
 .widget > div {
@@ -83,7 +66,7 @@
 .deployLink {
     color: white;
     text-decoration: none;
-    border: 1px solid white;
+    /*border: 1px solid white;*/
     padding: 0.2rem 0.6rem;
     border-radius: 4px;
     box-sizing: border-box;
@@ -92,12 +75,12 @@
     font-size: 0.875rem;
     float: right;
     gap: 0.5rem;
-    background: transparent;
+    background: primary;
     transition: background 0.3s;
 }
 
 .deployLink:hover {
-    background: rgba(0, 0, 0, 0.05);
+    background: primaryLight;
 }
 
 .deployLink:visited {

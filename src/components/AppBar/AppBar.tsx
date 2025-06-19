@@ -1,16 +1,14 @@
 import React, { useCallback, useRef, useState } from 'react';
-import AppBar from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar';
 import { useTranslation } from 'react-i18next';
 import { useVariant } from '../../util/variant';
 import SaveAltIcon from '@mui/icons-material/SaveAlt';
 import FileOpenIcon from '@mui/icons-material/FileOpen';
 import style from './AppBar.module.css';
 import { useAtomValue, useSetAtom } from 'jotai';
-import { loadState, saveState, showOpenDialog } from '../../state';
+import { loadState, menuShowSettings, saveState, showOpenDialog } from '../../state';
 import SettingsIcon from '@mui/icons-material/Settings';
 import { IconButton, Link as MUILink, NativeSelect } from '@mui/material';
-import { createSearchParams, useNavigate, useSearchParams, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Suggestion from '../Suggestion/Suggestion';
 import { BusyButton } from '@genai-fi/base';
 
@@ -36,15 +34,14 @@ export const LANGS = [
 ];
 
 export default function ApplicationBar({ showReminder, onSave }: Props) {
-    const [params] = useSearchParams();
     const { namespace, showSettings, showSaveReminder } = useVariant();
     const { t, i18n } = useTranslation(namespace);
     const saving = useAtomValue(saveState);
-    const navigate = useNavigate();
     const saveButtonRef = useRef(null);
     const [reminder, setReminder] = useState(true);
     const setShowOpenDialog = useSetAtom(showOpenDialog);
     const isloading = useAtomValue(loadState);
+    const setShowSettings = useSetAtom(menuShowSettings);
 
     const openFile = useCallback(() => {
         setShowOpenDialog(true);
@@ -58,8 +55,9 @@ export default function ApplicationBar({ showReminder, onSave }: Props) {
     );
 
     const doSettings = useCallback(() => {
-        navigate(`/settings?${createSearchParams(params)}`, { replace: false });
-    }, [navigate, params]);
+        //navigate(`/settings?${createSearchParams(params)}`, { replace: false });
+        setShowSettings(true);
+    }, []);
 
     const doSave = useCallback(() => {
         setReminder(false);
@@ -67,25 +65,21 @@ export default function ApplicationBar({ showReminder, onSave }: Props) {
     }, [setReminder, onSave]);
 
     return (
-        <AppBar
-            component="nav"
-            className="AppBar"
-            position="static"
-        >
+        <nav className={style.appbar}>
             <Suggestion
                 open={showReminder && reminder && showSaveReminder}
                 anchorEl={saveButtonRef.current}
             >
                 Remember to save your classifier.
             </Suggestion>
-            <Toolbar>
+            <div className={style.toolbar}>
                 <Link
                     to="/about"
                     className={style.logo}
                     title="About"
                 >
                     <img
-                        src="/logo48.png"
+                        src="/logo48_bw_invert.png"
                         alt="GenAI logo"
                         width="48"
                         height="48"
@@ -144,7 +138,7 @@ export default function ApplicationBar({ showReminder, onSave }: Props) {
                         <SettingsIcon fontSize="large" />
                     </IconButton>
                 )}
-            </Toolbar>
-        </AppBar>
+            </div>
+        </nav>
     );
 }
