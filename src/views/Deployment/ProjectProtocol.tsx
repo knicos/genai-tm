@@ -18,7 +18,6 @@ export default function ProjectProtocol({ code, onModel, onBehaviours, onError, 
     const [params] = useSearchParams();
 
     usePeerData(async (data: EventProtocol) => {
-        console.log('ProjectProtocol: Received data', data);
         if (data.event === 'project' && data.project instanceof Uint8Array) {
             try {
                 const project = await loadProject(data.project);
@@ -49,7 +48,6 @@ export default function ProjectProtocol({ code, onModel, onBehaviours, onError, 
 
     useEffect(() => {
         if (ready && send) {
-            console.log('ProjectProtocol: Sending request for project', code, ready, send);
             send({ event: 'request', channel: code, password: params.get('p') || undefined });
         }
     }, [ready, send]);

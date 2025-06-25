@@ -6,7 +6,7 @@ import { useEffect, useRef } from 'react';
 import { BehaviourType } from '../../workflow/Behaviour/Behaviour';
 import { behaviourState, classState, IClassification, sessionCode, shareSamples } from '@genaitm/state';
 import { useTeachableModel } from '@genaitm/util/TeachableModel';
-import { useAtom, useAtomValue } from 'jotai';
+import { useAtomValue } from 'jotai';
 import { ModelContents } from '@genaitm/workflow/ImageWorkspace/saver';
 
 interface CacheState {
@@ -17,7 +17,7 @@ interface CacheState {
 
 export default function ShareProtocol() {
     const includeSamples = useAtomValue(shareSamples);
-    const [classes] = useAtom(classState);
+    const classes = useAtomValue(classState);
     const code = useAtomValue(sessionCode);
     const { model } = useTeachableModel();
     const behaviours = useAtomValue(behaviourState);
@@ -26,6 +26,7 @@ export default function ShareProtocol() {
 
     cache.current.model = model;
     cache.current.behaviours = behaviours;
+    cache.current.rawSamples = includeSamples ? classes : undefined;
 
     usePeerData(async (data: EventProtocol, conn: Connection<EventProtocol>) => {
         if (data.event === 'request') {
@@ -57,13 +58,10 @@ export default function ShareProtocol() {
         }
     });
 
+    // Reset the blob cache
     useEffect(() => {
-        // Reset the blob data if samples are included or excluded.
-        if ((cache.current.rawSamples && !includeSamples) || (!cache.current.rawSamples && includeSamples)) {
-            blob.current = undefined;
-        }
-        cache.current.rawSamples = includeSamples ? classes : undefined;
-    }, [classes, includeSamples]);
+        blob.current = undefined;
+    }, [classes, includeSamples, behaviours, model, code]);
 
     return null;
 }
