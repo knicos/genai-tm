@@ -105,5 +105,14 @@
             "models": ["පින්තූර (MobileNet)", "උරහිස් තත්ත්වය (PoseNet)"],
             "variants": ["සාමාන්‍ය භාවිතය", "පාසල් භාවිතය"]
         }
+    },
+    "widget": {
+        "aria": {
+            "editTitle": "මාතෘකාව වෙනස් කරන්න",
+            "editTitleInput": "{{value}} වෙනස් කරන්න"
+        },
+        "labels": {
+            "titlePlaceholder": "මාතෘකාව"
+        }
     }
 }

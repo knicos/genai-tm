@@ -52,5 +52,14 @@
             "models": ["Image (MobileNet)", "Pose (PoseNet)"],
             "variants": ["General Use", "Classroom"]
         }
+    },
+    "widget": {
+        "aria": {
+            "editTitle": "editar título",
+            "editTitleInput": "{{value}} caixa de edição"
+        },
+        "labels": {
+            "titlePlaceholder": "Nome"
+        }
     }
 }

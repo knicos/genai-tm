@@ -133,5 +133,14 @@
             "models": ["Image (MobileNet)", "Pose (PoseNet)"],
             "variants": ["General Use", "Classroom"]
         }
+    },
+    "widget": {
+        "aria": {
+            "editTitle": "edit title",
+            "editTitleInput": "{{value}} edit box"
+        },
+        "labels": {
+            "titlePlaceholder": "Name"
+        }
     }
 }

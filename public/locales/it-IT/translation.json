@@ -1,0 +1,146 @@
+{
+    "deploy": {
+        "actions": {
+            "copy": "Copia",
+            "close": "Chiudi"
+        },
+        "labels": {
+            "notFound": "Classificatore non trovato",
+            "dropHere": "Carica qui la tua immagine",
+            "errorInfo": "Questa pagina esiste solo se mantieni il tuo classificatore aperto in una scheda del browser. Potrebbero esserci anche delle restrizioni di sicurezza che ne impediscono il ritrovamento.",
+            "share": "Condividi l'app su altri dispositivi",
+            "qrExpand": "Clicca sul codice QR per ingrandirlo.",
+            "noWebcam": "L'accesso alla fotocamera è richiesto per la condivisione del classificatore.",
+            "switch": "Abilita la sorgente di input"
+        }
+    },
+    "loader": {
+        "messages": {
+            "getIceConfig": "Recupero configurazione di rete",
+            "cameraPermission": "Per consentire connessioni dirette tra dispositivi, devi permettere l'accesso temporaneo alla fotocamera.",
+            "connecting": "Connessione in corso...",
+            "signaling": "Ricerca di altri dispositivi",
+            "disconnected": "Disconnesso dall'altro dispositivo",
+            "retry": "Nuovo tentativo di connessione...",
+            "content_load": "Caricamento dei contenuti",
+            "content_download": "Download dei contenuti",
+            "ready": "Connessione pronta",
+            "content_none": "Contenuti pronti",
+            "wifiNetwork": "I tuoi dati vengono inviati tramite internet perché non stai utilizzando la stessa rete Wi-Fi.",
+            "permNetwork": "I tuoi dati vengono inviati tramite internet perché non hai permesso l'accesso alla fotocamera.",
+            "quality0": "Verifica in corso...",
+            "quality1": "Connessione debole",
+            "quality2": "Connesso",
+            "quality3": "Connesso",
+            "failed": "Nessuna connessione"
+        },
+        "errors": {
+            "unknown": "Si è verificato un problema di connessione.",
+            "id-in-use": "Qualcuno sta già usando questo codice.",
+            "peer-not-found": "Il codice non è stato trovato.",
+            "missing-ice": "Manca la configurazione.",
+            "no-signaling": "Il nostro server non risponde.",
+            "bad-browser": "Il tuo dispositivo non supporta questa app.",
+            "unknownContent": "Si è verificato un problema con il contenuto multimediale.",
+            "load": "Impossibile caricare il contenuto multimediale.",
+            "download": "Impossibile scaricare il contenuto multimediale."
+        },
+        "titles": {
+            "iceConfig": "Configurazione",
+            "permission": "Permessi",
+            "connecting": "Connessione",
+            "error": "Problema",
+            "contentLoad": "Contenuto multimediale",
+            "networkType": "Informazioni"
+        },
+        "actions": {
+            "close": "Chiudi"
+        }
+    },
+    "testInput": {
+        "title": "Input"
+    },
+    "collect": {
+        "samplePrompt": "Scatta foto o carica immagini qui.",
+        "actions": {
+            "upload": "Carica"
+        },
+        "sampleCount": "{{count}} campioni",
+        "connecting": "Connessione...",
+        "disconnected": "Disconnesso",
+        "failed": "Errore",
+        "failedMessage": "Questo classificatore non è accessibile dal tuo dispositivo.",
+        "dropError": "Solo immagini possono essere trascinate qui.",
+        "relayWarning": "I tuoi dati vengono inviati tramite il nostro server. Potresti voler utilizzare un'altra connessione Wi-Fi per evitarlo."
+    },
+    "about": {
+        "back": "Indietro",
+        "title": "IA Generativa",
+        "privacyTitle": "Informativa sulla privacy",
+        "privacy": [
+            "Benvenuti alla nostra Informativa sulla Privacy, pensata per informarvi su come trattiamo i vostri dati personali in conformità con il Regolamento Generale sulla Protezione dei Dati (GDPR) quando utilizzate il nostro sito web che include lo strumento GenAI Teachable Machine.",
+            "Per rendere più chiaro l'argomento di questa informativa, definiamo alcuni termini del GDPR. Il \"titolare del trattamento\" si riferisce a noi, poiché decidiamo come e perché i vostri dati personali vengono utilizzati, il che ci rende anche responsabili della protezione dei vostri dati personali. I \"dati personali\" includono qualsiasi informazione che possa identificarvi direttamente o indirettamente, come il vostro indirizzo IP. Il \"trattamento\" copre tutte le azioni eseguite con i vostri dati, come la raccolta, la memorizzazione, l'utilizzo e la cancellazione.",
+            "È importante leggere questa informativa per capire quali dati raccogliamo da voi, perché li raccogliamo, cosa ne facciamo e quali diritti avete riguardo ai vostri dati.",
+            "Se avete domande riguardo a questa informativa, vi preghiamo di contattare il titolare del trattamento:",
+            "**Dr. Nicolas Pope**,",
+            "**Indirizzo postale:** University of Eastern Finland, Länsikatu 15, 80110 Joensuu, Finland.",
+            "**Email:** nicolas.pope@uef.fi",
+            "**Telefono:** +358 505 288 449.",
+            "### 1. Attività di trattamento dei dati:",
+            "Registriamo gli indirizzi IP.",
+            "Tuttavia, non utilizziamo i cookie per il tracciamento o l'analisi; forniamo invece contenuti basandoci esclusivamente sui vostri input.",
+            "### 2. Finalità del Trattamento:",
+            "Registrare gli indirizzi IP aiuta a mantenere l'integrità e la sicurezza del sito web identificando e prevenendo attività malevole.",
+            "### 3. Base Giuridica per il Trattamento:",
+            "Principalmente, trattiamo gli indirizzi IP per motivi di sicurezza, basandoci sul nostro legittimo interesse a proteggere il nostro sito web e i nostri dati come previsto dall'Articolo 6(1)(f) del GDPR. Inoltre, potremmo trattare i dati in base al vostro consenso ai sensi dell'Articolo 6(1)(a) del GDPR, qualora desideriate esercitare il vostro diritto di accesso al vostro indirizzo IP registrato. Infine, potremmo trattare i vostri dati personali qualora ci venisse richiesto da un tribunale competente ai sensi dell'Articolo 6(1)(c).",
+            "### 4. Interessi Legittimi Perseguiti:",
+            "Il nostro obiettivo è mantenere il sito web funzionante, preservandone l'integrità e la sicurezza e prevenendo abusi.",
+            "### 5. Sicurezza:",
+            "Adottiamo misure di sicurezza per proteggere i vostri indirizzi IP da accessi illeciti o danni. I vostri indirizzi IP sono crittografati durante qualsiasi trasferimento successivo.",
+            "### 6. Destinatari dei Dati:",
+            "Solo il personale autorizzato del sito web può accedere al vostro indirizzo IP per scopi di sicurezza e manutenzione.",
+            "### 7. Trasferimento dei Dati:",
+            "Gli indirizzi IP possono essere trasferiti ai server Microsoft, ma garantiamo la conformità al GDPR per la protezione dei dati.",
+            "### 8. Limitazione della Conservazione:",
+            "Conserviamo gli indirizzi IP solo per il tempo necessario, tipicamente fino a 7 giorni, a meno che non sia richiesto dalla legge.",
+            "### 9. I vostri Diritti:",
+            "Ai sensi del GDPR, avete diritti che includono:",
+            "* Diritto di essere informati: oltre a informarvi sulle finalità del trattamento, sui periodi di conservazione e con chi vengono condivisi i vostri dati, avete il diritto di essere informati su come raccogliamo i vostri dati. Noi raccogliamo il vostro indirizzo IP quando visitate il nostro sito web.",
+            "* Diritto di accesso: potete richiedere una copia del vostro indirizzo IP registrato e dei relativi dati di log.",
+            "* Diritto di rettifica: se i dati registrati sono inaccurati o incompleti, potete richiederne la rettifica, sebbene l'indirizzo IP non sia tipicamente qualcosa che possa essere corretto allo stesso modo di altri dati.",
+            "* Diritto alla cancellazione: potete richiedere la cancellazione del vostro indirizzo IP entro 7 giorni dalla vostra ultima visita a questo sito web, dato che il vostro indirizzo viene eliminato automaticamente dopo 7 giorni.",
+            "* Diritto di opposizione: potete opporvi al trattamento dei vostri indirizzi IP.",
+            "* Diritto di proporre reclamo: potete proporre un reclamo all'autorità di controllo se ritenete che i vostri dati non siano trattati in conformità con le disposizioni del GDPR.",
+            "### 10. Aggiornamenti a questa Informativa sulla Privacy:",
+            "Possiamo aggiornare questa informativa per riflettere i cambiamenti nelle nostre pratiche di trattamento dei dati o nei requisiti legali. Vi informeremo di eventuali modifiche.",
+            "Apprezziamo la vostra privacy e ci impegniamo a proteggere i vostri dati e a garantire la conformità al GDPR. Se avete domande o desiderate esercitare i vostri diritti, contattateci a: nicolas.pope@uef.fi."
+        ]
+    },
+    "settings": {
+        "title": "Impostazioni",
+        "actions": {
+            "save": "Salva",
+            "reset": "Reset",
+            "cancel": "Annulla"
+        },
+        "labels": {
+            "language": "Lingua",
+            "model": "Modello",
+            "variant": "Varianti dell'interfaccia",
+            "advanced": "Avanzate"
+        },
+        "values": {
+            "models": ["Immagine (MobileNet)", "Pose (PoseNet)"],
+            "variants": ["Uso Generale", "Aula scolastica"]
+        }
+    },
+    "widget": {
+        "aria": {
+            "editTitle": "modifica titolo",
+            "editTitleInput": "casella di modifica {{value}}"
+        },
+        "labels": {
+            "titlePlaceholder": "Nome"
+        }
+    }
+}

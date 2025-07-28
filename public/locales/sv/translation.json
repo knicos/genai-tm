@@ -49,5 +49,14 @@
             "models": ["Bild (MobileNet)", "Pose (PoseNet)"],
             "variants": ["Allmän användning", "Klassrum"]
         }
+    },
+    "widget": {
+        "aria": {
+            "editTitle": "redigera rubrik",
+            "editTitleInput": "{{värde}} redigera låda"
+        },
+        "labels": {
+            "titlePlaceholder": "Namn"
+        }
     }
 }

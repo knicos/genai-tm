@@ -52,5 +52,14 @@
             "models": ["Изображение (MobileNet)", "Поза (PoseNet)"],
             "variants": ["Общее использование", "Учебный класс"]
         }
+    },
+    "widget": {
+        "aria": {
+            "editTitle": "Редактировать название",
+            "editTitleInput": "{{value}} поле для редактирования"
+        },
+        "labels": {
+            "titlePlaceholder": "Имя"
+        }
     }
 }

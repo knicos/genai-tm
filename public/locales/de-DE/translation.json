@@ -52,5 +52,14 @@
             "models": ["Bild (MobileNet)", "Pose (PoseNet)"],
             "variants": ["Allgemeine Nutzung", "Klassenzimmer"]
         }
+    },
+    "widget": {
+        "aria": {
+            "editTitle": "Titel bearbeiten",
+            "editTitleInput": "{{value}} Feld bearbeiten"
+        },
+        "labels": {
+            "titlePlaceholder": "Name"
+        }
     }
 }

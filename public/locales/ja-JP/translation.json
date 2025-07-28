@@ -128,5 +128,14 @@
             "models": ["画像(MobileNet)", "姿勢(PoseNet)"],
             "variants": ["一般的な使用", "教室"]
         }
+    },
+    "widget": {
+        "aria": {
+            "editTitle": "タイトルを編集",
+            "editTitleInput": "{{value}} の編集ボックス"
+        },
+        "labels": {
+            "titlePlaceholder": "名前"
+        }
     }
 }

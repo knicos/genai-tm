@@ -52,5 +52,14 @@
             "models": ["Kuva (MobileNet)", "Asento (PoseNet)"],
             "variants": ["Kaikkeen käyttöön", "Luokkahuoneeseen"]
         }
+    },
+    "widget": {
+        "aria": {
+            "editTitle": "muokkaa otsikkoa",
+            "editTitleInput": "{{value}} muokkaa laatikkoa"
+        },
+        "labels": {
+            "titlePlaceholder": "Nimi"
+        }
     }
 }

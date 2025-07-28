@@ -52,5 +52,14 @@
             "models": ["Зображення (MobileNet)", "Поза (PoseNet)"],
             "variants": ["Загальне використання", "Класна кімната"]
         }
+    },
+    "widget": {
+        "aria": {
+            "editTitle": "редагувати заголовок",
+            "editTitleInput": "поле для редагування {{value}} "
+        },
+        "labels": {
+            "titlePlaceholder": "Назва"
+        }
     }
 }

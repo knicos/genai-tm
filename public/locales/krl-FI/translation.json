@@ -52,5 +52,14 @@
             "models": ["Kuva (MobileNet)", "Azendo (PoseNet)"],
             "variants": ["Kaikkeh käyttöh", "Kluassupertih"]
         }
+    },
+    "widget": {
+        "aria": {
+            "editTitle": "kohendele oččikkuo",
+            "editTitleInput": "{{value}} kohendele kodastu"
+        },
+        "labels": {
+            "titlePlaceholder": "Nimi"
+        }
     }
 }

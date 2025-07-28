@@ -90,5 +90,14 @@
             "models": ["Görsel (MobileNet)", "Poz (PoseNet)"],
             "variants": ["Genel Kullanım", "Sınıf"]
         }
+    },
+    "widget": {
+        "aria": {
+            "editTitle": "başlığı düzenle",
+            "editTitleInput": "{{value}} düzenleme kutusu"
+        },
+        "labels": {
+            "titlePlaceholder": "İsim"
+        }
     }
 }

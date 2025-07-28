@@ -133,5 +133,14 @@
             "models": ["Picha (MobileNet)", "Mkao wa Mwili (PoseNet)"],
             "variants": ["Matumizi ya Kawaida", "Kundi"]
         }
+    },
+    "widget": {
+        "aria": {
+            "editTitle": "hariri kichwa",
+            "editTitleInput": "{{value}} kisanduku cha kuhariri"
+        },
+        "labels": {
+            "titlePlaceholder": "Jina"
+        }
     }
 }

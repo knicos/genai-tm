@@ -1,0 +1,210 @@
+{
+    "app": {
+        "title": "Teachable Machine",
+        "about": "Informazioni",
+        "save": "Salva",
+        "load": "Apri",
+        "language": "Lingua",
+        "reminder": "Ricorda di salvare il tuo classificatore."
+    },
+    "load": {
+        "title": "Apri classificatore",
+        "code": "Inserisci codice condiviso",
+        "actions": {
+            "openFile": "Apri File",
+            "openCode": "Usa Codice",
+            "cancel": "Annulla"
+        }
+    },
+    "save": {
+        "title": "Salva Classificatore",
+        "noModel": "Devi prima creare un classificatore.",
+        "message": "Scarica il contenuto del tuo classificatore in un file.",
+        "saveSamples": "Salva Campioni",
+        "saveClassifier": "Salva Classificatore",
+        "saveBehaviours": "Salva Comportamenti",
+        "name": "Nome",
+        "actions": {
+            "save": "Salva",
+            "cancel": "Annulla"
+        }
+    },
+    "alignment": {
+        "aria": {
+            "left": "allinea a sinistra",
+            "center": "allinea al centro",
+            "right": "allinea a destra",
+            "align": "allineamento testo"
+        }
+    },
+    "fontsize": {
+        "aria": {
+            "title": "modifica dimensione testo",
+            "increase": "aumenta",
+            "decrease": "riduci"
+        }
+    },
+    "trainingdata": {
+        "actions": {
+            "addClass": "Aggiungi una classe",
+            "webcam": "Webcam",
+            "upload": "Carica",
+            "deleteClass": "Rimuovi Classe",
+            "removeAll": "Rimuovi tutti i campioni",
+            "capture": "Tieni premuto per scattare",
+            "collaborate": "Collabora"
+        },
+        "labels": {
+            "title": "Dati di Addestramento",
+            "addSamples": "Aggiungi campioni di immagini",
+            "imageSamples": "{{count}} immagini campione",
+            "class": "Classe",
+            "wait": "Cattura in corso...",
+            "dropFiles": "o trascina le immagini qui da un sito web o un file",
+            "needsMore": "Servono altri campioni",
+            "dropError": "Solo immagini possono essere trascinate qui",
+            "qrMessage": "Puoi usare un telefono o un tablet per aggiungere immagini. Clicca sul codice QR per ingrandirlo."
+        },
+        "aria": {
+            "sample": "campione caricato",
+            "delete": "elimina campione",
+            "more": "più opzioni",
+            "close": "Chiudi",
+            "classCard": "Dati di addestramento per {{name}}"
+        }
+    },
+    "heatmap": {
+        "title": "Spiegazione"
+    },
+    "training": {
+        "actions": {
+            "train": "Addestra classificatore"
+        },
+        "labels": {
+            "title": "Addestramento",
+            "addMore": "Aggiungi prima più campioni o classi",
+            "needsTraining": "Il classificatore necessita di addestramento",
+            "advanced": "Avanzate",
+            "epochs": "Epoche",
+            "learningRate": "Tasso di Apprendimento",
+            "batchSize": "Dimensione del Batch",
+            "loading": "Caricamento classificatore",
+            "prepairing": "Preparazione esempi in corso...",
+            "training": "Addestramento del classificatore",
+            "complete": "Addestramento completato"
+        },
+        "tooltips": {
+            "epochs": "Il numero di volte in cui ogni campione viene utilizzato per l'addestramento.",
+            "learningRate": "Regola solo leggermente, dovrebbe essere inferiore a 0.1.",
+            "batchSize": "Ha un effetto minimo sull'addestramento. È il numero di campioni utilizzati in ogni iterazione dell'addestramento."
+        }
+    },
+    "input": {
+        "labels": {
+            "title": "Input",
+            "webcam": "Webcam",
+            "file": "File",
+            "device": "Dispositivo",
+            "switchOn": "Acceso",
+            "switchOff": "Spento",
+            "upload": "Carica o trascina il file qui."
+        },
+        "aria": {
+            "switch": "Abilita sorgente di input"
+        }
+    },
+    "model": {
+        "actions": {
+            "export": "Esporta per Scratch",
+            "clone": "Condividi una copia"
+        },
+        "labels": {
+            "title": "Classificatore",
+            "mustTrain": "Devi prima addestrare il tuo classificatore",
+            "failedTensorflow": "Il tuo dispositivo o browser non è riuscito a eseguire il nostro classificatore"
+        },
+        "aria": { "more": "più opzioni" }
+    },
+    "output": {
+        "labels": {
+            "title": "Output",
+            "deploy": "Implementa"
+        },
+        "aria": {
+            "volume": "Volume",
+            "image": "Classe {{index}} output",
+            "display": "Output per la classe {{index}}",
+            "expand": "Ingrandisci finestra"
+        }
+    },
+    "behaviours": {
+        "actions": {
+            "upload": "Carica",
+            "delete": "Elimina",
+            "record": "Registra",
+            "stop": "Stop"
+        },
+        "labels": {
+            "title": "Azioni",
+            "message": "Messaggio",
+            "link": "Link",
+            "linkError": "Il link non è supportato",
+            "embedInfo": "Mostra video e immagini da un link. Solo alcuni link funzioneranno, ad esempio YouTube, Vimeo, SoundCloud, file video o immagini.",
+            "voiceRecording": "Registrazione Vocale",
+            "dropError": "Solo immagini o suoni possono essere rilasciati qui",
+            "loop": "Loop"
+        },
+        "aria": {
+            "message": "Testo per l'output",
+            "image": "comportamento immagine",
+            "sound": "comportamento audio",
+            "text": "comportamento testo",
+            "embed": "comportamento del link incorporato",
+            "imageOutput": "Immagine caricata",
+            "noImage": "Segnaposto immagine",
+            "stop": "stop",
+            "play": "riproduci",
+            "behaviourCard": "Comportamento per {{name}}",
+            "loop": "Loop"
+        }
+    },
+    "stepper": {
+        "actions": {
+            "next": "Prossimo"
+        },
+        "aria": {
+            "step": "passaggi dell'attività"
+        }
+    },
+    "webcam": {
+        "aria": {
+            "video": "video da webcam in diretta",
+            "flip": "Passa all'altra fotocamera"
+        }
+    },
+    "widget": {
+        "aria": {
+            "editTitle": "modifica titolo",
+            "editTitleInput": "casella di modifica {{value}}"
+        },
+        "labels": {
+            "titlePlaceholder": "Nome"
+        }
+    },
+    "fontcolor": {
+        "aria": {
+            "title": "seleziona colore carattere"
+        }
+    },
+    "share": {
+        "actions": {
+            "close": "Chiudi"
+        },
+        "labels": {
+            "title": "Condividi",
+            "includeSamples": "Includi immagini campione",
+            "codeInstructions": "Consenti ad altri di aprire una copia del tuo classificatore usando il codice qui sotto.",
+            "linkInstructions": "Copia il link per usare il classificatore in altre applicazioni come <scratchLink>Scratch</scratchLink>. Il link funzionerà solo se mantieni aperta questa scheda del browser, o se salvi il tuo progetto e lo riapri in seguito."
+        }
+    }
+}

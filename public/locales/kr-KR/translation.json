@@ -133,5 +133,14 @@
             "models": ["이미지 (MobileNet)", "포즈 (PoseNet)"],
             "variants": ["일반적 용도", "교실"]
         }
+    },
+    "widget": {
+        "aria": {
+            "editTitle": "제목 수정",
+            "editTitleInput": "{{value}} 박스 수정"
+        },
+        "labels": {
+            "titlePlaceholder": "이름"
+        }
     }
 }
