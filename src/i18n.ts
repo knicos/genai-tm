@@ -23,6 +23,7 @@ i18n.use(detector)
             'de-DE',
             'en-GB',
             'fi-FI',
+            'fr-FR',
             'it-IT',
             'ja-JP',
             'kr-KR',

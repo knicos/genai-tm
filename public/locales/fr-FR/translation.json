@@ -1,0 +1,146 @@
+{
+    "deploy": {
+        "actions": {
+            "copy": "Copier",
+            "close": "Fermer"
+        },
+        "labels": {
+            "notFound": "Classificateur introuvable.",
+            "dropHere": "Déposer une image ici",
+            "errorInfo": "Cette page n'existe que si vous gardez votre Classificateur ouvert dans une fenêtre du navigateur. Il peut aussi y avoir des restrictions de sécurité qui empêchent de la trouver.",
+            "share": "Partager l'application vers d'autres appareils",
+            "qrExpand": "Cliquer le QR pour la déployer.",
+            "noWebcam": "L'accès à la caméra est requis pour partager le classificateur.",
+            "switch": "Changer la source d'entrée"
+        }
+    },
+    "loader": {
+        "messages": {
+            "getIceConfig": "Recherche de la connexion réseau",
+            "cameraPermission": "Pour permettre les connexions directes entre les appareils, vous devez autoriser l'accès temporaire à la caméra..",
+            "connecting": "Tentative de connexion...",
+            "signaling": "Recherche d'autres appareils",
+            "disconnected": "Déconnecté de l'autre appareil",
+            "retry": "Tentative de reconnexion...",
+            "content_load": "Chargement du contenu",
+            "content_download": "Téléchargement du contenu",
+            "ready": "Connexion établie",
+            "content_none": "Contenu prêt",
+            "wifiNetwork": "Vos données sont envoyées via Internet car vous n'utilisez pas le même réseau Wi-Fi.",
+            "permNetwork": "Vos données sont envoyées via Internet car vous n'avez pas autorisé l'accès à la caméra.",
+            "quality0": "Vérification...",
+            "quality1": "Connexion faible",
+            "quality2": "Connecté",
+            "quality3": "Connecté",
+            "failed": "Pas de connexion"
+        },
+        "errors": {
+            "unknown": "Une erreur de connexion s'est produite",
+            "id-in-use": "Quelqu'un utilise actuellement ce code",
+            "peer-not-found": "Le code n'a pas pu être trouvé",
+            "missing-ice": "La configuration est manquante",
+            "no-signaling": "Notre serveur ne répond pas",
+            "bad-browser": "Votre appareil ne supporte pas cette application",
+            "unknownContent": "Il y a un problème avec le contenu multimédia",
+            "load": "Impossible de charger le contenu multimédia",
+            "download": "Impossible de télécharger le contenu multimédia"
+        },
+        "titles": {
+            "iceConfig": "Configurer",
+            "permission": "Permissions",
+            "connecting": "Connexion",
+            "error": "Erreur",
+            "contentLoad": "Contenu multimédia",
+            "networkType": "Information"
+        },
+        "actions": {
+            "close": "Fermer"
+        }
+    },
+    "testInput": {
+        "title": "Entrée"
+    },
+    "collect": {
+        "samplePrompt": "Prendre des photos ou charger des images ici.",
+        "actions": {
+            "upload": "Chargement"
+        },
+        "sampleCount": "{{count}} échantillons",
+        "connecting": "Connecting...",
+        "disconnected": "Déconnecté",
+        "failed": "Échec",
+        "failedMessage": "Ce classificateur n'est pas accessible depuis votre appareil",
+        "dropError": "Seules des images peuvent être déposées ici",
+        "relayWarning": "Vos données sont transmises via notre serveur. Vous pouvez utiliser une autre connexion Wi-Fi pour éviter cela."
+    },
+    "about": {
+        "back": "Retour",
+        "title": "Generation AI",
+        "privacyTitle": "Privacy Notice",
+        "privacy": [
+            "Bienvenue dans notre politique de confidentialité, conçue pour vous informer sur la manière dont nous traitons vos données personnelles conformément au Règlement général sur la protection des données (RGPD) lorsque vous utilisez notre site web proposant l'outil GenAI Teachable Machine.",
+            "Afin de clarifier l'objet de cette politique, définissons certains termes du RGPD. Le \"responsable du traitement\" désigne notre entité, car c'est nous qui décidons comment et pourquoi vos données personnelles sont utilisées, ce qui nous rend également responsables de la protection de vos données personnelles. Les \"données personnelles\" comprennent toute information permettant de vous identifier directement ou indirectement, comme votre adresse IP. Le \"traitement\" couvre toutes les actions effectuées avec vos données, telles que leur collecte, leur stockage, leur utilisation et leur suppression. ",
+            "Il est important de lire cet avis afin de comprendre quelles données nous collectons à votre sujet, pourquoi nous les collectons, ce que nous en faisons et quels sont vos droits concernant vos données.",
+            "Si vous avez des questions concernant cet avis, veuillez contacter le responsable du traitement :",
+            "**Dr. Nicolas Pope**,",
+            "**Adresse postale:** University of Eastern Finland, Länsikatu 15, 80110 Joensuu, Finland.",
+            "**Email:** nicolas.pope@uef.fi",
+            "**Téléphone:** +358 505 288 449.",
+            "### 1. Activité de traitement de données :",
+            "Nous enregistrons les adresses IP.",
+            "Cependant, nous n’utilisons pas de cookies pour le suivi ou l’analyse; à la place, nous fournissons du contenu basé uniquement sur vos entrées.",
+            "### 2. Finalités du traitement :",
+            "Le suivi des adresses IP aide à maintenir l’intégrité et la sécurité du site Web en identifiant et en empêchant les activités malveillantes.",
+            "### 3. Bases légales du traitement :",
+            "Nous traitons essentiellement des adresses IP pour des raisons de sécurité, sur la base de notre intérêt légitime à protéger notre site Internet et nos données, conformément à l’article 6, paragraphe 1, point f), du RGPD. Nous pouvons également traiter des données sur la base de votre consentement, conformément à l’article 6, paragraphe 1, point a), du RGPD, si vous souhaitez exercer votre droit d’accès à votre adresse IP enregistrée. Nous pouvons également traiter vos données à caractère personnel si un tribunal compétent nous en donne l’ordre, conformément à l’article 6, paragraphe 1, point c), du RGPD.",
+            "### 4. Intérêts légitimes poursuivis :",
+            "Notre objectif est de maintenir le site en bon état de fonctionnement en préservant son intégrité et sa sécurité et en empêchant les abus.",
+            "### 5. Securité :",
+            "Nous mettons en œuvre des mesures de sécurité pour protéger vos adresses IP contre tout accès ou dommage illicite. Vos adresses IP sont cryptées lors de tout transfert ultérieur.",
+            "### 6. Destinataires des données:",
+            "Seul le personnel autorisé du site web peut accéder à votre adresse IP à des fins de sécurité et de maintenance.",
+            "### 7. Transferts des données :",
+            "Les adresses IP peuvent être transférées vers des serveurs Microsoft, mais nous nous assurons du respect du RGPD pour la protection des données.",
+            "### 8. Périodes de conservation :",
+            "Nous conservons les adresses IP aussi longtemps que nécessaire, généralement jusqu’à 7 jours, sauf si la loi l’exige.",
+            "### 9. Vos droits:",
+            "Under GDPR, you have rights including",
+            "* Droit d'être informé : En plus de vous informer sur les finalités du traitement, les périodes de conservation et les destinataires de vos données, vous avez le droit d’être informé sur la manière dont nous collectons vos données. Nous collectons votre adresse IP lorsque vous visitez notre site web.",
+            "* Droit d’accès: vous pouvez demander une copie de votre adresse IP enregistrée et des données de journal associées.",
+            "* Droit de rectification: si les données enregistrées sont inexactes ou incomplètes, vous pouvez demander une rectification, même si l’adresse IP n’est pas un élément que l’on peut corriger de la même manière que d’autres données.",
+            "* Droit à l’effacement: vous pouvez demander l’effacement de votre adresse IP dans les 7 jours suivant votre dernière visite sur ce site web, car votre adresse IP est automatiquement effacée après 7 jours.",
+            "* Droit d’opposition: vous pouvez vous opposer au traitement de votre adresse IP.",
+            "* Droit de recours: vous pouvez déposer un recours auprès de l’autorité de contrôle si vous pensez que vos données ne sont pas traitées conformément aux dispositions du RGPD.",
+            "### 10. Mises à jour de cette politique de confidentialité :",
+            "Nous pouvons mettre à jour cette déclaration pour refléter les changements dans nos pratiques de traitement des données ou les exigences légales. Nous vous informerons de tout changement.",
+            "Nous respectons votre vie privée et nous nous engageons à protéger vos données et à garantir la conformité au RGPD. Si vous avez des questions ou si vous souhaitez exercer vos droits, contactez-nous à nicolas.pope@uef.fi."
+        ]
+    },
+    "settings": {
+        "title": "Réglages",
+        "actions": {
+            "save": "Enregistrer",
+            "reset": "Réinitialiser",
+            "cancel": "Annuler"
+        },
+        "labels": {
+            "language": "Langue",
+            "model": "Modèle",
+            "variant": "Interface Variant",
+            "advanced": "Avancés"
+        },
+        "values": {
+            "models": ["Image (MobileNet)", "Pose (PoseNet)"],
+            "variants": ["Usage général", "En classe"]
+        }
+    },
+    "widget": {
+        "aria": {
+            "editTitle": "modifier le titre",
+            "editTitleInput": "{{value}} edit box"
+        },
+        "labels": {
+            "titlePlaceholder": "Nom"
+        }
+    }
+}

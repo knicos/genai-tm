@@ -21,6 +21,7 @@ export const LANGS = [
     { name: 'de-DE', label: 'Deutsch' },
     { name: 'en-GB', label: 'English' },
     { name: 'pt-BR', label: 'Português Brasileiro' },
+    { name: 'fr-FR', label: 'Français' },
     { name: 'fi-FI', label: 'Suomi' },
     { name: 'it-IT', label: 'Italiano' },
     { name: 'ja-JP', label: '日本語' },
