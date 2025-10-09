@@ -4,7 +4,6 @@ import { modelState, modelTraining } from '@genaitm/state';
 import { FormControlLabel, Switch } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useVariant } from '@genaitm/util/variant';
-import { useActiveNode } from '@genaitm/util/nodes';
 import style from './style.module.css';
 import { Widget } from '@genai-fi/base';
 
@@ -14,9 +13,9 @@ export default function Heatmap() {
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const model = useAtomValue(modelState);
     const training = useAtomValue(modelTraining);
-    const [enabled, setEnabled] = useState(true);
+    const [enabled, setEnabled] = useState(false);
 
-    useActiveNode('widget-heatmap-in', enabled);
+    //useActiveNode('widget-heatmap-in', enabled);
 
     useEffect(() => {
         if (canvasRef.current && model) {
@@ -35,6 +34,7 @@ export default function Heatmap() {
             noPadding
             dataWidget="heatmap"
             title={t('heatmap.title')}
+            active={enabled && canPredict}
             menu={
                 <div>
                     <FormControlLabel
@@ -55,14 +55,16 @@ export default function Heatmap() {
                 </div>
             }
         >
-            <div className={style.container}>
-                <canvas
-                    width={224}
-                    height={224}
-                    ref={canvasRef}
-                    style={{ margin: '1rem', borderRadius: '6px', background: '#eee' }}
-                />
-            </div>
+            {enabled && (
+                <div className={style.container}>
+                    <canvas
+                        width={224}
+                        height={224}
+                        ref={canvasRef}
+                        style={{ margin: '1rem', borderRadius: '6px', background: '#eee' }}
+                    />
+                </div>
+            )}
         </Widget>
     );
 }
