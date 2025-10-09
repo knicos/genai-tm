@@ -83,7 +83,7 @@
         "labels": {
             "title": "Entraînement",
             "addMore": "Ajoutez d'abord plus d'échantillons ou de classes",
-            "needsEntraînement": "Le Classificateur a besoin d'entraînement ",
+            "needsTraining": "Le Classificateur a besoin d'entraînement ",
             "advanced": "Avancé",
             "epochs": "Epochs",
             "learningRate": "Taux d'apprentissage",
