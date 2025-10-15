@@ -26,7 +26,6 @@ import {
     sharingActive,
 } from '../../state';
 import { useAtomValue, useAtom } from 'jotai';
-import { useActiveNode } from '@genaitm/util/nodes';
 import { BusyButton, canvasesFromFiles, canvasFromDataTransfer, QRCode, Widget } from '@genai-fi/base';
 
 interface Props {
@@ -54,8 +53,6 @@ export default function Input(props: Props) {
     const training = useAtomValue(modelTraining);
 
     const enableInput = isActive && enableInputSwitch && !training;
-
-    useActiveNode('widget-input-out', enableInput);
 
     useEffect(() => {
         if (fatal) setTabIndex(1);
@@ -169,6 +166,7 @@ export default function Input(props: Props) {
             noPadding
             active={dropProps.hovered}
             dataWidget="input"
+            data-active={enableInput}
             title={t('input.labels.title')}
             menu={
                 <div className={style.inputControls}>

@@ -21,13 +21,11 @@ import { useModelCreator } from '../../util/TeachableModel';
 import OpenDialog from './OpenDialog';
 import CloneDialog from './CloneDialog';
 import Heatmap from '../Heatmap/Heatmap';
-import SvgLayer, { ILine } from '@genai-fi/base/main/components/WorkflowLayout/SvgLayer';
-import { IConnection } from '@genai-fi/base';
-import { extractNodesFromElements, generateLines } from '@genai-fi/base/main/components/WorkflowLayout/lines';
+import { IConnection, WorkflowLayout } from '@genai-fi/base';
 
 const SAVE_PERIOD = 5 * 60 * 1000; // 5 mins
 
-const connections: IConnection[] = [
+const CONNECTIONS: IConnection[] = [
     { start: 'class', end: 'trainer', startPoint: 'right', endPoint: 'left' },
     { start: 'trainer', end: 'model', startPoint: 'right', endPoint: 'left' },
     { start: 'model', end: 'behaviour', startPoint: 'right', endPoint: 'left' },
@@ -62,7 +60,6 @@ export default function Workspace({ step, visitedStep, onComplete, saveTrigger, 
     const { namespace, resetOnLoad, modelVariant, allowHeatmap } = useVariant();
     const { t } = useTranslation(namespace);
     const [data, setData] = useAtom(classState);
-    const [lines, setLines] = useState<ILine[]>([]);
     const [errMsg, setErrMsg] = useState<string | null>(null);
     const setSaving = useSetAtom(saveState);
     const [editingData, setEditingData] = useState(false);
@@ -84,8 +81,6 @@ export default function Workspace({ step, visitedStep, onComplete, saveTrigger, 
         setP2PEnabled(true);
     }, [setShowShare, setP2PEnabled]);
 
-    const observer = useRef<ResizeObserver>(undefined);
-    const wkspaceRef = useRef<HTMLDivElement>(null);
     const saveTimer = useRef(-1);
 
     const closeError = useCallback(() => setErrMsg(null), [setErrMsg]);
@@ -113,27 +108,6 @@ export default function Workspace({ step, visitedStep, onComplete, saveTrigger, 
                     samples: [],
                 },
             ]);
-        }
-
-        if (wkspaceRef.current) {
-            observer.current = new ResizeObserver(() => {
-                if (wkspaceRef.current) {
-                    const lastNode = wkspaceRef.current.children[wkspaceRef.current.children.length - 1] as HTMLElement;
-                    const nodes = extractNodesFromElements(lastNode);
-                    setLines(generateLines(nodes, connections));
-                }
-            });
-            observer.current.observe(wkspaceRef.current);
-            const children = wkspaceRef.current.children[0]?.children;
-            if (children) {
-                for (let i = 0; i < children.length; ++i) {
-                    const child = children[i];
-                    observer.current.observe(child);
-                }
-            }
-            return () => {
-                observer.current?.disconnect();
-            };
         }
     }, []);
 
@@ -186,18 +160,14 @@ export default function Workspace({ step, visitedStep, onComplete, saveTrigger, 
     );
 
     return (
-        <main
-            className={style.workspace}
-            ref={wkspaceRef}
-        >
+        <main className={style.workspace}>
             <DeployWrapper />
             <ModelLoader
                 onLoaded={doLoaded}
                 onError={doLoadError}
             />
             <ModelSaver onSaved={doSaved} />
-            <div className={visitedStep < 1 ? style.container3 : style.container5}>
-                <SvgLayer lines={lines} />
+            <WorkflowLayout connections={CONNECTIONS}>
                 <TrainingData
                     data={data}
                     setData={doSetData}
@@ -226,7 +196,7 @@ export default function Workspace({ step, visitedStep, onComplete, saveTrigger, 
                     onChange={doBehaviourChange}
                 />
                 <Output hidden={visitedStep < 1} />
-            </div>
+            </WorkflowLayout>
 
             <SaveDialog
                 trigger={saveTrigger}

@@ -4,6 +4,7 @@ import { createStore, Provider } from 'jotai';
 import { VariantContext } from './variant';
 import _settings from '../views/ImageGeneral/configuration.json';
 import { VariantConfiguration } from '../views/ImageGeneral/ImageGeneral';
+import { WorkflowLayout } from '@genai-fi/base';
 
 const settings = _settings as VariantConfiguration;
 
@@ -15,7 +16,9 @@ export default function TestWrapper({ initializeState, children }: Props) {
     return (
         <Provider store={initializeState}>
             <BrowserRouter>
-                <VariantContext.Provider value={settings.base}>{children}</VariantContext.Provider>
+                <WorkflowLayout connections={[]}>
+                    <VariantContext.Provider value={settings.base}>{children}</VariantContext.Provider>
+                </WorkflowLayout>
             </BrowserRouter>
         </Provider>
     );

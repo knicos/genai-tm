@@ -16,7 +16,6 @@ import { useVariant } from '@genaitm/util/variant';
 import TrainingAnimation from '@genaitm/components/TrainingAnimation/TrainingAnimation';
 import { useModelTrainer } from '@genaitm/util/TeachableModel';
 import { useAtom, useAtomValue, useSetAtom } from 'jotai';
-import { useActiveNode } from '@genaitm/util/nodes';
 import { BusyButton, Widget } from '@genai-fi/base';
 
 interface Props {
@@ -57,9 +56,6 @@ export default function Trainer({ onTrained, editing, ...props }: Props) {
 
     const sampleMin = Math.min(...data.map((v) => v.samples.length));
     const isTrainable = data.length >= 2 && sampleMin >= 2;
-
-    useActiveNode('widget-trainer-in', isTrainable);
-    useActiveNode('widget-trainer-out', training);
 
     useEffect(() => {
         clearTraining();
@@ -126,6 +122,7 @@ export default function Trainer({ onTrained, editing, ...props }: Props) {
             dataWidget="trainer"
             title={t('training.labels.title')}
             className={style.widget}
+            data-active={isTrainable}
             {...props}
         >
             {showTrainingAnimation && <TrainingAnimation active={stage === 'training'} />}

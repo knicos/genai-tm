@@ -15,8 +15,6 @@ export default function Heatmap() {
     const training = useAtomValue(modelTraining);
     const [enabled, setEnabled] = useState(false);
 
-    //useActiveNode('widget-heatmap-in', enabled);
-
     useEffect(() => {
         if (canvasRef.current && model) {
             if (enabled && model.isTrained()) {
@@ -34,7 +32,7 @@ export default function Heatmap() {
             noPadding
             dataWidget="heatmap"
             title={t('heatmap.title')}
-            active={enabled && canPredict}
+            data-active={`${enabled && canPredict}`}
             menu={
                 <div>
                     <FormControlLabel

@@ -17,7 +17,6 @@ import { NativeTypes } from 'react-dnd-html5-backend';
 import AlertModal from '@genaitm/components/AlertModal';
 import { useAtomValue } from 'jotai';
 import { predictedIndex } from '@genaitm/state';
-import { useActiveNode } from '@genaitm/util/nodes';
 import { Widget } from '@genai-fi/base';
 
 type BehaviourTypes = 'image' | 'sound' | 'speech' | 'text' | 'embed';
@@ -48,9 +47,6 @@ export default function Behaviour({ classLabel, behaviour, setBehaviour, index, 
     const prevLabel = useRef(classLabel);
     const [showDropError, setShowDropError] = useState(false);
     const predicted = useAtomValue(predictedIndex);
-
-    useActiveNode(`widget-behaviour${index}-in`, predicted === index);
-    useActiveNode(`widget-behaviour${index}-out`, predicted === index);
 
     const patchBehaviour = useCallback(
         (newBehaviour: Partial<BehaviourType>) => {
@@ -183,6 +179,7 @@ export default function Behaviour({ classLabel, behaviour, setBehaviour, index, 
             dataWidget="behaviour"
             id={`behaviour${index}`}
             title={classLabel}
+            data-active={predicted === index}
             className={style.widget}
             aria-label={t('behaviours.aria.behaviourCard', { name: classLabel })}
             {...props}

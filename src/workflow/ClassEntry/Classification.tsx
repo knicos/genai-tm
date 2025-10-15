@@ -15,7 +15,6 @@ import UploadIcon from '@mui/icons-material/Upload';
 import DnDAnimation from '@genaitm/components/DnDAnimation/DnDAnimation';
 import AlertModal from '@genaitm/components/AlertModal';
 import { useAtomValue } from 'jotai';
-import { useActiveNode } from '@genaitm/util/nodes';
 import { AlertPara, canvasesFromFiles, canvasFromDataTransfer, Widget } from '@genai-fi/base';
 
 const SAMPLEMIN = 2;
@@ -40,8 +39,6 @@ export function Classification({ name, active, data, index, setData, onActivate,
     const [showTip, setShowTip] = useState(false);
     const [showDropError, setShowDropError] = useState(false);
     const fatal = useAtomValue(fatalWebcam);
-
-    useActiveNode(`widget-class-${index}-out`, Math.max(0, data.samples.length - SAMPLEMIN + 1));
 
     const doShowTip = useCallback(() => data.samples.length === 0 && setShowTip(true), [data, setShowTip]);
 
@@ -176,6 +173,7 @@ export function Classification({ name, active, data, index, setData, onActivate,
             aria-label={t('trainingdata.aria.classCard', { name })}
             dataWidget="class"
             id={`class-${index}`}
+            data-active={Math.max(0, data.samples.length - SAMPLEMIN + 1)}
             setTitle={disableClassNameEdit ? undefined : setTitle}
             menu={
                 <ClassMenu

@@ -4,7 +4,6 @@ import { useVariant } from '../../util/variant';
 import Alert from '@mui/material/Alert';
 import { useAtomValue } from 'jotai';
 import { prediction, predictionError } from '../../state';
-import { useActiveNode } from '@genaitm/util/nodes';
 import PreviewMenu from './PreviewMenu';
 import { PercentageBar, Widget } from '@genai-fi/base';
 import { Colours } from '@genai-fi/base/main/components/PercentageBar/PercentageBar';
@@ -24,15 +23,13 @@ export default function Preview({ onExport, onClone }: Props) {
 
     const model = preds.length > 0;
 
-    useActiveNode('widget-model-in', true);
-    useActiveNode('widget-model-out', model);
-
     return (
         <Widget
             noPadding
             dataWidget="model"
             title={t('model.labels.title')}
             className={style.widget}
+            data-active={model}
             menu={
                 <PreviewMenu
                     disabled={!model}
