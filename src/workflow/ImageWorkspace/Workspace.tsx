@@ -5,13 +5,13 @@ import Preview from '../Preview/Preview';
 import Output from '../Output/Output';
 import Behaviours from '../../workflow/Behaviours/Behaviours';
 import { useTranslation } from 'react-i18next';
-import { classState, IClassification, saveState, p2pActive, sharingActive } from '../../state';
+import { classState, IClassification, saveState } from '../../state';
 import style from './TeachableMachine.module.css';
 import { useVariant } from '../../util/variant';
 import Input from '../Input/Input';
 import SaveDialog, { SaveProperties } from './SaveDialog';
 import { ModelSaver } from './saver';
-import { useAtom, useAtomValue, useSetAtom } from 'jotai';
+import { useAtom, useSetAtom } from 'jotai';
 import { ModelLoader } from './loader';
 import Alert from '@mui/material/Alert';
 import Snackbar from '@mui/material/Snackbar';
@@ -65,8 +65,6 @@ export default function Workspace({ step, visitedStep, onComplete, saveTrigger, 
     const [editingData, setEditingData] = useState(false);
     const [showShare, setShowShare] = useState(false);
     const [showClone, setShowClone] = useState(false);
-    const sharing = useAtomValue(sharingActive);
-    const [, setP2PEnabled] = useAtom(p2pActive);
 
     // Ensure an initial model exists
     useModelCreator(modelVariant);
@@ -74,12 +72,10 @@ export default function Workspace({ step, visitedStep, onComplete, saveTrigger, 
     const doCloseShare = useCallback(() => setShowShare(false), [setShowShare]);
     const doShare = useCallback(() => {
         setShowShare(true);
-        setP2PEnabled(true);
-    }, [setShowShare, setP2PEnabled]);
+    }, [setShowShare]);
     const doClone = useCallback(() => {
         setShowClone(true);
-        setP2PEnabled(true);
-    }, [setShowShare, setP2PEnabled]);
+    }, [setShowClone]);
 
     const saveTimer = useRef(-1);
 
@@ -206,12 +202,12 @@ export default function Workspace({ step, visitedStep, onComplete, saveTrigger, 
             <ExportDialog
                 open={showShare}
                 onClose={doCloseShare}
-                ready={sharing}
+                ready={true}
             />
             <CloneDialog
                 open={showClone}
                 onClose={() => setShowClone(false)}
-                ready={sharing}
+                ready={true}
             />
             <Snackbar
                 anchorOrigin={{ vertical: 'top', horizontal: 'center' }}

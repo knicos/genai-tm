@@ -7,12 +7,13 @@ import { Button } from '@genaitm/components/button/Button';
 import { useVariant } from '../../util/variant';
 import { useTranslation } from 'react-i18next';
 import { useAtom, useAtomValue } from 'jotai';
-import { sessionCode, shareSamples, sharingActive } from '@genaitm/state';
+import { modelShared, sessionCode, shareModel, shareSamples } from '@genaitm/state';
 import { CircularProgress, IconButton } from '@mui/material';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import style from './TeachableMachine.module.css';
+import { BusyButton } from '@genai-fi/base';
 
 export interface SaveProperties {
     samples: boolean;
@@ -28,11 +29,12 @@ interface Props {
 
 export default function CloneDialog({ open, onClose, ready }: Props) {
     const code = useAtomValue(sessionCode);
-    const sharing = useAtomValue(sharingActive);
     const [samples, setShareSamples] = useAtom(shareSamples);
     const { namespace } = useVariant();
     const { t } = useTranslation(namespace);
     const textRef = useRef<HTMLInputElement>(null);
+    const [shared, setShared] = useAtom(shareModel);
+    const sharedModel = useAtomValue(modelShared);
 
     useEffect(() => {
         if (open) {
@@ -53,7 +55,7 @@ export default function CloneDialog({ open, onClose, ready }: Props) {
         setShareSamples((old) => !old);
     }, [setShareSamples]);
 
-    return sharing ? (
+    return (
         <Dialog
             open={open}
             onClose={onClose}
@@ -91,8 +93,16 @@ export default function CloneDialog({ open, onClose, ready }: Props) {
                 </DialogContent>
             )}
             <DialogActions>
-                <Button
+                <BusyButton
+                    busy={!ready || (shared && !sharedModel)}
                     variant="contained"
+                    onClick={() => setShared((old) => !old)}
+                    data-testid="share-share"
+                >
+                    {sharedModel && shared ? t('share.actions.stopShare') : t('share.actions.share')}
+                </BusyButton>
+                <Button
+                    variant="outlined"
                     onClick={onClose}
                     data-testid="share-close"
                 >
@@ -100,5 +110,5 @@ export default function CloneDialog({ open, onClose, ready }: Props) {
                 </Button>
             </DialogActions>
         </Dialog>
-    ) : null;
+    );
 }

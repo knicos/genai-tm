@@ -197,7 +197,9 @@
     },
     "share": {
         "actions": {
-            "close": "Fechar"
+            "close": "Fechar",
+            "share": "Compartilhar",
+            "stopShare": "Parar de compartilhar"
         },
         "labels": {
             "title": "Compartilhar",

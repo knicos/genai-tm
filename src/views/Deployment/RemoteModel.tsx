@@ -30,7 +30,8 @@ export default function RemoteModel({ code, ...props }: Props) {
                 {...props}
             />
             <ConnectionStatus
-                api={import.meta.env.VITE_APP_APIURL}
+                api={import.meta.env.VITE_APP_PEER_URL}
+                checkURL={import.meta.env.VITE_APP_API}
                 appName="tm"
                 visibility={0}
                 noCheck

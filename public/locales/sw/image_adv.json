@@ -197,7 +197,9 @@
     },
     "share": {
         "actions": {
-            "close": "Funga"
+            "close": "Funga",
+            "share": "Shiriki",
+            "stopShare": "Acha kushiriki"
         },
         "labels": {
             "title": "Shiriki",

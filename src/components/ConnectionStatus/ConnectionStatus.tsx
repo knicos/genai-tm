@@ -6,6 +6,7 @@ interface Props {
     appName: string;
     noCheck?: boolean;
     visibility?: number;
+    checkURL?: string;
 }
 
 export default function ConnectionStatus(props: Props) {

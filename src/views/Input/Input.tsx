@@ -21,7 +21,8 @@ export function Component() {
             >
                 <SampleProtocol />
                 <ConnectionStatus
-                    api={import.meta.env.VITE_APP_APIURL}
+                    api={import.meta.env.VITE_APP_PEER_URL}
+                    checkURL={import.meta.env.VITE_APP_API}
                     appName="tm"
                     visibility={0}
                     noCheck

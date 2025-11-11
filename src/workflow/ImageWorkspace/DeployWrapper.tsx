@@ -4,6 +4,7 @@ import { p2pActive } from '../../state';
 import { useVariant } from '../../util/variant';
 import PeerDeployer from '@genaitm/components/PeerDeployer/PeerDeployer';
 import Deployer from '@genaitm/components/Deployer/Deployer';
+import ShareProtocol from '@genaitm/workflow/ImageWorkspace/ShareProtocol';
 
 export default function DeployWrapper() {
     const { usep2p } = useVariant();
@@ -13,6 +14,7 @@ export default function DeployWrapper() {
         <React.Suspense fallback="">
             {usep2p && enableP2P && <PeerDeployer />}
             {!usep2p && <Deployer />}
+            <ShareProtocol />
         </React.Suspense>
     );
 }

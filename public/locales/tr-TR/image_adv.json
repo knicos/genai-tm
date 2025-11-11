@@ -194,7 +194,9 @@
     },
     "share": {
         "actions": {
-            "close": "Kapat"
+            "close": "Kapat",
+            "share": "Paylaş",
+            "stopShare": "Paylaşımı Durdur"
         },
         "labels": {
             "includeSamples": "Örnek görselleri dahil et",

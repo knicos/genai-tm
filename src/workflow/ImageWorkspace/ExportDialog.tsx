@@ -7,11 +7,12 @@ import { Button } from '@genaitm/components/button/Button';
 import { useVariant } from '../../util/variant';
 import { useTranslation, Trans } from 'react-i18next';
 import TextField from '@mui/material/TextField';
-import { useAtomValue } from 'jotai';
-import { sessionCode, sharingActive } from '../../state';
+import { useAtom, useAtomValue } from 'jotai';
+import { modelShared, sessionCode, shareModel } from '../../state';
 import InputAdornment from '@mui/material/InputAdornment';
 import { CircularProgress, IconButton } from '@mui/material';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
+import { BusyButton } from '@genai-fi/base';
 
 export interface SaveProperties {
     samples: boolean;
@@ -43,12 +44,13 @@ function LinkText(props: LinkProps) {
 
 export default function ExportDialog({ open, onClose, ready }: Props) {
     const code = useAtomValue(sessionCode);
-    const sharing = useAtomValue(sharingActive);
     const { namespace } = useVariant();
     const { t } = useTranslation(namespace);
     const textRef = useRef<HTMLInputElement>(null);
+    const [shared, setShared] = useAtom(shareModel);
+    const sharedModel = useAtomValue(modelShared);
 
-    const link = `${import.meta.env.VITE_APP_APIURL}/model/${code}/`;
+    const link = `${import.meta.env.VITE_APP_API}/model/${code}/`;
 
     useEffect(() => {
         if (open) {
@@ -65,7 +67,7 @@ export default function ExportDialog({ open, onClose, ready }: Props) {
         navigator.clipboard.writeText(link);
     }, [link]);
 
-    return sharing ? (
+    return (
         <Dialog
             open={open}
             onClose={onClose}
@@ -111,8 +113,16 @@ export default function ExportDialog({ open, onClose, ready }: Props) {
                 </DialogContent>
             )}
             <DialogActions>
-                <Button
+                <BusyButton
+                    busy={!ready || (shared && !sharedModel)}
                     variant="contained"
+                    onClick={() => setShared((old) => !old)}
+                    data-testid="share-share"
+                >
+                    {sharedModel && shared ? t('share.actions.stopShare') : t('share.actions.share')}
+                </BusyButton>
+                <Button
+                    variant="outlined"
                     onClick={onClose}
                     data-testid="share-close"
                 >
@@ -120,5 +130,5 @@ export default function ExportDialog({ open, onClose, ready }: Props) {
                 </Button>
             </DialogActions>
         </Dialog>
-    ) : null;
+    );
 }

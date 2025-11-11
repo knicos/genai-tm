@@ -196,7 +196,9 @@
     },
     "share": {
         "actions": {
-            "close": "Stäng"
+            "close": "Stäng",
+            "share": "Dela",
+            "stopShare": "Sluta dela"
         },
         "labels": {
             "title": "Dela",

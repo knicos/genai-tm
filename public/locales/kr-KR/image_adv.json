@@ -197,7 +197,9 @@
     },
     "share": {
         "actions": {
-            "close": "닫기"
+            "close": "닫기",
+            "share": "공유",
+            "stopShare": "공유 중지"
         },
         "labels": {
             "title": "공유",

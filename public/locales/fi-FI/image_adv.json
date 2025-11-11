@@ -197,7 +197,9 @@
     },
     "share": {
         "actions": {
-            "close": "Sulje"
+            "close": "Sulje",
+            "share": "Jaa",
+            "stopShare": "Lopeta jakaminen"
         },
         "labels": {
             "title": "Jaa",

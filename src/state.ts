@@ -44,6 +44,10 @@ export const sessionPassword = atom<string>(randomId(20));
 
 export const sharingActive = atom<boolean>(false);
 
+export const shareModel = atom<boolean>(false);
+
+export const modelShared = atom<boolean>(false);
+
 export const p2pActive = atom<boolean>(false);
 
 export const fatalWebcam = atom<boolean>(false);

@@ -36,7 +36,7 @@ function mapToURL(project: string) {
         return project;
     }
     if (project.length === 8 && /^[a-z0-9]+$/i.test(project)) {
-        return `${import.meta.env.VITE_APP_APIURL}/model/${project}/project.zip`;
+        return `${import.meta.env.VITE_APP_API}/model/${project}/project.zip`;
     }
 }
 
@@ -90,7 +90,7 @@ export function ModelLoader({ onLoaded, onError }: Props) {
                     });
             }
         }
-    }, [params, onLoaded, setData, setCode, setBehaviours, onError, setLoading]);
+    }, [params, onLoaded, setData, setBehaviours, onError, setLoading]);
 
     useEffect(() => {
         if (projectFile) {
@@ -98,6 +98,7 @@ export function ModelLoader({ onLoaded, onError }: Props) {
             loadProject(projectFile)
                 .then((project) => {
                     if (project.id) setCode(project.id);
+
                     setData(
                         project.samples
                             ? project.samples.map((s, i) => ({ label: project.labels?.[i] || '', samples: s }))

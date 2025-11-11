@@ -3,8 +3,8 @@ import { sessionCode } from '../../state';
 import ConnectionStatus from '../ConnectionStatus/ConnectionStatus';
 import { Peer } from '@genai-fi/base/hooks/peer';
 import SampleProtocol from './SampleProtocol';
-import ShareProtocol from './ShareProtocol';
 import Monitor from './Monitor';
+import ShareProtocol from './ShareProtocol';
 
 export default function PeerDeployer() {
     const code = useAtomValue(sessionCode);
@@ -18,7 +18,8 @@ export default function PeerDeployer() {
             code={`tm-${code}`}
         >
             <ConnectionStatus
-                api={import.meta.env.VITE_APP_APIURL}
+                api={import.meta.env.VITE_APP_PEER_URL}
+                checkURL={import.meta.env.VITE_APP_API}
                 appName="tm"
                 visibility={0}
             />

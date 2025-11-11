@@ -199,7 +199,9 @@
     },
     "share": {
         "actions": {
-            "close": "වසන්න"
+            "close": "වසන්න",
+            "share": "බෙදාගන්න",
+            "stopShare": "බෙදා ගැනීම නවත්වන්න"
         },
         "labels": {
             "title": "බෙදාගන්න",
