@@ -2,6 +2,28 @@ import { useMemo, useState } from 'react';
 import { useAtomValue } from 'jotai';
 import { trainingHistory, modelStats } from '../../state';
 import styles from './Charts.module.css';
+import {
+    Chart as ChartJS,
+    CategoryScale,
+    LinearScale,
+    PointElement,
+    LineElement,
+    Title,
+    Tooltip,
+    Legend,
+    ChartOptions
+} from 'chart.js';
+import { Line } from 'react-chartjs-2';
+
+ChartJS.register(
+    CategoryScale,
+    LinearScale,
+    PointElement,
+    LineElement,
+    Title,
+    Tooltip,
+    Legend
+);
 
 export function AccuracyPerClass() {
     const stats = useAtomValue(modelStats);
@@ -145,57 +167,103 @@ export function ConfusionMatrix() {
 
 export function AccuracyPerEpoch() {
     const history = useAtomValue(trainingHistory);
-    const [tooltip, setTooltip] = useState<{ x: number; y: number; epoch: number; acc: number; valAcc?: number } | null>(null);
 
-    const { minY, maxY } = useMemo(() => {
-        if (history.length === 0) return { minY: 0, maxY: 1 };
-        const allValues = history.flatMap(h => [h.accuracy, h.valAccuracy].filter(v => v !== undefined) as number[]);
+    const chartData = useMemo(() => {
         return {
-            minY: Math.min(...allValues) * 0.9,
-            maxY: 1.0
+            labels: history.map(h => h.epoch.toString()),
+            datasets: [
+                {
+                    label: 'acc',
+                    data: history.map(h => h.accuracy),
+                    borderColor: 'rgb(25, 118, 210)',
+                    backgroundColor: 'rgba(25, 118, 210, 0.1)',
+                    tension: 0.1,
+                    borderWidth: 2,
+                    pointRadius: 0,
+                    pointHoverRadius: 4
+                },
+                ...(history.some(h => h.valAccuracy !== undefined) ? [{
+                    label: 'test acc',
+                    data: history.map(h => h.valAccuracy ?? null),
+                    borderColor: 'rgb(255, 152, 0)',
+                    backgroundColor: 'rgba(255, 152, 0, 0.1)',
+                    tension: 0.1,
+                    borderWidth: 2,
+                    borderDash: [5, 5],
+                    pointRadius: 0,
+                    pointHoverRadius: 4
+                }] : [])
+            ]
         };
     }, [history]);
+
+    const maxEpoch = useMemo(() => Math.max(...history.map(h => h.epoch)), [history]);
+
+    const options: ChartOptions<'line'> = {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+            legend: {
+                display: true,
+                position: 'top',
+                align: 'end',
+                labels: {
+                    usePointStyle: false,
+                    boxWidth: 40,
+                    boxHeight: 2,
+                    font: {
+                        size: 11
+                    },
+                    padding: 10
+                }
+            },
+            tooltip: {
+                mode: 'index',
+                intersect: false,
+                callbacks: {
+                    title: (items) => `x: ${items[0].label}`,
+                    label: (item) => `${item.dataset.label}: ${Number(item.raw).toFixed(3)}`
+                }
+            }
+        },
+        scales: {
+            x: {
+                title: {
+                    display: true,
+                    text: 'Epochs'
+                },
+                ticks: {
+                    autoSkip: false,
+                    maxRotation: 0,
+                    callback: function(value, index) {
+                        const epoch = parseInt(this.getLabelForValue(value as number));
+                        if (epoch % 5 === 0) return epoch;
+                        return '';
+                    }
+                }
+            },
+            y: {
+                title: {
+                    display: true,
+                    text: 'Accuracy'
+                },
+                min: 0,
+                max: 1,
+                ticks: {
+                    callback: (value) => Number(value).toFixed(2)
+                }
+            }
+        },
+        interaction: {
+            mode: 'nearest',
+            axis: 'x',
+            intersect: false
+        }
+    };
 
     if (history.length === 0) {
         return null;
     }
-
-    const width = 500;
-    const height = 200;
-    const padding = { top: 20, right: 100, bottom: 40, left: 50 };
-    const chartWidth = width - padding.left - padding.right;
-    const chartHeight = height - padding.top - padding.bottom;
-
-    const maxEpoch = Math.max(...history.map(h => h.epoch));
-    const xScale = (epoch: number) => (epoch / maxEpoch) * chartWidth;
-    const yScale = (value: number) => chartHeight - ((value - minY) / (maxY - minY)) * chartHeight;
-
-    const handleMouseMove = (e: React.MouseEvent<SVGSVGElement>) => {
-        const svg = e.currentTarget;
-        const rect = svg.getBoundingClientRect();
-        const mouseX = e.clientX - rect.left - padding.left;
-
-        if (mouseX < 0 || mouseX > chartWidth) {
-            setTooltip(null);
-            return;
-        }
-
-        const epochRatio = mouseX / chartWidth;
-        const targetEpoch = epochRatio * maxEpoch;
-        const closestPoint = history.reduce((prev, curr) =>
-            Math.abs(curr.epoch - targetEpoch) < Math.abs(prev.epoch - targetEpoch) ? curr : prev
-        );
-
-        if (closestPoint) {
-            setTooltip({
-                x: e.clientX - rect.left,
-                y: e.clientY - rect.top - 10,
-                epoch: closestPoint.epoch,
-                acc: closestPoint.accuracy,
-                valAcc: closestPoint.valAccuracy
-            });
-        }
-    };
 
     return (
         <div className={styles.chartContainer}>
@@ -203,190 +271,112 @@ export function AccuracyPerEpoch() {
                 Accuracy per epoch
             </h3>
             <div className={styles.chartScrollWrapper}>
-                <svg
-                    width={width}
-                    height={height}
-                    className={styles.chartSvg}
-                    onMouseMove={handleMouseMove}
-                    onMouseLeave={() => setTooltip(null)}
-                >
-                    {/* Grid lines */}
-                    {[0, 0.25, 0.5, 0.75, 1].map((tick) => {
-                        const y = padding.top + yScale(minY + (maxY - minY) * tick);
-                        return (
-                            <g key={tick}>
-                                <line
-                                    x1={padding.left}
-                                    y1={y}
-                                    x2={padding.left + chartWidth}
-                                    y2={y}
-                                    stroke="#f0f0f0"
-                                    strokeWidth="1"
-                                />
-                                <text
-                                    x={padding.left - 10}
-                                    y={y + 4}
-                                    textAnchor="end"
-                                    fontSize="10"
-                                    fill="#666"
-                                >
-                                    {(minY + (maxY - minY) * tick).toFixed(2)}
-                                </text>
-                            </g>
-                        );
-                    })}
-
-                    {/* X-axis labels */}
-                    {[0, 0.25, 0.5, 0.75, 1].map((tick) => {
-                        const x = padding.left + xScale(maxEpoch * tick);
-                        return (
-                            <text
-                                key={tick}
-                                x={x}
-                                y={height - padding.bottom + 20}
-                                textAnchor="middle"
-                                fontSize="10"
-                                fill="#666"
-                            >
-                                {Math.round(maxEpoch * tick)}
-                            </text>
-                        );
-                    })}
-
-                    {/* X-axis label */}
-                    <text
-                        x={padding.left + chartWidth / 2}
-                        y={height - 5}
-                        textAnchor="middle"
-                        fontSize="12"
-                        fill="#333"
-                    >
-                        Epochs
-                    </text>
-
-                    {/* Y-axis label */}
-                    <text
-                        x={-padding.top - chartHeight / 2}
-                        y={15}
-                        textAnchor="middle"
-                        fontSize="12"
-                        fill="#333"
-                        transform={`rotate(-90)`}
-                    >
-                        Accuracy
-                    </text>
-
-                    {/* Training accuracy line */}
-                    <polyline
-                        fill="none"
-                        stroke="#1976d2"
-                        strokeWidth="2"
-                        points={history
-                            .map((h) => `${padding.left + xScale(h.epoch)},${padding.top + yScale(h.accuracy)}`)
-                            .join(' ')}
-                    />
-
-                    {/* Validation accuracy line */}
-                    {history.some(h => h.valAccuracy !== undefined) && (
-                        <polyline
-                            fill="none"
-                            stroke="#ff9800"
-                            strokeWidth="2"
-                            strokeDasharray="4,4"
-                            points={history
-                                .filter(h => h.valAccuracy !== undefined)
-                                .map((h) => `${padding.left + xScale(h.epoch)},${padding.top + yScale(h.valAccuracy!)}`)
-                                .join(' ')}
-                        />
-                    )}
-
-                    {/* Legend */}
-                    <g transform={`translate(${padding.left + chartWidth + 10}, ${padding.top})`}>
-                        <line x1="0" y1="0" x2="20" y2="0" stroke="#1976d2" strokeWidth="2" />
-                        <text x="25" y="4" fontSize="10" fill="#333">acc</text>
-                        {history.some(h => h.valAccuracy !== undefined) && (
-                            <>
-                                <line x1="0" y1="15" x2="20" y2="15" stroke="#ff9800" strokeWidth="2" strokeDasharray="4,4" />
-                                <text x="25" y="19" fontSize="10" fill="#333">val acc</text>
-                            </>
-                        )}
-                    </g>
-                </svg>
-            </div>
-
-            {/* Tooltip */}
-            {tooltip && (
-                <div
-                    className={styles.chartTooltip}
-                    style={{
-                        left: tooltip.x,
-                        top: tooltip.y
-                    }}
-                >
-                    <div>x: {tooltip.epoch}</div>
-                    <div className={styles.tooltipValue}>acc: {tooltip.acc.toFixed(3)}</div>
-                    {tooltip.valAcc !== undefined && (
-                        <div className={styles.tooltipValueAlt}>test acc: {tooltip.valAcc.toFixed(3)}</div>
-                    )}
+                <div style={{ height: '250px', minWidth: Math.max(500, maxEpoch * 6) + 'px' }}>
+                    <Line data={chartData} options={options} />
                 </div>
-            )}
+            </div>
         </div>
     );
 }
 
 export function LossPerEpoch() {
     const history = useAtomValue(trainingHistory);
-    const [tooltip, setTooltip] = useState<{ x: number; y: number; epoch: number; loss: number; valLoss?: number } | null>(null);
 
-    const { minY, maxY } = useMemo(() => {
-        if (history.length === 0) return { minY: 0, maxY: 1 };
-        const allValues = history.flatMap(h => [h.loss, h.valLoss].filter(v => v !== undefined) as number[]);
+    const chartData = useMemo(() => {
         return {
-            minY: 0,
-            maxY: Math.max(...allValues) * 1.1
+            labels: history.map(h => h.epoch.toString()),
+            datasets: [
+                {
+                    label: 'loss',
+                    data: history.map(h => h.loss),
+                    borderColor: 'rgb(25, 118, 210)',
+                    backgroundColor: 'rgba(25, 118, 210, 0.1)',
+                    tension: 0.1,
+                    borderWidth: 2,
+                    pointRadius: 0,
+                    pointHoverRadius: 4
+                },
+                ...(history.some(h => h.valLoss !== undefined) ? [{
+                    label: 'test loss',
+                    data: history.map(h => h.valLoss ?? null),
+                    borderColor: 'rgb(255, 152, 0)',
+                    backgroundColor: 'rgba(255, 152, 0, 0.1)',
+                    tension: 0.1,
+                    borderWidth: 2,
+                    borderDash: [5, 5],
+                    pointRadius: 0,
+                    pointHoverRadius: 4
+                }] : [])
+            ]
         };
     }, [history]);
+
+    const maxEpoch = useMemo(() => Math.max(...history.map(h => h.epoch)), [history]);
+
+    const options: ChartOptions<'line'> = {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+            legend: {
+                display: true,
+                position: 'top',
+                align: 'end',
+                labels: {
+                    usePointStyle: false,
+                    boxWidth: 40,
+                    boxHeight: 2,
+                    font: {
+                        size: 11
+                    },
+                    padding: 10
+                }
+            },
+            tooltip: {
+                mode: 'index',
+                intersect: false,
+                callbacks: {
+                    title: (items) => `x: ${items[0].label}`,
+                    label: (item) => `${item.dataset.label}: ${Number(item.raw).toFixed(3)}`
+                }
+            }
+        },
+        scales: {
+            x: {
+                title: {
+                    display: true,
+                    text: 'Epochs'
+                },
+                ticks: {
+                    autoSkip: false,
+                    maxRotation: 0,
+                    callback: function(value, index) {
+                        const epoch = parseInt(this.getLabelForValue(value as number));
+                        if (epoch % 5 === 0) return epoch;
+                        return '';
+                    }
+                }
+            },
+            y: {
+                title: {
+                    display: true,
+                    text: 'Loss'
+                },
+                min: 0,
+                ticks: {
+                    callback: (value) => Number(value).toFixed(2)
+                }
+            }
+        },
+        interaction: {
+            mode: 'nearest',
+            axis: 'x',
+            intersect: false
+        }
+    };
 
     if (history.length === 0) {
         return null;
     }
-
-    const width = 500;
-    const height = 200;
-    const padding = { top: 20, right: 100, bottom: 40, left: 50 };
-    const chartWidth = width - padding.left - padding.right;
-    const chartHeight = height - padding.top - padding.bottom;
-
-    const maxEpoch = Math.max(...history.map(h => h.epoch));
-    const xScale = (epoch: number) => (epoch / maxEpoch) * chartWidth;
-    const yScale = (value: number) => chartHeight - ((value - minY) / (maxY - minY)) * chartHeight;
-
-    const handleMouseMove = (e: React.MouseEvent<SVGSVGElement>) => {
-        const svg = e.currentTarget;
-        const rect = svg.getBoundingClientRect();
-        const mouseX = e.clientX - rect.left - padding.left;
-
-        if (mouseX < 0 || mouseX > chartWidth) {
-            setTooltip(null);
-            return;
-        }
-
-        const epochRatio = mouseX / chartWidth;
-        const targetEpoch = epochRatio * maxEpoch;
-        const closestPoint = history.reduce((prev, curr) =>
-            Math.abs(curr.epoch - targetEpoch) < Math.abs(prev.epoch - targetEpoch) ? curr : prev
-        );
-
-        if (closestPoint) {
-            setTooltip({
-                x: e.clientX - rect.left,
-                y: e.clientY - rect.top - 10,
-                epoch: closestPoint.epoch,
-                loss: closestPoint.loss,
-                valLoss: closestPoint.valLoss
-            });
-        }
-    };
 
     return (
         <div className={styles.chartContainer}>
@@ -394,133 +384,10 @@ export function LossPerEpoch() {
                 Loss per epoch
             </h3>
             <div className={styles.chartScrollWrapper}>
-                <svg
-                    width={width}
-                    height={height}
-                    className={styles.chartSvg}
-                    onMouseMove={handleMouseMove}
-                    onMouseLeave={() => setTooltip(null)}
-                >
-                    {/* Grid lines */}
-                    {[0, 0.25, 0.5, 0.75, 1].map((tick) => {
-                        const y = padding.top + yScale(minY + (maxY - minY) * tick);
-                        return (
-                            <g key={tick}>
-                                <line
-                                    x1={padding.left}
-                                    y1={y}
-                                    x2={padding.left + chartWidth}
-                                    y2={y}
-                                    stroke="#f0f0f0"
-                                    strokeWidth="1"
-                                />
-                                <text
-                                    x={padding.left - 10}
-                                    y={y + 4}
-                                    textAnchor="end"
-                                    fontSize="10"
-                                    fill="#666"
-                                >
-                                    {(minY + (maxY - minY) * tick).toFixed(2)}
-                                </text>
-                            </g>
-                        );
-                    })}
-
-                    {/* X-axis labels */}
-                    {[0, 0.25, 0.5, 0.75, 1].map((tick) => {
-                        const x = padding.left + xScale(maxEpoch * tick);
-                        return (
-                            <text
-                                key={tick}
-                                x={x}
-                                y={height - padding.bottom + 20}
-                                textAnchor="middle"
-                                fontSize="10"
-                                fill="#666"
-                            >
-                                {Math.round(maxEpoch * tick)}
-                            </text>
-                        );
-                    })}
-
-                    {/* X-axis label */}
-                    <text
-                        x={padding.left + chartWidth / 2}
-                        y={height - 5}
-                        textAnchor="middle"
-                        fontSize="12"
-                        fill="#333"
-                    >
-                        Epochs
-                    </text>
-
-                    {/* Y-axis label */}
-                    <text
-                        x={-padding.top - chartHeight / 2}
-                        y={15}
-                        textAnchor="middle"
-                        fontSize="12"
-                        fill="#333"
-                        transform={`rotate(-90)`}
-                    >
-                        Loss
-                    </text>
-
-                    {/* Training loss line */}
-                    <polyline
-                        fill="none"
-                        stroke="#1976d2"
-                        strokeWidth="2"
-                        points={history
-                            .map((h) => `${padding.left + xScale(h.epoch)},${padding.top + yScale(h.loss)}`)
-                            .join(' ')}
-                    />
-
-                    {/* Validation loss line */}
-                    {history.some(h => h.valLoss !== undefined) && (
-                        <polyline
-                            fill="none"
-                            stroke="#ff9800"
-                            strokeWidth="2"
-                            strokeDasharray="4,4"
-                            points={history
-                                .filter(h => h.valLoss !== undefined)
-                                .map((h) => `${padding.left + xScale(h.epoch)},${padding.top + yScale(h.valLoss!)}`)
-                                .join(' ')}
-                        />
-                    )}
-
-                    {/* Legend */}
-                    <g transform={`translate(${padding.left + chartWidth + 10}, ${padding.top})`}>
-                        <line x1="0" y1="0" x2="20" y2="0" stroke="#1976d2" strokeWidth="2" />
-                        <text x="25" y="4" fontSize="10" fill="#333">loss</text>
-                        {history.some(h => h.valLoss !== undefined) && (
-                            <>
-                                <line x1="0" y1="15" x2="20" y2="15" stroke="#ff9800" strokeWidth="2" strokeDasharray="4,4" />
-                                <text x="25" y="19" fontSize="10" fill="#333">val loss</text>
-                            </>
-                        )}
-                    </g>
-                </svg>
-            </div>
-
-            {/* Tooltip */}
-            {tooltip && (
-                <div
-                    className={styles.chartTooltip}
-                    style={{
-                        left: tooltip.x,
-                        top: tooltip.y
-                    }}
-                >
-                    <div>x: {tooltip.epoch}</div>
-                    <div className={styles.tooltipValue}>loss: {tooltip.loss.toFixed(3)}</div>
-                    {tooltip.valLoss !== undefined && (
-                        <div className={styles.tooltipValueAlt}>test loss: {tooltip.valLoss.toFixed(3)}</div>
-                    )}
+                <div style={{ height: '250px', minWidth: Math.max(500, maxEpoch * 6) + 'px' }}>
+                    <Line data={chartData} options={options} />
                 </div>
-            )}
+            </div>
         </div>
     );
 }

@@ -174,7 +174,7 @@ export function useModelTrainer() {
                             batchSize: settings.batchSize,
                         },
                         {
-                            onEpochEnd: (epoch: number, logs?: any) => {
+                            onEpochEnd: (epoch: number, logs?: Record<string, number>) => {
                                 setEpochs(epoch / 50);
 
                                 // Collect training metrics if available
@@ -204,26 +204,26 @@ export function useModelTrainer() {
                 if (numExamples > 0 && numValidation > 0) {
                     // Initialize confusion matrix
                     const confusionMatrix = labels.map(() => labels.map(() => 0));
-                    
+
                     // Track correct predictions per class for accuracy calculation
                     const correctPerClass: number[] = labels.map(() => 0);
                     const validationSamplesPerClass: number[] = labels.map(() => 0);
-                    
+
                     // Get validation data by filtering based on total examples
                     // TeachableModel uses last portion as validation set
                     const validationRatio = numValidation / numExamples;
-                    
+
                     // Predict on validation portion of each class
                     const predictionPromises: Promise<void>[] = [];
-                    
+
                     data.forEach((classData, actualClassIdx) => {
                         const numClassSamples = classData.samples.length;
                         const validationStart = Math.floor(numClassSamples * (1 - validationRatio));
-                        
+
                         // Get validation samples for this class
                         const validationSamples = classData.samples.slice(validationStart);
                         validationSamplesPerClass[actualClassIdx] = validationSamples.length;
-                        
+
                         // Predict each validation sample
                         validationSamples.forEach((sample) => {
                             const promise = tm.predict(sample.data).then((result) => {
@@ -232,10 +232,10 @@ export function useModelTrainer() {
                                     curr.probability > prev.probability ? curr : prev
                                 );
                                 const predictedClassIdx = result.predictions.indexOf(predictedClass);
-                                
+
                                 // Update confusion matrix
                                 confusionMatrix[actualClassIdx][predictedClassIdx]++;
-                                
+
                                 // Track correct predictions
                                 if (predictedClassIdx === actualClassIdx) {
                                     correctPerClass[actualClassIdx]++;
@@ -243,22 +243,22 @@ export function useModelTrainer() {
                             }).catch((err) => {
                                 console.error('Prediction failed for validation sample:', err);
                             });
-                            
+
                             predictionPromises.push(promise);
                         });
                     });
-                    
+
                     // Wait for all predictions to complete
                     await Promise.all(predictionPromises);
-                    
+
                     // Calculate accuracy per class
                     const accuracyPerClass = labels.map((_, ix) => ({
-                        accuracy: validationSamplesPerClass[ix] > 0 
+                        accuracy: validationSamplesPerClass[ix] > 0
                             ? correctPerClass[ix] / validationSamplesPerClass[ix]
                             : 0,
                         samples: validationSamplesPerClass[ix]
                     }));
-                    
+
                     // Calculate overall accuracy
                     const totalValidation = validationSamplesPerClass.reduce((a, b) => a + b, 0);
                     const totalCorrect = correctPerClass.reduce((a, b) => a + b, 0);
