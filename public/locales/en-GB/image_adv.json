@@ -123,7 +123,9 @@
             "mustTrain": "You must train your classifier first",
             "failedTensorflow": "Your device or browser could not run our classifier"
         },
-        "aria": { "more": "more options" }
+        "aria": {
+            "more": "more options"
+        }
     },
     "output": {
         "labels": {

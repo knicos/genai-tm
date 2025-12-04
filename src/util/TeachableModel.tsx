@@ -1,4 +1,4 @@
-import { IClassification, modelState, predictedIndex, prediction, predictionError } from '../state';
+import { IClassification, modelState, predictedIndex, prediction, predictionError, trainingHistory, modelStats, TrainingMetrics } from '../state';
 import { useAtom, useSetAtom, useAtomValue } from 'jotai';
 import { useCallback, useEffect, useState, useRef } from 'react';
 import { TeachableModel } from '@genai-fi/classifier';
@@ -108,6 +108,8 @@ export function useModelTrainer() {
     const [model, setModel] = useAtom(modelState);
     const [stage, setStage] = useState<TrainingState>('none');
     const [epochs, setEpochs] = useState(0);
+    const setHistory = useSetAtom(trainingHistory);
+    const setStats = useSetAtom(modelStats);
 
     useEffect(() => {
         if (model) {
@@ -132,6 +134,7 @@ export function useModelTrainer() {
 
                 setStage('loading');
                 setEpochs(0);
+                setHistory([]);
                 const tm = new TeachableModel(model.getVariant() || 'image');
 
                 if (!(await tm.ready())) {
@@ -160,6 +163,8 @@ export function useModelTrainer() {
 
                 setStage('training');
 
+                const historyData: TrainingMetrics[] = [];
+
                 try {
                     await tm.train(
                         {
@@ -169,14 +174,102 @@ export function useModelTrainer() {
                             batchSize: settings.batchSize,
                         },
                         {
-                            onEpochEnd: (epoch: number) => {
+                            onEpochEnd: (epoch: number, logs?: any) => {
                                 setEpochs(epoch / 50);
+
+                                // Collect training metrics if available
+                                if (logs) {
+                                    historyData.push({
+                                        epoch: epoch,
+                                        loss: logs.loss || 0,
+                                        accuracy: logs.acc || 0,
+                                        valLoss: logs.val_loss,
+                                        valAccuracy: logs.val_acc
+                                    });
+                                    setHistory([...historyData]);
+                                }
                             },
                         }
                     );
                 } catch (e) {
                     console.error('Training failed', e);
                     return;
+                }
+
+                // Calculate model statistics on validation set
+                const labels = tm.getLabels();
+                const numExamples = tm.getNumExamples();
+                const numValidation = tm.getNumValidation();
+
+                if (numExamples > 0 && numValidation > 0) {
+                    // Initialize confusion matrix
+                    const confusionMatrix = labels.map(() => labels.map(() => 0));
+                    
+                    // Track correct predictions per class for accuracy calculation
+                    const correctPerClass: number[] = labels.map(() => 0);
+                    const validationSamplesPerClass: number[] = labels.map(() => 0);
+                    
+                    // Get validation data by filtering based on total examples
+                    // TeachableModel uses last portion as validation set
+                    const validationRatio = numValidation / numExamples;
+                    
+                    // Predict on validation portion of each class
+                    const predictionPromises: Promise<void>[] = [];
+                    
+                    data.forEach((classData, actualClassIdx) => {
+                        const numClassSamples = classData.samples.length;
+                        const validationStart = Math.floor(numClassSamples * (1 - validationRatio));
+                        
+                        // Get validation samples for this class
+                        const validationSamples = classData.samples.slice(validationStart);
+                        validationSamplesPerClass[actualClassIdx] = validationSamples.length;
+                        
+                        // Predict each validation sample
+                        validationSamples.forEach((sample) => {
+                            const promise = tm.predict(sample.data).then((result) => {
+                                // Find predicted class with highest probability
+                                const predictedClass = result.predictions.reduce((prev, curr) =>
+                                    curr.probability > prev.probability ? curr : prev
+                                );
+                                const predictedClassIdx = result.predictions.indexOf(predictedClass);
+                                
+                                // Update confusion matrix
+                                confusionMatrix[actualClassIdx][predictedClassIdx]++;
+                                
+                                // Track correct predictions
+                                if (predictedClassIdx === actualClassIdx) {
+                                    correctPerClass[actualClassIdx]++;
+                                }
+                            }).catch((err) => {
+                                console.error('Prediction failed for validation sample:', err);
+                            });
+                            
+                            predictionPromises.push(promise);
+                        });
+                    });
+                    
+                    // Wait for all predictions to complete
+                    await Promise.all(predictionPromises);
+                    
+                    // Calculate accuracy per class
+                    const accuracyPerClass = labels.map((_, ix) => ({
+                        accuracy: validationSamplesPerClass[ix] > 0 
+                            ? correctPerClass[ix] / validationSamplesPerClass[ix]
+                            : 0,
+                        samples: validationSamplesPerClass[ix]
+                    }));
+                    
+                    // Calculate overall accuracy
+                    const totalValidation = validationSamplesPerClass.reduce((a, b) => a + b, 0);
+                    const totalCorrect = correctPerClass.reduce((a, b) => a + b, 0);
+                    const overallAccuracy = totalValidation > 0 ? totalCorrect / totalValidation : 0;
+
+                    setStats({
+                        labels,
+                        confusionMatrix,
+                        accuracyPerClass,
+                        overallAccuracy
+                    });
                 }
 
                 setModel(tm);

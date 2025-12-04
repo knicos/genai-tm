@@ -1,0 +1,164 @@
+.chartContainer {
+    margin-bottom: 2rem;
+    position: relative;
+}
+
+.chartTitle {
+    font-size: 1rem;
+    color: #1976d2;
+    margin-bottom: 0.5rem;
+}
+
+.chartScrollWrapper {
+    overflow-x: auto;
+}
+
+.chartSvg {
+    border: 1px solid #e0e0e0;
+    background: white;
+}
+
+.table {
+    width: 100%;
+    max-width: 500px;
+    border-collapse: collapse;
+    font-size: 0.875rem;
+}
+
+.tableHeader {
+    border-bottom: 1px solid #ddd;
+}
+
+.tableHeaderCell {
+    text-align: left;
+    padding: 0.5rem;
+}
+
+.tableRow {
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.tableCell {
+    padding: 0.5rem;
+}
+
+.matrixScrollWrapper {
+    overflow-x: auto;
+}
+
+.matrixContainer {
+    display: inline-block;
+    min-width: 300px;
+}
+
+.matrixHeaderRow {
+    display: flex;
+    margin-bottom: 0.5rem;
+}
+
+.matrixHeaderSpacer {
+    width: 80px;
+}
+
+.matrixHeaderTitle {
+    flex: 1;
+    text-align: center;
+    font-size: 0.875rem;
+    font-weight: bold;
+}
+
+.matrixContent {
+    display: flex;
+}
+
+.matrixYAxisLabel {
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    width: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.875rem;
+    font-weight: bold;
+}
+
+.matrixBody {
+    flex: 1;
+}
+
+.matrixColumnHeaders {
+    display: flex;
+    margin-bottom: 0.25rem;
+}
+
+.matrixColumnHeader {
+    flex: 1;
+    text-align: center;
+    font-size: 0.75rem;
+    padding: 0.25rem;
+}
+
+.matrixRow {
+    display: flex;
+    margin-bottom: 2px;
+}
+
+.matrixRowLabel {
+    width: 80px;
+    display: flex;
+    align-items: center;
+    font-size: 0.75rem;
+    padding-right: 0.5rem;
+}
+
+.matrixCell {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem;
+    margin-right: 2px;
+    font-size: 0.875rem;
+    min-height: 40px;
+    position: relative;
+    cursor: pointer;
+    border: none;
+}
+
+.matrixCell:hover {
+    border: 2px solid #1976d2;
+}
+
+.tooltip {
+    position: fixed;
+    transform: translate(-50%, -100%);
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 0.5rem;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    pointer-events: none;
+    white-space: nowrap;
+    z-index: 10000;
+}
+
+.chartTooltip {
+    position: absolute;
+    transform: translate(-50%, -100%);
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 0.5rem;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    pointer-events: none;
+    white-space: nowrap;
+    z-index: 1000;
+}
+
+.tooltipValue {
+    color: #5eb3f6;
+}
+
+.tooltipValueAlt {
+    color: #ffb74d;
+}

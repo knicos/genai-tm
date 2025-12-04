@@ -20,8 +20,9 @@ import ExportDialog from './ExportDialog';
 import { useModelCreator } from '../../util/TeachableModel';
 import OpenDialog from './OpenDialog';
 import CloneDialog from './CloneDialog';
-import Heatmap from '../Heatmap/Heatmap';
-import { IConnection, WorkflowLayout } from '@genai-fi/base';
+// import Heatmap from '../Heatmap/Heatmap';
+import { IConnection, WorkflowLayout, SidePanel } from '@genai-fi/base';
+import SidePanelContent from '../../components/SidePanel/SidePanel';
 
 const SAVE_PERIOD = 5 * 60 * 1000; // 5 mins
 
@@ -57,7 +58,7 @@ function addCloseAlert() {
 }
 
 export default function Workspace({ step, visitedStep, onComplete, saveTrigger, onSkip, onSaveRemind }: Props) {
-    const { namespace, resetOnLoad, modelVariant, allowHeatmap } = useVariant();
+    const { namespace, resetOnLoad, modelVariant } = useVariant();
     const { t } = useTranslation(namespace);
     const [data, setData] = useAtom(classState);
     const [errMsg, setErrMsg] = useState<string | null>(null);
@@ -65,7 +66,7 @@ export default function Workspace({ step, visitedStep, onComplete, saveTrigger, 
     const [editingData, setEditingData] = useState(false);
     const [showShare, setShowShare] = useState(false);
     const [showClone, setShowClone] = useState(false);
-
+    const [showSidebar, setShowSidebar] = useState(false);
     // Ensure an initial model exists
     useModelCreator(modelVariant);
 
@@ -76,6 +77,9 @@ export default function Workspace({ step, visitedStep, onComplete, saveTrigger, 
     const doClone = useCallback(() => {
         setShowClone(true);
     }, [setShowClone]);
+    const doSidebar = useCallback(() => {
+        setShowSidebar(true);
+    }, [setShowSidebar]);
 
     const saveTimer = useRef(-1);
 
@@ -183,8 +187,9 @@ export default function Workspace({ step, visitedStep, onComplete, saveTrigger, 
                     <Preview
                         onExport={doShare}
                         onClone={doClone}
+                        onSidebar={doSidebar}
                     />
-                    {allowHeatmap && modelVariant === 'image' && <Heatmap />}
+
                 </div>
                 <Behaviours
                     hidden={visitedStep < 1}
@@ -192,6 +197,15 @@ export default function Workspace({ step, visitedStep, onComplete, saveTrigger, 
                     onChange={doBehaviourChange}
                 />
                 <Output hidden={visitedStep < 1} />
+
+                <SidePanel
+                    open={showSidebar}
+                    position="right"
+                    onClose={() => setShowSidebar(false)}
+                    onOpen={() => setShowSidebar(true)}
+                >
+                    <SidePanelContent />
+                </SidePanel>
             </WorkflowLayout>
 
             <SaveDialog

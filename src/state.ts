@@ -65,3 +65,22 @@ export const modelTraining = atom<boolean>(false);
 export const activeNodes = atom<Set<string>>(new Set<string>());
 
 export const menuShowSettings = atom<boolean>(false);
+
+export interface TrainingMetrics {
+    epoch: number;
+    loss: number;
+    accuracy: number;
+    valLoss?: number;
+    valAccuracy?: number;
+}
+
+export const trainingHistory = atom<TrainingMetrics[]>([]);
+
+export interface ModelStats {
+    labels: string[];
+    confusionMatrix?: number[][];
+    accuracyPerClass?: { accuracy: number; samples: number }[];
+    overallAccuracy?: number;
+}
+
+export const modelStats = atom<ModelStats>({ labels: [] });
