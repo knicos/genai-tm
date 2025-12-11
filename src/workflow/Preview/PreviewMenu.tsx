@@ -80,9 +80,8 @@ export default function PreviewMenu({ disabled, onExport, onClone, onSidebar }: 
                 </MenuItem>
 
                 <MenuItem
-                    disabled={disabled || !onSidebar}
+                    disabled={disabled || !onSidebar || !usep2p}
                     onClick={() => {
-                        console.log('Sidebar clicked', onSidebar);
                         handleClose();
                         if (onSidebar) onSidebar();
                     }}

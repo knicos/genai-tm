@@ -3,8 +3,8 @@
     width: 100%;
     background: #fff;
     box-shadow: 0 0 8px rgba(0, 0, 0, 0.08);
-    height: 80vh;
-    max-height: 80vh;
+    height: 100vh;
+    max-height: 100vh;
     overflow-y: auto;
     box-sizing: border-box;
 }

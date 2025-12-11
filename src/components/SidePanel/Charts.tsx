@@ -2,28 +2,7 @@ import { useMemo, useState } from 'react';
 import { useAtomValue } from 'jotai';
 import { trainingHistory, modelStats } from '../../state';
 import styles from './Charts.module.css';
-import {
-    Chart as ChartJS,
-    CategoryScale,
-    LinearScale,
-    PointElement,
-    LineElement,
-    Title,
-    Tooltip,
-    Legend,
-    ChartOptions
-} from 'chart.js';
-import { Line } from 'react-chartjs-2';
-
-ChartJS.register(
-    CategoryScale,
-    LinearScale,
-    PointElement,
-    LineElement,
-    Title,
-    Tooltip,
-    Legend
-);
+import { LineChart } from '@mui/x-charts/LineChart';
 
 export function AccuracyPerClass() {
     const stats = useAtomValue(modelStats);
@@ -168,98 +147,35 @@ export function ConfusionMatrix() {
 export function AccuracyPerEpoch() {
     const history = useAtomValue(trainingHistory);
 
-    const chartData = useMemo(() => {
-        return {
-            labels: history.map(h => h.epoch.toString()),
-            datasets: [
-                {
-                    label: 'acc',
-                    data: history.map(h => h.accuracy),
-                    borderColor: 'rgb(25, 118, 210)',
-                    backgroundColor: 'rgba(25, 118, 210, 0.1)',
-                    tension: 0.1,
-                    borderWidth: 2,
-                    pointRadius: 0,
-                    pointHoverRadius: 4
-                },
-                ...(history.some(h => h.valAccuracy !== undefined) ? [{
-                    label: 'test acc',
-                    data: history.map(h => h.valAccuracy ?? null),
-                    borderColor: 'rgb(255, 152, 0)',
-                    backgroundColor: 'rgba(255, 152, 0, 0.1)',
-                    tension: 0.1,
-                    borderWidth: 2,
-                    borderDash: [5, 5],
-                    pointRadius: 0,
-                    pointHoverRadius: 4
-                }] : [])
-            ]
-        };
+    const dataset = useMemo(() => history.map(h => ({
+        epoch: h.epoch,
+        accuracy: h.accuracy,
+        valAccuracy: h.valAccuracy ?? 0
+    })), [history]);
+
+    const series = useMemo(() => {
+        const result = [
+            {
+                dataKey: 'accuracy',
+                label: 'acc',
+                color: 'rgb(25, 118, 210)',
+                showMark: false
+            }
+        ];
+
+        if (history.some(h => h.valAccuracy !== undefined)) {
+            result.push({
+                dataKey: 'valAccuracy',
+                label: 'test acc',
+                color: 'rgb(255, 152, 0)',
+                showMark: false
+            });
+        }
+
+        return result;
     }, [history]);
 
-    const maxEpoch = useMemo(() => Math.max(...history.map(h => h.epoch)), [history]);
-
-    const options: ChartOptions<'line'> = {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-            legend: {
-                display: true,
-                position: 'top',
-                align: 'end',
-                labels: {
-                    usePointStyle: false,
-                    boxWidth: 40,
-                    boxHeight: 2,
-                    font: {
-                        size: 11
-                    },
-                    padding: 10
-                }
-            },
-            tooltip: {
-                mode: 'index',
-                intersect: false,
-                callbacks: {
-                    title: (items) => `x: ${items[0].label}`,
-                    label: (item) => `${item.dataset.label}: ${Number(item.raw).toFixed(3)}`
-                }
-            }
-        },
-        scales: {
-            x: {
-                title: {
-                    display: true,
-                    text: 'Epochs'
-                },
-                ticks: {
-                    autoSkip: false,
-                    maxRotation: 0,
-                    callback: function(value, index) {
-                        const epoch = parseInt(this.getLabelForValue(value as number));
-                        if (epoch % 5 === 0) return epoch;
-                        return '';
-                    }
-                }
-            },
-            y: {
-                title: {
-                    display: true,
-                    text: 'Accuracy'
-                },
-                min: 0,
-                max: 1,
-                ticks: {
-                    callback: (value) => Number(value).toFixed(2)
-                }
-            }
-        },
-        interaction: {
-            mode: 'nearest',
-            axis: 'x',
-            intersect: false
-        }
-    };
+    const maxEpoch = useMemo(() => Math.max(...history.map(h => h.epoch), 0), [history]);
 
     if (history.length === 0) {
         return null;
@@ -271,8 +187,32 @@ export function AccuracyPerEpoch() {
                 Accuracy per epoch
             </h3>
             <div className={styles.chartScrollWrapper}>
-                <div style={{ height: '250px', minWidth: Math.max(500, maxEpoch * 6) + 'px' }}>
-                    <Line data={chartData} options={options} />
+                <div style={{ minWidth: Math.max(300, maxEpoch * 6) + 'px' }}>
+                    <LineChart
+                        dataset={dataset}
+                        xAxis={[{
+                            data: history.map(h => h.epoch),
+                            label: 'Epochs',
+                            scaleType: 'linear',
+                            min: 0,
+                            max: maxEpoch,
+                            tickNumber: 10,
+                            valueFormatter: (value) => `Epoch ${Math.round(value)}`
+                        }]}
+                        yAxis={[{
+                            label: 'Accuracy',
+                            min: 0,
+                            max: 1
+                        }]}
+                        series={series}
+                        height={250}
+                        // margin={{ top: 10, right: 80, bottom: 50, left: 50 }}
+                        slotProps={{
+                            legend: {
+                                position: { vertical: 'middle', horizontal: 'center' }
+                            }
+                        }}
+                    />
                 </div>
             </div>
         </div>
@@ -282,97 +222,35 @@ export function AccuracyPerEpoch() {
 export function LossPerEpoch() {
     const history = useAtomValue(trainingHistory);
 
-    const chartData = useMemo(() => {
-        return {
-            labels: history.map(h => h.epoch.toString()),
-            datasets: [
-                {
-                    label: 'loss',
-                    data: history.map(h => h.loss),
-                    borderColor: 'rgb(25, 118, 210)',
-                    backgroundColor: 'rgba(25, 118, 210, 0.1)',
-                    tension: 0.1,
-                    borderWidth: 2,
-                    pointRadius: 0,
-                    pointHoverRadius: 4
-                },
-                ...(history.some(h => h.valLoss !== undefined) ? [{
-                    label: 'test loss',
-                    data: history.map(h => h.valLoss ?? null),
-                    borderColor: 'rgb(255, 152, 0)',
-                    backgroundColor: 'rgba(255, 152, 0, 0.1)',
-                    tension: 0.1,
-                    borderWidth: 2,
-                    borderDash: [5, 5],
-                    pointRadius: 0,
-                    pointHoverRadius: 4
-                }] : [])
-            ]
-        };
+    const dataset = useMemo(() => history.map(h => ({
+        epoch: h.epoch,
+        loss: h.loss,
+        valLoss: h.valLoss ?? 0
+    })), [history]);
+
+    const series = useMemo(() => {
+        const result = [
+            {
+                dataKey: 'loss',
+                label: 'loss',
+                color: 'rgb(25, 118, 210)',
+                showMark: false
+            }
+        ];
+
+        if (history.some(h => h.valLoss !== undefined)) {
+            result.push({
+                dataKey: 'valLoss',
+                label: 'test loss',
+                color: 'rgb(255, 152, 0)',
+                showMark: false
+            });
+        }
+
+        return result;
     }, [history]);
 
-    const maxEpoch = useMemo(() => Math.max(...history.map(h => h.epoch)), [history]);
-
-    const options: ChartOptions<'line'> = {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-            legend: {
-                display: true,
-                position: 'top',
-                align: 'end',
-                labels: {
-                    usePointStyle: false,
-                    boxWidth: 40,
-                    boxHeight: 2,
-                    font: {
-                        size: 11
-                    },
-                    padding: 10
-                }
-            },
-            tooltip: {
-                mode: 'index',
-                intersect: false,
-                callbacks: {
-                    title: (items) => `x: ${items[0].label}`,
-                    label: (item) => `${item.dataset.label}: ${Number(item.raw).toFixed(3)}`
-                }
-            }
-        },
-        scales: {
-            x: {
-                title: {
-                    display: true,
-                    text: 'Epochs'
-                },
-                ticks: {
-                    autoSkip: false,
-                    maxRotation: 0,
-                    callback: function(value, index) {
-                        const epoch = parseInt(this.getLabelForValue(value as number));
-                        if (epoch % 5 === 0) return epoch;
-                        return '';
-                    }
-                }
-            },
-            y: {
-                title: {
-                    display: true,
-                    text: 'Loss'
-                },
-                min: 0,
-                ticks: {
-                    callback: (value) => Number(value).toFixed(2)
-                }
-            }
-        },
-        interaction: {
-            mode: 'nearest',
-            axis: 'x',
-            intersect: false
-        }
-    };
+    const maxEpoch = useMemo(() => Math.max(...history.map(h => h.epoch), 0), [history]);
 
     if (history.length === 0) {
         return null;
@@ -384,8 +262,31 @@ export function LossPerEpoch() {
                 Loss per epoch
             </h3>
             <div className={styles.chartScrollWrapper}>
-                <div style={{ height: '250px', minWidth: Math.max(500, maxEpoch * 6) + 'px' }}>
-                    <Line data={chartData} options={options} />
+                <div style={{ minWidth: Math.max(300, maxEpoch * 6) + 'px' }}>
+                    <LineChart
+                        dataset={dataset}
+                        xAxis={[{
+                            data: history.map(h => h.epoch),
+                            label: 'Epochs',
+                            scaleType: 'linear',
+                            min: 0,
+                            max: maxEpoch,
+                            tickNumber: 10,
+                            valueFormatter: (value) => `Epoch ${Math.round(value)}`
+                        }]}
+                        yAxis={[{
+                            label: 'Loss',
+                            min: 0
+                        }]}
+                        series={series}
+                        height={250}
+                        // margin={{ top: 10, right: 80, bottom: 50, left: 50 }}
+                        slotProps={{
+                            legend: {
+                                position: { vertical: 'middle', horizontal: 'center' }
+                            }
+                        }}
+                    />
                 </div>
             </div>
         </div>

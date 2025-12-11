@@ -197,7 +197,9 @@ export default function Workspace({ step, visitedStep, onComplete, saveTrigger, 
                     onChange={doBehaviourChange}
                 />
                 <Output hidden={visitedStep < 1} />
+            </WorkflowLayout>
 
+            <div style={{ position: 'fixed', top: 0, right: 0, bottom: 0, zIndex: 1300, pointerEvents: showSidebar ? 'auto' : 'none' }}>
                 <SidePanel
                     open={showSidebar}
                     position="right"
@@ -206,7 +208,7 @@ export default function Workspace({ step, visitedStep, onComplete, saveTrigger, 
                 >
                     <SidePanelContent />
                 </SidePanel>
-            </WorkflowLayout>
+            </div>
 
             <SaveDialog
                 trigger={saveTrigger}
