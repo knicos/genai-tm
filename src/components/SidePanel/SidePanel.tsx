@@ -40,11 +40,6 @@ export function SidePanel() {
                     Under The Hood
                     {/* {t('sidePanel.title')} */}
                 </h2>
-                {/* {onClose && (
-                    <IconButton onClick={onClose} size="small">
-                        <CloseIcon />
-                    </IconButton>
-                )} */}
             </div>
             <div style={{ marginBottom: '1rem' }}>
                 <div style={{ fontWeight: 'bold', marginBottom: '0.5rem' }}>{t('heatmap.title')}</div>
@@ -61,20 +56,20 @@ export function SidePanel() {
                 />
             </div>
             {enabled && canPredict && (
-                <div style={{ padding: '1rem' }}>
+                <div className={style.canvasContainer}>
                     <canvas
                         width={224}
                         height={224}
                         ref={canvasRef}
-                        style={{ margin: '1rem', borderRadius: '6px', background: '#eee' }}
+                        className={style.canvas}
                     />
                 </div>
             )}
 
             {/* Model Statistics Charts */}
             {canPredict && (hasStats || hasHistory) && (
-                <div style={{ marginTop: '2rem', paddingTop: '2rem', borderTop: '1px solid #e0e0e0' }}>
-                    <h2 style={{ fontSize: '1.2rem', marginBottom: '1rem' }}>Model Statistics</h2>
+                <div className={style.statsSection}>
+                    <h2 className={style.statsTitle}>Model Statistics</h2>
 
                     {hasStats && (
                         <>

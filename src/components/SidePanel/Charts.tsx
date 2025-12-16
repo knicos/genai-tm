@@ -70,7 +70,7 @@ export function ConfusionMatrix() {
                         </div>
                         <div className={styles.matrixBody}>
                             <div className={styles.matrixColumnHeaders}>
-                                <div className={styles.matrixHeaderSpacer}></div>
+                                <div className={styles.matrixColumnHeaderSpacer}></div>
                                 {stats.labels.map((label, index) => (
                                     <div key={index} className={styles.matrixColumnHeader}>
                                         {label}
@@ -79,13 +79,7 @@ export function ConfusionMatrix() {
                             </div>
                             {stats.confusionMatrix.map((row, rowIndex) => (
                                 <div key={rowIndex} style={{ display: 'flex', marginBottom: '2px' }}>
-                                    <div style={{
-                                        width: '80px',
-                                        display: 'flex',
-                                        alignItems: 'center',
-                                        fontSize: '0.75rem',
-                                        paddingRight: '0.5rem'
-                                    }}>
+                                    <div className={styles.matrixRowHeader}>
                                         {stats.labels[rowIndex]}
                                     </div>
                                     {row.map((value, colIndex) => {
@@ -206,7 +200,6 @@ export function AccuracyPerEpoch() {
                         }]}
                         series={series}
                         height={250}
-                        // margin={{ top: 10, right: 80, bottom: 50, left: 50 }}
                         slotProps={{
                             legend: {
                                 position: { vertical: 'middle', horizontal: 'center' }
@@ -280,7 +273,6 @@ export function LossPerEpoch() {
                         }]}
                         series={series}
                         height={250}
-                        // margin={{ top: 10, right: 80, bottom: 50, left: 50 }}
                         slotProps={{
                             legend: {
                                 position: { vertical: 'middle', horizontal: 'center' }

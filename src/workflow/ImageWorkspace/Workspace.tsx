@@ -70,6 +70,13 @@ export default function Workspace({ step, visitedStep, onComplete, saveTrigger, 
     // Ensure an initial model exists
     useModelCreator(modelVariant);
 
+    // Set default sidebar width to 400px
+    useEffect(() => {
+        if (!window.sessionStorage.getItem('sidePanelWidth')) {
+            window.sessionStorage.setItem('sidePanelWidth', '400');
+        }
+    }, []);
+
     const doCloseShare = useCallback(() => setShowShare(false), [setShowShare]);
     const doShare = useCallback(() => {
         setShowShare(true);

@@ -1,3 +1,5 @@
+@value borderGrey, primary from "@genai-fi/base/css/colours.module.css";
+
 .chartContainer {
     margin-bottom: 2rem;
     position: relative;
@@ -5,7 +7,7 @@
 
 .chartTitle {
     font-size: 1rem;
-    color: #1976d2;
+    color: primary;
     margin-bottom: 0.5rem;
 }
 
@@ -14,7 +16,7 @@
 }
 
 .chartSvg {
-    border: 1px solid #e0e0e0;
+    border: 1px solid borderGrey;
     background: white;
 }
 
@@ -26,7 +28,7 @@
 }
 
 .tableHeader {
-    border-bottom: 1px solid #ddd;
+    border-bottom: 1px solid borderGrey;
 }
 
 .tableHeaderCell {
@@ -35,7 +37,7 @@
 }
 
 .tableRow {
-    border-bottom: 1px solid #f0f0f0;
+    border-bottom: 1px solid borderGrey;
 }
 
 .tableCell {
@@ -47,8 +49,9 @@
 }
 
 .matrixContainer {
-    display: inline-block;
-    min-width: 300px;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
 }
 
 .matrixHeaderRow {
@@ -57,7 +60,7 @@
 }
 
 .matrixHeaderSpacer {
-    width: 80px;
+    width: 120px;
 }
 
 .matrixHeaderTitle {
@@ -74,12 +77,13 @@
 .matrixYAxisLabel {
     writing-mode: vertical-rl;
     transform: rotate(180deg);
-    width: 30px;
+    width: 40px;
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 0.875rem;
     font-weight: bold;
+    margin-right: 0.5rem;
 }
 
 .matrixBody {
@@ -91,10 +95,14 @@
     margin-bottom: 0.25rem;
 }
 
+.matrixColumnHeaderSpacer {
+    width: 80px;
+}
+
 .matrixColumnHeader {
     flex: 1;
     text-align: center;
-    font-size: 0.75rem;
+    font-size: 0.875rem;
     padding: 0.25rem;
 }
 
@@ -103,12 +111,11 @@
     margin-bottom: 2px;
 }
 
-.matrixRowLabel {
+.matrixRowHeader {
     width: 80px;
     display: flex;
     align-items: center;
-    font-size: 0.75rem;
-    padding-right: 0.5rem;
+    font-size: 0.875rem;
 }
 
 .matrixCell {
@@ -126,7 +133,7 @@
 }
 
 .matrixCell:hover {
-    border: 2px solid #1976d2;
+    border: 2px solid primary;
 }
 
 .tooltip {

@@ -1,3 +1,5 @@
+@value backgroundLight, borderGrey from "@genai-fi/base/css/colours.module.css";
+
 .sidePanel {
     padding: 2rem;
     width: 100%;
@@ -16,4 +18,28 @@
 
 .spacer {
     height: 2rem;
+}
+
+.canvasContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+}
+
+.canvas {
+    border-radius: 6px;
+    background: backgroundLight;
+}
+
+.statsSection {
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 1px solid borderGrey;
+}
+
+.statsTitle {
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+    color: #444;
 }

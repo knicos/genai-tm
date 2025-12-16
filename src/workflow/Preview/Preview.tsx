@@ -7,7 +7,6 @@ import { prediction, predictionError } from '../../state';
 import PreviewMenu from './PreviewMenu';
 import { PercentageBar, Widget } from '@genai-fi/base';
 import { Colours } from '@genai-fi/base/main/components/PercentageBar/PercentageBar';
-import Heatmap from '../Heatmap/Heatmap';
 interface Props {
     onExport?: () => void;
     onClone?: () => void;

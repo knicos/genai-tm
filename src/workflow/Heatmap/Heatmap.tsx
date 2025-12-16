@@ -59,7 +59,7 @@ export default function Heatmap() {
                         width={224}
                         height={224}
                         ref={canvasRef}
-                        style={{ margin: '1rem', borderRadius: '6px', background: '#eee' }}
+                        className={style.canvas}
                     />
                 </div>
             )}
