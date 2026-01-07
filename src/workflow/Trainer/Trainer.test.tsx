@@ -21,6 +21,18 @@ vi.mock('@genai-fi/classifier', () => ({
         this.isTrained = vi.fn(() => false);
         this.getImageSize = vi.fn(() => 224);
         this.getVariant = vi.fn(() => 'image');
+        this.getLabels = vi.fn(() => ['Class 1', 'Class 2']);
+        this.getNumExamples = vi.fn(() => 10);
+        this.getNumValidation = vi.fn(() => 2);
+        this.getExamplesPerClass = vi.fn(() => [5, 5]);
+        this.predict = vi.fn(() =>
+            Promise.resolve({
+                predictions: [
+                    { className: 'Class 1', probability: 0.6 },
+                    { className: 'Class 2', probability: 0.4 },
+                ],
+            })
+        );
     }),
 }));
 
