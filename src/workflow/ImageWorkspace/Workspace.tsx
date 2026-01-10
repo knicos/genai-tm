@@ -20,9 +20,8 @@ import ExportDialog from './ExportDialog';
 import { useModelCreator } from '../../util/TeachableModel';
 import OpenDialog from './OpenDialog';
 import CloneDialog from './CloneDialog';
-// import Heatmap from '../Heatmap/Heatmap';
 import { IConnection, WorkflowLayout, SidePanel } from '@genai-fi/base';
-import SidePanelContent from '../../components/SidePanel/SidePanel';
+import UnderTheHood from '../../components/UnderTheHood/UnderTheHood';
 
 const SAVE_PERIOD = 5 * 60 * 1000; // 5 mins
 
@@ -213,7 +212,7 @@ export default function Workspace({ step, visitedStep, onComplete, saveTrigger, 
                     onClose={() => setShowSidebar(false)}
                     onOpen={() => setShowSidebar(true)}
                 >
-                    <SidePanelContent />
+                    <UnderTheHood />
                 </SidePanel>
             </div>
 

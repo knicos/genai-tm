@@ -5,10 +5,13 @@ import { useTranslation } from 'react-i18next';
 import { useAtomValue } from 'jotai';
 import { modelState, modelTraining, modelStats, trainingHistory } from '../../state';
 import { useVariant } from '@genaitm/util/variant';
-import style from './SidePanel.module.css';
-import { AccuracyPerClass, ConfusionMatrix, AccuracyPerEpoch, LossPerEpoch } from './Charts';
+import style from './UnderTheHood.module.css';
+import { AccuracyPerClass } from './AccuracyPerClass';
+import { ConfusionMatrix } from './ConfusionMatrix';
+import { AccuracyPerEpoch } from './AccuracyPerEpoch';
+import { LossPerEpoch } from './LossPerEpoch';
 
-export function SidePanel() {
+export function UnderTheHood() {
     const { namespace } = useVariant();
     const { t } = useTranslation(namespace);
     const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -34,11 +37,10 @@ export function SidePanel() {
     const canPredict = (model?.isTrained() || false) && !training;
 
     return (
-        <div className={style.sidePanel}>
+        <div className={style.underTheHood}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
                 <h2 style={{ margin: 0 }}>
-                    Under The Hood
-                    {/* {t('sidePanel.title')} */}
+                    {t('underTheHood.title')}
                 </h2>
             </div>
             <div style={{ marginBottom: '1rem' }}>
@@ -52,7 +54,7 @@ export function SidePanel() {
                             disabled={!canPredict}
                         />
                     }
-                    label={enabled ? 'On' : 'Off'}
+                    label={enabled ? t('underTheHood.on') : t('underTheHood.off')}
                 />
             </div>
             {enabled && canPredict && (
@@ -69,7 +71,7 @@ export function SidePanel() {
             {/* Model Statistics Charts */}
             {canPredict && (hasStats || hasHistory) && (
                 <div className={style.statsSection}>
-                    <h2 className={style.statsTitle}>Model Statistics</h2>
+                    <h2 className={style.statsTitle}>{t('underTheHood.statistics')}</h2>
 
                     {hasStats && (
                         <>
@@ -89,4 +91,6 @@ export function SidePanel() {
 
         </div>
     );
-} export default SidePanel;
+}
+
+export default UnderTheHood;

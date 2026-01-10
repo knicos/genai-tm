@@ -76,6 +76,31 @@
     "heatmap": {
         "title": "Förklaring"
     },
+    "underTheHood": {
+        "title": "Under huven",
+        "statistics": "Modellstatistik",
+        "on": "På",
+        "off": "Av"
+    },
+    "charts": {
+        "accuracyPerClass": "Noggrannhet per klass",
+        "confusionMatrix": "Förvirringsmatris",
+        "accuracyPerEpoch": "Noggrannhet per epok",
+        "lossPerEpoch": "Förlust per epok",
+        "class": "Klass",
+        "accuracy": "Noggrannhet",
+        "samples": "# Prover",
+        "prediction": "Förutsägelse",
+        "actual": "Faktisk",
+        "predicted": "Förutsagd",
+        "count": "Antal",
+        "acc": "nogr.",
+        "testAcc": "test nogr.",
+        "loss": "förlust",
+        "testLoss": "test förlust",
+        "epochs": "Epoker",
+        "epoch": "Epok"
+    },
     "training": {
         "actions": {
             "train": "Träna klassificerare"

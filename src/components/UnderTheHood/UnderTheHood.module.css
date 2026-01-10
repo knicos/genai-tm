@@ -1,6 +1,6 @@
 @value backgroundLight, borderGrey from "@genai-fi/base/css/colours.module.css";
 
-.sidePanel {
+.underTheHood {
     padding: 2rem;
     width: 100%;
     background: #fff;

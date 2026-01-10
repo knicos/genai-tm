@@ -76,6 +76,31 @@
     "heatmap": {
         "title": "説明"
     },
+    "underTheHood": {
+        "title": "内部の仕組み",
+        "statistics": "モデル統計",
+        "on": "オン",
+        "off": "オフ"
+    },
+    "charts": {
+        "accuracyPerClass": "クラス別精度",
+        "confusionMatrix": "混同行列",
+        "accuracyPerEpoch": "エポック別精度",
+        "lossPerEpoch": "エポック別損失",
+        "class": "クラス",
+        "accuracy": "精度",
+        "samples": "# サンプル",
+        "prediction": "予測",
+        "actual": "実際",
+        "predicted": "予測済み",
+        "count": "カウント",
+        "acc": "精度",
+        "testAcc": "テスト精度",
+        "loss": "損失",
+        "testLoss": "テスト損失",
+        "epochs": "エポック",
+        "epoch": "エポック"
+    },
     "training": {
         "actions": {
             "train": "分類器をトレーニング"

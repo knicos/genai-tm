@@ -76,6 +76,31 @@
     "heatmap": {
         "title": "Sellitändy"
     },
+    "underTheHood": {
+        "title": "Konepellin alla",
+        "statistics": "Mallin tilastot",
+        "on": "Päällä",
+        "off": "Pois päältä"
+    },
+    "charts": {
+        "accuracyPerClass": "Tarkkuš luokittain",
+        "confusionMatrix": "Šekaannušmatriisi",
+        "accuracyPerEpoch": "Tarkkuš per epookki",
+        "lossPerEpoch": "Häviö per epookki",
+        "class": "Luokka",
+        "accuracy": "Tarkkuš",
+        "samples": "# Näytteh",
+        "prediction": "Ennušte",
+        "actual": "Todellisuš",
+        "predicted": "Ennuštettu",
+        "count": "Määrä",
+        "acc": "tark.",
+        "testAcc": "tešti tark.",
+        "loss": "häviö",
+        "testLoss": "tešti häviö",
+        "epochs": "Epookit",
+        "epoch": "Epookki"
+    },
     "training": {
         "actions": {
             "train": "Opasta luokittelii"

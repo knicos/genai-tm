@@ -73,6 +73,31 @@
             "classCard": "{{name}} için eğitim verisi"
         }
     },
+    "underTheHood": {
+        "title": "Kaputun altında",
+        "statistics": "Model İstatistikleri",
+        "on": "Açık",
+        "off": "Kapalı"
+    },
+    "charts": {
+        "accuracyPerClass": "Sınıf başına doğruluk",
+        "confusionMatrix": "Karışıklık matrisi",
+        "accuracyPerEpoch": "Devir başına doğruluk",
+        "lossPerEpoch": "Devir başına kayıp",
+        "class": "Sınıf",
+        "accuracy": "Doğruluk",
+        "samples": "# Örnekler",
+        "prediction": "Tahmin",
+        "actual": "Gerçek",
+        "predicted": "Tahmin Edilen",
+        "count": "Sayı",
+        "acc": "doğ.",
+        "testAcc": "test doğ.",
+        "loss": "kayıp",
+        "testLoss": "test kayıp",
+        "epochs": "Devirler",
+        "epoch": "Devir"
+    },
     "training": {
         "actions": {
             "train": "Sınıflandırıcıyı Eğit"

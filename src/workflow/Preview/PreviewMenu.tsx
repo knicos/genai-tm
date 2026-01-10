@@ -89,7 +89,7 @@ export default function PreviewMenu({ disabled, onExport, onClone, onSidebar }: 
                     <ListItemIcon>
                         {<InsertChartOutlinedIcon />}
                     </ListItemIcon>
-                    <ListItemText>Under the hood</ListItemText>
+                    <ListItemText>{t('underTheHood.title')}</ListItemText>
                 </MenuItem>
             </Menu>
         </div>

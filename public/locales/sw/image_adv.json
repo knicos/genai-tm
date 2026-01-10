@@ -76,6 +76,31 @@
     "heatmap": {
         "title": "Ufafanuzi"
     },
+    "underTheHood": {
+        "title": "Chini ya bonet",
+        "statistics": "Takwimu za muundo",
+        "on": "Washa",
+        "off": "Zima"
+    },
+    "charts": {
+        "accuracyPerClass": "Usahihi kwa darasa",
+        "confusionMatrix": "Matriki ya kuchanganyikiwa",
+        "accuracyPerEpoch": "Usahihi kwa kipindi",
+        "lossPerEpoch": "Hasara kwa kipindi",
+        "class": "Darasa",
+        "accuracy": "Usahihi",
+        "samples": "# Sampuli",
+        "prediction": "Ubashiri",
+        "actual": "Halisi",
+        "predicted": "Imebasiriwa",
+        "count": "Idadi",
+        "acc": "usahihi",
+        "testAcc": "usahihi wa jaribio",
+        "loss": "hasara",
+        "testLoss": "hasara ya jaribio",
+        "epochs": "Vipindi",
+        "epoch": "Kipindi"
+    },
     "training": {
         "actions": {
             "train": "Fundisha kichanganuzi"
