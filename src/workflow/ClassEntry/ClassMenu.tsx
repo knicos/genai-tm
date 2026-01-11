@@ -14,11 +14,13 @@ import { BusyButton, QRCode } from '@genai-fi/base';
 interface Props {
     index: number;
     hasSamples: boolean;
+    isDisabled?: boolean;
     onDeleteClass: () => void;
     onRemoveSamples: () => void;
+    onToggleDisable: () => void;
 }
 
-export default function ClassMenu({ hasSamples, index, onDeleteClass, onRemoveSamples }: Props) {
+export default function ClassMenu({ hasSamples, index, isDisabled, onDeleteClass, onRemoveSamples, onToggleDisable }: Props) {
     const code = useAtomValue(sessionCode);
     const sharing = useAtomValue(sharingActive);
     const [p2penabled, setP2PEnabled] = useAtom(p2pActive);
@@ -70,6 +72,14 @@ export default function ClassMenu({ hasSamples, index, onDeleteClass, onRemoveSa
                         {t('trainingdata.actions.deleteClass')}
                     </MenuItem>
                 )}
+                <MenuItem
+                    onClick={() => {
+                        handleClose();
+                        onToggleDisable();
+                    }}
+                >
+                    {isDisabled ? t('trainingdata.actions.enableClass') : t('trainingdata.actions.disableClass')}
+                </MenuItem>
                 <MenuItem
                     disabled={!hasSamples}
                     onClick={() => {

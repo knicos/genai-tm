@@ -50,6 +50,8 @@
             "webcam": "Webcam",
             "upload": "Hochladen",
             "deleteClass": "Klasse löschen",
+            "disableClass": "Klasse deaktivieren",
+            "enableClass": "Klasse aktivieren",
             "removeAll": "Alle Beispiele entfernen",
             "capture": "Zum Aufnehmen anhalten",
             "collaborate": "Zusammenarbeiten"

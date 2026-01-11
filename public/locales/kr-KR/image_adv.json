@@ -50,6 +50,8 @@
             "webcam": "웹캡",
             "upload": "업로드",
             "deleteClass": "클래스 삭제",
+            "disableClass": "클래스 비활성화",
+            "enableClass": "클래스 활성화",
             "removeAll": "모든 샘플 삭제",
             "capture": "캡처를 위해 홀드하세요요",
             "collaborate": "협업업"

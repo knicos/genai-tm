@@ -163,6 +163,17 @@ export function Classification({ name, active, data, index, setData, onActivate,
 
     const doDropErrorClose = useCallback(() => setShowDropError(false), [setShowDropError]);
 
+    const doToggleDisable = useCallback(() => {
+        setData(
+            (data) => ({
+                label: data.label,
+                samples: data.samples,
+                disabled: !data.disabled,
+            }),
+            index
+        );
+    }, [setData, index]);
+
     const doAnimation = index === 0 && showTip && showDragTip;
 
     return (
@@ -179,15 +190,24 @@ export function Classification({ name, active, data, index, setData, onActivate,
                 <ClassMenu
                     index={index}
                     hasSamples={data.samples.length > 0}
+                    isDisabled={data.disabled}
                     onDeleteClass={doDeleteClass}
                     onRemoveSamples={removeSamples}
+                    onToggleDisable={doToggleDisable}
                 />
             }
         >
-            <div
-                className={active ? style.containerLarge : style.containerSmall}
-                onMouseEnter={doShowTip}
-            >
+            <div style={{ position: 'relative', width: '100%', height: '100%' }}>
+                {data.disabled && (
+                    <div className={style.disabledBadge}>
+                        <span>⚠</span>
+                        DISABLED
+                    </div>
+                )}
+                <div
+                    className={`${active ? style.containerLarge : style.containerSmall} ${data.disabled ? style.disabledClass : ''}`}
+                    onMouseEnter={doShowTip}
+                >
                 {active ? (
                     <WebcamCapture
                         visible={true}
@@ -273,6 +293,7 @@ export function Classification({ name, active, data, index, setData, onActivate,
                         ))}
                     </ol>
                 </div>
+            </div>
             </div>
             <AlertModal
                 open={showDropError}

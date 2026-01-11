@@ -50,6 +50,8 @@
             "webcam": "Webcam",
             "upload": "Upload",
             "deleteClass": "Delete Class",
+            "disableClass": "Disable Class",
+            "enableClass": "Enable Class",
             "removeAll": "Remove all samples",
             "capture": "Hold to capture",
             "collaborate": "Collaborate"

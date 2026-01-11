@@ -11,6 +11,7 @@ export interface ISample {
 export interface IClassification {
     label: string;
     samples: ISample[];
+    disabled?: boolean;
 }
 
 export const fileData = atom<File | null>(null);

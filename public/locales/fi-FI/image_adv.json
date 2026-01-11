@@ -50,6 +50,8 @@
             "webcam": "Webkamera",
             "upload": "Lataa",
             "deleteClass": "Poista luokka",
+            "disableClass": "Poista luokka käytöstä",
+            "enableClass": "Ota luokka käyttöön",
             "removeAll": "Poista kaikki tiedot",
             "capture": "Pidä nappi pohjassa",
             "collaborate": "Tee yhteistyötä"

@@ -50,6 +50,8 @@
             "webcam": "Webkameru",
             "upload": "Lad'd'ua",
             "deleteClass": "Iärestä luokku",
+            "disableClass": "Poista luokka käytöstä",
+            "enableClass": "Ota luokka käyttöön",
             "removeAll": "Iärestä kai tiijot",
             "capture": "Pie nybläine painetunnu",
             "collaborate": "Rua yhtes"

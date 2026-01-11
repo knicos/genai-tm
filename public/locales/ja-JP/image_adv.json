@@ -50,6 +50,8 @@
             "webcam": "ウェブカメラ",
             "upload": "アップロード",
             "deleteClass": "クラスを削除",
+            "disableClass": "クラスを無効にする",
+            "enableClass": "クラスを有効にする",
             "removeAll": "すべてのサンプルを削除",
             "capture": "押し続けてキャプチャ",
             "collaborate": "共同作業"

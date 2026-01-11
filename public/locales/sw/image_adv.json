@@ -50,6 +50,8 @@
             "webcam": "Kamera ya wavuti",
             "upload": "Pakia",
             "deleteClass": "Futa Kundi",
+            "disableClass": "Lemaza Darasa",
+            "enableClass": "Washa Darasa",
             "removeAll": "Ondoa sampuli zote",
             "capture": "Shikilia kupiga picha",
             "collaborate": "Shirikiana"

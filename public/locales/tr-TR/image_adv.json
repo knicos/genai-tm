@@ -49,7 +49,9 @@
             "addClass": "Bir Sınıf Ekle",
             "webcam": "Webcam",
             "upload": "Yükle",
-            "deleteClass": "Sınıfı Sil",
+            "deleteClass": "Sınıfı Sil",            
+            "disableClass": "Sınıfı Devre Dışı Bırak",
+            "enableClass": "Sınıfı Etkinleştir",            
             "removeAll": "Tüm Örnekleri Kaldır",
             "capture": "Yakalamak İçin Basılı Tutun",
             "collaborate": "İş Birliği Yap"

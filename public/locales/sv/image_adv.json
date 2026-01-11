@@ -50,6 +50,8 @@
             "webcam": "Webbkamera",
             "upload": "ladda upp",
             "deleteClass": "Radera klass",
+            "disableClass": "Inaktivera klass",
+            "enableClass": "Aktivera klass",
             "removeAll": "ta bort alla prover",
             "capture": "Håll för att ta foto",
             "collaborate": "Samarbeta"

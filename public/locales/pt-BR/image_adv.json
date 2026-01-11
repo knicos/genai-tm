@@ -50,6 +50,8 @@
             "webcam": "Webcam",
             "upload": "Carregar",
             "deleteClass": "Excluir Classe",
+            "disableClass": "Desativar Classe",
+            "enableClass": "Ativar Classe",
             "removeAll": "Remover todas as amostras",
             "capture": "Segure para capturar",
             "collaborate": "Colaborar"
