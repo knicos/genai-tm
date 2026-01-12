@@ -10,6 +10,7 @@ import RecoilObserver from '../../util/Observer';
 import { TeachableModel } from '@genai-fi/classifier';
 
 vi.mock('@genai-fi/classifier', () => ({
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     TeachableModel: vi.fn(function (this: any) {
         this.setLabels = vi.fn();
         this.setSeed = vi.fn();
@@ -209,13 +210,13 @@ describe('Trainer component', () => {
             this.setLabels = setLabelsSpy;
             this.setSeed = vi.fn();
             this.addExample = vi.fn(async () => {});
-            this.train = vi.fn(async () => {});
+            this.train = vi.fn(async () => undefined);
             this.ready = vi.fn(async () => true);
             this.isTrained = vi.fn(() => false);
             this.getImageSize = vi.fn(() => 224);
-            this.getVariant = vi.fn(() => 'image');
+            this.getVariant = vi.fn(() => 'image' as const);
             this.getLabels = vi.fn(() => setLabelsSpy.mock.calls[0]?.[0] || []);
-            this.getMetadata = vi.fn(() => ({}));
+            this.getMetadata = vi.fn(() => ({} as never));
             this.getNumExamples = vi.fn(() => 2);
             this.getNumValidation = vi.fn(() => 0);
             this.getExamplesPerClass = vi.fn(() => [1, 1]);
