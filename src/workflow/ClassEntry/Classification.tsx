@@ -6,6 +6,7 @@ import Sample from './Sample';
 import WebcamCapture from './WebcamCapture';
 import VideocamIcon from '@mui/icons-material/Videocam';
 import UploadFileIcon from '@mui/icons-material/UploadFile';
+import WarningIcon from '@mui/icons-material/Warning';
 import ClassMenu from './ClassMenu';
 import { useTranslation } from 'react-i18next';
 import { useDrop } from 'react-dnd';
@@ -200,7 +201,7 @@ export function Classification({ name, active, data, index, setData, onActivate,
             <div style={{ position: 'relative', width: '100%', height: '100%' }}>
                 {data.disabled && (
                     <div className={style.disabledBadge}>
-                        <span>⚠</span>
+                        <WarningIcon />
                         DISABLED
                     </div>
                 )}
