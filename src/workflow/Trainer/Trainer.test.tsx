@@ -10,7 +10,6 @@ import RecoilObserver from '../../util/Observer';
 import { TeachableModel } from '@genai-fi/classifier';
 
 vi.mock('@genai-fi/classifier', () => ({
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     TeachableModel: vi.fn(function (this: any) {
         this.setLabels = vi.fn();
         this.setSeed = vi.fn();
