@@ -76,6 +76,31 @@
     "heatmap": {
         "title": "Erläuterung"
     },
+    "underTheHood": {
+        "title": "Unter der Haube",
+        "statistics": "Modellstatistiken",
+        "on": "An",
+        "off": "Aus"
+    },
+    "charts": {
+        "accuracyPerClass": "Genauigkeit pro Klasse",
+        "confusionMatrix": "Konfusionsmatrix",
+        "accuracyPerEpoch": "Genauigkeit pro Epoche",
+        "lossPerEpoch": "Verlust pro Epoche",
+        "class": "Klasse",
+        "accuracy": "Genauigkeit",
+        "samples": "# Proben",
+        "prediction": "Vorhersage",
+        "actual": "Tatsächlich",
+        "predicted": "Vorhergesagt",
+        "count": "Anzahl",
+        "acc": "Gen.",
+        "testAcc": "Test-Gen.",
+        "loss": "Verlust",
+        "testLoss": "Test-Verlust",
+        "epochs": "Epochen",
+        "epoch": "Epoche"
+    },
     "training": {
         "actions": {
             "train": "Klassifikator trainieren"

@@ -1,7 +1,8 @@
-import { IClassification, modelState, predictedIndex, prediction, predictionError } from '../state';
+import { IClassification, modelState, predictedIndex, prediction, predictionError, trainingHistory, modelStats, TrainingMetrics } from '../state';
 import { useAtom, useSetAtom, useAtomValue } from 'jotai';
 import { useCallback, useEffect, useState, useRef } from 'react';
 import { TeachableModel } from '@genai-fi/classifier';
+import { calculateModelStatistics } from './modelStats';
 
 export type TMType = 'image' | 'pose';
 
@@ -108,6 +109,8 @@ export function useModelTrainer() {
     const [model, setModel] = useAtom(modelState);
     const [stage, setStage] = useState<TrainingState>('none');
     const [epochs, setEpochs] = useState(0);
+    const setHistory = useSetAtom(trainingHistory);
+    const setStats = useSetAtom(modelStats);
 
     useEffect(() => {
         if (model) {
@@ -132,6 +135,7 @@ export function useModelTrainer() {
 
                 setStage('loading');
                 setEpochs(0);
+                setHistory([]);
                 const tm = new TeachableModel(model.getVariant() || 'image');
 
                 if (!(await tm.ready())) {
@@ -160,6 +164,8 @@ export function useModelTrainer() {
 
                 setStage('training');
 
+                const historyData: TrainingMetrics[] = [];
+
                 try {
                     await tm.train(
                         {
@@ -169,14 +175,32 @@ export function useModelTrainer() {
                             batchSize: settings.batchSize,
                         },
                         {
-                            onEpochEnd: (epoch: number) => {
+                            onEpochEnd: (epoch: number, logs?: Record<string, number>) => {
                                 setEpochs(epoch / 50);
+
+                                // Collect training metrics if available
+                                if (logs) {
+                                    historyData.push({
+                                        epoch: epoch,
+                                        loss: logs.loss || 0,
+                                        accuracy: logs.acc || 0,
+                                        valLoss: logs.val_loss,
+                                        valAccuracy: logs.val_acc
+                                    });
+                                    setHistory([...historyData]);
+                                }
                             },
                         }
                     );
                 } catch (e) {
                     console.error('Training failed', e);
                     return;
+                }
+
+                // Calculate model statistics on validation set
+                const stats = await calculateModelStatistics(tm, data);
+                if (stats) {
+                    setStats(stats);
                 }
 
                 setModel(tm);

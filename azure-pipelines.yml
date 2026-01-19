@@ -11,8 +11,10 @@ trigger:
         include:
             - 'v*'
 
-pool:
-    vmImage: ubuntu-latest
+# pool:
+#     vmImage: ubuntu-latest
+
+pool: Default
 
 stages:
     - stage: Static

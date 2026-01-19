@@ -7,15 +7,15 @@ import { prediction, predictionError } from '../../state';
 import PreviewMenu from './PreviewMenu';
 import { PercentageBar, Widget } from '@genai-fi/base';
 import { Colours } from '@genai-fi/base/main/components/PercentageBar/PercentageBar';
-
 interface Props {
     onExport?: () => void;
     onClone?: () => void;
+    onSidebar?: () => void;
 }
 
 const colourWheel: Colours[] = ['orange', 'purple', 'blue', 'green', 'red'];
 
-export default function Preview({ onExport, onClone }: Props) {
+export default function Preview({ onExport, onClone, onSidebar }: Props) {
     const { namespace } = useVariant();
     const { t } = useTranslation(namespace);
     const preds = useAtomValue(prediction);
@@ -35,6 +35,7 @@ export default function Preview({ onExport, onClone }: Props) {
                     disabled={!model}
                     onExport={onExport}
                     onClone={onClone}
+                    onSidebar={onSidebar}
                 />
             }
         >

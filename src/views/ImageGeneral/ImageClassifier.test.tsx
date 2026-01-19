@@ -62,12 +62,14 @@ vi.mock('@genai-fi/classifier', () => ({
         this.getMetadata = vi.fn(() => ({
             imageSize: 224,
         }));
-        this.predict = vi.fn(() => ({
-            predictions: [
-                { className: 'class 1', probability: 0.2 },
-                { className: 'class 2', probability: 0.4 },
-            ],
-        }));
+        this.predict = vi.fn(() =>
+            Promise.resolve({
+                predictions: [
+                    { className: 'class 1', probability: 0.2 },
+                    { className: 'class 2', probability: 0.4 },
+                ],
+            })
+        );
         this.ready = vi.fn(async () => true);
         this.isTrained = vi.fn(() => true);
         this.getImageSize = vi.fn(() => 224);
@@ -76,6 +78,9 @@ vi.mock('@genai-fi/classifier', () => ({
         this.estimate = vi.fn();
         this.draw = vi.fn();
         this.setXAICanvas = vi.fn();
+        this.getNumExamples = vi.fn(() => 10);
+        this.getNumValidation = vi.fn(() => 2);
+        this.getExamplesPerClass = vi.fn(() => [5, 5]);
     }),
 }));
 

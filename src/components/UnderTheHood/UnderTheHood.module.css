@@ -1,0 +1,45 @@
+@value backgroundLight, borderGrey from "@genai-fi/base/css/colours.module.css";
+
+.underTheHood {
+    padding: 2rem;
+    width: 100%;
+    background: #fff;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.08);
+    height: 100vh;
+    max-height: 100vh;
+    overflow-y: auto;
+    box-sizing: border-box;
+}
+
+.label {
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+}
+
+.spacer {
+    height: 2rem;
+}
+
+.canvasContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+}
+
+.canvas {
+    border-radius: 6px;
+    background: backgroundLight;
+}
+
+.statsSection {
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 1px solid borderGrey;
+}
+
+.statsTitle {
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+    color: #444;
+}

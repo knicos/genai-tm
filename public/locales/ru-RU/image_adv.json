@@ -76,6 +76,31 @@
     "heatmap": {
         "title": "Объяснение"
     },
+    "underTheHood": {
+        "title": "Под капотом",
+        "statistics": "Статистика модели",
+        "on": "Вкл",
+        "off": "Выкл"
+    },
+    "charts": {
+        "accuracyPerClass": "Точность по классам",
+        "confusionMatrix": "Матрица путаницы",
+        "accuracyPerEpoch": "Точность по эпохам",
+        "lossPerEpoch": "Потери по эпохам",
+        "class": "Класс",
+        "accuracy": "Точность",
+        "samples": "# Образцы",
+        "prediction": "Предсказание",
+        "actual": "Фактический",
+        "predicted": "Предсказанный",
+        "count": "Количество",
+        "acc": "точн.",
+        "testAcc": "тест точн.",
+        "loss": "потери",
+        "testLoss": "тест потери",
+        "epochs": "Эпохи",
+        "epoch": "Эпоха"
+    },
     "training": {
         "actions": {
             "train": "Обучить классификатор"

@@ -76,6 +76,31 @@
     "heatmap": {
         "title": "Пояснення"
     },
+    "underTheHood": {
+        "title": "Під капотом",
+        "statistics": "Статистика моделі",
+        "on": "Увімк",
+        "off": "Вимк"
+    },
+    "charts": {
+        "accuracyPerClass": "Точність по класах",
+        "confusionMatrix": "Матриця плутанини",
+        "accuracyPerEpoch": "Точність по епохах",
+        "lossPerEpoch": "Втрати по епохах",
+        "class": "Клас",
+        "accuracy": "Точність",
+        "samples": "# Зразки",
+        "prediction": "Прогноз",
+        "actual": "Фактичний",
+        "predicted": "Прогнозований",
+        "count": "Кількість",
+        "acc": "точн.",
+        "testAcc": "тест точн.",
+        "loss": "втрати",
+        "testLoss": "тест втрати",
+        "epochs": "Епохи",
+        "epoch": "Епоха"
+    },
     "training": {
         "actions": {
             "train": "Навчити класифікатор"

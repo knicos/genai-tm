@@ -76,6 +76,31 @@
     "heatmap": {
         "title": "설명"
     },
+    "underTheHood": {
+        "title": "내부 작동 방식",
+        "statistics": "모델 통계",
+        "on": "켜기",
+        "off": "끄기"
+    },
+    "charts": {
+        "accuracyPerClass": "클래스별 정확도",
+        "confusionMatrix": "혼동 행렬",
+        "accuracyPerEpoch": "에포크별 정확도",
+        "lossPerEpoch": "에포크별 손실",
+        "class": "클래스",
+        "accuracy": "정확도",
+        "samples": "# 샘플",
+        "prediction": "예측",
+        "actual": "실제",
+        "predicted": "예측됨",
+        "count": "개수",
+        "acc": "정확도",
+        "testAcc": "테스트 정확도",
+        "loss": "손실",
+        "testLoss": "테스트 손실",
+        "epochs": "에포크",
+        "epoch": "에포크"
+    },
     "training": {
         "actions": {
             "train": "분류기 학습"

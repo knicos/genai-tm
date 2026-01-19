@@ -10,14 +10,16 @@ import { fatalWebcam } from '@genaitm/state';
 import { ListItemIcon, ListItemText } from '@mui/material';
 import ShareIcon from '@mui/icons-material/Share';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
+import InsertChartOutlinedIcon from '@mui/icons-material/InsertChartOutlined';
 
 interface Props {
     disabled?: boolean;
     onExport?: () => void;
     onClone?: () => void;
+    onSidebar?: () => void;
 }
 
-export default function PreviewMenu({ disabled, onExport, onClone }: Props) {
+export default function PreviewMenu({ disabled, onExport, onClone, onSidebar }: Props) {
     const { namespace, usep2p, allowModelSharing } = useVariant();
     const { t } = useTranslation(namespace);
     const fatal = useAtomValue(fatalWebcam);
@@ -75,6 +77,19 @@ export default function PreviewMenu({ disabled, onExport, onClone }: Props) {
                         <ShareIcon />
                     </ListItemIcon>
                     <ListItemText>{t('model.actions.export')}</ListItemText>
+                </MenuItem>
+
+                <MenuItem
+                    disabled={disabled || !onSidebar || !usep2p}
+                    onClick={() => {
+                        handleClose();
+                        if (onSidebar) onSidebar();
+                    }}
+                >
+                    <ListItemIcon>
+                        {<InsertChartOutlinedIcon />}
+                    </ListItemIcon>
+                    <ListItemText>{t('underTheHood.title')}</ListItemText>
                 </MenuItem>
             </Menu>
         </div>

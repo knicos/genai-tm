@@ -76,6 +76,31 @@
     "heatmap": {
         "title": "Selitys"
     },
+    "underTheHood": {
+        "title": "Konepellin alla",
+        "statistics": "Mallin tilastot",
+        "on": "Päällä",
+        "off": "Pois päältä"
+    },
+    "charts": {
+        "accuracyPerClass": "Tarkkuus luokittain",
+        "confusionMatrix": "Sekaannusmatriisi",
+        "accuracyPerEpoch": "Tarkkuus per epookki",
+        "lossPerEpoch": "Häviö per epookki",
+        "class": "Luokka",
+        "accuracy": "Tarkkuus",
+        "samples": "# Näytteet",
+        "prediction": "Ennuste",
+        "actual": "Todellinen",
+        "predicted": "Ennustettu",
+        "count": "Määrä",
+        "acc": "tark.",
+        "testAcc": "testi tark.",
+        "loss": "häviö",
+        "testLoss": "testi häviö",
+        "epochs": "Epookit",
+        "epoch": "Epookki"
+    },
     "training": {
         "actions": {
             "train": "Opeta luokittelija"

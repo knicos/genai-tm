@@ -20,8 +20,8 @@ import ExportDialog from './ExportDialog';
 import { useModelCreator } from '../../util/TeachableModel';
 import OpenDialog from './OpenDialog';
 import CloneDialog from './CloneDialog';
-import Heatmap from '../Heatmap/Heatmap';
-import { IConnection, WorkflowLayout } from '@genai-fi/base';
+import { IConnection, WorkflowLayout, SidePanel } from '@genai-fi/base';
+import UnderTheHood from '../../components/UnderTheHood/UnderTheHood';
 
 const SAVE_PERIOD = 5 * 60 * 1000; // 5 mins
 
@@ -57,7 +57,7 @@ function addCloseAlert() {
 }
 
 export default function Workspace({ step, visitedStep, onComplete, saveTrigger, onSkip, onSaveRemind }: Props) {
-    const { namespace, resetOnLoad, modelVariant, allowHeatmap } = useVariant();
+    const { namespace, resetOnLoad, modelVariant } = useVariant();
     const { t } = useTranslation(namespace);
     const [data, setData] = useAtom(classState);
     const [errMsg, setErrMsg] = useState<string | null>(null);
@@ -65,9 +65,16 @@ export default function Workspace({ step, visitedStep, onComplete, saveTrigger, 
     const [editingData, setEditingData] = useState(false);
     const [showShare, setShowShare] = useState(false);
     const [showClone, setShowClone] = useState(false);
-
+    const [showSidebar, setShowSidebar] = useState(false);
     // Ensure an initial model exists
     useModelCreator(modelVariant);
+
+    // Set default sidebar width to 400px
+    useEffect(() => {
+        if (!window.sessionStorage.getItem('sidePanelWidth')) {
+            window.sessionStorage.setItem('sidePanelWidth', '400');
+        }
+    }, []);
 
     const doCloseShare = useCallback(() => setShowShare(false), [setShowShare]);
     const doShare = useCallback(() => {
@@ -76,6 +83,9 @@ export default function Workspace({ step, visitedStep, onComplete, saveTrigger, 
     const doClone = useCallback(() => {
         setShowClone(true);
     }, [setShowClone]);
+    const doSidebar = useCallback(() => {
+        setShowSidebar(true);
+    }, [setShowSidebar]);
 
     const saveTimer = useRef(-1);
 
@@ -183,8 +193,9 @@ export default function Workspace({ step, visitedStep, onComplete, saveTrigger, 
                     <Preview
                         onExport={doShare}
                         onClone={doClone}
+                        onSidebar={doSidebar}
                     />
-                    {allowHeatmap && modelVariant === 'image' && <Heatmap />}
+
                 </div>
                 <Behaviours
                     hidden={visitedStep < 1}
@@ -193,6 +204,17 @@ export default function Workspace({ step, visitedStep, onComplete, saveTrigger, 
                 />
                 <Output hidden={visitedStep < 1} />
             </WorkflowLayout>
+
+            <div style={{ position: 'fixed', top: 0, right: 0, bottom: 0, zIndex: 1300, pointerEvents: showSidebar ? 'auto' : 'none' }}>
+                <SidePanel
+                    open={showSidebar}
+                    position="right"
+                    onClose={() => setShowSidebar(false)}
+                    onOpen={() => setShowSidebar(true)}
+                >
+                    <UnderTheHood />
+                </SidePanel>
+            </div>
 
             <SaveDialog
                 trigger={saveTrigger}

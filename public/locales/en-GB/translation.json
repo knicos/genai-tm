@@ -130,8 +130,14 @@
             "advanced": "Advanced"
         },
         "values": {
-            "models": ["Image (MobileNet)", "Pose (PoseNet)"],
-            "variants": ["General Use", "Classroom"]
+            "models": [
+                "Image (MobileNet)",
+                "Pose (PoseNet)"
+            ],
+            "variants": [
+                "General Use",
+                "Classroom"
+            ]
         }
     },
     "widget": {

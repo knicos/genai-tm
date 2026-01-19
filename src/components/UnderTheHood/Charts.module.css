@@ -1,0 +1,170 @@
+@value borderGrey, primary from "@genai-fi/base/css/colours.module.css";
+
+.chartContainer {
+    margin-bottom: 2rem;
+    position: relative;
+}
+
+.chartTitle {
+    font-size: 1rem;
+    color: primary;
+    margin-bottom: 0.5rem;
+}
+
+.chartScrollWrapper {
+    overflow-x: auto;
+}
+
+.chartSvg {
+    border: 1px solid borderGrey;
+    background: white;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.875rem;
+}
+
+.tableHeader {
+    border-bottom: 1px solid borderGrey;
+}
+
+.tableHeaderCell {
+    text-align: left;
+    padding: 0.5rem;
+}
+
+.tableRow {
+    border-bottom: 1px solid borderGrey;
+}
+
+.tableCell {
+    padding: 0.5rem;
+}
+
+.matrixScrollWrapper {
+    overflow-x: auto;
+}
+
+.matrixContainer {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.matrixHeaderRow {
+    display: flex;
+    margin-bottom: 0.5rem;
+}
+
+.matrixHeaderSpacer {
+    width: 120px;
+}
+
+.matrixHeaderTitle {
+    flex: 1;
+    text-align: center;
+    font-size: 0.875rem;
+    font-weight: bold;
+}
+
+.matrixContent {
+    display: flex;
+}
+
+.matrixYAxisLabel {
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    width: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.875rem;
+    font-weight: bold;
+    margin-right: 0.5rem;
+}
+
+.matrixBody {
+    flex: 1;
+}
+
+.matrixColumnHeaders {
+    display: flex;
+    margin-bottom: 0.25rem;
+}
+
+.matrixColumnHeaderSpacer {
+    width: 80px;
+}
+
+.matrixColumnHeader {
+    flex: 1;
+    text-align: center;
+    font-size: 0.875rem;
+    padding: 0.25rem;
+}
+
+.matrixRow {
+    display: flex;
+    margin-bottom: 2px;
+}
+
+.matrixRowHeader {
+    width: 80px;
+    display: flex;
+    align-items: center;
+    font-size: 0.875rem;
+}
+
+.matrixCell {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem;
+    margin-right: 2px;
+    font-size: 0.875rem;
+    min-height: 40px;
+    position: relative;
+    cursor: pointer;
+    border: none;
+}
+
+.matrixCell:hover {
+    border: 2px solid primary;
+}
+
+.tooltip {
+    position: fixed;
+    transform: translate(-50%, -100%);
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 0.5rem;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    pointer-events: none;
+    white-space: nowrap;
+    z-index: 10000;
+}
+
+.chartTooltip {
+    position: absolute;
+    transform: translate(-50%, -100%);
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 0.5rem;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    pointer-events: none;
+    white-space: nowrap;
+    z-index: 1000;
+}
+
+.tooltipValue {
+    color: #5eb3f6;
+}
+
+.tooltipValueAlt {
+    color: #ffb74d;
+}

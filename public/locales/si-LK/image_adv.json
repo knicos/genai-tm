@@ -76,6 +76,31 @@
     "heatmap": {
         "title": "විස්තර"
     },
+    "underTheHood": {
+        "title": "හුඩ් තලේ",
+        "statistics": "ආකෘති සංඛ්‍යාලේඛන",
+        "on": "සක්‍රිය",
+        "off": "අක්‍රිය"
+    },
+    "charts": {
+        "accuracyPerClass": "වර්ගය ප්‍රකාරව යව්නතාවය",
+        "confusionMatrix": "අනිශ්චිත මැට්රික්ස්වය",
+        "accuracyPerEpoch": "එපොක් ප්‍රකාරව යව්නතාවය",
+        "lossPerEpoch": "එපොක් ප්‍රකාරව සන්තොෂය",
+        "class": "වර්ගය",
+        "accuracy": "යව්නතාවය",
+        "samples": "# නමුනා",
+        "prediction": "පුරාකත්නය",
+        "actual": "වාස්තවික",
+        "predicted": "පුරාකතන කර ඇත",
+        "count": "ගණනය",
+        "acc": "යව්.",
+        "testAcc": "පරීක්ෂණ යව්.",
+        "loss": "සන්තොෂය",
+        "testLoss": "පරීක්ෂණ සන්තොෂය",
+        "epochs": "එපොක්",
+        "epoch": "එපොක්"
+    },
     "training": {
         "actions": {
             "train": "වර්ගීකරණය පුහුණු කරන්න"

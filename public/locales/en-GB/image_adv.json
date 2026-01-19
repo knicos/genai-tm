@@ -76,6 +76,31 @@
     "heatmap": {
         "title": "Explanation"
     },
+    "underTheHood": {
+        "title": "Under The Hood",
+        "statistics": "Model Statistics",
+        "on": "On",
+        "off": "Off"
+    },
+    "charts": {
+        "accuracyPerClass": "Accuracy per class",
+        "confusionMatrix": "Confusion Matrix",
+        "accuracyPerEpoch": "Accuracy per epoch",
+        "lossPerEpoch": "Loss per epoch",
+        "class": "Class",
+        "accuracy": "Accuracy",
+        "samples": "# Samples",
+        "prediction": "Prediction",
+        "actual": "Actual",
+        "predicted": "Predicted",
+        "count": "Count",
+        "acc": "acc",
+        "testAcc": "test acc",
+        "loss": "loss",
+        "testLoss": "test loss",
+        "epochs": "Epochs",
+        "epoch": "Epoch"
+    },
     "training": {
         "actions": {
             "train": "Train classifier"
@@ -123,7 +148,9 @@
             "mustTrain": "You must train your classifier first",
             "failedTensorflow": "Your device or browser could not run our classifier"
         },
-        "aria": { "more": "more options" }
+        "aria": {
+            "more": "more options"
+        }
     },
     "output": {
         "labels": {

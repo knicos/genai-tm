@@ -76,6 +76,31 @@
     "heatmap": {
         "title": "Explicação"
     },
+    "underTheHood": {
+        "title": "Sob o capô",
+        "statistics": "Estatísticas do modelo",
+        "on": "Ligado",
+        "off": "Desligado"
+    },
+    "charts": {
+        "accuracyPerClass": "Precisão por classe",
+        "confusionMatrix": "Matriz de confusão",
+        "accuracyPerEpoch": "Precisão por época",
+        "lossPerEpoch": "Perda por época",
+        "class": "Classe",
+        "accuracy": "Precisão",
+        "samples": "# Amostras",
+        "prediction": "Predição",
+        "actual": "Real",
+        "predicted": "Previsto",
+        "count": "Contagem",
+        "acc": "prec.",
+        "testAcc": "prec. teste",
+        "loss": "perda",
+        "testLoss": "perda teste",
+        "epochs": "Épocas",
+        "epoch": "Época"
+    },
     "training": {
         "actions": {
             "train": "Treinar classificador"

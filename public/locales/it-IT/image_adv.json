@@ -76,6 +76,31 @@
     "heatmap": {
         "title": "Spiegazione"
     },
+    "underTheHood": {
+        "title": "Sotto il cofano",
+        "statistics": "Statistiche del modello",
+        "on": "Attivo",
+        "off": "Disattivo"
+    },
+    "charts": {
+        "accuracyPerClass": "Precisione per classe",
+        "confusionMatrix": "Matrice di confusione",
+        "accuracyPerEpoch": "Precisione per epoca",
+        "lossPerEpoch": "Perdita per epoca",
+        "class": "Classe",
+        "accuracy": "Precisione",
+        "samples": "# Campioni",
+        "prediction": "Predizione",
+        "actual": "Effettivo",
+        "predicted": "Previsto",
+        "count": "Conteggio",
+        "acc": "prec.",
+        "testAcc": "prec. test",
+        "loss": "perdita",
+        "testLoss": "perdita test",
+        "epochs": "Epoche",
+        "epoch": "Epoca"
+    },
     "training": {
         "actions": {
             "train": "Addestra classificatore"
