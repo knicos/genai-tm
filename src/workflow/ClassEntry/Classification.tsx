@@ -202,7 +202,7 @@ export function Classification({ name, active, data, index, setData, onActivate,
                 {data.disabled && (
                     <div className={style.disabledBadge}>
                         <WarningIcon />
-                        DISABLED
+                        {t('trainingdata.labels.disabled')}
                     </div>
                 )}
                 <div

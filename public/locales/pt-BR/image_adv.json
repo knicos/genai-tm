@@ -65,7 +65,8 @@
             "dropFiles": "ou arraste imagens aqui de um site ou arquivo",
             "needsMore": "São necessárias mais amostras",
             "dropError": "Apenas imagens podem ser arrastadas aqui",
-            "qrMessage": "Você pode usar um telefone ou tablet para adicionar imagens. Clique no código QR para expandi-lo."
+            "qrMessage": "Você pode usar um telefone ou tablet para adicionar imagens. Clique no código QR para expandi-lo.",
+            "disabled": "DESATIVADO"
         },
         "aria": {
             "sample": "amostra carregada",

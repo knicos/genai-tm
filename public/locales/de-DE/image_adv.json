@@ -65,7 +65,8 @@
             "dropFiles": "oder ziehe Bilder von einer Website oder Datei hierher",
             "needsMore": "Es werden mehr Beispiele benötigt",
             "dropError": "Hier können nur Bilder abgelegt werden",
-            "qrMessage": "Du kannst ein Telefon oder Tablet benutzen, um Bilder hinzuzufügen. Klicke auf den QR-Code, um ihn zu vergrößern."
+            "qrMessage": "Du kannst ein Telefon oder Tablet benutzen, um Bilder hinzuzufügen. Klicke auf den QR-Code, um ihn zu vergrößern.",
+            "disabled": "DEAKTIVIERT"
         },
         "aria": {
             "sample": "hochgeladenes Beispiel",

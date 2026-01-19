@@ -65,7 +65,8 @@
             "dropFiles": "libo vie kuvua täh nettusaitoilpäi libo tiijostoloispäi",
             "needsMore": "Ližiä opastusdatua pidäy",
             "dropError": "Täh voibi pakuttua vaiku kuvua",
-            "qrMessage": "Voit ližätä kuvua telefonači libo tablietači. Suurenda QR-koudu plikaten sidä."
+            "qrMessage": "Voit ližätä kuvua telefonači libo tabletači. Suurenda QR-koudu plikaten sidä.",
+            "disabled": "POISTETTU KÄYTÖSTÄ"
         },
         "aria": {
             "sample": "lad'd'attu opastusdata",

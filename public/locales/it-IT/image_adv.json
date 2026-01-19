@@ -65,7 +65,8 @@
             "dropFiles": "o trascina le immagini qui da un sito web o un file",
             "needsMore": "Servono altri campioni",
             "dropError": "Solo immagini possono essere trascinate qui",
-            "qrMessage": "Puoi usare un telefono o un tablet per aggiungere immagini. Clicca sul codice QR per ingrandirlo."
+            "qrMessage": "Puoi usare un telefono o un tablet per aggiungere immagini. Clicca sul codice QR per ingrandirlo.",
+            "disabled": "DISABILITATO"
         },
         "aria": {
             "sample": "campione caricato",

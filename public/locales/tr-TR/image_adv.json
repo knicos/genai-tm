@@ -65,7 +65,8 @@
             "dropFiles": "ya da bir web sitesinden veya dosyadan görselleri buraya sürükleyin",
             "needsMore": "Daha fazla örneğe ihtiyaç var",
             "dropError": "Buraya yalnızca görseller bırakılabilir",
-            "qrMessage": "Görseller eklemek için bir telefon veya tablet kullanabilirsiniz. QR kodunu genişletmek için üzerine tıklayın."
+            "qrMessage": "Görseller eklemek için bir telefon veya tablet kullanabilirsiniz. QR kodunu genişletmek için üzerine tıklayın.",
+            "disabled": "DEVRE DIŞI"
         },
         "aria": {
             "sample": "yüklenen örnek",
