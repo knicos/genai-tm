@@ -50,6 +50,8 @@
             "webcam": "Kamera ya wavuti",
             "upload": "Pakia",
             "deleteClass": "Futa Kundi",
+            "disableClass": "Lemaza Darasa",
+            "enableClass": "Washa Darasa",
             "removeAll": "Ondoa sampuli zote",
             "capture": "Shikilia kupiga picha",
             "collaborate": "Shirikiana"
@@ -63,7 +65,8 @@
             "dropFiles": "au buruta picha hapa kutoka tovuti au faili",
             "needsMore": "Sampuli zinahitajika zaidi",
             "dropError": "Ni picha pekee zinaruhusiwa",
-            "qrMessage": "Unaweza kutumia simu au kishikwambi kuongeza picha. Bofya msimbo wa QR ili kupanua."
+            "qrMessage": "Unaweza kutumia simu au kishikwambi kuongeza picha. Bofya msimbo wa QR ili kupanua.",
+            "disabled": "IMEZIMWA"
         },
         "aria": {
             "sample": "sampuli zilizopakiwa",

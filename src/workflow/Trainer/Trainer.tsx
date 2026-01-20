@@ -54,8 +54,9 @@ export default function Trainer({ onTrained, editing, ...props }: Props) {
     const data = useAtomValue(classState);
     const setActive = useSetAtom(activeNodes);
 
-    const sampleMin = Math.min(...data.map((v) => v.samples.length));
-    const isTrainable = data.length >= 2 && sampleMin >= 2;
+    const enabledData = data.filter((data) => !data.disabled);
+    const sampleMin = Math.min(...enabledData.map((v) => v.samples.length));
+    const isTrainable = enabledData.length >= 2 && sampleMin >= 2;
 
     useEffect(() => {
         clearTraining();
@@ -77,7 +78,7 @@ export default function Trainer({ onTrained, editing, ...props }: Props) {
 
     useEffect(() => {
         if (training) {
-            train(data, { batchSize: settingBatch, epochs: settingEpochs, learningRate: settingRate }).then(() => {
+            train(enabledData, { batchSize: settingBatch, epochs: settingEpochs, learningRate: settingRate }).then(() => {
                 setTraining(false);
                 if (onTrained) onTrained();
             });

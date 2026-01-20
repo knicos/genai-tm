@@ -50,6 +50,8 @@
             "webcam": "Webcam",
             "upload": "Charger",
             "deleteClass": "Effacer la classe",
+            "disableClass": "Désactiver la classe",
+            "enableClass": "Activer la classe",
             "removeAll": "Enlever tous les échantillons",
             "capture": "Maintenir pour capturer",
             "collaborate": "Collaborer"
@@ -63,7 +65,8 @@
             "dropFiles": "ou faites glisser ici des images depuis un site Web ou un fichier",
             "needsMore": "Il faut plus d'échantillons",
             "dropError": "Seules les images peuvent être déposées ici",
-            "qrMessage": "Vous pouvez utiliser un téléphone ou une tablette pour ajouter des images. Cliquez sur le code QR pour l'agrandir."
+            "qrMessage": "Vous pouvez utiliser un téléphone ou une tablette pour ajouter des images. Cliquez sur le code QR pour l'agrandir.",
+            "disabled": "DÉSACTIVÉ"
         },
         "aria": {
             "sample": "Charger un échantillon",

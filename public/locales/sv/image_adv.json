@@ -50,6 +50,8 @@
             "webcam": "Webbkamera",
             "upload": "ladda upp",
             "deleteClass": "Radera klass",
+            "disableClass": "Inaktivera klass",
+            "enableClass": "Aktivera klass",
             "removeAll": "ta bort alla prover",
             "capture": "Håll för att ta foto",
             "collaborate": "Samarbeta"
@@ -63,7 +65,8 @@
             "dropFiles": "eller dra bilder hit från en webbsida eller fil",
             "needsMore": "Fler prover behövs",
             "dropError": "Endast bilder kan släppas här",
-            "qrMessage": "Du kan använda telefon eller surfplatta för att lägga till bilder. Klicka på QR-koden för att expandera den."
+            "qrMessage": "Du kan använda en telefon eller surfplatta för att lägga till bilder. Klicka på QR-koden för att utöka den.",
+            "disabled": "INAKTIVERAD"
         },
         "aria": {
             "sample": "uppladdade prover",

@@ -50,6 +50,8 @@
             "webcam": "Webkamera",
             "upload": "Lataa",
             "deleteClass": "Poista luokka",
+            "disableClass": "Poista luokka käytöstä",
+            "enableClass": "Ota luokka käyttöön",
             "removeAll": "Poista kaikki tiedot",
             "capture": "Pidä nappi pohjassa",
             "collaborate": "Tee yhteistyötä"
@@ -63,7 +65,8 @@
             "dropFiles": "tai vedä kuvia tähän nettisivuilta tai tiedostoista",
             "needsMore": "Lisää opetusdataa tarvitaan",
             "dropError": "Only images can be dropped here",
-            "qrMessage": "Voit lisätä kuvia puhelimella tai tabletilla. Laajenna QR-koodi napsauttamalla sitä."
+            "qrMessage": "Voit lisätä kuvia puhelimella tai tabletilla. Laajenna QR-koodi napsauttamalla sitä.",
+            "disabled": "POISTETTU KÄYTÖSTÄ"
         },
         "aria": {
             "sample": "ladattu opetusdata",
