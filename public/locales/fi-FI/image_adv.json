@@ -155,13 +155,19 @@
     "output": {
         "labels": {
             "title": "Tulos",
-            "deploy": "Esitä"
+            "deploy": "Esitä",
+            "serialdevice": "Sarjalaite",
+            "connect": "Yhdistä",
+            "disconnect": "Katkaise yhteys",
+            "connectSuccess": "Yhdistetty Sarjalaitteeseen",
+            "connectError": "Sarjalaitteen yhdistäminen epäonnistui. Varmista, ettei laite ole käytössä muualla, ja yritä uudelleen."
         },
         "aria": {
             "volume": "Äänenvoimakkuus",
             "image": "luokan {{index}} tulos",
             "display": "tulos luokalle {{index}}",
-            "expand": "laajenna"
+            "expand": "laajenna",
+            "serialdevice": "Sarjalaite"
         }
     },
     "behaviours": {

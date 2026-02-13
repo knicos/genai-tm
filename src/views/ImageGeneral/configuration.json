@@ -29,7 +29,8 @@
         "enabledP2PData": true,
         "enableCollaboration": true,
         "allowModelSharing": true,
-        "allowHeatmap": true
+        "allowHeatmap": true,
+        "allowSerialUSB": false
     },
     "image": {
         "modelVariant": "image"

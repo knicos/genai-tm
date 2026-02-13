@@ -158,13 +158,19 @@
     "output": {
         "labels": {
             "title": "Output",
-            "deploy": "Deploy"
+            "deploy": "Deploy",
+            "serialdevice": "Serial device",
+            "connect": "Connect",
+            "disconnect": "Disconnect",
+            "connectSuccess": "Connected to the serial device",
+            "connectError": "Unable to connect to the serial device. Please ensure it’s not in use by another application and try again."
         },
         "aria": {
             "volume": "Volume",
             "image": "class {{index}} output",
             "display": "output for class {{index}}",
-            "expand": "expand window size"
+            "expand": "expand window size",
+            "serialdevice": "Serial device"
         }
     },
     "behaviours": {
