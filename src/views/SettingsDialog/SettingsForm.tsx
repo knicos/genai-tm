@@ -370,6 +370,17 @@ export default function SettingsForm({ state, setState }: Props) {
                                 }
                                 label="Show XAI Heatmap"
                             />
+                            <FormControlLabel
+                                control={
+                                    <Checkbox
+                                        checked={state.allowSerialUSB}
+                                        name="allowSerialUSB"
+                                        onChange={doCheckChange}
+                                        disabled={!("serial" in navigator)}
+                                    />
+                                }
+                                label={("serial" in navigator)?"Allow Serial USB connectivity":"Serial usb not supported"}
+                            />
                         </div>
                     </AccordionDetails>
                 </Accordion>

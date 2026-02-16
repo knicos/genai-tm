@@ -11,6 +11,7 @@ import VolumeDown from '@mui/icons-material/VolumeDown';
 import VolumeUp from '@mui/icons-material/VolumeUp';
 import { useActiveNode } from '@genaitm/util/nodes';
 import { Widget } from '@genai-fi/base';
+import SerialUSBConnector from './SerialUSBConnector';
 
 interface Props {
     focus?: boolean;
@@ -28,7 +29,7 @@ export default function Output(props: Props) {
         setVolume(newValue as number);
     }, []);
 
-    const { namespace, allowDeploy, usep2p, enableCollaboration } = useVariant();
+    const { namespace, allowDeploy, usep2p, enableCollaboration, allowSerialUSB } = useVariant();
     const { t } = useTranslation(namespace);
     const predicted = useAtomValue(predictedIndex);
     const fatal = useAtomValue(fatalWebcam);
@@ -78,6 +79,7 @@ export default function Output(props: Props) {
                 />
                 <VolumeUp />
             </div>
+            {allowSerialUSB ? (<SerialUSBConnector/>) : null}
         </Widget>
     );
 }

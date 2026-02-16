@@ -63,6 +63,16 @@
     border-top: 1px solid #ddd;
 }
 
+.SerialConnectContainer {
+    display: flex;
+    background: white;
+    gap: 1rem;
+    padding: 1rem;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid #ddd;
+}
+
 .deployLink {
     color: white;
     text-decoration: none;

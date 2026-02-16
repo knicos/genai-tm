@@ -27,6 +27,8 @@ export const predictionError = atom<boolean>(false);
 
 export const predictionHeatmap = atom<number[][] | null>(null);
 
+export const serialWriterInstance = atom<WritableStreamDefaultWriter<Uint8Array> | null>(null);
+
 export const predictedIndex = atom<number>(-1);
 
 export const behaviourState = atom<BehaviourType[]>([]);

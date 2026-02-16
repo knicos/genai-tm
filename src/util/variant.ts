@@ -36,6 +36,7 @@ export interface IVariantContext {
     enableCollaboration?: boolean;
     allowModelSharing?: boolean;
     allowHeatmap?: boolean;
+    allowSerialUSB?: boolean;
 }
 
 export const VariantContext = React.createContext<IVariantContext>({
