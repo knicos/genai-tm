@@ -1,11 +1,12 @@
 import { serialWriterInstance } from '@genaitm/state';
 import { useVariant } from '@genaitm/util/variant';
 import UsbIcon from '@mui/icons-material/Usb';
-import { Button, Stack, Tooltip, Typography } from '@mui/material';
+import { Button, IconButton, Stack, Tooltip, Typography } from '@mui/material';
 import { useAtom } from 'jotai';
 import { useEffect, useRef, useState } from 'react';
 import style from './Output.module.css';
 import { useTranslation } from 'react-i18next';
+import HelpIcon from '@mui/icons-material/Help';
 export default function SerialUSBConnector() {
     const [serialUSBWriter, setSerialUSBWriter] = useAtom(serialWriterInstance);
     const [open, setOpen] = useState(false);
@@ -116,10 +117,15 @@ export default function SerialUSBConnector() {
                 <Stack
                     direction={'row'}
                     gap={1}
+                    alignItems="center"
                 >
                     {<UsbIcon color={serialConnection ? 'success' : 'disabled'} />}
                     <Typography>{t('output.labels.serialdevice')}</Typography>
+                    <IconButton size="small" component="a" href='https://www.gen-ai.fi/en/tools/TMMicrocontroller' target="_blank" rel="noopener noreferrer">
+                    <HelpIcon/>
+                    </IconButton>
                 </Stack>
+
                 <Button
                     sx={{ textTransform: 'none' }}
                     variant="outlined"
