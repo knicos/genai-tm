@@ -1,7 +1,8 @@
 import { serialWriterInstance } from '@genaitm/state';
 import { useVariant } from '@genaitm/util/variant';
 import UsbIcon from '@mui/icons-material/Usb';
-import { Button, IconButton, Stack, Tooltip, Typography } from '@mui/material';
+import { IconButton, Stack, Tooltip, Typography } from '@mui/material';
+import { Button } from '@genaitm/components/button/Button';
 import { useAtom } from 'jotai';
 import { useEffect, useRef, useState } from 'react';
 import style from './Output.module.css';
