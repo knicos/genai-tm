@@ -144,7 +144,8 @@
     "model": {
         "actions": {
             "export": "Export for Scratch",
-            "clone": "Share a copy"
+            "clone": "Share a copy",
+            "bm": "Use with Breakable Machine"
         },
         "labels": {
             "title": "Classifier",

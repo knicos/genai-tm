@@ -6,5 +6,6 @@
     "azureFunctions.projectRuntime": "~4",
     "debug.internalConsoleOptions": "neverOpen",
     "azureFunctions.preDeployTask": "npm prune (functions)",
-    "jest.jestCommandLine": "CI=1 npm test"
+    "jest.jestCommandLine": "CI=1 npm test",
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
 }
