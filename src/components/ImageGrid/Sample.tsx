@@ -14,6 +14,11 @@ const IconButton = styled(MIconButton)({
     top: '0px',
     left: '0px',
     color: 'white',
+    padding: '0',
+    '&:hover': {
+        backgroundColor: 'rgba(0, 0, 0, 0.3)',
+    },
+    transition: 'all 0.2s ease-in-out',
 });
 
 interface Props {

@@ -17,6 +17,7 @@ export interface IVariantContext {
     speechBehaviours?: boolean;
     embedBehaviours?: boolean;
     sampleUploadFile?: boolean;
+    sampleDatasets?: boolean;
     classLimit?: number;
     disabledClassRemove?: boolean;
     disableAddClass?: boolean;

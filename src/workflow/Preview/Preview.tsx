@@ -29,7 +29,7 @@ export default function Preview({ onExport, onClone, onSidebar }: Props) {
             dataWidget="model"
             title={t('model.labels.title')}
             className={style.widget}
-            data-active={model}
+            activated={model}
             menu={
                 <PreviewMenu
                     disabled={!model}

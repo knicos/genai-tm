@@ -49,12 +49,16 @@
             "addClass": "Add a class",
             "webcam": "Webcam",
             "upload": "Upload",
+            "datasets": "Datasets",
             "deleteClass": "Delete Class",
             "disableClass": "Disable Class",
             "enableClass": "Enable Class",
             "removeAll": "Remove all samples",
             "capture": "Hold to capture",
-            "collaborate": "Collaborate"
+            "collaborate": "Collaborate",
+            "cancel": "Cancel",
+            "use": "Use ({{count}})",
+            "displayMore": "Display {{count}} images"
         },
         "labels": {
             "title": "Training Data",
@@ -65,8 +69,17 @@
             "dropFiles": "or drag images here from a website or file",
             "needsMore": "More samples are needed",
             "dropError": "Only images can be dropped here",
+            "emptyClass": "This class is empty.",
             "qrMessage": "You can use a phone or tablet to add images. Click the QR code to expand it.",
-            "disabled": "DISABLED"
+            "disabled": "DISABLED",
+            "selectDataset": "Select a Dataset",
+            "selectTestData": "Select test data",
+            "searchDataset": "Search a dataset",
+            "images": "images",
+            "selected": "selected",
+            "loading": "Loading...",
+            "loadingDataset": "Loading images {{loaded}}/{{total}}...",
+            "datasetLoadError": "Failed to load dataset images. Please try again."
         },
         "aria": {
             "sample": "uploaded sample",
@@ -77,7 +90,8 @@
         }
     },
     "heatmap": {
-        "title": "Explanation"
+        "title": "Explanation",
+        "colorScaleHelp": "The color scale shows which parts of the image the model focuses on. Red = high importance, Blue = low importance."
     },
     "underTheHood": {
         "title": "Under The Hood",
@@ -133,6 +147,7 @@
             "webcam": "Webcam",
             "file": "File",
             "device": "Device",
+            "dataset": "Dataset",
             "switchOn": "On",
             "switchOff": "Off",
             "upload": "Upload or drop file here"
@@ -244,6 +259,108 @@
             "includeSamples": "Include sample images",
             "codeInstructions": "Allow others to open a copy of your classifier using the code below.",
             "linkInstructions": "Copy the link to use the classifier in other applications such as <scratchLink>Scratch</scratchLink>. The link will only work if you keep this browser tab open, or if you save your project and open in again later."
+        }
+    },
+    "datasets": {
+        "categories": {
+            "animals": "Animals",
+            "nature": "Nature",
+            "colors": "Colors",
+            "fruits": "Fruits",
+            "human": "Human",
+            "studyTools": "Study Tools"
+        },
+        "cats": {
+            "name": "Cats",
+            "description": "Collection of cat images"
+        },
+        "dogs": {
+            "name": "Dogs",
+            "description": "Collection of dog images"
+        },
+        "birds": {
+            "name": "Birds",
+            "description": "Collection of bird images"
+        },
+        "flowers": {
+            "name": "Flowers",
+            "description": "Collection of flower images"
+        },
+        "trees": {
+            "name": "Trees",
+            "description": "Collection of tree images"
+        },
+        "white": {
+            "name": "White",
+            "description": "Collection of white-colored images"
+        },
+        "black": {
+            "name": "Black",
+            "description": "Collection of black-colored images"
+        },
+        "gray": {
+            "name": "Gray",
+            "description": "Collection of gray-colored images"
+        },
+        "blue": {
+            "name": "Blue",
+            "description": "Collection of blue-colored images"
+        },
+        "green": {
+            "name": "Green",
+            "description": "Collection of green-colored images"
+        },
+        "red": {
+            "name": "Red",
+            "description": "Collection of red-colored images"
+        },
+        "pink": {
+            "name": "Pink",
+            "description": "Collection of pink-colored images"
+        },
+        "orange": {
+            "name": "Orange",
+            "description": "Collection of orange-colored images"
+        },
+        "purple": {
+            "name": "Purple",
+            "description": "Collection of purple-colored images"
+        },
+        "yellow": {
+            "name": "Yellow",
+            "description": "Collection of yellow-colored images"
+        },
+        "apple": {
+            "name": "Apple",
+            "description": "Collection of apple images"
+        },
+        "pear": {
+            "name": "Pear",
+            "description": "Collection of pear images"
+        },
+        "orangeFruit": {
+            "name": "Orange",
+            "description": "Collection of orange fruit images"
+        },
+        "men": {
+            "name": "Men",
+            "description": "Collection of men images"
+        },
+        "women": {
+            "name": "Women",
+            "description": "Collection of women images"
+        },
+        "handPalm": {
+            "name": "Hand Palm",
+            "description": "Collection of hand palm images"
+        },
+        "pencils": {
+            "name": "Pencils",
+            "description": "Collection of pencil images"
+        },
+        "pens": {
+            "name": "Pens",
+            "description": "Collection of pen images"
         }
     }
 }

@@ -87,7 +87,13 @@ export default function ShareProtocol() {
             fetch(`${import.meta.env.VITE_APP_API || 'http://localhost:9001'}/model/${cache.current.code}/`, {
                 method: 'DELETE',
             }).catch((err) => {
-                console.error('Failed to unshare model', err);
+                // Silently handle connection errors when collaboration server isn't running
+                if (err instanceof TypeError && err.message?.includes('Failed to fetch')) {
+                    // Collaboration server not available - this is expected when not using P2P features
+                    console.debug('Collaboration server not available');
+                } else {
+                    console.error('Failed to unshare model', err);
+                }
             });
             setModelShared(false);
         }

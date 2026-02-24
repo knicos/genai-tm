@@ -4,7 +4,7 @@ import { render, screen } from '@testing-library/react';
 import Sample from './Sample';
 import userEvent from '@testing-library/user-event';
 
-function TestWrapper() {
+function SampleWrapper() {
     const iCanvas = document.createElement('canvas');
     iCanvas.setAttribute('data-testid', 'sample');
     const [image, setImage] = useState(iCanvas);
@@ -33,10 +33,11 @@ function TestWrapper() {
 describe('Sample image component', () => {
     it('always shows a single canvas', async ({ expect }) => {
         const user = userEvent.setup();
-        render(<TestWrapper />);
+        render(<SampleWrapper />);
         expect(screen.getAllByTestId('sample')).toHaveLength(1);
         const buttonElement = screen.getByTestId('newimage');
         await user.click(buttonElement);
         expect(screen.getAllByTestId('sample')).toHaveLength(1);
     });
 });
+

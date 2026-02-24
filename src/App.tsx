@@ -50,6 +50,7 @@ export const routes = createRoutesFromElements(
     <Route
         path="/"
         ErrorBoundary={ErrorComponent}
+        hydrateFallbackElement={<div />}
     >
         <Route
             index

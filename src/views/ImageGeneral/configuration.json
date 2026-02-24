@@ -2,6 +2,7 @@
     "base": {
         "namespace": "image_adv",
         "sampleUploadFile": true,
+        "sampleDatasets": true,
         "imageBehaviours": true,
         "soundBehaviours": true,
         "speechBehaviours": true,

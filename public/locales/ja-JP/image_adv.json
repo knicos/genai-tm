@@ -49,12 +49,16 @@
             "addClass": "クラスを追加",
             "webcam": "ウェブカメラ",
             "upload": "アップロード",
+            "datasets": "データセット",
+            "cancel": "キャンセル",
             "deleteClass": "クラスを削除",
             "disableClass": "クラスを無効にする",
             "enableClass": "クラスを有効にする",
             "removeAll": "すべてのサンプルを削除",
             "capture": "押し続けてキャプチャ",
-            "collaborate": "共同作業"
+            "collaborate": "共同作業",
+            "use": "使用 ({{count}})",
+            "displayMore": "{{count}}枚の画像を表示"
         },
         "labels": {
             "title": "トレーニングデータ",
@@ -65,8 +69,17 @@
             "dropFiles": "または、ウェブサイトやファイルからの画像をドラッグして入れてください。",
             "needsMore": "もっとサンプルが必要です。",
             "dropError": "ここには画像のみドロップ可能です。",
+                "emptyClass": "このクラスには何もありません。",
             "qrMessage": "画像を追加はスマホやタブレットでも可能です。QRコードをクリックすると拡大できます。",
-            "disabled": "無効"
+            "disabled": "無効",
+            "selectDataset": "データセットを選択",
+            "selectTestData": "テストデータを選択",
+            "searchDataset": "データセットを検索",
+            "images": "画像",
+            "selected": "選択済み",
+            "loading": "読み込み中...",
+            "loadingDataset": "Loading images {{loaded}}/{{total}}...",
+            "datasetLoadError": "Failed to load dataset images. Please try again."
         },
         "aria": {
             "sample": "アップロードされたサンプル",
@@ -77,7 +90,8 @@
         }
     },
     "heatmap": {
-        "title": "説明"
+        "title": "説明",
+        "colorScaleHelp": "カラースケールは、モデルが画像のどの部分に注目しているかを示します。赤 = 高い重要度、青 = 低い重要度。"
     },
     "underTheHood": {
         "title": "内部の仕組み",
@@ -133,6 +147,7 @@
             "webcam": "ウェブカメラ",
             "file": "ファイル",
             "device": "デバイス",
+            "dataset": "データセット",
             "switchOn": "オン",
             "switchOff": "オフ",
             "upload": "ファイルをアップロード、または、ここにドロップ"
@@ -234,6 +249,108 @@
             "includeSamples": "サンプル画像を含める",
             "codeInstructions": "以下のコードを使って、他の人が分類器のコピーを開けるようにします。",
             "linkInstructions": "このリンクをコピーすると、<scratchLink>Scratch</scratchLink>など他のアプリで分類器を使用できます（ただし、このブラウザタブを開いたままにするか、プロジェクトを保存して再度開かないとリンクは機能しないので注意）。"
+        }
+    },
+    "datasets": {
+        "categories": {
+            "animals": "動物",
+            "nature": "自然",
+            "colors": "色",
+            "fruits": "果物",
+            "human": "人間",
+            "studyTools": "学用品"
+        },
+        "cats": {
+            "name": "猫",
+            "description": "猫の画像コレクション"
+        },
+        "dogs": {
+            "name": "犬",
+            "description": "犬の画像コレクション"
+        },
+        "birds": {
+            "name": "鳥",
+            "description": "鳥の画像コレクション"
+        },
+        "flowers": {
+            "name": "花",
+            "description": "花の画像コレクション"
+        },
+        "trees": {
+            "name": "木",
+            "description": "木の画像コレクション"
+        },
+        "white": {
+            "name": "白",
+            "description": "白色の画像コレクション"
+        },
+        "black": {
+            "name": "黒",
+            "description": "黒色の画像コレクション"
+        },
+        "gray": {
+            "name": "灰色",
+            "description": "灰色の画像コレクション"
+        },
+        "blue": {
+            "name": "青",
+            "description": "青色の画像コレクション"
+        },
+        "green": {
+            "name": "緑",
+            "description": "緑色の画像コレクション"
+        },
+        "red": {
+            "name": "赤",
+            "description": "赤色の画像コレクション"
+        },
+        "pink": {
+            "name": "ピンク",
+            "description": "ピンク色の画像コレクション"
+        },
+        "orange": {
+            "name": "オレンジ",
+            "description": "オレンジ色の画像コレクション"
+        },
+        "purple": {
+            "name": "紫",
+            "description": "紫色の画像コレクション"
+        },
+        "yellow": {
+            "name": "黄色",
+            "description": "黄色の画像コレクション"
+        },
+        "apple": {
+            "name": "りんご",
+            "description": "りんごの画像コレクション"
+        },
+        "pear": {
+            "name": "梨",
+            "description": "梨の画像コレクション"
+        },
+        "orangeFruit": {
+            "name": "オレンジ",
+            "description": "オレンジの画像コレクション"
+        },
+        "men": {
+            "name": "男性",
+            "description": "男性の画像コレクション"
+        },
+        "women": {
+            "name": "女性",
+            "description": "女性の画像コレクション"
+        },
+        "handPalm": {
+            "name": "手のひら",
+            "description": "手のひらの画像コレクション"
+        },
+        "pencils": {
+            "name": "鉛筆",
+            "description": "鉛筆の画像コレクション"
+        },
+        "pens": {
+            "name": "ペン",
+            "description": "ペンの画像コレクション"
         }
     }
 }

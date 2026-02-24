@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect, useRef } from 'react';
 import style from './stepper.module.css';
 import { useTranslation } from 'react-i18next';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
@@ -11,13 +11,24 @@ import { theme } from '@genai-fi/base';
 import SettingsDialog from '../SettingsDialog/SettingsDialog';
 
 export default function ImageClassifier() {
-    const { namespace } = useVariant();
+    const { namespace, modelVariant } = useVariant();
     const { t } = useTranslation(namespace);
     const [step, setStep] = useState(0);
     const [allowedStep, setAllowedStep] = useState(0);
     const [visited, setVisited] = useState(0);
     const [saveTrigger, setSaveTrigger] = useState<(() => void) | undefined>(undefined);
     const [showReminder, setShowReminder] = useState(false);
+    const lastVariantRef = useRef(modelVariant);
+
+    // Reset stepper to default state when model variant changes
+    useEffect(() => {
+        if (lastVariantRef.current !== modelVariant) {
+            setStep(0);
+            setAllowedStep(0);
+            setVisited(0);
+            lastVariantRef.current = modelVariant;
+        }
+    }, [modelVariant]);
 
     const doComplete = useCallback(
         (newstep: number) => {

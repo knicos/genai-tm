@@ -49,12 +49,16 @@
             "addClass": "Bir Sınıf Ekle",
             "webcam": "Webcam",
             "upload": "Yükle",
+            "datasets": "Veri kümeleri",
+            "cancel": "İptal",
             "deleteClass": "Sınıfı Sil",            
             "disableClass": "Sınıfı Devre Dışı Bırak",
             "enableClass": "Sınıfı Etkinleştir",            
             "removeAll": "Tüm Örnekleri Kaldır",
             "capture": "Yakalamak İçin Basılı Tutun",
-            "collaborate": "İş Birliği Yap"
+            "collaborate": "İş Birliği Yap",
+            "use": "Kullan ({{count}})",
+            "displayMore": "{{count}} resmi göster"
         },
         "labels": {
             "title": "Eğitim Verisi",
@@ -65,8 +69,17 @@
             "dropFiles": "ya da bir web sitesinden veya dosyadan görselleri buraya sürükleyin",
             "needsMore": "Daha fazla örneğe ihtiyaç var",
             "dropError": "Buraya yalnızca görseller bırakılabilir",
+            "emptyClass": "Bu sınıf boş.",
             "qrMessage": "Görseller eklemek için bir telefon veya tablet kullanabilirsiniz. QR kodunu genişletmek için üzerine tıklayın.",
-            "disabled": "DEVRE DIŞI"
+            "disabled": "DEVRE DIŞI",
+            "selectDataset": "Veri kümesi seç",
+            "selectTestData": "Test verilerini seç",
+            "searchDataset": "Veri kümesi ara",
+            "images": "görsel",
+            "selected": "seçildi",
+            "loading": "Yükleniyor...",
+            "loadingDataset": "Loading images {{loaded}}/{{total}}...",
+            "datasetLoadError": "Failed to load dataset images. Please try again."
         },
         "aria": {
             "sample": "yüklenen örnek",
@@ -75,6 +88,10 @@
             "close": "Kapat",
             "classCard": "{{name}} için eğitim verisi"
         }
+    },
+    "heatmap": {
+        "title": "Açıklama",
+        "colorScaleHelp": "Renk ölçeği, modelin görüntünün hangi bölümlerine odaklandığını gösterir. Kırmızı = yüksek önem, Mavi = düşük önem."
     },
     "underTheHood": {
         "title": "Kaputun altında",
@@ -129,8 +146,7 @@
             "title": "Giriş",
             "webcam": "Webcam",
             "file": "Dosya",
-            "device": "Cihaz",
-            "switchOn": "Açık",
+            "device": "Cihaz",            "dataset": "Veri kümesi",            "switchOn": "Açık",
             "switchOff": "Kapalı",
             "upload": "Dosya yükleyin veya buraya bırakın"
         },
@@ -230,6 +246,108 @@
             "includeSamples": "Örnek görselleri dahil et",
             "codeInstructions": "Başkalarının aşağıdaki kodu kullanarak sınıflandırıcınızın bir kopyasını açmasına izin verin.",
             "linkInstructions": "Aşağıdaki kodu paylaşarak sınıflandırıcının bir kopyasını açın. Kodu, <scratchLink>Scratch</scratchLink> gibi diğer uygulamalarda sınıflandırıcıyı kullanmak için kopyalayın. Bağlantı yalnızca bu tarayıcı sekmesini açık tutarsanız veya projeyi kaydedip daha sonra tekrar açarsanız çalışır."
+        }
+    },
+    "datasets": {
+        "categories": {
+            "animals": "Hayvanlar",
+            "nature": "Doğa",
+            "colors": "Renkler",
+            "fruits": "Meyveler",
+            "human": "İnsan",
+            "studyTools": "Okul Malzemeleri"
+        },
+        "cats": {
+            "name": "Kediler",
+            "description": "Kedi görsellerinin koleksiyonu"
+        },
+        "dogs": {
+            "name": "Köpekler",
+            "description": "Köpek görsellerinin koleksiyonu"
+        },
+        "birds": {
+            "name": "Kuşlar",
+            "description": "Kuş görsellerinin koleksiyonu"
+        },
+        "flowers": {
+            "name": "Çiçekler",
+            "description": "Çiçek görsellerinin koleksiyonu"
+        },
+        "trees": {
+            "name": "Ağaçlar",
+            "description": "Ağaç görsellerinin koleksiyonu"
+        },
+        "white": {
+            "name": "Beyaz",
+            "description": "Beyaz renkli görsellerin koleksiyonu"
+        },
+        "black": {
+            "name": "Siyah",
+            "description": "Siyah renkli görsellerin koleksiyonu"
+        },
+        "gray": {
+            "name": "Gri",
+            "description": "Gri renkli görsellerin koleksiyonu"
+        },
+        "blue": {
+            "name": "Mavi",
+            "description": "Mavi renkli görsellerin koleksiyonu"
+        },
+        "green": {
+            "name": "Yeşil",
+            "description": "Yeşil renkli görsellerin koleksiyonu"
+        },
+        "red": {
+            "name": "Kırmızı",
+            "description": "Kırmızı renkli görsellerin koleksiyonu"
+        },
+        "pink": {
+            "name": "Pembe",
+            "description": "Pembe renkli görsellerin koleksiyonu"
+        },
+        "orange": {
+            "name": "Turuncu",
+            "description": "Turuncu renkli görsellerin koleksiyonu"
+        },
+        "purple": {
+            "name": "Mor",
+            "description": "Mor renkli görsellerin koleksiyonu"
+        },
+        "yellow": {
+            "name": "Sarı",
+            "description": "Sarı renkli görsellerin koleksiyonu"
+        },
+        "apple": {
+            "name": "Elma",
+            "description": "Elma görseleri koleksiyonu"
+        },
+        "pear": {
+            "name": "Armut",
+            "description": "Armut görseleri koleksiyonu"
+        },
+        "orangeFruit": {
+            "name": "Portakal",
+            "description": "Portakal görseleri koleksiyonu"
+        },
+        "men": {
+            "name": "Erkekler",
+            "description": "Erkek görseleri koleksiyonu"
+        },
+        "women": {
+            "name": "Kadınlar",
+            "description": "Kadın görseleri koleksiyonu"
+        },
+        "handPalm": {
+            "name": "El ayağı",
+            "description": "El ayağı görseleri koleksiyonu"
+        },
+        "pencils": {
+            "name": "Kalemler",
+            "description": "Kalem görselleri koleksiyonu"
+        },
+        "pens": {
+            "name": "Tükenmez Kalemler",
+            "description": "Tükenmez kalem görselleri koleksiyonu"
         }
     }
 }

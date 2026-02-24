@@ -1,4 +1,4 @@
-@value primary from "@genai-fi/base/css/colours.module.css";
+@value primary, workspaceBg, bgSubdued1, borderBrightBlue from "@genai-fi/base/css/colours.module.css";
 
 .sampleList {
     display: grid;
@@ -20,7 +20,7 @@
     overflow-y: scroll;
     width: 100%;
     flex-grow: 1;
-    background: #eee;
+    background: workspaceBg;
 }
 
 @media only screen and (min-width: 850px) {
@@ -77,9 +77,14 @@
     height: 100%;
     aspect-ratio: 1;
     border: 1px dashed primary;
-    background: #e8f0fe;
+    background: bgSubdued1;
     animation: grow 0.2s ease-in-out;
     justify-content: center;
     align-items: center;
     color: primary;
+}
+
+.alertInfo {
+    border: 1px solid borderBrightBlue;
+    border-radius: 6px;
 }

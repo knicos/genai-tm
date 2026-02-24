@@ -49,12 +49,16 @@
             "addClass": "Lisää luokka",
             "webcam": "Webkamera",
             "upload": "Lataa",
+            "datasets": "Datasetit",
             "deleteClass": "Poista luokka",
             "disableClass": "Poista luokka käytöstä",
             "enableClass": "Ota luokka käyttöön",
             "removeAll": "Poista kaikki tiedot",
             "capture": "Pidä nappi pohjassa",
-            "collaborate": "Tee yhteistyötä"
+            "collaborate": "Tee yhteistyötä",
+            "cancel": "Peruuta",
+            "use": "Käytä ({{count}})",
+            "displayMore": "Näytä {{count}} kuvaa"
         },
         "labels": {
             "title": "Opetusdata",
@@ -65,8 +69,17 @@
             "dropFiles": "tai vedä kuvia tähän nettisivuilta tai tiedostoista",
             "needsMore": "Lisää opetusdataa tarvitaan",
             "dropError": "Only images can be dropped here",
+                "emptyClass": "Tämä luokka on tyhjä.",
             "qrMessage": "Voit lisätä kuvia puhelimella tai tabletilla. Laajenna QR-koodi napsauttamalla sitä.",
-            "disabled": "POISTETTU KÄYTÖSTÄ"
+            "disabled": "POISTETTU KÄYTÖSTÄ",
+            "selectDataset": "Valitse datasetti",
+            "selectTestData": "Valitse testitiedot",
+            "searchDataset": "Etsi datasetti",
+            "images": "kuvaa",
+            "selected": "valittu",
+            "loading": "Ladataan...",
+            "loadingDataset": "Ladataan kuvia {{loaded}}/{{total}}...",
+            "datasetLoadError": "Datasettiä ei voitu ladata. Yritä uudelleen."
         },
         "aria": {
             "sample": "ladattu opetusdata",
@@ -77,7 +90,8 @@
         }
     },
     "heatmap": {
-        "title": "Selitys"
+        "title": "Selitys",
+        "colorScaleHelp": "Väriasteikko näyttää, mihin kuvaan osiin malli keskittyy. Punainen = korkea tärkeys, Sininen = matala tärkeys."
     },
     "underTheHood": {
         "title": "Konepellin alla",
@@ -132,8 +146,7 @@
             "title": "Syöte",
             "webcam": "Webkamera",
             "file": "Tiedosto",
-            "device": "Laite",
-            "switchOn": "Päällä",
+            "device": "Laite",            "dataset": "Aineisto",            "switchOn": "Päällä",
             "switchOff": "Pois päältä",
             "upload": "lataa tai pudota tiedosto tähän"
         },
@@ -241,5 +254,105 @@
             "codeInstructions": "Anna muiden avata kopio luokittelijastasi alla olevan koodin avulla.",
             "linkInstructions": "Kopioimalla linkin luokittelijaasi voi käyttää muissa sovelluksissa kuten <scratchLink>Scratch</scratchLink>. Linkki toimii niin kauan kuin tämä välilehti on auki, tai jos talletat projektin ja avaat sen myöhemmin uudelleen."
         }
+    },
+    "datasets": {
+        "categories": {
+            "animals": "Eläimet",
+            "nature": "Luonto",
+            "colors": "Värit",
+            "fruits": "Hedelmät",
+            "human": "Ihminen",
+            "studyTools": "Opiskeluvälineet"
+        },
+        "cats": {
+            "name": "Kissat",
+            "description": "Kokoelma kissakuvia"
+        },
+        "dogs": {
+            "name": "Koirat",
+            "description": "Kokoelma koirakuvia"
+        },
+        "birds": {
+            "name": "Linnut",
+            "description": "Kokoelma lintukuvia"
+        },
+        "flowers": {
+            "name": "Kukat",
+            "description": "Kokoelma kukkakuvia"
+        },
+        "trees": {
+            "name": "Puut",
+            "description": "Kokoelma puukuvia"
+        },
+        "white": {
+            "name": "Valkoinen",
+            "description": "Kokoelma valkoisia kuvia"
+        },
+        "black": {
+            "name": "Musta",
+            "description": "Kokoelma mustia kuvia"
+        },
+        "gray": {
+            "name": "Harmaa",
+            "description": "Kokoelma harmaita kuvia"
+        },
+        "blue": {
+            "name": "Sininen",
+            "description": "Kokoelma sinisiä kuvia"
+        },
+        "green": {
+            "name": "Vihreä",
+            "description": "Kokoelma vihreitä kuvia"
+        },
+        "red": {
+            "name": "Punainen",
+            "description": "Kokoelma punaisia kuvia"
+        },
+        "pink": {
+            "name": "Vaaleanpunainen",
+            "description": "Kokoelma vaaleanpunaisia kuvia"
+        },
+        "orange": {
+            "name": "Oranssi",
+            "description": "Kokoelma oransseja kuvia"
+        },
+        "purple": {
+            "name": "Violetti",
+            "description": "Kokoelma violetteja kuvia"
+        },
+        "yellow": {
+            "name": "Keltainen",
+            "description": "Kokoelma keltaisia kuvia"
+        },
+        "apple": {
+            "name": "Omena",
+            "description": "Kokoelma omenakuvia"
+        },
+        "pear": {
+            "name": "Päärynä",
+            "description": "Kokoelma päärynäkuvia"
+        },
+        "orangeFruit": {
+            "name": "Appelsiini",
+            "description": "Kokoelma appelsiininkuvia"
+        },
+        "men": {
+            "name": "Miehet",
+            "description": "Kokoelma mieskuvia"
+        },
+        "women": {
+            "name": "Naiset",
+            "description": "Kokoelma naiskuvia"
+        },
+        "handPalm": {
+            "name": "Käämenkämmen",
+            "description": "Kokoelma kämmenkuvia"        },
+        "pencils": {
+            "name": "Lyijykynät",
+            "description": "Kokoelma lyijykynä kuvia"
+        },
+        "pens": {
+            "name": "Kynät",
+            "description": "Kokoelma kynä kuvia"        }
     }
 }

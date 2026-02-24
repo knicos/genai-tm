@@ -2,7 +2,15 @@ import React, { useCallback } from 'react';
 import IconButton from '@mui/material/IconButton';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
+import Divider from '@mui/material/Divider';
+import ListItemIcon from '@mui/material/ListItemIcon';
 import MenuIcon from '@mui/icons-material/Menu';
+import DeleteIcon from '@mui/icons-material/Delete';
+import BlockIcon from '@mui/icons-material/Block';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import DeleteSweepIcon from '@mui/icons-material/DeleteSweep';
+import GridViewIcon from '@mui/icons-material/GridView';
+import GroupIcon from '@mui/icons-material/Group';
 import { useTranslation } from 'react-i18next';
 import { useVariant } from '../../util/variant';
 import { useAtom, useAtomValue } from 'jotai';
@@ -18,13 +26,14 @@ interface Props {
     onDeleteClass: () => void;
     onRemoveSamples: () => void;
     onToggleDisable: () => void;
+    onDatasets?: () => void;
 }
 
-export default function ClassMenu({ hasSamples, index, isDisabled, onDeleteClass, onRemoveSamples, onToggleDisable }: Props) {
+export default function ClassMenu({ hasSamples, index, isDisabled, onDeleteClass, onRemoveSamples, onToggleDisable, onDatasets }: Props) {
     const code = useAtomValue(sessionCode);
     const sharing = useAtomValue(sharingActive);
     const [p2penabled, setP2PEnabled] = useAtom(p2pActive);
-    const { namespace, disabledClassRemove, enabledP2PData, enableCollaboration } = useVariant();
+    const { namespace, disabledClassRemove, enabledP2PData, enableCollaboration, sampleDatasets } = useVariant();
     const { t, i18n } = useTranslation(namespace);
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const fatal = useAtomValue(fatalWebcam);
@@ -62,24 +71,33 @@ export default function ClassMenu({ hasSamples, index, isDisabled, onDeleteClass
                 open={open}
                 onClose={handleClose}
             >
-                {!disabledClassRemove && (
+                {!disabledClassRemove && [
                     <MenuItem
+                        key="delete"
                         onClick={() => {
                             handleClose();
                             onDeleteClass();
                         }}
                     >
+                        <ListItemIcon>
+                            <DeleteIcon fontSize="small" />
+                        </ListItemIcon>
                         {t('trainingdata.actions.deleteClass')}
-                    </MenuItem>
-                )}
+                    </MenuItem>,
+                    <Divider key="divider0" className={style.menuDivider}/>
+                ]}
                 <MenuItem
                     onClick={() => {
                         handleClose();
                         onToggleDisable();
                     }}
                 >
+                    <ListItemIcon>
+                        {isDisabled ? <CheckCircleIcon fontSize="small" /> : <BlockIcon fontSize="small" />}
+                    </ListItemIcon>
                     {isDisabled ? t('trainingdata.actions.enableClass') : t('trainingdata.actions.disableClass')}
                 </MenuItem>
+                <Divider key="divider1" className={style.menuDivider}/>
                 <MenuItem
                     disabled={!hasSamples}
                     onClick={() => {
@@ -87,16 +105,35 @@ export default function ClassMenu({ hasSamples, index, isDisabled, onDeleteClass
                         onRemoveSamples();
                     }}
                 >
+                    <ListItemIcon>
+                        <DeleteSweepIcon fontSize="small" />
+                    </ListItemIcon>
                     {t('trainingdata.actions.removeAll')}
                 </MenuItem>
-                {enabledP2PData && enableCollaboration && !fatal && (
-                    <div className={style.shareBox}>
+                {sampleDatasets && onDatasets && [
+                    <Divider key="divider2" className={style.menuDivider}/>,
+                    <MenuItem
+                        key="datasets"
+                        onClick={() => {
+                            handleClose();
+                            onDatasets();
+                        }}
+                    >
+                        <ListItemIcon>
+                            <GridViewIcon fontSize="small" />
+                        </ListItemIcon>
+                        {t('trainingdata.actions.datasets')}
+                    </MenuItem>
+                ]}
+                {enabledP2PData && enableCollaboration && !fatal && [
+                    <div key="sharebox" className={style.shareBox} >
                         {!sharing && (
                             <BusyButton
                                 busy={p2penabled && !sharing}
                                 onClick={doCollab}
                                 variant="contained"
                                 style={{ margin: '1rem 0' }}
+                                startIcon={<GroupIcon />}
                             >
                                 {t('trainingdata.actions.collaborate')}
                             </BusyButton>
@@ -117,7 +154,7 @@ export default function ClassMenu({ hasSamples, index, isDisabled, onDeleteClass
                             </Alert>
                         )}
                     </div>
-                )}
+                ]}
             </Menu>
         </div>
     );

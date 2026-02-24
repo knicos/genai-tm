@@ -17,6 +17,7 @@ import DnDAnimation from '@genaitm/components/DnDAnimation/DnDAnimation';
 import AlertModal from '@genaitm/components/AlertModal';
 import { useAtomValue } from 'jotai';
 import { AlertPara, canvasesFromFiles, canvasFromDataTransfer, Widget } from '@genai-fi/base';
+import DatasetPicker from '@genaitm/components/DatasetPicker/DatasetPicker';
 
 const SAMPLEMIN = 2;
 
@@ -29,9 +30,10 @@ interface Props {
     setData: (data: (old: IClassification) => IClassification, ix: number) => void;
     setActive: (active: boolean, ix: number) => void;
     index: number;
+    onSampleClick?: (classIndex: number, sampleIndex: number) => void;
 }
 
-export function Classification({ name, active, data, index, setData, onActivate, setActive, onDelete }: Props) {
+export function Classification({ name, active, data, index, setData, onActivate, setActive, onDelete, onSampleClick }: Props) {
     const { namespace, sampleUploadFile, disableClassNameEdit, showDragTip } = useVariant();
     const { t } = useTranslation(namespace);
     const fileRef = useRef<HTMLInputElement>(null);
@@ -39,6 +41,7 @@ export function Classification({ name, active, data, index, setData, onActivate,
     const [loading, setLoading] = useState(false);
     const [showTip, setShowTip] = useState(false);
     const [showDropError, setShowDropError] = useState(false);
+    const [showDatasetPicker, setShowDatasetPicker] = useState(false);
     const fatal = useAtomValue(fatalWebcam);
 
     const doShowTip = useCallback(() => data.samples.length === 0 && setShowTip(true), [data, setShowTip]);
@@ -162,6 +165,31 @@ export function Classification({ name, active, data, index, setData, onActivate,
 
     const doUploadClick = useCallback(() => fileRef.current?.click(), []);
 
+    const doDatasetClick = useCallback(() => setShowDatasetPicker(true), [setShowDatasetPicker]);
+
+    const doDatasetPickerClose = useCallback(() => setShowDatasetPicker(false), [setShowDatasetPicker]);
+
+    const handleSampleClick = useCallback((ix: number) => {
+        if (onSampleClick) {
+            onSampleClick(index, data.samples.length - ix);
+        }
+    }, [onSampleClick, index, data.samples.length]);
+
+    const doDatasetSelected = useCallback(
+        (canvases: HTMLCanvasElement[]) => {
+            if (canvases.length > 0) {
+                setData(
+                    (data) => ({
+                        label: data.label,
+                        samples: [...canvases.map((c) => ({ data: c, id: '' })), ...data.samples],
+                    }),
+                    index
+                );
+            }
+        },
+        [setData, index]
+    );
+
     const doDropErrorClose = useCallback(() => setShowDropError(false), [setShowDropError]);
 
     const doToggleDisable = useCallback(() => {
@@ -185,7 +213,7 @@ export function Classification({ name, active, data, index, setData, onActivate,
             aria-label={t('trainingdata.aria.classCard', { name })}
             dataWidget="class"
             id={`class-${index}`}
-            data-active={Math.max(0, data.samples.length - SAMPLEMIN + 1)}
+            activated={!data.disabled && data.samples.length >= SAMPLEMIN}
             setTitle={disableClassNameEdit ? undefined : setTitle}
             menu={
                 <ClassMenu
@@ -195,6 +223,7 @@ export function Classification({ name, active, data, index, setData, onActivate,
                     onDeleteClass={doDeleteClass}
                     onRemoveSamples={removeSamples}
                     onToggleDisable={doToggleDisable}
+                    onDatasets={doDatasetClick}
                 />
             }
         >
@@ -290,6 +319,7 @@ export function Classification({ name, active, data, index, setData, onActivate,
                                 index={data.samples.length - ix}
                                 image={s.data}
                                 onDelete={doDelete}
+                                onClick={handleSampleClick}
                             />
                         ))}
                     </ol>
@@ -303,8 +333,11 @@ export function Classification({ name, active, data, index, setData, onActivate,
             >
                 {t('trainingdata.labels.dropError')}
             </AlertModal>
+            <DatasetPicker
+                open={showDatasetPicker}
+                onClose={doDatasetPickerClose}
+                onDatasetSelected={doDatasetSelected}
+            />
         </Widget>
     );
 }
-
-// {isDragActive && <div className={style.dropOverlay}>{t('trainingdata.labels.dropFiles')}</div>}

@@ -27,6 +27,8 @@ i18n.use(detector)
             'it-IT',
             'ja-JP',
             'kr-KR',
+            'ko-KR',
+            'ko',
             'krl-FI',
             'sv',
             'pt-BR',

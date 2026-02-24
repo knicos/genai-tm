@@ -179,7 +179,7 @@ export default function Behaviour({ classLabel, behaviour, setBehaviour, index, 
             dataWidget="behaviour"
             id={`behaviour${index}`}
             title={classLabel}
-            data-active={predicted === index}
+            activated={predicted === index}
             className={style.widget}
             aria-label={t('behaviours.aria.behaviourCard', { name: classLabel })}
             {...props}

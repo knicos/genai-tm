@@ -49,12 +49,16 @@
             "addClass": "Eine Klasse hinzufügen",
             "webcam": "Webcam",
             "upload": "Hochladen",
+            "datasets": "Datensätze",
             "deleteClass": "Klasse löschen",
             "disableClass": "Klasse deaktivieren",
             "enableClass": "Klasse aktivieren",
             "removeAll": "Alle Beispiele entfernen",
             "capture": "Zum Aufnehmen anhalten",
-            "collaborate": "Zusammenarbeiten"
+            "collaborate": "Zusammenarbeiten",
+            "cancel": "Abbrechen",
+            "use": "Verwenden ({{count}})",
+            "displayMore": "{{count}} Bilder anzeigen"
         },
         "labels": {
             "title": "Trainingsdaten",
@@ -65,8 +69,17 @@
             "dropFiles": "oder ziehe Bilder von einer Website oder Datei hierher",
             "needsMore": "Es werden mehr Beispiele benötigt",
             "dropError": "Hier können nur Bilder abgelegt werden",
+            "emptyClass": "Diese Klasse ist leer.",
             "qrMessage": "Du kannst ein Telefon oder Tablet benutzen, um Bilder hinzuzufügen. Klicke auf den QR-Code, um ihn zu vergrößern.",
-            "disabled": "DEAKTIVIERT"
+            "disabled": "DEAKTIVIERT",
+            "selectDataset": "Datensatz auswählen",
+            "selectTestData": "Testdaten auswählen",
+            "searchDataset": "Datensatz suchen",
+            "images": "Bilder",
+            "selected": "ausgewählt",
+            "loading": "Wird geladen...",
+            "loadingDataset": "Bilder werden geladen {{loaded}}/{{total}}...",
+            "datasetLoadError": "Datensatz konnte nicht geladen werden. Bitte erneut versuchen."
         },
         "aria": {
             "sample": "hochgeladenes Beispiel",
@@ -77,7 +90,8 @@
         }
     },
     "heatmap": {
-        "title": "Erläuterung"
+        "title": "Erläuterung",
+        "colorScaleHelp": "Die Farbskala zeigt, auf welche Teile des Bildes sich das Modell konzentriert. Rot = hohe Wichtigkeit, Blau = niedrige Wichtigkeit."
     },
     "underTheHood": {
         "title": "Unter der Haube",
@@ -133,6 +147,7 @@
             "webcam": "Webcam",
             "file": "Datei",
             "device": "Gerät",
+            "dataset": "Datensatz",
             "switchOn": "Ein",
             "switchOff": "Aus",
             "upload": "Datei hier hochladen oder ablegen"
@@ -235,5 +250,105 @@
             "codeInstructions": "Erlaube anderen, eine Kopie deines Klassifizierers mit dem unten stehenden Code zu öffnen.",
             "linkInstructions": "Kopiere den Link, um den Klassifikator in anderen Anwendungen wie <scratchLink>Scratch</scratchLink> zu verwenden. Der Link funktioniert nur, wenn du diesen Browser-Tab geöffnet lässt oder wenn du dein Projekt speicherst und später wieder öffnest."
         }
+    },
+    "datasets": {
+        "categories": {
+            "animals": "Tiere",
+            "nature": "Natur",
+            "colors": "Farben",
+            "fruits": "Früchte",
+            "human": "Menschen",
+            "studyTools": "Lernwerkzeuge"
+        },
+        "cats": {
+            "name": "Katzen",
+            "description": "Sammlung von Katzenbildern"
+        },
+        "dogs": {
+            "name": "Hunde",
+            "description": "Sammlung von Hundebildern"
+        },
+        "birds": {
+            "name": "Vögel",
+            "description": "Sammlung von Vogelbildern"
+        },
+        "flowers": {
+            "name": "Blumen",
+            "description": "Sammlung von Blumenbildern"
+        },
+        "trees": {
+            "name": "Bäume",
+            "description": "Sammlung von Baumbildern"
+        },
+        "white": {
+            "name": "Weiß",
+            "description": "Sammlung von weißen Bildern"
+        },
+        "black": {
+            "name": "Schwarz",
+            "description": "Sammlung von schwarzen Bildern"
+        },
+        "gray": {
+            "name": "Grau",
+            "description": "Sammlung von grauen Bildern"
+        },
+        "blue": {
+            "name": "Blau",
+            "description": "Sammlung von blauen Bildern"
+        },
+        "green": {
+            "name": "Grün",
+            "description": "Sammlung von grünen Bildern"
+        },
+        "red": {
+            "name": "Rot",
+            "description": "Sammlung von roten Bildern"
+        },
+        "pink": {
+            "name": "Rosa",
+            "description": "Sammlung von rosa Bildern"
+        },
+        "orange": {
+            "name": "Orange",
+            "description": "Sammlung von orangefarbenen Bildern"
+        },
+        "purple": {
+            "name": "Lila",
+            "description": "Sammlung von lila Bildern"
+        },
+        "yellow": {
+            "name": "Gelb",
+            "description": "Sammlung von gelben Bildern"
+        },
+        "apple": {
+            "name": "Apfel",
+            "description": "Sammlung von Apfelbildern"
+        },
+        "pear": {
+            "name": "Birne",
+            "description": "Sammlung von Birnenbildern"
+        },
+        "orangeFruit": {
+            "name": "Orange",
+            "description": "Sammlung von Orangenbildern"
+        },
+        "men": {
+            "name": "Männer",
+            "description": "Sammlung von Männerbildern"
+        },
+        "women": {
+            "name": "Frauen",
+            "description": "Sammlung von Frauenbildern"
+        },
+        "handPalm": {
+            "name": "Handfläche",
+            "description": "Sammlung von Handflächenbildern"        },
+        "pencils": {
+            "name": "Bleistifte",
+            "description": "Sammlung von Bleistift-Bildern"
+        },
+        "pens": {
+            "name": "Kugelschreiber",
+            "description": "Sammlung von Kugelschreiber-Bildern"        }
     }
 }

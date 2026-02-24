@@ -49,12 +49,16 @@
             "addClass": "Ajouter une classe",
             "webcam": "Webcam",
             "upload": "Charger",
+            "datasets": "Jeux de données",
             "deleteClass": "Effacer la classe",
             "disableClass": "Désactiver la classe",
             "enableClass": "Activer la classe",
             "removeAll": "Enlever tous les échantillons",
             "capture": "Maintenir pour capturer",
-            "collaborate": "Collaborer"
+            "collaborate": "Collaborer",
+            "cancel": "Annuler",
+            "use": "Utiliser ({{count}})",
+            "displayMore": "Afficher {{count}} images"
         },
         "labels": {
             "title": "Données d'entraînements",
@@ -65,8 +69,17 @@
             "dropFiles": "ou faites glisser ici des images depuis un site Web ou un fichier",
             "needsMore": "Il faut plus d'échantillons",
             "dropError": "Seules les images peuvent être déposées ici",
+            "emptyClass": "Cette classe est vide.",
             "qrMessage": "Vous pouvez utiliser un téléphone ou une tablette pour ajouter des images. Cliquez sur le code QR pour l'agrandir.",
-            "disabled": "DÉSACTIVÉ"
+            "disabled": "DÉSACTIVÉ",
+            "selectDataset": "Sélectionner un jeu de données",
+            "selectTestData": "Sélectionner des données de test",
+            "searchDataset": "Rechercher un jeu de données",
+            "images": "images",
+            "selected": "sélectionné",
+            "loading": "Chargement...",
+            "loadingDataset": "Chargement des images {{loaded}}/{{total}}...",
+            "datasetLoadError": "Échec du chargement du jeu de données. Veuillez réessayer."
         },
         "aria": {
             "sample": "Charger un échantillon",
@@ -77,7 +90,8 @@
         }
     },
     "heatmap": {
-        "title": "Explication"
+        "title": "Explanation",
+        "colorScaleHelp": "L'échelle de couleurs montre les parties de l'image sur lesquelles le modèle se concentre. Rouge = haute importance, Bleu = faible importance."
     },
     "underTheHood": {
         "title": "Sous le capot",
@@ -133,6 +147,7 @@
             "webcam": "Webcam",
             "file": "Fichier",
             "device": "Appareil",
+            "dataset": "Jeu de données",
             "switchOn": "En fonction",
             "switchOff": "Arrêté",
             "upload": "Charger ou déposer un fichier ici"
@@ -235,6 +250,105 @@
             "includeSamples": "Inclure des exemples d'images",
             "codeInstructions": "Autorisez d'autres personnes à ouvrir une copie de votre Classificateur à l'aide du code ci-dessous.",
             "linkInstructions": "Copiez le lien pour utiliser le classificateur dans d’autres applications comme <scratchLink>Scratch</scratchLink>. Le lien ne fonctionnera que si vous gardez cette fenêtre de navigateur ouverte ou si vous enregistrez votre projet et l’ouvrez plus tard."
-        }
+        }    },
+    "datasets": {
+        "categories": {
+            "animals": "Animaux",
+            "nature": "Nature",
+            "colors": "Couleurs",
+            "fruits": "Fruits",
+            "human": "Humain",
+            "studyTools": "Outils d'étude"
+        },
+        "cats": {
+            "name": "Chats",
+            "description": "Collection d'images de chats"
+        },
+        "dogs": {
+            "name": "Chiens",
+            "description": "Collection d'images de chiens"
+        },
+        "birds": {
+            "name": "Oiseaux",
+            "description": "Collection d'images d'oiseaux"
+        },
+        "flowers": {
+            "name": "Fleurs",
+            "description": "Collection d'images de fleurs"
+        },
+        "trees": {
+            "name": "Arbres",
+            "description": "Collection d'images d'arbres"
+        },
+        "white": {
+            "name": "Blanc",
+            "description": "Collection d'images blanches"
+        },
+        "black": {
+            "name": "Noir",
+            "description": "Collection d'images noires"
+        },
+        "gray": {
+            "name": "Gris",
+            "description": "Collection d'images grises"
+        },
+        "blue": {
+            "name": "Bleu",
+            "description": "Collection d'images bleues"
+        },
+        "green": {
+            "name": "Vert",
+            "description": "Collection d'images vertes"
+        },
+        "red": {
+            "name": "Rouge",
+            "description": "Collection d'images rouges"
+        },
+        "pink": {
+            "name": "Rose",
+            "description": "Collection d'images roses"
+        },
+        "orange": {
+            "name": "Orange",
+            "description": "Collection d'images orange"
+        },
+        "purple": {
+            "name": "Violet",
+            "description": "Collection d'images violettes"
+        },
+        "yellow": {
+            "name": "Jaune",
+            "description": "Collection d'images jaunes"
+        },
+        "apple": {
+            "name": "Pomme",
+            "description": "Collection d'images de pommes"
+        },
+        "pear": {
+            "name": "Poire",
+            "description": "Collection d'images de poires"
+        },
+        "orangeFruit": {
+            "name": "Orange",
+            "description": "Collection d'images d'oranges"
+        },
+        "men": {
+            "name": "Hommes",
+            "description": "Collection d'images d'hommes"
+        },
+        "women": {
+            "name": "Femmes",
+            "description": "Collection d'images de femmes"
+        },
+        "handPalm": {
+            "name": "Paume de main",
+            "description": "Collection d'images de paumes de main"        },
+        "pencils": {
+            "name": "Crayons",
+            "description": "Collection d'images de crayons"
+        },
+        "pens": {
+            "name": "Stylos",
+            "description": "Collection d'images de stylos"        }
     }
 }

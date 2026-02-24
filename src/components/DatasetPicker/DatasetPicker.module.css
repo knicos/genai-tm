@@ -1,0 +1,220 @@
+@value primary, primaryLight, primaryHover, textDark, backgroundLight, borderGrey from "@genai-fi/base/css/colours.module.css";
+
+.imageContainer {
+    position: relative;
+    flex-shrink: 0;
+    cursor: pointer;
+    border-radius: 5px  ;
+    overflow: hidden;
+}
+
+/* Put the visible border on the container so scaled images don't move it */
+.imageContainer {
+    border: 1px solid borderGrey;
+    width: 80px;
+    height: 80px;
+    box-sizing: border-box;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.imageContainer:hover {
+    border-color: primary;
+}
+
+.datasetImage {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 5px;
+    transition: all 0.2s ease-in-out;
+    display: block;
+    box-sizing: border-box;
+    transform-origin: center;
+}
+
+.expandButton {
+    width: 80px;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px dashed primary;
+    border-radius: 4px;
+    cursor: pointer;
+    background-color: primaryHover;
+    transition: all 0.2s ease-in-out;
+    flex-shrink: 0;
+}
+
+.expandButton:hover {
+    background-color: backgroundLight;
+    border-color: primaryLight;
+}
+
+.selected {
+    border: 2px solid primary;
+    border-radius: 5px;
+}
+
+.expandButtonText {
+    color: primary;
+    font-weight: 600;
+    text-align: center;
+    padding: 8px;
+    font-size: 0.7rem;
+}
+
+/* Scale for DatasetPicker and DatasetTestPicker */
+.imageContainer:hover .testImage {
+    transform: scale(1.05);
+}
+
+.imageContainer:hover .datasetImage {
+    transform: scale(1.05);
+}
+
+
+/* Dialog */
+.dialogPaper {
+    height: 80vh;
+    max-width: 700px;
+}
+
+.dialogTitle {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 0.75rem 1.8rem;
+    margin-bottom: 0;
+}
+
+/* Loading state */
+.loadingContainer {
+    padding: 20px;
+    text-align: center;
+}
+
+.loadingProgress {
+    margin-top: 16px;
+}
+
+/* Search field */
+.searchField {
+    width: calc(100% - 16px);
+    padding: 28px 8px 0px 8px;
+    margin-bottom: 8px;
+    position: sticky;
+    top: 0;
+    background-color: white;
+    z-index: 10;
+}
+
+/* Give the MUI outlined input a rounded appearance when used as the searchField */
+.searchField :global(.MuiOutlinedInput-root) {
+    border-radius: 6px;
+    overflow: hidden;
+}
+.searchField :global(.MuiOutlinedInput-notchedOutline) {
+    border-radius: 6px;
+}
+
+/* Category / dataset layout */
+.categoryBox {
+    margin-bottom: 24px;
+}
+
+.categoryTitle {
+    font-weight: bold;
+    margin: 8px 8px 4px 8px;
+}
+
+.datasetBox {
+    margin-bottom: 16px;
+}
+
+.datasetHeader {
+    display: grid;
+    grid-template-columns: 36px 1fr auto auto;
+    column-gap: 8px;
+    align-items: center;
+    margin-bottom: 4px;
+}
+
+.datasetHeader.test {
+    margin-left: 8px;
+    grid-template-columns: 1fr auto auto;
+}
+
+
+
+.datasetName {
+    font-weight: 500;
+}
+
+.imageCount {
+    color: textDark;
+    justify-self: end;
+}
+
+.selectedCount {
+    color: primary;
+    justify-self: start;
+    padding-right: 8px;
+}
+
+/* Images row */
+.imagesRow {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    margin: 0px 8px;
+    height: 96px;
+    scrollbar-gutter: stable;
+    align-items: flex-start;
+}
+
+.imagesRow::-webkit-scrollbar {
+    height: 8px;
+}
+
+.imagesRow::-webkit-scrollbar-thumb {
+    background-color: borderGrey;
+    border-radius: 6px;
+}
+
+/* Failed image */
+.imageFailed {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* Checkbox overlay on image */
+.imageCheckbox {
+    position: absolute;
+    top: -4px;
+    left: -4px;
+    z-index: 1;
+    padding: 2px;
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 6px;
+}
+
+.imageCheckbox:hover {
+    background-color: white;
+}
+
+.imageCheckbox svg {
+    font-size: 1.2rem;
+}
+
+/* Dialog actions spacing */
+.dialogActions {
+    display: flex;
+    gap: 0.2rem;
+    padding-right: 28px;
+    border-top: 2px solid primary;
+}
+

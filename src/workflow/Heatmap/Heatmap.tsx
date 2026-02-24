@@ -32,7 +32,7 @@ export default function Heatmap() {
             noPadding
             dataWidget="heatmap"
             title={t('heatmap.title')}
-            data-active={`${enabled && canPredict}`}
+            activated={enabled && canPredict}
             menu={
                 <div>
                     <FormControlLabel

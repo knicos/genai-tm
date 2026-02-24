@@ -8,6 +8,15 @@ import smoothscroll from 'smoothscroll-polyfill';
 
 smoothscroll.polyfill();
 
+// Suppress harmless video playback interruption errors
+window.addEventListener('unhandledrejection', (event) => {
+    if (event.reason?.name === 'AbortError' && 
+        event.reason?.message?.includes('play() request was interrupted')) {
+        // Suppress: Video playback interrupted (happens during webcam switching)
+        event.preventDefault();
+    }
+});
+
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 root.render(
     <React.StrictMode>

@@ -27,6 +27,11 @@
     padding: 1rem;
 }
 
+.canvasWrapper {
+    position: relative;
+    display: inline-block;
+}
+
 .canvas {
     border-radius: 6px;
     background: backgroundLight;
@@ -42,4 +47,18 @@
     font-size: 1.2rem;
     margin-bottom: 1rem;
     color: #444;
+}
+
+.helpButton {
+    position: absolute;
+    bottom: -25px;
+    right: 0px;
+    color: #999;
+    background-color: rgba(255, 255, 255, 0.9);
+    font-size: '1.5rem';
+}
+
+.helpButton:hover {
+    color: #666;
+    background-color: rgba(255, 255, 255, 1);
 }

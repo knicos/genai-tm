@@ -49,12 +49,16 @@
             "addClass": "නව පන්තියක් එක් කරන්න",
             "webcam": "වෙබ් කැමරාව",
             "upload": "උඩුගත කරන්න",
+            "datasets": "දත්ත කට්ටල",
+            "cancel": "අවලංගු කරන්න",
             "deleteClass": "පන්තිය ඉවත් කරන්න",
             "disableClass": "පන්තිය අක්‍රිය කරන්න",
             "enableClass": "පන්තිය සක්‍රිය කරන්න",
             "removeAll": "සියලුම උදාහරණ ඉවත් කරන්න",
             "capture": "පිංතූරය ගන්න",
-            "collaborate": "සහාය දක්වන්න"
+            "collaborate": "සහාය දක්වන්න",
+            "use": "භාවිතා කරන්න ({{count}})",
+            "displayMore": "පින්තූර {{count}} ක් පෙන්වන්න"
         },
         "labels": {
             "title": "පුහුණු දත්ත",
@@ -65,8 +69,17 @@
             "dropFiles": "රූප ඇදගෙන මෙතැනට දමන්න",
             "needsMore": "තව උදාහරණ අවශ්‍යයි",
             "dropError": "පිළිගන්නා රූප පමණි",
+            "emptyClass": "This class is empty.",
             "qrMessage": "ඔබේ ජංගම දුරකථනයේන් QR කේතය ස්කැන් කර රූප එක් කල හැක",
-            "disabled": "අක්‍රිය කර ඇත"
+            "disabled": "අක්‍රිය කර ඇත",
+            "selectDataset": "දත්ත කට්ටලයක් තෝරන්න",
+            "selectTestData": "පරීක්ෂණ දත්ත තෝරන්න",
+            "searchDataset": "දත්ත කට්ටලයක් සොයන්න",
+            "images": "රූප",
+            "selected": "තෝරගත්තු",
+            "loading": "පූරණය වෙමින්...",
+            "loadingDataset": "Loading images {{loaded}}/{{total}}...",
+            "datasetLoadError": "Failed to load dataset images. Please try again."
         },
         "aria": {
             "sample": "උඩුගත කළ උදාහරණය",
@@ -77,7 +90,8 @@
         }
     },
     "heatmap": {
-        "title": "විස්තර"
+        "title": "විස්තර",
+        "colorScaleHelp": "වර්ණ පරිමාණය මගින් ආකෘතිය රූපයේ කුමන කොටස් කෙරෙහි අවධානය යොමු කරන්නේ දැයි පෙන්වයි. රතු = ඉහළ වැදගත්කම, නිල් = අඩු වැදගත්කම."
     },
     "underTheHood": {
         "title": "හුඩ් තලේ",
@@ -133,6 +147,7 @@
             "webcam": "වෙබ් කැමරාව",
             "file": "ගොනුව",
             "device": "උපාංගය",
+            "dataset": "දත්ත කට්ටලය",
             "switchOn": "ආරම්භ කරන්න",
             "switchOff": "නවත්වන්න",
             "upload": "ගොනුවක් මෙතැනට ඇදෙන්න හෝ උඩුගත කරන්න"
@@ -236,6 +251,107 @@
             "includeSamples": "උදාහරණ එක් කරන්න",
             "codeInstructions": "වෙබ් අඩවිය බෙදා ගැනීම සඳහා මෙම කේතය භාවිතා කරන්න",
             "linkInstructions": "Scratch වැනි යෙදුම්වල භාවිතා කිරීමට සබැඳියක් පිටපත් කරන්න. මෙම පිටුව විවෘතව තබාගන්න."
+        }    },
+    "datasets": {
+        "categories": {
+            "animals": "සත්‍වයෝ",
+            "nature": "ප්‍රකෘතිය",
+            "colors": "වර්ණ",
+            "fruits": "පළතුරු",
+            "human": "මැනුෂ්‍යයා",
+            "studyTools": "අධ්‍යයන උපකරණ"
+        },
+        "cats": {
+            "name": "බළ්ලෝ",
+            "description": "බළ්ලෝ කරන ලද ප්‍රතිමා සංග්‍රහය"
+        },
+        "dogs": {
+            "name": "බල්ලෝ",
+            "description": "බල්ලෝ ප්‍රතිමා සංග්‍රහය"
+        },
+        "birds": {
+            "name": "පක්ෂී",
+            "description": "පක්ෂී ප්‍රතිමා සංග්‍රහය"
+        },
+        "flowers": {
+            "name": "මල්",
+            "description": "මල් ප්‍රතිමා සංග්‍රහය"
+        },
+        "trees": {
+            "name": "ගස්",
+            "description": "ගස් ප්‍රතිමා සංග්‍රහය"
+        },
+        "white": {
+            "name": "සුදු",
+            "description": "සුදු වර්ණයේ ප්‍රතිමා සංග්‍රහය"
+        },
+        "black": {
+            "name": "කැළුම්",
+            "description": "කැළුම් වර්ණයේ ප්‍රතිමා සංග්‍රහය"
+        },
+        "gray": {
+            "name": "පැස්බරු",
+            "description": "පැස්බරු වර්ණයේ ප්‍රතිමා සංග්‍රහය"
+        },
+        "blue": {
+            "name": "නීල්",
+            "description": "නීල් වර්ණයේ ප්‍රතිමා සංග්‍රහය"
+        },
+        "green": {
+            "name": "පසුරු",
+            "description": "පසුරු වර්ණයේ ප්‍රතිමා සංග්‍රහය"
+        },
+        "red": {
+            "name": "රතු",
+            "description": "රතු වර්ණයේ ප්‍රතිමා සංග්‍රහය"
+        },
+        "pink": {
+            "name": "රෝස් පැත්",
+            "description": "රෝස් පැත් වර්ණයේ ප්‍රතිමා සංග්‍රහය"
+        },
+        "orange": {
+            "name": "නැරංගි",
+            "description": "නැරංගි වර්ණයේ ප්‍රතිමා සංග්‍රහය"
+        },
+        "purple": {
+            "name": "විස්තරා",
+            "description": "විස්තරා වර්ණයේ ප්‍රතිමා සංග්‍රහය"
+        },
+        "yellow": {
+            "name": "කහ",
+            "description": "කහ වර්ණයේ ප්‍රතිමා සංග්‍රහය"
+        },
+        "apple": {
+            "name": "ඇප්පළි",
+            "description": "ඇප්පළි ප්‍රතිමා සංග්‍රහය"
+        },
+        "pear": {
+            "name": "පේරස්",
+            "description": "පේරස් ප්‍රතිමා සංග්‍රහය"
+        },
+        "orangeFruit": {
+            "name": "දොදම්",
+            "description": "දොදම් ප්‍රතිමා සංග්‍රහය"
+        },
+        "men": {
+            "name": "පුරුෂයින්",
+            "description": "පුරුෂයින් ප්‍රතිමා සංග්‍රහය"
+        },
+        "women": {
+            "name": "ස්‍ත්‍රීන්",
+            "description": "ස්‍ත්‍රීන් ප්‍රතිමා සංග්‍රහය"
+        },
+        "handPalm": {
+            "name": "අත් තලුව",
+            "description": "අත් තලුව ප්‍රතිමා සංග්‍රහය"
+        },
+        "pencils": {
+            "name": "පැන්සල්",
+            "description": "පැන්සල් ප්‍රතිමා සංග්‍රහය"
+        },
+        "pens": {
+            "name": "පෑන",
+            "description": "පෑන ප්‍රතිමා සංග්‍රහය"
         }
     }
 }

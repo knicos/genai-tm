@@ -49,8 +49,16 @@ export async function calculateModelStatistics(
         validationSamplesPerClass[actualClassIdx] = validationSamples.length;
 
         // Predict each validation sample
-        validationSamples.forEach((sample) => {
+        validationSamples.forEach(sample => {
+            // For pose models, sample.data is HTMLCanvasElement
+            // The model internally extracts pose keypoints
             const promise = tm.predict(sample.data).then((result) => {
+                // Skip if no predictions (shouldn't happen but be safe)
+                if (!result.predictions || result.predictions.length === 0) {
+                    console.warn('Empty predictions for validation sample');
+                    return;
+                }
+
                 // Find predicted class with highest probability
                 const predictedClass = result.predictions.reduce((prev, curr) =>
                     curr.probability > prev.probability ? curr : prev

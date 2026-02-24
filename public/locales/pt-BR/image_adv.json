@@ -49,12 +49,16 @@
             "addClass": "Adicionar uma classe",
             "webcam": "Webcam",
             "upload": "Carregar",
+            "datasets": "Conjuntos de dados",
+            "cancel": "Cancelar",
             "deleteClass": "Excluir Classe",
             "disableClass": "Desativar Classe",
             "enableClass": "Ativar Classe",
             "removeAll": "Remover todas as amostras",
             "capture": "Segure para capturar",
-            "collaborate": "Colaborar"
+            "collaborate": "Colaborar",
+            "use": "Usar ({{count}})",
+            "displayMore": "Exibir {{count}} imagens"
         },
         "labels": {
             "title": "Dados de Treinamento",
@@ -64,9 +68,18 @@
             "wait": "Capturando...",
             "dropFiles": "ou arraste imagens aqui de um site ou arquivo",
             "needsMore": "São necessárias mais amostras",
-            "dropError": "Apenas imagens podem ser arrastadas aqui",
+            "addropError": "Apenas imagens podem ser arrastadas aqui",
+            "emptyClass": "Esta classe está vazia.",
             "qrMessage": "Você pode usar um telefone ou tablet para adicionar imagens. Clique no código QR para expandi-lo.",
-            "disabled": "DESATIVADO"
+            "disabled": "DESATIVADO",
+            "selectDataset": "Selecionar conjunto de dados",
+            "selectTestData": "Selecionar dados de teste",
+            "searchDataset": "Pesquisar conjunto de dados",
+            "images": "imagens",
+            "selected": "selecionado",
+            "loading": "Carregando...",
+            "loadingDataset": "Loading images {{loaded}}/{{total}}...",
+            "datasetLoadError": "Failed to load dataset images. Please try again."
         },
         "aria": {
             "sample": "amostra carregada",
@@ -77,7 +90,8 @@
         }
     },
     "heatmap": {
-        "title": "Explicação"
+        "title": "Explicação",
+        "colorScaleHelp": "A escala de cores mostra em quais partes da imagem o modelo se concentra. Vermelho = alta importância, Azul = baixa importância."
     },
     "underTheHood": {
         "title": "Sob o capô",
@@ -133,6 +147,7 @@
             "webcam": "Webcam",
             "file": "Arquivo",
             "device": "Telefone",
+            "dataset": "Conjunto de dados",
             "switchOn": "Ligar",
             "switchOff": "Desligar",
             "upload": "Fazer carregamento ou soltar arquivo aqui"
@@ -234,6 +249,107 @@
             "includeSamples": "Incluir imagens de amostra",
             "codeInstructions": "Permita que outras pessoas abram uma cópia do seu classificador usando o código abaixo.",
             "linkInstructions": "Copie o link para usar o classificador em outras aplicações como o <scratchLink>Scratch</scratchLink>. O link só funcionará se você mantiver esta aba do navegador aberta, ou se você salvar seu projeto e abri-lo novamente mais tarde."
+        }    },
+    "datasets": {
+        "categories": {
+            "animals": "Animais",
+            "nature": "Natureza",
+            "colors": "Cores",
+            "fruits": "Frutas",
+            "human": "Humano",
+            "studyTools": "Materiais Escolares"
+        },
+        "cats": {
+            "name": "Gatos",
+            "description": "Coleção de imagens de gatos"
+        },
+        "dogs": {
+            "name": "Cães",
+            "description": "Coleção de imagens de cães"
+        },
+        "birds": {
+            "name": "Pássaros",
+            "description": "Coleção de imagens de pássaros"
+        },
+        "flowers": {
+            "name": "Flores",
+            "description": "Coleção de imagens de flores"
+        },
+        "trees": {
+            "name": "Árvores",
+            "description": "Coleção de imagens de árvores"
+        },
+        "white": {
+            "name": "Branco",
+            "description": "Coleção de imagens brancas"
+        },
+        "black": {
+            "name": "Preto",
+            "description": "Coleção de imagens pretas"
+        },
+        "gray": {
+            "name": "Cinza",
+            "description": "Coleção de imagens cinzas"
+        },
+        "blue": {
+            "name": "Azul",
+            "description": "Coleção de imagens azuis"
+        },
+        "green": {
+            "name": "Verde",
+            "description": "Coleção de imagens verdes"
+        },
+        "red": {
+            "name": "Vermelho",
+            "description": "Coleção de imagens vermelhas"
+        },
+        "pink": {
+            "name": "Rosa",
+            "description": "Coleção de imagens rosas"
+        },
+        "orange": {
+            "name": "Laranja",
+            "description": "Coleção de imagens laranjas"
+        },
+        "purple": {
+            "name": "Roxo",
+            "description": "Coleção de imagens roxas"
+        },
+        "yellow": {
+            "name": "Amarelo",
+            "description": "Coleção de imagens amarelas"
+        },
+        "apple": {
+            "name": "Maçã",
+            "description": "Coleção de imagens de maçãs"
+        },
+        "pear": {
+            "name": "Pera",
+            "description": "Coleção de imagens de peras"
+        },
+        "orangeFruit": {
+            "name": "Laranja",
+            "description": "Coleção de imagens de laranjas"
+        },
+        "men": {
+            "name": "Homens",
+            "description": "Coleção de imagens de homens"
+        },
+        "women": {
+            "name": "Mulheres",
+            "description": "Coleção de imagens de mulheres"
+        },
+        "handPalm": {
+            "name": "Palma da mão",
+            "description": "Coleção de imagens de palmas"
+        },
+        "pencils": {
+            "name": "Lápis",
+            "description": "Coleção de imagens de lápis"
+        },
+        "pens": {
+            "name": "Canetas",
+            "description": "Coleção de imagens de canetas"
         }
     }
 }

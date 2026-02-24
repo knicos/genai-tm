@@ -78,23 +78,42 @@ export function useTeachableModel() {
 }
 
 export function useModelCreator(variant: TMType) {
-    const oldModel = useRef<TeachableModel | undefined>(undefined);
     const [model, setModel] = useAtom(modelState);
+    const currentModelRef = useRef<TeachableModel | undefined>(model);
 
+    useEffect(() => {
+        currentModelRef.current = model;
+    }, [model]);
+
+    // Create new model when variant changes
     useEffect(() => {
         setModel((old) => {
             if (old?.getVariant() === variant) return old;
+
+            if (old) {
+                try {
+                    old.dispose();
+                } catch (error) {
+                    console.warn('Error disposing old model:', error);
+                }
+            }
+
             return new TeachableModel(variant);
         });
     }, [variant, setModel]);
 
-    // Garbage all old models.
+    // Cleanup on unmount
     useEffect(() => {
-        if (oldModel.current && oldModel.current !== model) {
-            oldModel.current.dispose();
-        }
-        oldModel.current = model;
-    }, [model]);
+        return () => {
+            if (currentModelRef.current) {
+                try {
+                    currentModelRef.current.dispose();
+                } catch (error) {
+                    console.warn('Error disposing model on unmount:', error);
+                }
+            }
+        };
+    }, []);
 }
 
 export type TrainingState = 'none' | 'loading' | 'prepare' | 'training' | 'done';
@@ -138,15 +157,17 @@ export function useModelTrainer() {
                 setHistory([]);
                 const tm = new TeachableModel(model.getVariant() || 'image');
 
-                if (!(await tm.ready())) {
-                    console.error('Failed to create new model for training');
+                const isReady = await tm.ready();
+                if (!isReady) {
+                    console.error('[Training] Failed to create new model - model.ready() returned false');
+                    setStage('none');
                     return;
                 }
 
                 setStage('prepare');
 
                 try {
-                    await new Promise((resolve) => {
+                    await new Promise((resolve, reject) => {
                         setTimeout(() => {
                             tm.setLabels(data.map((t) => t.label));
                             tm.setSeed('something');
@@ -154,11 +175,17 @@ export function useModelTrainer() {
                                 (p, v, ix) => [...p, ...v.samples.map((s) => tm.addExample(ix, s.data))],
                                 []
                             );
-                            Promise.all(promises).then(resolve);
+                            Promise.all(promises)
+                                .then(() => resolve(undefined))
+                                .catch((err) => {
+                                    console.error('[Training] Error during sample preparation:', err);
+                                    reject(err);
+                                });
                         }, 10);
                     });
                 } catch (e) {
                     console.error('Sample prep failed', e);
+                    setStage('none');
                     return;
                 }
 

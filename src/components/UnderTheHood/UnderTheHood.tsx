@@ -1,6 +1,7 @@
 
 import { useState, useEffect, useRef } from 'react';
-import { FormControlLabel, Switch } from '@mui/material';
+import { FormControlLabel, Switch, Tooltip, IconButton } from '@mui/material';
+import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import { useTranslation } from 'react-i18next';
 import { useAtomValue } from 'jotai';
 import { modelState, modelTraining, modelStats, trainingHistory } from '../../state';
@@ -10,6 +11,7 @@ import { AccuracyPerClass } from './AccuracyPerClass';
 import { ConfusionMatrix } from './ConfusionMatrix';
 import { AccuracyPerEpoch } from './AccuracyPerEpoch';
 import { LossPerEpoch } from './LossPerEpoch';
+import { ColorLegend } from './ColorLegend';
 
 export function UnderTheHood() {
     const { namespace } = useVariant();
@@ -59,12 +61,24 @@ export function UnderTheHood() {
             </div>
             {enabled && canPredict && (
                 <div className={style.canvasContainer}>
-                    <canvas
-                        width={224}
-                        height={224}
-                        ref={canvasRef}
-                        className={style.canvas}
-                    />
+                    <div className={style.canvasWrapper}>
+                        <canvas
+                            width={224}
+                            height={224}
+                            ref={canvasRef}
+                            className={style.canvas}
+                        />
+                        <Tooltip
+                            title={t('heatmap.colorScaleHelp')}
+                            placement="top"
+                            arrow
+                        >
+                            <IconButton size="small" className={style.helpButton}>
+                                <HelpOutlineIcon fontSize="small" />
+                            </IconButton>
+                        </Tooltip>
+                    </div>
+                    <ColorLegend height={224} width={10} />
                 </div>
             )}
 

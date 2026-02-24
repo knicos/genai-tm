@@ -49,12 +49,16 @@
             "addClass": "Ližiä luokku",
             "webcam": "Webkameru",
             "upload": "Lad'd'ua",
+            "datasets": "Datasetit",
+            "cancel": "Perävytä",
             "deleteClass": "Iärestä luokku",
             "disableClass": "Poista luokka käytöstä",
             "enableClass": "Ota luokka käyttöön",
             "removeAll": "Iärestä kai tiijot",
             "capture": "Pie nybläine painetunnu",
-            "collaborate": "Rua yhtes"
+            "collaborate": "Rua yhtes",
+            "use": "Käytä ({{count}})",
+            "displayMore": "Näytä {{count}} kuvua"
         },
         "labels": {
             "title": "Opastusdata",
@@ -65,8 +69,17 @@
             "dropFiles": "libo vie kuvua täh nettusaitoilpäi libo tiijostoloispäi",
             "needsMore": "Ližiä opastusdatua pidäy",
             "dropError": "Täh voibi pakuttua vaiku kuvua",
+            "emptyClass": "This class is empty.",
             "qrMessage": "Voit ližätä kuvua telefonači libo tabletači. Suurenda QR-koudu plikaten sidä.",
-            "disabled": "POISTETTU KÄYTÖSTÄ"
+            "disabled": "POISTETTU KÄYTÖSTÄ",
+            "selectDataset": "Valitte datasetti",
+            "selectTestData": "Valitte testiainehisto",
+            "searchDataset": "Etsi datasetti",
+            "images": "kuvua",
+            "selected": "valittu",
+            "loading": "Lad'd'atah...",
+            "loadingDataset": "Loading images {{loaded}}/{{total}}...",
+            "datasetLoadError": "Failed to load dataset images. Please try again."
         },
         "aria": {
             "sample": "lad'd'attu opastusdata",
@@ -77,7 +90,8 @@
         }
     },
     "heatmap": {
-        "title": "Sellitändy"
+        "title": "Sellitändy",
+        "colorScaleHelp": "Väri-asteikko näyttäy, mih kuvah osih malli keškittyy. Punie = korkei tärkevys, Sinie = matala tärkevys."
     },
     "underTheHood": {
         "title": "Konepellin alla",
@@ -133,6 +147,7 @@
             "webcam": "Webkameru",
             "file": "Tiijosto",
             "device": "Laiteh",
+            "dataset": "Ainehisto",
             "switchOn": "Käytä",
             "switchOff": "Älä käytä",
             "upload": "lad'd'ua libo pakuta tiijosto täh"
@@ -234,6 +249,108 @@
             "includeSamples": "Liitä opastuskuvat keräle",
             "codeInstructions": "Anna toizien avata koupii iččes luokittelijas al olijan koudan vuoh.",
             "linkInstructions": "Kopiruimal linkan, luokittelijua voit käyttiä toizis moizis sobivutuksis, kui <scratchLink>Scratchas</scratchLink>. Linku ruadau sini, kuni tämä välilehti on avvoi, libo ku tallendanet projektan da avuat sen myöhembä uvvessah."
+        }
+    },
+    "datasets": {
+        "categories": {
+            "animals": "Eläjimet",
+            "nature": "Luonto",
+            "colors": "Värit",
+            "fruits": "Hedelmät",
+            "human": "Ihmini",
+            "studyTools": "Opastusväliniehet"
+        },
+        "cats": {
+            "name": "Kižat",
+            "description": "Kižakuvien kokoelma"
+        },
+        "dogs": {
+            "name": "Koirat",
+            "description": "Koirakuvien kokoelma"
+        },
+        "birds": {
+            "name": "Linnut",
+            "description": "Lintukuvien kokoelma"
+        },
+        "flowers": {
+            "name": "Kukat",
+            "description": "Kukkakuvien kokoelma"
+        },
+        "trees": {
+            "name": "Puut",
+            "description": "Puukuvien kokoelma"
+        },
+        "white": {
+            "name": "Valgei",
+            "description": "Valgeitten kuvien kokoelma"
+        },
+        "black": {
+            "name": "Mustu",
+            "description": "Mustien kuvien kokoelma"
+        },
+        "gray": {
+            "name": "Harmua",
+            "description": "Harmuatten kuvien kokoelma"
+        },
+        "blue": {
+            "name": "Sinine",
+            "description": "Sinisten kuvien kokoelma"
+        },
+        "green": {
+            "name": "Vihannu",
+            "description": "Vihannujen kuvien kokoelma"
+        },
+        "red": {
+            "name": "Punaini",
+            "description": "Punainien kuvien kokoelma"
+        },
+        "pink": {
+            "name": "Vaalenpunaini",
+            "description": "Vaalenpunainien kuvien kokoelma"
+        },
+        "orange": {
+            "name": "Oranžu",
+            "description": "Oranžujen kuvien kokoelma"
+        },
+        "purple": {
+            "name": "Violetti",
+            "description": "Violettien kuvien kokoelma"
+        },
+        "yellow": {
+            "name": "Keltaini",
+            "description": "Keltainien kuvien kokoelma"
+        },
+        "apple": {
+            "name": "Omena",
+            "description": "Omenakuvien kokoelma"
+        },
+        "pear": {
+            "name": "Päärynä",
+            "description": "Päärynäkuvien kokoelma"
+        },
+        "orangeFruit": {
+            "name": "Appelsiini",
+            "description": "Appelsiininkuvien kokoelma"
+        },
+        "men": {
+            "name": "Miehet",
+            "description": "Mieskuvien kokoelma"
+        },
+        "women": {
+            "name": "Naižet",
+            "description": "Naiskuvien kokoelma"
+        },
+        "handPalm": {
+            "name": "Kämmenkämmen",
+            "description": "Kämmenkuvien kokoelma"
+        },
+        "pencils": {
+            "name": "Kynät",
+            "description": "Kynäkuvien kokoelma"
+        },
+        "pens": {
+            "name": "Kynät",
+            "description": "Kynäkuvien kokoelma"
         }
     }
 }

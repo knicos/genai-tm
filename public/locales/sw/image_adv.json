@@ -49,12 +49,16 @@
             "addClass": "Ongeza kundi",
             "webcam": "Kamera ya wavuti",
             "upload": "Pakia",
+            "datasets": "Seti za data",
+            "cancel": "Ghairi",
             "deleteClass": "Futa Kundi",
             "disableClass": "Lemaza Darasa",
             "enableClass": "Washa Darasa",
             "removeAll": "Ondoa sampuli zote",
             "capture": "Shikilia kupiga picha",
-            "collaborate": "Shirikiana"
+            "collaborate": "Shirikiana",
+            "use": "Tumia ({{count}})",
+            "displayMore": "Onyesha picha {{count}}"
         },
         "labels": {
             "title": "Takwimu za Mafunzo",
@@ -65,8 +69,17 @@
             "dropFiles": "au buruta picha hapa kutoka tovuti au faili",
             "needsMore": "Sampuli zinahitajika zaidi",
             "dropError": "Ni picha pekee zinaruhusiwa",
+            "emptyClass": "Darasa hili ni tupu.",
             "qrMessage": "Unaweza kutumia simu au kishikwambi kuongeza picha. Bofya msimbo wa QR ili kupanua.",
-            "disabled": "IMEZIMWA"
+            "disabled": "IMEZIMWA",
+            "selectDataset": "Chagua seti ya data",
+            "selectTestData": "Chagua data ya mtihani",
+            "searchDataset": "Tafuta seti ya data",
+            "images": "picha",
+            "selected": "imechaguliwa",
+            "loading": "Inapakia...",
+            "loadingDataset": "Loading images {{loaded}}/{{total}}...",
+            "datasetLoadError": "Failed to load dataset images. Please try again."
         },
         "aria": {
             "sample": "sampuli zilizopakiwa",
@@ -77,7 +90,8 @@
         }
     },
     "heatmap": {
-        "title": "Ufafanuzi"
+        "title": "Ufafanuzi",
+        "colorScaleHelp": "Mizani ya rangi inaonyesha sehemu za picha ambazo muundo unazingatia. Nyekundu = umuhimu wa juu, Bluu = umuhimu wa chini."
     },
     "underTheHood": {
         "title": "Chini ya bonet",
@@ -133,6 +147,7 @@
             "webcam": "Kamera ya wavuti",
             "file": "Faili",
             "device": "Kifaa",
+            "dataset": "Seti ya data",
             "switchOn": "Washa",
             "switchOff": "Zima",
             "upload": "Pakia au buruta faili hapa"
@@ -234,6 +249,108 @@
             "includeSamples": "Jumuisha sampuli za picha",
             "codeInstructions": "Ruhusu wengine kufungua nakala ya kichanganuzi chako kwa kutumia msimbo hapa chini.",
             "linkInstructions": "Nakili kiungo ili kutumia kichanganuzi katika programu zingine kama<scratchLink>Scratch</scratchLink>. Kiungo kitafanya kazi tu ikiwa utaendelea kuweka tabo hii wazi au ikiwa utahifadhi kazi yako na kuifungua tena baadaye."
+        }
+    },
+    "datasets": {
+        "categories": {
+            "animals": "Wanyama",
+            "nature": "Asili",
+            "colors": "Rangi",
+            "fruits": "Matunda",
+            "human": "Binadamu",
+            "studyTools": "Vifaa vya Kusoma"
+        },
+        "cats": {
+            "name": "Paka",
+            "description": "Mkusanyiko wa picha za paka"
+        },
+        "dogs": {
+            "name": "Mbwa",
+            "description": "Mkusanyiko wa picha za mbwa"
+        },
+        "birds": {
+            "name": "Ndege",
+            "description": "Mkusanyiko wa picha za ndege"
+        },
+        "flowers": {
+            "name": "Maua",
+            "description": "Mkusanyiko wa picha za maua"
+        },
+        "trees": {
+            "name": "Miti",
+            "description": "Mkusanyiko wa picha za miti"
+        },
+        "white": {
+            "name": "Nyeupe",
+            "description": "Mkusanyiko wa picha za rangi nyeupe"
+        },
+        "black": {
+            "name": "Nyeusi",
+            "description": "Mkusanyiko wa picha za rangi nyeusi"
+        },
+        "gray": {
+            "name": "Kijivu",
+            "description": "Mkusanyiko wa picha za rangi kijivu"
+        },
+        "blue": {
+            "name": "Bluu",
+            "description": "Mkusanyiko wa picha za rangi ya bluu"
+        },
+        "green": {
+            "name": "Kijani",
+            "description": "Mkusanyiko wa picha za rangi ya kijani"
+        },
+        "red": {
+            "name": "Nyekundu",
+            "description": "Mkusanyiko wa picha za rangi nyekundu"
+        },
+        "pink": {
+            "name": "Waridi",
+            "description": "Mkusanyiko wa picha za rangi ya waridi"
+        },
+        "orange": {
+            "name": "Rangi ya chungwa",
+            "description": "Mkusanyiko wa picha za rangi ya chungwa"
+        },
+        "purple": {
+            "name": "Zambarau",
+            "description": "Mkusanyiko wa picha za rangi ya zambarau"
+        },
+        "yellow": {
+            "name": "Manjano",
+            "description": "Mkusanyiko wa picha za rangi ya manjano"
+        },
+        "apple": {
+            "name": "Tofaa",
+            "description": "Mkusanyiko wa picha za tofaa"
+        },
+        "pear": {
+            "name": "Pea",
+            "description": "Mkusanyiko wa picha za pea"
+        },
+        "orangeFruit": {
+            "name": "Chungwa",
+            "description": "Mkusanyiko wa picha za chungwa"
+        },
+        "men": {
+            "name": "Wanaume",
+            "description": "Mkusanyiko wa picha za wanaume"
+        },
+        "women": {
+            "name": "Wanawake",
+            "description": "Mkusanyiko wa picha za wanawake"
+        },
+        "handPalm": {
+            "name": "Kiganja",
+            "description": "Mkusanyiko wa picha za kiganja"
+        },
+        "pencils": {
+            "name": "Penseli",
+            "description": "Mkusanyiko wa picha za penseli"
+        },
+        "pens": {
+            "name": "Kalamu",
+            "description": "Mkusanyiko wa picha za kalamu"
         }
     }
 }

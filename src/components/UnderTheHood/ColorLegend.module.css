@@ -1,0 +1,20 @@
+.legendContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.2rem;
+    margin-left: 1rem;
+    margin-bottom: 4px;
+    position: relative;
+}
+
+.legendCanvas {
+    border-radius: 5px;
+    border: 1px solid #ddd;
+}
+
+.legendLabel {
+    font-size: 0.875rem;
+    color: #444;
+    font-weight: 500;
+}

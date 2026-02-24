@@ -1,11 +1,71 @@
+/* ── Colour tokens from @genai-fi/base ─────────────────────────────────── */
+@value primary, primaryHover, bgSubdued1, textDark from "@genai-fi/base/css/colours.module.css";
+
 .container {
     display: flex;
     flex-direction: column;
     transition: height 0.5s;
+    max-width: 100%;
 }
 
-.container :global .MuiTabs-root button {
+.container :global .MuiTabs-root {
+    min-height: 34px;
+}
+
+.container :global .MuiTabs-scroller {
+    height: 34px;
+}
+
+/* image/mobilenet: narrower tabs, tighter gap */
+.container[data-variant="image"] :global .MuiTabs-root {
+    max-width: 280px;
+}
+
+.container[data-variant="image"] :global .MuiTabs-flexContainer {
+    gap: 2px;
+}
+
+/* pose/posenet: wider tabs, larger gap */
+.container[data-variant="pose"] :global .MuiTabs-root {
+    max-width: 289px;
+}
+
+.container[data-variant="pose"] :global .MuiTabs-flexContainer {
+    gap: 4px;
+}
+
+.container :global .MuiTabs-root .MuiTab-root {
     text-transform: none;
+    min-width: 60px;
+    min-height: 34px;   
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: textDark;
+    opacity: 0.6;
+    transition: background-color 0.2s ease, opacity 0.2s ease;
+}
+
+.container :global .MuiTabs-root .MuiTab-root:hover:not(.Mui-disabled) {
+    background-color: primaryHover;
+    opacity: 1;
+}
+
+.container :global .MuiTabs-root .MuiTab-root.Mui-selected {
+    background-color: bgSubdued1;
+    color: primary;
+    opacity: 1;
+    font-weight: 600;
+}
+
+/* Hide the underline indicator — selection is shown via background instead */
+.container :global .MuiTabs-indicator {
+    display: none;
+}
+
+.container :global .MuiTabScrollButton-root {
+    font-size: 1.5rem;
 }
 
 .inputContainer {
@@ -25,7 +85,6 @@
 }
 
 .filesButton {
-    width: 224px;
     padding: 1rem;
     border-radius: 6px;
     border-style: dashed;
@@ -33,7 +92,7 @@
 
 .filesButtonHighlight {
     composes: filesButton;
-    background: #e8f0fe;
+    background: bgSubdued1;
 }
 
 .fileImage canvas {
@@ -46,4 +105,19 @@
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+.fileActionsRow {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+}
+
+.datasetActionsRow {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
 }

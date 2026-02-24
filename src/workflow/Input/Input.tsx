@@ -8,11 +8,13 @@ import Skeleton from '@mui/material/Skeleton';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import UploadFileIcon from '@mui/icons-material/UploadFile';
+import GridViewIcon from '@mui/icons-material/GridView';
 import { Button } from '@genaitm/components/button/Button';
 import { useDrop } from 'react-dnd';
 import { NativeTypes } from 'react-dnd-html5-backend';
 import TabPanel from './TabPanel';
 import WebcamInput from './WebcamInput';
+import DatasetTestPicker from '@genaitm/components/DatasetTestPicker/DatasetTestPicker';
 import { useTabActive } from '@genaitm/util/useTabActive';
 import AlertModal from '@genaitm/components/AlertModal';
 import { useTeachableModel } from '@genaitm/util/TeachableModel';
@@ -34,7 +36,7 @@ interface Props {
 }
 
 export default function Input(props: Props) {
-    const { namespace, enableFileInput } = useVariant();
+    const { namespace, enableFileInput, sampleDatasets, modelVariant } = useVariant();
     const { t, i18n } = useTranslation(namespace);
     const [enableInputSwitch, setEnableInput] = useAtom(enableCamInput);
     const [tabIndex, setTabIndex] = useState(0);
@@ -42,6 +44,7 @@ export default function Input(props: Props) {
     const fileImageRef = useRef<HTMLDivElement>(null);
     const remoteImageRef = useRef<HTMLDivElement>(null);
     const [file, setFile] = useState<HTMLCanvasElement | null>(null);
+    const [showDatasetPicker, setShowDatasetPicker] = useState(false);
     const isActive = useTabActive();
     const [showDropError, setShowDropError] = useState(false);
     const { predict, canPredict, draw, imageSize } = useTeachableModel();
@@ -57,6 +60,13 @@ export default function Input(props: Props) {
     useEffect(() => {
         if (fatal) setTabIndex(1);
     }, [fatal]);
+
+    // Reset all local input state when the model variant changes (e.g. image <-> pose)
+    useEffect(() => {
+        setFile(null);
+        setTabIndex(0);
+        setRemoteInput(null);
+    }, [modelVariant]);
 
     const doCollab = useCallback(() => {
         setP2PEnabled(true);
@@ -161,12 +171,31 @@ export default function Input(props: Props) {
 
     const doDropErrorClose = useCallback(() => setShowDropError(false), [setShowDropError]);
 
+    const handleDatasetImageSelected = useCallback(
+        (canvas: HTMLCanvasElement) => {
+            // Reset canvas styling to display at full size for prediction
+            canvas.style.width = `${imageSize}px`;
+            canvas.style.height = `${imageSize}px`;
+            setTabIndex(3);
+            setFile(canvas);
+        },
+        [imageSize]
+    );
+
+    const handleDatasetPickerOpen = useCallback(() => {
+        setShowDatasetPicker(true);
+    }, []);
+
+    const handleDatasetPickerClose = useCallback(() => {
+        setShowDatasetPicker(false);
+    }, []);
+
     return (
         <Widget
             noPadding
             active={dropProps.hovered}
             dataWidget="input"
-            data-active={enableInput}
+            activated={enableInput}
             title={t('input.labels.title')}
             menu={
                 <div className={style.inputControls}>
@@ -192,33 +221,53 @@ export default function Input(props: Props) {
             {enableFileInput && (
                 <div
                     className={style.container}
+                    data-variant={modelVariant}
                     ref={drop as unknown as RefObject<HTMLDivElement>}
                 >
-                    <Tabs
-                        value={tabIndex}
-                        onChange={doChangeTab}
-                        aria-label="input source tabs"
-                        variant="fullWidth"
-                    >
-                        <Tab
-                            disabled={!canPredict || fatal}
-                            label={t('input.labels.webcam')}
-                            id="input-tab-0"
-                            aria-controls="input-panel-0"
-                        />
-                        <Tab
-                            disabled={!canPredict}
-                            label={t('input.labels.file')}
-                            id="input-tab-1"
-                            aria-controls="input-panel-1"
-                        />
-                        <Tab
-                            disabled={!canPredict || fatal}
-                            label={t('input.labels.device')}
-                            id="input-tab-2"
-                            aria-controls="input-panel-2"
-                        />
-                    </Tabs>
+                    <div className={style.tabsRow}>
+                        <Tabs
+                            value={tabIndex}
+                            onChange={doChangeTab}
+                            aria-label="input source tabs"
+                            variant="scrollable"
+                            scrollButtons="auto"
+                            allowScrollButtonsMobile
+                        >
+                            <Tab
+                                disabled={!canPredict || fatal}
+                                label={t('input.labels.webcam')}
+                                id="input-tab-0"
+                                aria-controls="input-panel-0"
+                                value={0}
+                            />
+                            <Tab
+                                disabled={!canPredict}
+                                label={t('input.labels.file')}
+                                id="input-tab-1"
+                                aria-controls="input-panel-1"
+                                value={1}
+                            />
+                            <Tab
+                                disabled={!canPredict || fatal}
+                                label={t('input.labels.device')}
+                                id="input-tab-2"
+                                aria-controls="input-panel-2"
+                                value={2}
+                            />
+                            {sampleDatasets && (
+                                <Tab
+                                    disabled={!canPredict}
+                                    className={style.datasetTab}
+                                    label={t('input.labels.dataset')}
+                                    id="input-tab-3"
+                                    aria-controls="input-panel-3"
+                                    value={3}
+                                />
+                            )}
+                        </Tabs>
+
+                        
+                    </div>
                     <TabPanel
                         value={tabIndex}
                         index={0}
@@ -244,15 +293,17 @@ export default function Input(props: Props) {
                             accept="image/*"
                             ref={fileRef}
                         />
-                        <Button
-                            className={dropProps.hovered ? style.filesButtonHighlight : style.filesButton}
-                            onClick={doUploadClick}
-                            disabled={!canPredict || !enableInput}
-                            startIcon={<UploadFileIcon fontSize="large" />}
-                            variant="outlined"
-                        >
-                            {t('input.labels.upload')}
-                        </Button>
+                        <div className={style.fileActionsRow}>
+                            <Button
+                                className={dropProps.hovered ? style.filesButtonHighlight : style.filesButton}
+                                onClick={doUploadClick}
+                                disabled={!canPredict || !enableInput}
+                                startIcon={<UploadFileIcon fontSize="large" />}
+                                variant="outlined"
+                            >
+                                {t('input.labels.upload')}
+                            </Button>
+                        </div>
                         {!!file && (
                             <div
                                 role="img"
@@ -311,6 +362,40 @@ export default function Input(props: Props) {
                             />
                         )}
                     </TabPanel>
+                    {sampleDatasets && (
+                        <TabPanel
+                            value={tabIndex}
+                            index={3}
+                            enabled={enableInput}
+                        >
+                            <div className={style.datasetActionsRow}>
+                                <Button
+                                    onClick={handleDatasetPickerOpen}
+                                    disabled={!canPredict || !enableInput}
+                                    startIcon={<GridViewIcon fontSize="large" />}
+                                    variant="outlined"
+                                >
+                                    {t('trainingdata.labels.selectDataset')}
+                                </Button>
+                            </div>
+                            {!!file && (
+                                <div
+                                    role="img"
+                                    aria-label={t('input.aria.imageFile')}
+                                    ref={fileImageRef}
+                                    className={style.fileImage}
+                                />
+                            )}
+                            {!file && (
+                                <Skeleton
+                                    sx={{ marginTop: '1rem' }}
+                                    variant="rounded"
+                                    width={imageSize}
+                                    height={imageSize}
+                                />
+                            )}
+                        </TabPanel>
+                    )}
                 </div>
             )}
             {!enableFileInput && (
@@ -333,6 +418,13 @@ export default function Input(props: Props) {
             >
                 {t('trainingdata.labels.dropError')}
             </AlertModal>
+            {sampleDatasets && (
+                <DatasetTestPicker
+                    open={showDatasetPicker}
+                    onClose={handleDatasetPickerClose}
+                    onImageSelected={handleDatasetImageSelected}
+                />
+            )}
         </Widget>
     );
 }

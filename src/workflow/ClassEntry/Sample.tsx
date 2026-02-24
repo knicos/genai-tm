@@ -11,15 +11,21 @@ const IconButton = styled(MIconButton)({
     top: '0px',
     left: '0px',
     color: 'white',
+    padding: 0,
+    '&:hover': {
+        backgroundColor: 'rgba(0, 0, 0, 0.3)',
+    },
+    transition: 'all 0.2s ease-in-out',
 });
 
 interface Props {
     image: HTMLCanvasElement;
     onDelete: (index: number) => void;
+    onClick?: (index: number) => void;
     index: number;
 }
 
-export default function Sample({ image, index, onDelete }: Props) {
+export default function Sample({ image, index, onDelete, onClick }: Props) {
     const { namespace } = useVariant();
     const { t } = useTranslation(namespace);
     const ref = useRef<HTMLImageElement>(null);
@@ -33,12 +39,23 @@ export default function Sample({ image, index, onDelete }: Props) {
         }
     }, [image]);
 
-    const doClick = useCallback(() => onDelete(index), [onDelete, index]);
+    const doClick = useCallback((e: React.MouseEvent) => {
+        e.stopPropagation();
+        onDelete(index);
+    }, [onDelete, index]);
+
+    const handleImageClick = useCallback((e: React.MouseEvent) => {
+        if (onClick) {
+            e.stopPropagation();
+            onClick(index);
+        }
+    }, [onClick, index]);
 
     return (
         <li
             className={style.sampleImage}
             data-testid={`sample-${index}`}
+            style={{ cursor: onClick ? 'pointer' : 'default' }}
         >
             <IconButton
                 aria-label={t('trainingdata.aria.delete')}
@@ -49,7 +66,9 @@ export default function Sample({ image, index, onDelete }: Props) {
             <img
                 ref={ref}
                 alt={t('trainingdata.aria.sample')}
+                onClick={handleImageClick}
             />
         </li>
     );
 }
+

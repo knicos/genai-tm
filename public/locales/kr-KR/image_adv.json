@@ -49,12 +49,16 @@
             "addClass": "클래스 추가",
             "webcam": "웹캡",
             "upload": "업로드",
+            "datasets": "데이터셋",
+            "cancel": "취소",
             "deleteClass": "클래스 삭제",
             "disableClass": "클래스 비활성화",
             "enableClass": "클래스 활성화",
             "removeAll": "모든 샘플 삭제",
             "capture": "캡처를 위해 홀드하세요요",
-            "collaborate": "협업업"
+            "collaborate": "협업업",
+            "use": "사용 ({{count}})",
+            "displayMore": "{{count}}개 이미지 표시"
         },
         "labels": {
             "title": "데이터 학습시키기",
@@ -66,7 +70,16 @@
             "needsMore": "더 많은 샘플이 필요합니다",
             "dropError": "이미지만 가능합니다",
             "qrMessage": "이미지를 추가하기 위해 휴대폰이나 태블릿을 사용할 수 있습니다. QR 코드를 누르면 확장됩니다.",
-            "disabled": "비활성화됨"
+            "disabled": "비활성화됨",
+            "selectDataset": "데이터셋 선택",
+            "selectTestData": "테스트 데이터 선택",
+            "searchDataset": "데이터셋 검색",
+            "images": "이미지",
+            "selected": "선택됨",
+            "loading": "로딩 중...",
+            "loadingDataset": "Loading images {{loaded}}/{{total}}...",
+            "datasetLoadError": "Failed to load dataset images. Please try again.",
+            "emptyClass": "이 클래스는 비어 있습니다."
         },
         "aria": {
             "sample": "업로드 된 샘플",
@@ -77,7 +90,8 @@
         }
     },
     "heatmap": {
-        "title": "설명"
+        "title": "설명",
+        "colorScaleHelp": "색상 척도는 모델이 이미지의 어느 부분에 집중하는지 보여줍니다. 빨강 = 높은 중요도, 파랑 = 낮은 중요도."
     },
     "underTheHood": {
         "title": "내부 작동 방식",
@@ -132,8 +146,7 @@
             "title": "입력",
             "webcam": "웹캠",
             "file": "파일",
-            "device": "기기",
-            "switchOn": "켜기",
+            "device": "기기",            "dataset": "데이터셋",            "switchOn": "켜기",
             "switchOff": "끄기",
             "upload": "이곳에 파일을 업로드하거나 드래그 하세요"
         },
@@ -234,6 +247,108 @@
             "includeSamples": "샘플 이미지 포함",
             "codeInstructions": "하단의 코드를 통해 다른 사람들이 내 분류기의 복사본을 열 수 있도록 허가.",
             "linkInstructions": "<scratchLink>Scratch</scratchLink>와 같은 다른 어플리케이션에서 분류기를 이용할 수 있는 링크 복사하기. 이 브라우저 탭을 열어두거나, 프로젝트를 저장한 후 나중에 다시 열 경우에만 링크가 작동합니다."
+        }
+    },
+    "datasets": {
+        "categories": {
+            "animals": "동물",
+            "nature": "자연",
+            "colors": "색상",
+            "fruits": "과일",
+            "human": "인간",
+            "studyTools": "학용품"
+        },
+        "cats": {
+            "name": "고양이",
+            "description": "고양이 이미지 모음"
+        },
+        "dogs": {
+            "name": "개",
+            "description": "개 이미지 모음"
+        },
+        "birds": {
+            "name": "새",
+            "description": "새 이미지 모음"
+        },
+        "flowers": {
+            "name": "꽃",
+            "description": "꽃 이미지 모음"
+        },
+        "trees": {
+            "name": "나무",
+            "description": "나무 이미지 모음"
+        },
+        "white": {
+            "name": "흰색",
+            "description": "흰색 이미지 모음"
+        },
+        "black": {
+            "name": "검은색",
+            "description": "검은색 이미지 모음"
+        },
+        "gray": {
+            "name": "회색",
+            "description": "회색 이미지 모음"
+        },
+        "blue": {
+            "name": "파란색",
+            "description": "파란색 이미지 모음"
+        },
+        "green": {
+            "name": "초록색",
+            "description": "초록색 이미지 모음"
+        },
+        "red": {
+            "name": "빨간색",
+            "description": "빨간색 이미지 모음"
+        },
+        "pink": {
+            "name": "분홍색",
+            "description": "분홍색 이미지 모음"
+        },
+        "orange": {
+            "name": "주황색",
+            "description": "주황색 이미지 모음"
+        },
+        "purple": {
+            "name": "보라색",
+            "description": "보라색 이미지 모음"
+        },
+        "yellow": {
+            "name": "노란색",
+            "description": "노란색 이미지 모음"
+        },
+        "apple": {
+            "name": "사과",
+            "description": "사과 이미지 모음"
+        },
+        "pear": {
+            "name": "배",
+            "description": "배 이미지 모음"
+        },
+        "orangeFruit": {
+            "name": "오렌지",
+            "description": "오렌지 이미지 모음"
+        },
+        "men": {
+            "name": "남성",
+            "description": "남성 이미지 모음"
+        },
+        "women": {
+            "name": "여성",
+            "description": "여성 이미지 모음"
+        },
+        "handPalm": {
+            "name": "손바닥",
+            "description": "손바닥 이미지 모음"
+        },
+        "pencils": {
+            "name": "연필",
+            "description": "연필 이미지 모음"
+        },
+        "pens": {
+            "name": "펜",
+            "description": "펜 이미지 모음"
         }
     }
 }

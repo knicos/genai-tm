@@ -33,7 +33,7 @@ export default function ImageGrid({ samples, onDelete, disabled, showDrop }: Pro
                 ))}
                 {samples.length === 0 && !showDrop && (
                     <Alert
-                        style={{ border: '1px solid #0288d1' }}
+                        className={style.alertInfo}
                         severity="info"
                     >
                         {t('collect.samplePrompt')}

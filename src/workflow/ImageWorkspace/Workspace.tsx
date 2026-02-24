@@ -5,7 +5,7 @@ import Preview from '../Preview/Preview';
 import Output from '../Output/Output';
 import Behaviours from '../../workflow/Behaviours/Behaviours';
 import { useTranslation } from 'react-i18next';
-import { classState, IClassification, saveState } from '../../state';
+import { classState, IClassification, saveState, inputImage, prediction, predictedIndex } from '../../state';
 import style from './TeachableMachine.module.css';
 import { useVariant } from '../../util/variant';
 import Input from '../Input/Input';
@@ -47,7 +47,7 @@ function alertMessage(e: Event) {
     e.returnValue = true;
     return '';
 }
-
+ 
 let hasAlert = false;
 function addCloseAlert() {
     if (!hasAlert) {
@@ -62,12 +62,52 @@ export default function Workspace({ step, visitedStep, onComplete, saveTrigger, 
     const [data, setData] = useAtom(classState);
     const [errMsg, setErrMsg] = useState<string | null>(null);
     const setSaving = useSetAtom(saveState);
+    const setInputImage = useSetAtom(inputImage);
+    const setPrediction = useSetAtom(prediction);
+    const setPredictedIndex = useSetAtom(predictedIndex);
     const [editingData, setEditingData] = useState(false);
     const [showShare, setShowShare] = useState(false);
     const [showClone, setShowClone] = useState(false);
     const [showSidebar, setShowSidebar] = useState(false);
+    const lastVariantRef = useRef(modelVariant);
+    
+
     // Ensure an initial model exists
     useModelCreator(modelVariant);
+
+    const closeSidebar = useCallback(() => {
+        try {
+            const active = document.activeElement as HTMLElement | null;
+            // find any sidepanel section currently in the DOM
+            const panel = document.querySelector('section[class*="sidePanel"]') as HTMLElement | null;
+            if (panel && active && panel.contains(active)) {
+                // move focus back to the preview menu button if available, otherwise blur
+                const opener = document.getElementById('preview-menu-button') as HTMLElement | null;
+                if (opener) opener.focus();
+                else active.blur();
+            }
+        } catch (e) {
+            // ignore DOM errors
+        }
+        setShowSidebar(false);
+    }, [setShowSidebar]);
+
+    // Clear samples when model variant changes (pose <-> image)
+    useEffect(() => {
+        if (lastVariantRef.current !== modelVariant) {
+            // Clear all samples when switching between model types
+            setData((classes) => 
+                classes.map(cls => ({ ...cls, samples: [] }))
+            );
+            // Clear test input image and predictions
+            setInputImage(null);
+            setPrediction([]);
+            setPredictedIndex(-1);
+            // Close Actions sidebar
+            closeSidebar();
+            lastVariantRef.current = modelVariant;
+        }
+    }, [modelVariant, setData, setInputImage, setPrediction, setPredictedIndex]);
 
     // Set default sidebar width to 400px
     useEffect(() => {
@@ -173,48 +213,48 @@ export default function Workspace({ step, visitedStep, onComplete, saveTrigger, 
                 onError={doLoadError}
             />
             <ModelSaver onSaved={doSaved} />
-            <WorkflowLayout connections={CONNECTIONS}>
-                <TrainingData
-                    data={data}
-                    setData={doSetData}
-                    active={true}
-                    onFocused={setEditingData}
-                />
-                <Trainer
-                    focus={step === 0}
-                    editing={editingData}
-                    onTrained={doTrained}
-                />
-                <div
-                    className={style.column}
-                    data-widget="container"
-                >
-                    <Input />
-                    <Preview
-                        onExport={doShare}
-                        onClone={doClone}
-                        onSidebar={doSidebar}
+            <div className={style.workspaceContent}>
+                <WorkflowLayout connections={CONNECTIONS}>
+                    <TrainingData
+                        data={data}
+                        setData={doSetData}
+                        active={true}
+                        onFocused={setEditingData}
                     />
+                    <Trainer
+                        focus={step === 0}
+                        editing={editingData}
+                        onTrained={doTrained}
+                    />
+                    <div
+                        className={style.column}
+                        data-widget="container"
+                    >
+                        <Input />
+                        <Preview
+                            onExport={doShare}
+                            onClone={doClone}
+                            onSidebar={doSidebar}
+                        />
 
-                </div>
-                <Behaviours
-                    hidden={visitedStep < 1}
-                    focus={step === 1}
-                    onChange={doBehaviourChange}
-                />
-                <Output hidden={visitedStep < 1} />
-            </WorkflowLayout>
-
-            <div style={{ position: 'fixed', top: 0, right: 0, bottom: 0, zIndex: 1300, pointerEvents: showSidebar ? 'auto' : 'none' }}>
-                <SidePanel
-                    open={showSidebar}
-                    position="right"
-                    onClose={() => setShowSidebar(false)}
-                    onOpen={() => setShowSidebar(true)}
-                >
-                    <UnderTheHood />
-                </SidePanel>
+                    </div>
+                    <Behaviours
+                        hidden={visitedStep < 1}
+                        focus={step === 1}
+                        onChange={doBehaviourChange}
+                    />
+                    <Output hidden={visitedStep < 1} />
+                </WorkflowLayout>
             </div>
+
+            <SidePanel
+                open={showSidebar}
+                position="right"
+                onClose={closeSidebar}
+                onOpen={() => setShowSidebar(true)}
+            >
+                <UnderTheHood />
+            </SidePanel>
 
             <SaveDialog
                 trigger={saveTrigger}

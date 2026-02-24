@@ -49,12 +49,16 @@
             "addClass": "Lägg till en class",
             "webcam": "Webbkamera",
             "upload": "ladda upp",
+            "datasets": "Dataset",
+            "cancel": "avbryt",
             "deleteClass": "Radera klass",
             "disableClass": "Inaktivera klass",
             "enableClass": "Aktivera klass",
             "removeAll": "ta bort alla prover",
             "capture": "Håll för att ta foto",
-            "collaborate": "Samarbeta"
+            "collaborate": "Samarbeta",
+            "use": "Använd ({{count}})",
+            "displayMore": "Visa {{count}} bilder"
         },
         "labels": {
             "title": "Träningsdata",
@@ -65,8 +69,17 @@
             "dropFiles": "eller dra bilder hit från en webbsida eller fil",
             "needsMore": "Fler prover behövs",
             "dropError": "Endast bilder kan släppas här",
+            "emptyClass": "Denna klass är tom.",
             "qrMessage": "Du kan använda en telefon eller surfplatta för att lägga till bilder. Klicka på QR-koden för att utöka den.",
-            "disabled": "INAKTIVERAD"
+            "disabled": "INAKTIVERAD",
+            "selectDataset": "Välj ett dataset",
+            "selectTestData": "Välj testdata",
+            "searchDataset": "Sök dataset",
+            "images": "bilder",
+            "selected": "vald",
+            "loading": "Laddar...",
+            "loadingDataset": "Loading images {{loaded}}/{{total}}...",
+            "datasetLoadError": "Failed to load dataset images. Please try again."
         },
         "aria": {
             "sample": "uppladdade prover",
@@ -77,7 +90,8 @@
         }
     },
     "heatmap": {
-        "title": "Förklaring"
+        "title": "Förklaring",
+        "colorScaleHelp": "Färgskalan visar vilka delar av bilden som modellen fokuserar på. Röd = hög betydelse, Blå = låg betydelse."
     },
     "underTheHood": {
         "title": "Under huven",
@@ -131,8 +145,8 @@
         "labels": {
             "title": "Inmatning",
             "webcam": "Webbkamera",
-            "file": "Fil",
-            "switchOn": "På",
+            "file": "Fil",            "device": "Enhet",
+            "dataset": "Dataset",            "switchOn": "På",
             "switchOff": "Av",
             "upload": "Ladda upp eller släpp fil här"
         },
@@ -233,6 +247,108 @@
             "includeSamples": "Ikludera provbilder",
             "codeInstructions": "Tillåt andra att öppna en kopia av din klassificerare med koden nedan.",
             "linkInstructions": "Kopiera länken för att använda klassificeraren i andra applikationer så som <scratchLink>Scratch</scratchLink>. Länken fungerar endast om du håller denna flik i webbläsaren öpppen, eller om du sparar ditt projekt och öppnar det igen senare."
+        }
+    },
+    "datasets": {
+        "categories": {
+            "animals": "Djur",
+            "nature": "Natur",
+            "colors": "Färger",
+            "fruits": "Frukter",
+            "human": "Människa",
+            "studyTools": "Studiematerial"
+        },
+        "cats": {
+            "name": "Katter",
+            "description": "Samling av kattbilder"
+        },
+        "dogs": {
+            "name": "Hundar",
+            "description": "Samling av hundbilder"
+        },
+        "birds": {
+            "name": "Fåglar",
+            "description": "Samling av fågelbilder"
+        },
+        "flowers": {
+            "name": "Blommor",
+            "description": "Samling av blombilder"
+        },
+        "trees": {
+            "name": "Träd",
+            "description": "Samling av trädbilder"
+        },
+        "white": {
+            "name": "Vit",
+            "description": "Samling av vita bilder"
+        },
+        "black": {
+            "name": "Svart",
+            "description": "Samling av svarta bilder"
+        },
+        "gray": {
+            "name": "Grå",
+            "description": "Samling av gråa bilder"
+        },
+        "blue": {
+            "name": "Blå",
+            "description": "Samling av blåa bilder"
+        },
+        "green": {
+            "name": "Grön",
+            "description": "Samling av gröna bilder"
+        },
+        "red": {
+            "name": "Röd",
+            "description": "Samling av röda bilder"
+        },
+        "pink": {
+            "name": "Rosa",
+            "description": "Samling av rosa bilder"
+        },
+        "orange": {
+            "name": "Orange",
+            "description": "Samling av orange bilder"
+        },
+        "purple": {
+            "name": "Lila",
+            "description": "Samling av lila bilder"
+        },
+        "yellow": {
+            "name": "Gul",
+            "description": "Samling av gula bilder"
+        },
+        "apple": {
+            "name": "Äpple",
+            "description": "Samling av äppelbilder"
+        },
+        "pear": {
+            "name": "Päron",
+            "description": "Samling av päronbilder"
+        },
+        "orangeFruit": {
+            "name": "Apelsin",
+            "description": "Samling av apelsinbilder"
+        },
+        "men": {
+            "name": "Män",
+            "description": "Samling av mansbilder"
+        },
+        "women": {
+            "name": "Kvinnor",
+            "description": "Samling av kvinnobilder"
+        },
+        "handPalm": {
+            "name": "Handflata",
+            "description": "Samling av handflatebilder"
+        },
+        "pencils": {
+            "name": "Pennor",
+            "description": "Samling av pennbilder"
+        },
+        "pens": {
+            "name": "Kulspetspennor",
+            "description": "Samling av kulspetspennbilder"
         }
     }
 }
