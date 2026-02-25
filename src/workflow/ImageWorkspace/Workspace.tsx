@@ -71,26 +71,8 @@ export default function Workspace({ step, visitedStep, onComplete, saveTrigger, 
     const [showSidebar, setShowSidebar] = useState(false);
     const lastVariantRef = useRef(modelVariant);
     
-
     // Ensure an initial model exists
     useModelCreator(modelVariant);
-
-    const closeSidebar = useCallback(() => {
-        try {
-            const active = document.activeElement as HTMLElement | null;
-            // find any sidepanel section currently in the DOM
-            const panel = document.querySelector('section[class*="sidePanel"]') as HTMLElement | null;
-            if (panel && active && panel.contains(active)) {
-                // move focus back to the preview menu button if available, otherwise blur
-                const opener = document.getElementById('preview-menu-button') as HTMLElement | null;
-                if (opener) opener.focus();
-                else active.blur();
-            }
-        } catch (e) {
-            // ignore DOM errors
-        }
-        setShowSidebar(false);
-    }, [setShowSidebar]);
 
     // Clear samples when model variant changes (pose <-> image)
     useEffect(() => {
@@ -104,7 +86,7 @@ export default function Workspace({ step, visitedStep, onComplete, saveTrigger, 
             setPrediction([]);
             setPredictedIndex(-1);
             // Close Actions sidebar
-            closeSidebar();
+            setShowSidebar(false);
             lastVariantRef.current = modelVariant;
         }
     }, [modelVariant, setData, setInputImage, setPrediction, setPredictedIndex]);
@@ -247,14 +229,15 @@ export default function Workspace({ step, visitedStep, onComplete, saveTrigger, 
                 </WorkflowLayout>
             </div>
 
-            <SidePanel
-                open={showSidebar}
-                position="right"
-                onClose={closeSidebar}
-                onOpen={() => setShowSidebar(true)}
-            >
-                <UnderTheHood />
-            </SidePanel>
+            {showSidebar && (
+                <SidePanel
+                    open={showSidebar}
+                    position="right"
+                    onClose={() => setShowSidebar(false)}
+                >
+                    <UnderTheHood />
+                </SidePanel>
+            )}
 
             <SaveDialog
                 trigger={saveTrigger}
