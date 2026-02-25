@@ -195,7 +195,7 @@ export default function Workspace({ step, visitedStep, onComplete, saveTrigger, 
                 onError={doLoadError}
             />
             <ModelSaver onSaved={doSaved} />
-            <div className={style.workspaceContent}>
+            <div className={`${style.workspaceContent} ${showSidebar ? style.workspaceContentPanelOpen : ''}`}>
                 <WorkflowLayout connections={CONNECTIONS}>
                     <TrainingData
                         data={data}

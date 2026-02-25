@@ -4,7 +4,7 @@
     position: relative;
     flex-shrink: 0;
     cursor: pointer;
-    border-radius: 5px  ;
+    border-radius: 5px;
     overflow: hidden;
 }
 
@@ -75,7 +75,6 @@
     transform: scale(1.05);
 }
 
-
 /* Dialog */
 .dialogPaper {
     height: 80vh;
@@ -88,6 +87,11 @@
     gap: 8px;
     padding: 0.75rem 1.8rem;
     margin-bottom: 0;
+}
+
+.closeButton {
+    margin-left: auto;
+    margin-right: -0.5rem;
 }
 
 /* Loading state */
@@ -146,8 +150,6 @@
     margin-left: 8px;
     grid-template-columns: 1fr auto auto;
 }
-
-
 
 .datasetName {
     font-weight: 500;
@@ -217,4 +219,3 @@
     padding-right: 28px;
     border-top: 2px solid primary;
 }
-

@@ -3,6 +3,8 @@ import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
 import DialogContent from '@mui/material/DialogContent';
 import FolderIcon from '@mui/icons-material/Folder';
+import CloseIcon from '@mui/icons-material/Close';
+import IconButton from '@mui/material/IconButton';
 import { useTranslation } from 'react-i18next';
 import { Dataset, DATASETS, fetchAndCacheDatasets } from '@genaitm/util/datasets';
 import { canvasFromURL } from '@genai-fi/base';
@@ -56,6 +58,13 @@ export default function DatasetTestPicker({ open, onClose, onImageSelected }: Da
             <DialogTitle className={styles.dialogTitle}>
                 <FolderIcon />
                 {t('trainingdata.labels.selectTestData')}
+                <IconButton
+                    onClick={onClose}
+                    aria-label="close"
+                    className={styles.closeButton}
+                >
+                    <CloseIcon />
+                </IconButton>
             </DialogTitle>
             <DialogContent>
                 <DatasetTestCategoryList

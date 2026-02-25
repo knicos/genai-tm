@@ -7,6 +7,8 @@ import { Button } from '@genaitm/components/button/Button';
 import Typography from '@mui/material/Typography';
 import LinearProgress from '@mui/material/LinearProgress';
 import FolderIcon from '@mui/icons-material/Folder';
+import CloseIcon from '@mui/icons-material/Close';
+import IconButton from '@mui/material/IconButton';
 import { useTranslation } from 'react-i18next';
 import { Dataset, DATASETS, fetchAndCacheDatasets, DatasetImage } from '@genaitm/util/datasets';
 import { loadDatasetImagesInParallel, LoadProgress } from '@genaitm/util/datasetLoader';
@@ -86,6 +88,14 @@ export default function DatasetPicker({ open, onClose, onDatasetSelected }: Data
             <DialogTitle className={styles.dialogTitle}>
                 <FolderIcon />
                 {t('trainingdata.labels.selectDataset')}
+                <IconButton
+                    onClick={handleClose}
+                    disabled={loading}
+                    aria-label="close"
+                    className={styles.closeButton}
+                >
+                    <CloseIcon />
+                </IconButton>
             </DialogTitle>
             <DialogContent>
                 {loading ? (
