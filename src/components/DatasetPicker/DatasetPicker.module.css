@@ -23,7 +23,8 @@
     border-color: primary;
 }
 
-.datasetImage {
+.datasetImage,
+.testImage {
     width: 80px;
     height: 80px;
     object-fit: cover;
