@@ -17,39 +17,44 @@
 }
 
 /* image/mobilenet: narrower tabs, tighter gap */
-.container[data-variant="image"] :global .MuiTabs-root {
+.container[data-variant='image'] :global .MuiTabs-root {
     max-width: 280px;
 }
 
-.container[data-variant="image"] :global .MuiTabs-flexContainer {
+.container[data-variant='image'] :global .MuiTabs-flexContainer {
     gap: 2px;
 }
 
 /* pose/posenet: wider tabs, larger gap */
-.container[data-variant="pose"] :global .MuiTabs-root {
+.container[data-variant='pose'] :global .MuiTabs-root {
     max-width: 289px;
 }
 
-.container[data-variant="pose"] :global .MuiTabs-flexContainer {
+.container[data-variant='pose'] :global .MuiTabs-flexContainer {
     gap: 4px;
 }
 
 .container :global .MuiTabs-root .MuiTab-root {
     text-transform: none;
     min-width: 60px;
-    min-height: 34px;   
+    min-height: 34px;
     padding: 5px 12px;
     border-radius: 20px;
     font-size: 0.875rem;
     font-weight: 500;
     color: textDark;
-    opacity: 0.6;
     transition: background-color 0.2s ease, opacity 0.2s ease;
 }
 
 .container :global .MuiTabs-root .MuiTab-root:hover:not(.Mui-disabled) {
     background-color: primaryHover;
     opacity: 1;
+}
+
+.container :global .MuiTabs-root .MuiTab-root.Mui-disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    pointer-events: auto;
 }
 
 .container :global .MuiTabs-root .MuiTab-root.Mui-selected {
