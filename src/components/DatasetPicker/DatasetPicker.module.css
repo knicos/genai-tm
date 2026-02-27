@@ -133,6 +133,7 @@
 .categoryTitle {
     font-weight: bold;
     margin: 8px 8px 4px 8px;
+    font-size: 1rem;
 }
 
 .datasetBox {

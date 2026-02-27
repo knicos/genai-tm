@@ -74,7 +74,7 @@ export default function DatasetTestCategoryList({ datasets, open, onImageClick }
                         <DatasetCategory
                             categoryKey={categoryKey}
                             datasets={cats}
-                            isTestMode={true}
+                            singleSelect={true}
                             onImageClick={handleImageClick}
                             selectedImageUrl={selectedImageUrl}
                         />

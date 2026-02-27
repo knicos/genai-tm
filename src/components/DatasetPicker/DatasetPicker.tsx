@@ -14,6 +14,7 @@ import { Dataset, DATASETS, fetchAndCacheDatasets, DatasetImage } from '@genaitm
 import { loadDatasetImagesInParallel, LoadProgress } from '@genaitm/util/datasetLoader';
 import { useVariant } from '@genaitm/util/variant';
 import DatasetCategoryList, { DatasetCategoryListHandle } from './DatasetCategoryList';
+import { ScrollRootContext, useScrollRootRef } from './ScrollRootContext';
 import styles from './DatasetPicker.module.css';
 
 interface DatasetPickerProps {
@@ -29,6 +30,7 @@ export default function DatasetPicker({ open, onClose, onDatasetSelected }: Data
     const [loadProgress, setLoadProgress] = useState<LoadProgress>({ loaded: 0, total: 0 });
     const [localDatasets, setLocalDatasets] = useState<Dataset[]>(DATASETS);
     const [selectedCount, setSelectedCount] = useState(0);
+    const [scrollRoot, scrollRootRef] = useScrollRootRef();
     const listRef = useRef<DatasetCategoryListHandle>(null);
 
     useEffect(() => {
@@ -74,8 +76,7 @@ export default function DatasetPicker({ open, onClose, onDatasetSelected }: Data
         }
     }, [loading, onClose]);
 
-    const progressPercentage =
-        loadProgress.total > 0 ? (loadProgress.loaded / loadProgress.total) * 100 : 0;
+    const progressPercentage = loadProgress.total > 0 ? (loadProgress.loaded / loadProgress.total) * 100 : 0;
 
     return (
         <Dialog
@@ -97,31 +98,40 @@ export default function DatasetPicker({ open, onClose, onDatasetSelected }: Data
                     <CloseIcon />
                 </IconButton>
             </DialogTitle>
-            <DialogContent>
-                {loading ? (
-                    <div className={styles.loadingContainer}>
-                        <Typography variant="body1" gutterBottom>
-                            {t('trainingdata.labels.loadingDataset', {
-                                loaded: loadProgress.loaded,
-                                total: loadProgress.total,
-                            })}
-                        </Typography>
-                        <LinearProgress
-                            variant="determinate"
-                            value={progressPercentage}
-                            className={styles.loadingProgress}
+            <DialogContent ref={scrollRootRef}>
+                <ScrollRootContext.Provider value={scrollRoot}>
+                    {loading ? (
+                        <div className={styles.loadingContainer}>
+                            <Typography
+                                variant="body1"
+                                gutterBottom
+                            >
+                                {t('trainingdata.labels.loadingDataset', {
+                                    loaded: loadProgress.loaded,
+                                    total: loadProgress.total,
+                                })}
+                            </Typography>
+                            <LinearProgress
+                                variant="determinate"
+                                value={progressPercentage}
+                                className={styles.loadingProgress}
+                            />
+                        </div>
+                    ) : (
+                        <DatasetCategoryList
+                            ref={listRef}
+                            datasets={localDatasets}
+                            onSelectionChange={setSelectedCount}
                         />
-                    </div>
-                ) : (
-                    <DatasetCategoryList
-                        ref={listRef}
-                        datasets={localDatasets}
-                        onSelectionChange={setSelectedCount}
-                    />
-                )}
+                    )}
+                </ScrollRootContext.Provider>
             </DialogContent>
             <DialogActions className={styles.dialogActions}>
-                <Button variant="outlined" onClick={handleClose} disabled={loading}>
+                <Button
+                    variant="outlined"
+                    onClick={handleClose}
+                    disabled={loading}
+                >
                     {t('trainingdata.actions.cancel')}
                 </Button>
                 <Button

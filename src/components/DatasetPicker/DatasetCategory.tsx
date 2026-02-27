@@ -1,6 +1,6 @@
+import { memo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useVariant } from '@genaitm/util/variant';
-import Typography from '@mui/material/Typography';
 import DatasetItem from './DatasetItem';
 import styles from './DatasetPicker.module.css';
 import { Dataset } from '@genaitm/util/datasets';
@@ -8,23 +8,17 @@ import { Dataset } from '@genaitm/util/datasets';
 interface DatasetCategoryProps {
     categoryKey: string;
     datasets: Dataset[];
-    isImageSelected?: (datasetId: string, imageIndex: number) => boolean;
-    handleImageToggle?: (datasetId: string, imageIndex: number, url: string) => void;
-    handleImportAll?: (dataset: Dataset, checked: boolean) => void;
-    getSelectedCountForDataset?: (datasetId: string) => number;
-    isTestMode?: boolean;
+    onSelectionChange?: (added: string[], removed: string[]) => void;
+    singleSelect?: boolean;
     onImageClick?: (url: string) => void;
     selectedImageUrl?: string | null;
 }
 
-export default function DatasetCategory({
+const DatasetCategory = memo(function DatasetCategory({
     categoryKey,
     datasets,
-    isImageSelected = () => false,
-    handleImageToggle = () => {},
-    handleImportAll = () => {},
-    getSelectedCountForDataset = () => 0,
-    isTestMode = false,
+    onSelectionChange,
+    singleSelect = false,
     onImageClick,
     selectedImageUrl = null,
 }: DatasetCategoryProps) {
@@ -33,22 +27,21 @@ export default function DatasetCategory({
 
     return (
         <div className={styles.categoryBox}>
-            <Typography variant="h6" gutterBottom className={styles.categoryTitle}>
+            <h3 className={styles.categoryTitle}>
                 {t(categoryKey)}
-            </Typography>
+            </h3>
             {datasets.map((dataset) => (
                 <DatasetItem
                     key={dataset.id}
                     dataset={dataset}
-                    isTestMode={isTestMode}
-                    isImageSelected={isImageSelected}
-                    handleImageToggle={handleImageToggle}
-                    handleImportAll={handleImportAll}
-                    getSelectedCountForDataset={getSelectedCountForDataset}
+                    singleSelect={singleSelect}
+                    onSelectionChange={onSelectionChange}
                     onImageClick={onImageClick}
                     selectedImageUrl={selectedImageUrl}
                 />
             ))}
         </div>
     );
-}
+});
+
+export default DatasetCategory;

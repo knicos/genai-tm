@@ -10,6 +10,7 @@ import { Dataset, DATASETS, fetchAndCacheDatasets } from '@genaitm/util/datasets
 import { canvasFromURL } from '@genai-fi/base';
 import { useVariant } from '@genaitm/util/variant';
 import styles from '../DatasetPicker/DatasetPicker.module.css';
+import { ScrollRootContext, useScrollRootRef } from '../DatasetPicker/ScrollRootContext';
 import DatasetTestCategoryList from './DatasetTestCategoryList';
 
 interface DatasetTestPickerProps {
@@ -22,6 +23,7 @@ export default function DatasetTestPicker({ open, onClose, onImageSelected }: Da
     const { namespace } = useVariant();
     const { t } = useTranslation(namespace);
     const [localDatasets, setLocalDatasets] = useState<Dataset[]>(DATASETS);
+    const [scrollRoot, scrollRootRef] = useScrollRootRef();
 
     useEffect(() => {
         if (!open) return;
@@ -66,12 +68,14 @@ export default function DatasetTestPicker({ open, onClose, onImageSelected }: Da
                     <CloseIcon />
                 </IconButton>
             </DialogTitle>
-            <DialogContent>
-                <DatasetTestCategoryList
-                    datasets={localDatasets}
-                    open={open}
-                    onImageClick={handleImageClick}
-                />
+            <DialogContent ref={scrollRootRef}>
+                <ScrollRootContext.Provider value={scrollRoot}>
+                    <DatasetTestCategoryList
+                        datasets={localDatasets}
+                        open={open}
+                        onImageClick={handleImageClick}
+                    />
+                </ScrollRootContext.Provider>
             </DialogContent>
         </Dialog>
     );

@@ -1,7 +1,5 @@
-import { useState, useRef } from 'react';
+import { memo, useState, useRef, useCallback, useEffect } from 'react';
 import Checkbox from '@mui/material/Checkbox';
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
 import ImageTile from './ImageTile';
 import styles from './DatasetPicker.module.css';
 import { Dataset } from '@genaitm/util/datasets';
@@ -12,22 +10,18 @@ const PREVIEW_IMAGE_COUNT = 5;
 
 interface DatasetItemProps {
     dataset: Dataset;
-    isTestMode?: boolean;
-    isImageSelected?: (datasetId: string, imageIndex: number) => boolean;
-    handleImageToggle?: (datasetId: string, imageIndex: number, url: string) => void;
-    handleImportAll?: (dataset: Dataset, checked: boolean) => void;
-    getSelectedCountForDataset?: (datasetId: string) => number;
+    singleSelect?: boolean;
+    resetKey?: number;
+    onSelectionChange?: (added: string[], removed: string[]) => void;
     onImageClick?: (url: string) => void;
     selectedImageUrl?: string | null;
 }
 
-export default function DatasetItem({
+const DatasetItem = memo(function DatasetItem({
     dataset,
-    isTestMode = false,
-    isImageSelected = () => false,
-    handleImageToggle = () => {},
-    handleImportAll = () => {},
-    getSelectedCountForDataset = () => 0,
+    singleSelect = false,
+    resetKey = 0,
+    onSelectionChange,
     onImageClick,
     selectedImageUrl = null,
 }: DatasetItemProps) {
@@ -36,68 +30,115 @@ export default function DatasetItem({
     const [isExpanded, setIsExpanded] = useState(false);
     const failedUrls = useRef<Set<string>>(new Set());
 
-    const selectedCount = getSelectedCountForDataset(dataset.id);
-    const allSelected = selectedCount === dataset.images.length;
+    // selectedRef is the source of truth; selectedIndices is kept in sync to drive re-renders.
+    const selectedRef = useRef<Set<number>>(new Set());
+    const [selectedIndices, setSelectedIndices] = useState<ReadonlySet<number>>(() => new Set());
+
+    // When the parent clears everything, reset local state.
+    useEffect(() => {
+        selectedRef.current = new Set();
+        setSelectedIndices(new Set());
+    }, [resetKey]);
+
+    const handleImageToggle = useCallback(
+        (idx: number) => {
+            const url = dataset.images[idx]?.url;
+            if (!url) return;
+            const wasSelected = selectedRef.current.has(idx);
+            if (wasSelected) selectedRef.current.delete(idx);
+            else selectedRef.current.add(idx);
+            setSelectedIndices(new Set(selectedRef.current));
+            onSelectionChange?.(wasSelected ? [] : [url], wasSelected ? [url] : []);
+        },
+        [dataset.images, onSelectionChange]
+    );
+
+    const handleImportAll = useCallback(
+        (checked: boolean) => {
+            if (checked) {
+                const added = dataset.images
+                    .map((img, i) => ({ img, i }))
+                    .filter(({ i }) => !selectedRef.current.has(i))
+                    .map(({ img }) => img.url);
+                selectedRef.current = new Set(dataset.images.map((_, i) => i));
+                setSelectedIndices(new Set(selectedRef.current));
+                if (added.length) onSelectionChange?.(added, []);
+            } else {
+                const removed = [...selectedRef.current].map((i) => dataset.images[i]?.url).filter(Boolean) as string[];
+                selectedRef.current = new Set();
+                setSelectedIndices(new Set());
+                if (removed.length) onSelectionChange?.([], removed);
+            }
+        },
+        [dataset.images, onSelectionChange]
+    );
+
+    const selectedCount = selectedIndices.size;
+    const allSelected = selectedCount === dataset.images.length && dataset.images.length > 0;
     const imagesToShow = isExpanded ? dataset.images : dataset.images.slice(0, PREVIEW_IMAGE_COUNT);
     const hasMoreImages = dataset.images.length > PREVIEW_IMAGE_COUNT;
 
     return (
         <div className={styles.datasetBox}>
-            <div className={`${styles.datasetHeader} ${isTestMode ? styles.test : ''}`}>
-                {!isTestMode && (
+            <div className={`${styles.datasetHeader} ${singleSelect ? styles.test : ''}`}>
+                {!singleSelect && (
                     <Checkbox
                         checked={allSelected}
                         indeterminate={selectedCount > 0 && !allSelected}
-                        onChange={(e) => handleImportAll(dataset, e.target.checked)}
+                        onChange={(e) => handleImportAll(e.target.checked)}
                     />
                 )}
-                <Typography variant="subtitle1" className={styles.datasetName}>
-                    {t(dataset.nameKey)}
-                </Typography>
-                <Typography variant="caption" className={styles.imageCount}>
+                <span className={styles.datasetName}>{t(dataset.nameKey)}</span>
+                <span className={styles.imageCount}>
                     ({dataset.images.length} {t('trainingdata.labels.images')})
-                </Typography>
-                {!isTestMode && selectedCount > 0 && (
-                    <Typography variant="caption" className={styles.selectedCount}>
+                </span>
+                {!singleSelect && selectedCount > 0 && (
+                    <span className={styles.selectedCount}>
                         {selectedCount} {t('trainingdata.labels.selected')}
-                    </Typography>
+                    </span>
                 )}
             </div>
 
             <div className={styles.imagesRow}>
                 {imagesToShow.map((image, idx) => {
                     const hasFailed = failedUrls.current.has(image.url);
-                    const selected = isTestMode ? selectedImageUrl === image.url : isImageSelected(dataset.id, idx);
-                    const onClick = isTestMode
+                    const selected = singleSelect ? selectedImageUrl === image.url : selectedIndices.has(idx);
+                    const onClick = singleSelect
                         ? () => !hasFailed && onImageClick?.(image.url)
-                        : () => !hasFailed && handleImageToggle(dataset.id, idx, image.url);
+                        : () => !hasFailed && handleImageToggle(idx);
                     return (
                         <ImageTile
                             key={image.url}
                             url={image.url}
                             alt={t(dataset.nameKey, { index: idx + 1 })}
-                            imgClassName={isTestMode ? styles.testImage : styles.datasetImage}
+                            imgClassName={singleSelect ? styles.testImage : styles.datasetImage}
                             selected={selected}
-                            containerSelected={!isTestMode}
-                            showCheckbox={!isTestMode && !hasFailed}
+                            containerSelected={!singleSelect}
+                            showCheckbox={!singleSelect && !hasFailed}
                             checked={selected}
-                            onCheckboxChange={isTestMode ? undefined : () => handleImageToggle(dataset.id, idx, image.url)}
+                            onCheckboxChange={singleSelect ? undefined : () => handleImageToggle(idx)}
                             onClick={onClick}
-                            loading="lazy"
-                            onError={() => { failedUrls.current.add(image.url); }}
+                            onError={() => {
+                                failedUrls.current.add(image.url);
+                            }}
                             hasFailed={hasFailed}
                         />
                     );
                 })}
 
                 {hasMoreImages && !isExpanded && (
-                    <Box className={styles.expandButton} onClick={() => setIsExpanded(true)}>
-                        <Typography variant="caption" className={styles.expandButtonText}>
+                    <div
+                        className={styles.expandButton}
+                        onClick={() => setIsExpanded(true)}
+                    >
+                        <span className={styles.expandButtonText}>
                             {t('trainingdata.actions.displayMore', { count: dataset.images.length })}
-                        </Typography>
-                    </Box>
+                        </span>
+                    </div>
                 )}
             </div>
         </div>
     );
-}
+});
+
+export default DatasetItem;
