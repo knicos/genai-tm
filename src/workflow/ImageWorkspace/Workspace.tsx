@@ -14,11 +14,10 @@ import { ModelSaver } from './saver';
 import { useAtom, useSetAtom } from 'jotai';
 import { ModelLoader } from './loader';
 import Alert from '@mui/material/Alert';
-import useOrientation from '../../util/useOrientation';
 import Snackbar from '@mui/material/Snackbar';
 import DeployWrapper from './DeployWrapper';
 import ExportDialog from './ExportDialog';
-import { useModelCreator, useXAICanvas } from '../../util/TeachableModel';
+import { useModelCreator } from '../../util/TeachableModel';
 import OpenDialog from './OpenDialog';
 import CloneDialog from './CloneDialog';
 import { IConnection, WorkflowLayout, SidePanel } from '@genai-fi/base';
@@ -48,7 +47,7 @@ function alertMessage(e: Event) {
     e.returnValue = true;
     return '';
 }
-
+ 
 let hasAlert = false;
 function addCloseAlert() {
     if (!hasAlert) {
@@ -70,22 +69,18 @@ export default function Workspace({ step, visitedStep, onComplete, saveTrigger, 
     const [showShare, setShowShare] = useState(false);
     const [showClone, setShowClone] = useState(false);
     const [showSidebar, setShowSidebar] = useState(false);
-    const orientation = useOrientation();
-    const sidePanelPosition = orientation === 'portrait' ? 'bottom' : 'right';
     const lastVariantRef = useRef(modelVariant);
-
+    
     // Ensure an initial model exists
     useModelCreator(modelVariant);
-    // Register the persistent off-DOM XAI canvas with the model. Placed here
-    // (always-mounted Workspace) rather than in UnderTheHood (unmounts with panel)
-    // so the canvas survives panel open/close and is always ready when panel opens.
-    useXAICanvas();
 
     // Clear samples when model variant changes (pose <-> image)
     useEffect(() => {
         if (lastVariantRef.current !== modelVariant) {
             // Clear all samples when switching between model types
-            setData((classes) => classes.map((cls) => ({ ...cls, samples: [] })));
+            setData((classes) => 
+                classes.map(cls => ({ ...cls, samples: [] }))
+            );
             // Clear test input image and predictions
             setInputImage(null);
             setPrediction([]);
@@ -193,17 +188,14 @@ export default function Workspace({ step, visitedStep, onComplete, saveTrigger, 
     );
 
     return (
-        <main
-            className={style.workspace}
-            style={{ flexDirection: orientation === 'portrait' ? 'column' : 'row' }}
-        >
+        <main className={style.workspace}>
             <DeployWrapper />
             <ModelLoader
                 onLoaded={doLoaded}
                 onError={doLoadError}
             />
             <ModelSaver onSaved={doSaved} />
-            <div className={style.workspaceContent}>
+            <div className={`${style.workspaceContent} ${showSidebar ? style.workspaceContentPanelOpen : ''}`}>
                 <WorkflowLayout connections={CONNECTIONS}>
                     <TrainingData
                         data={data}
@@ -226,6 +218,7 @@ export default function Workspace({ step, visitedStep, onComplete, saveTrigger, 
                             onClone={doClone}
                             onSidebar={doSidebar}
                         />
+
                     </div>
                     <Behaviours
                         hidden={visitedStep < 1}
@@ -236,14 +229,15 @@ export default function Workspace({ step, visitedStep, onComplete, saveTrigger, 
                 </WorkflowLayout>
             </div>
 
-            <SidePanel
-                open={showSidebar}
-                position={sidePanelPosition}
-                onClose={() => setShowSidebar(false)}
-                onOpen={() => setShowSidebar(true)}
-            >
-                <UnderTheHood />
-            </SidePanel>
+            {showSidebar && (
+                <SidePanel
+                    open={showSidebar}
+                    position="right"
+                    onClose={() => setShowSidebar(false)}
+                >
+                    <UnderTheHood />
+                </SidePanel>
+            )}
 
             <SaveDialog
                 trigger={saveTrigger}
