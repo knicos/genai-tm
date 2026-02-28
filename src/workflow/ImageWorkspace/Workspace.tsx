@@ -15,6 +15,7 @@ import { useAtom, useSetAtom } from 'jotai';
 import { ModelLoader } from './loader';
 import Alert from '@mui/material/Alert';
 import Snackbar from '@mui/material/Snackbar';
+import useOrientation from '../../util/useOrientation';
 import DeployWrapper from './DeployWrapper';
 import ExportDialog from './ExportDialog';
 import { useModelCreator } from '../../util/TeachableModel';
@@ -47,7 +48,7 @@ function alertMessage(e: Event) {
     e.returnValue = true;
     return '';
 }
- 
+
 let hasAlert = false;
 function addCloseAlert() {
     if (!hasAlert) {
@@ -69,8 +70,10 @@ export default function Workspace({ step, visitedStep, onComplete, saveTrigger, 
     const [showShare, setShowShare] = useState(false);
     const [showClone, setShowClone] = useState(false);
     const [showSidebar, setShowSidebar] = useState(false);
+    const orientation = useOrientation();
+    const sidePanelPosition = orientation === 'portrait' ? 'bottom' : 'right';
     const lastVariantRef = useRef(modelVariant);
-    
+
     // Ensure an initial model exists
     useModelCreator(modelVariant);
 
@@ -78,9 +81,7 @@ export default function Workspace({ step, visitedStep, onComplete, saveTrigger, 
     useEffect(() => {
         if (lastVariantRef.current !== modelVariant) {
             // Clear all samples when switching between model types
-            setData((classes) => 
-                classes.map(cls => ({ ...cls, samples: [] }))
-            );
+            setData((classes) => classes.map((cls) => ({ ...cls, samples: [] })));
             // Clear test input image and predictions
             setInputImage(null);
             setPrediction([]);
@@ -188,7 +189,10 @@ export default function Workspace({ step, visitedStep, onComplete, saveTrigger, 
     );
 
     return (
-        <main className={style.workspace}>
+        <main
+            className={style.workspace}
+            style={{ flexDirection: orientation === 'portrait' ? 'column' : 'row' }}
+        >
             <DeployWrapper />
             <ModelLoader
                 onLoaded={doLoaded}
@@ -218,7 +222,6 @@ export default function Workspace({ step, visitedStep, onComplete, saveTrigger, 
                             onClone={doClone}
                             onSidebar={doSidebar}
                         />
-
                     </div>
                     <Behaviours
                         hidden={visitedStep < 1}
@@ -229,15 +232,14 @@ export default function Workspace({ step, visitedStep, onComplete, saveTrigger, 
                 </WorkflowLayout>
             </div>
 
-            {showSidebar && (
-                <SidePanel
-                    open={showSidebar}
-                    position="right"
-                    onClose={() => setShowSidebar(false)}
-                >
-                    <UnderTheHood />
-                </SidePanel>
-            )}
+            <SidePanel
+                open={showSidebar}
+                position={sidePanelPosition}
+                onClose={() => setShowSidebar(false)}
+                onOpen={() => setShowSidebar(true)}
+            >
+                <UnderTheHood />
+            </SidePanel>
 
             <SaveDialog
                 trigger={saveTrigger}
