@@ -59,6 +59,8 @@ export const shareSamples = atom<boolean>(false);
 
 export const inputImage = atom<HTMLCanvasElement | null>(null);
 
+export const xaiEnabled = atom<boolean>(true);
+
 export const showOpenDialog = atom<boolean>(false);
 
 export const enableCamInput = atom<boolean>(true);
@@ -87,3 +89,9 @@ export interface ModelStats {
 }
 
 export const modelStats = atom<ModelStats>({ labels: [] });
+/**
+ * null  = no pose prediction has been run yet for the current input
+ * true  = the last pose prediction detected a person (XAI was drawn)
+ * false = the last pose prediction found no human joints in the image
+ */
+export const poseDetected = atom<boolean | null>(null);

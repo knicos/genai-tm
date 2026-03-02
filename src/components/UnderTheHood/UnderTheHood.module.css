@@ -1,4 +1,4 @@
-@value backgroundLight, borderGrey from "@genai-fi/base/css/colours.module.css";
+@value backgroundLight, borderGrey, textDark from "@genai-fi/base/css/colours.module.css";
 
 .underTheHood {
     padding: 2rem;
@@ -7,8 +7,27 @@
     box-shadow: 0 0 8px rgba(0, 0, 0, 0.08);
     height: 100vh;
     max-height: 100vh;
-    overflow-y: auto;
     box-sizing: border-box;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.title {
+    margin: 0;
+}
+
+.heatmapSection {
+    margin-bottom: 1rem;
+}
+
+.heatmapLabel {
+    font-weight: bold;
+    margin-bottom: 0.5rem;
 }
 
 .label {
@@ -22,19 +41,22 @@
 
 .canvasContainer {
     display: flex;
-    justify-content: center;
+    justify-content: safe center;
     align-items: center;
-    padding: 1rem;
+    padding: 1rem 0rem;
+    overflow-x: auto;
 }
 
 .canvasWrapper {
     position: relative;
     display: inline-block;
+    flex-shrink: 0;
 }
 
 .canvas {
     border-radius: 6px;
     background: backgroundLight;
+    display: block;
 }
 
 .statsSection {
@@ -46,12 +68,11 @@
 .statsTitle {
     font-size: 1.2rem;
     margin-bottom: 1rem;
-    color: #444;
+    color: textDark;
 }
 
 .helpButton {
     position: absolute;
-    bottom: -25px;
     right: 0px;
     color: #999;
     background-color: rgba(255, 255, 255, 0.9);
@@ -61,4 +82,36 @@
 .helpButton:hover {
     color: #666;
     background-color: rgba(255, 255, 255, 1);
+}
+
+.noPoseOverlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+    border-radius: 6px;
+}
+
+.noPoseWarning {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.4rem;
+    padding: 0.5rem 0.75rem;
+    border-radius: 6px;
+    background-color: #fff8e1;
+    border: 1px solid #ffe082;
+    color: #7a5c00;
+    font-size: 0.85rem;
+    line-height: 1.4;
+    max-width: 110px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    pointer-events: auto;
+}
+
+.noPoseWarningIcon {
+    flex-shrink: 0;
+    margin-top: 1px;
+    color: #f9a825;
 }

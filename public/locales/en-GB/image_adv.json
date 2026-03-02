@@ -91,7 +91,8 @@
     },
     "heatmap": {
         "title": "Explanation",
-        "colorScaleHelp": "The color scale shows which parts of the image the model focuses on. Red = high importance, Blue = low importance."
+        "colorScaleHelp": "The color scale shows which parts of the image the model focuses on. Red = high importance, Blue = low importance.",
+        "noPoseDetected": "No Pose"
     },
     "underTheHood": {
         "title": "Under The Hood",

@@ -1,99 +1,82 @@
-
 import { useState, useEffect, useRef } from 'react';
-import { FormControlLabel, Switch, Tooltip, IconButton } from '@mui/material';
-import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import { useTranslation } from 'react-i18next';
 import { useAtomValue } from 'jotai';
-import { modelState, modelTraining, modelStats, trainingHistory } from '../../state';
+import { modelState, modelTraining, modelStats, trainingHistory, poseDetected as poseDetectedAtom } from '../../state';
 import { useVariant } from '@genaitm/util/variant';
+import { getXAI, isXAICopied, markXAICopied } from '../../util/xaiCanvas';
 import style from './UnderTheHood.module.css';
 import { AccuracyPerClass } from './AccuracyPerClass';
 import { ConfusionMatrix } from './ConfusionMatrix';
 import { AccuracyPerEpoch } from './AccuracyPerEpoch';
 import { LossPerEpoch } from './LossPerEpoch';
-import { ColorLegend } from './ColorLegend';
+import { HeatmapPanel } from './HeatmapPanel';
 
 export function UnderTheHood() {
-    const { namespace } = useVariant();
+    const { namespace, modelVariant } = useVariant();
     const { t } = useTranslation(namespace);
-    const canvasRef = useRef<HTMLCanvasElement>(null);
     const model = useAtomValue(modelState);
     const training = useAtomValue(modelTraining);
     const stats = useAtomValue(modelStats);
     const history = useAtomValue(trainingHistory);
+    const poseDetected = useAtomValue(poseDetectedAtom);
     const [enabled, setEnabled] = useState(true);
 
     const hasStats = stats.confusionMatrix && stats.confusionMatrix.length > 0;
     const hasHistory = history.length > 0;
+    const canPredict = (model?.isTrained() || false) && !training;
+    const imageSize = model?.getImageSize();
+
+    const displayCanvasRef = useRef<HTMLCanvasElement | null>(null);
 
     useEffect(() => {
-        if (canvasRef.current && model) {
-            if (enabled && model.isTrained()) {
-                model.setXAICanvas(canvasRef.current);
-            } else {
-                model.explained = undefined;
+        if (!enabled || !canPredict) return;
+        let animId: number;
+        const loop = () => {
+            const display = displayCanvasRef.current;
+            if (display && !isXAICopied()) {
+                const dctx = display.getContext('2d');
+                if (dctx) {
+                    dctx.clearRect(0, 0, display.width, display.height);
+                    dctx.drawImage(getXAI().element, 0, 0);
+                }
+                markXAICopied();
             }
-        }
-    }, [model, enabled]);
+            animId = requestAnimationFrame(loop);
+        };
+        animId = requestAnimationFrame(loop);
+        return () => cancelAnimationFrame(animId);
+    }, [enabled, canPredict]);
 
-    const canPredict = (model?.isTrained() || false) && !training;
+    const handleCanvasRef = (canvas: HTMLCanvasElement | null) => {
+        displayCanvasRef.current = canvas;
+    };
+
+    const handleToggle = (checked: boolean) => {
+        setEnabled(checked);
+    };
 
     return (
         <div className={style.underTheHood}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
-                <h2 style={{ margin: 0 }}>
-                    {t('underTheHood.title')}
-                </h2>
+            <div className={style.header}>
+                <h2 className={style.title}>{t('underTheHood.title')}</h2>
             </div>
-            <div style={{ marginBottom: '1rem' }}>
-                <div style={{ fontWeight: 'bold', marginBottom: '0.5rem' }}>{t('heatmap.title')}</div>
-                <FormControlLabel
-                    control={
-                        <Switch
-                            checked={enabled}
-                            onChange={(_, checked) => setEnabled(checked)}
-                            color="error"
-                            disabled={!canPredict}
-                        />
-                    }
-                    label={enabled ? t('underTheHood.on') : t('underTheHood.off')}
-                />
-            </div>
-            {enabled && canPredict && (
-                <div className={style.canvasContainer}>
-                    <div className={style.canvasWrapper}>
-                        <canvas
-                            width={224}
-                            height={224}
-                            ref={canvasRef}
-                            className={style.canvas}
-                        />
-                        <Tooltip
-                            title={t('heatmap.colorScaleHelp')}
-                            placement="top"
-                            arrow
-                        >
-                            <IconButton size="small" className={style.helpButton}>
-                                <HelpOutlineIcon fontSize="small" />
-                            </IconButton>
-                        </Tooltip>
-                    </div>
-                    <ColorLegend height={224} width={10} />
-                </div>
-            )}
-
-            {/* Model Statistics Charts */}
+            <HeatmapPanel
+                enabled={enabled}
+                canPredict={canPredict}
+                onToggle={handleToggle}
+                canvasRef={handleCanvasRef}
+                size={imageSize}
+                poseDetected={modelVariant === 'pose' ? poseDetected : null}
+            />
             {canPredict && (hasStats || hasHistory) && (
                 <div className={style.statsSection}>
                     <h2 className={style.statsTitle}>{t('underTheHood.statistics')}</h2>
-
                     {hasStats && (
                         <>
                             <AccuracyPerClass />
                             <ConfusionMatrix />
                         </>
                     )}
-
                     {hasHistory && (
                         <>
                             <AccuracyPerEpoch />
@@ -102,7 +85,6 @@ export function UnderTheHood() {
                     )}
                 </div>
             )}
-
         </div>
     );
 }

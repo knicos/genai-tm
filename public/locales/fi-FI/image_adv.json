@@ -69,7 +69,7 @@
             "dropFiles": "tai vedä kuvia tähän nettisivuilta tai tiedostoista",
             "needsMore": "Lisää opetusdataa tarvitaan",
             "dropError": "Only images can be dropped here",
-                "emptyClass": "Tämä luokka on tyhjä.",
+            "emptyClass": "Tämä luokka on tyhjä.",
             "qrMessage": "Voit lisätä kuvia puhelimella tai tabletilla. Laajenna QR-koodi napsauttamalla sitä.",
             "disabled": "POISTETTU KÄYTÖSTÄ",
             "selectDataset": "Valitse datasetti",
@@ -91,7 +91,8 @@
     },
     "heatmap": {
         "title": "Selitys",
-        "colorScaleHelp": "Väriasteikko näyttää, mihin kuvaan osiin malli keskittyy. Punainen = korkea tärkeys, Sininen = matala tärkeys."
+        "colorScaleHelp": "Väriasteikko näyttää, mihin kuvaan osiin malli keskittyy. Punainen = korkea tärkeys, Sininen = matala tärkeys.",
+        "noPoseDetected": "Ei asentoa"
     },
     "underTheHood": {
         "title": "Konepellin alla",
@@ -146,7 +147,9 @@
             "title": "Syöte",
             "webcam": "Webkamera",
             "file": "Tiedosto",
-            "device": "Laite",            "dataset": "Aineisto",            "switchOn": "Päällä",
+            "device": "Laite",
+            "dataset": "Aineisto",
+            "switchOn": "Päällä",
             "switchOff": "Pois päältä",
             "upload": "lataa tai pudota tiedosto tähän"
         },
@@ -163,7 +166,9 @@
             "title": "Luokittelija",
             "mustTrain": "Sinun pitää opettaa luokittelija ensin"
         },
-        "aria": { "more": "Lisää asetuksia" }
+        "aria": {
+            "more": "Lisää asetuksia"
+        }
     },
     "output": {
         "labels": {
@@ -346,13 +351,15 @@
         },
         "handPalm": {
             "name": "Käämenkämmen",
-            "description": "Kokoelma kämmenkuvia"        },
+            "description": "Kokoelma kämmenkuvia"
+        },
         "pencils": {
             "name": "Lyijykynät",
             "description": "Kokoelma lyijykynä kuvia"
         },
         "pens": {
             "name": "Kynät",
-            "description": "Kokoelma kynä kuvia"        }
+            "description": "Kokoelma kynä kuvia"
+        }
     }
 }

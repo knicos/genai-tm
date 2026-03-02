@@ -91,7 +91,8 @@
     },
     "heatmap": {
         "title": "설명",
-        "colorScaleHelp": "색상 척도는 모델이 이미지의 어느 부분에 집중하는지 보여줍니다. 빨강 = 높은 중요도, 파랑 = 낮은 중요도."
+        "colorScaleHelp": "색상 척도는 모델이 이미지의 어느 부분에 집중하는지 보여줍니다. 빨강 = 높은 중요도, 파랑 = 낮은 중요도.",
+        "noPoseDetected": "포즈 없음"
     },
     "underTheHood": {
         "title": "내부 작동 방식",
@@ -146,7 +147,9 @@
             "title": "입력",
             "webcam": "웹캠",
             "file": "파일",
-            "device": "기기",            "dataset": "데이터셋",            "switchOn": "켜기",
+            "device": "기기",
+            "dataset": "데이터셋",
+            "switchOn": "켜기",
             "switchOff": "끄기",
             "upload": "이곳에 파일을 업로드하거나 드래그 하세요"
         },
@@ -163,7 +166,9 @@
             "title": "분류기",
             "mustTrain": "분류기를 먼저 학습시켜야 합니다"
         },
-        "aria": { "more": "추가 옵션" }
+        "aria": {
+            "more": "추가 옵션"
+        }
     },
     "output": {
         "labels": {

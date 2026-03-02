@@ -68,8 +68,8 @@
             "wait": "Cattura in corso...",
             "dropFiles": "o trascina le immagini qui da un sito web o un file",
             "needsMore": "Servono altri campioni",
-                "dropError": "Solo le immagini possono essere trascinate qui",
-                "emptyClass": "Questa classe è vuota.",
+            "dropError": "Solo le immagini possono essere trascinate qui",
+            "emptyClass": "Questa classe è vuota.",
             "qrMessage": "Puoi usare un telefono o un tablet per aggiungere immagini. Clicca sul codice QR per ingrandirlo.",
             "disabled": "DISABILITATO",
             "selectDataset": "Seleziona un dataset",
@@ -91,7 +91,8 @@
     },
     "heatmap": {
         "title": "Spiegazione",
-        "colorScaleHelp": "La scala di colori mostra quali parti dell'immagine il modello si concentra. Rosso = alta importanza, Blu = bassa importanza."
+        "colorScaleHelp": "La scala di colori mostra quali parti dell'immagine il modello si concentra. Rosso = alta importanza, Blu = bassa importanza.",
+        "noPoseDetected": "Nessuna posa"
     },
     "underTheHood": {
         "title": "Sotto il cofano",
@@ -166,7 +167,9 @@
             "mustTrain": "Devi prima addestrare il tuo classificatore",
             "failedTensorflow": "Il tuo dispositivo o browser non è riuscito a eseguire il nostro classificatore"
         },
-        "aria": { "more": "più opzioni" }
+        "aria": {
+            "more": "più opzioni"
+        }
     },
     "output": {
         "labels": {
@@ -250,7 +253,8 @@
             "includeSamples": "Includi immagini campione",
             "codeInstructions": "Consenti ad altri di aprire una copia del tuo classificatore usando il codice qui sotto.",
             "linkInstructions": "Copia il link per usare il classificatore in altre applicazioni come <scratchLink>Scratch</scratchLink>. Il link funzionerà solo se mantieni aperta questa scheda del browser, o se salvi il tuo progetto e lo riapri in seguito."
-        }    },
+        }
+    },
     "datasets": {
         "categories": {
             "animals": "Animali",

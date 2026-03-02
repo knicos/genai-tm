@@ -91,7 +91,8 @@
     },
     "heatmap": {
         "title": "Förklaring",
-        "colorScaleHelp": "Färgskalan visar vilka delar av bilden som modellen fokuserar på. Röd = hög betydelse, Blå = låg betydelse."
+        "colorScaleHelp": "Färgskalan visar vilka delar av bilden som modellen fokuserar på. Röd = hög betydelse, Blå = låg betydelse.",
+        "noPoseDetected": "Ingen pose"
     },
     "underTheHood": {
         "title": "Under huven",
@@ -145,8 +146,10 @@
         "labels": {
             "title": "Inmatning",
             "webcam": "Webbkamera",
-            "file": "Fil",            "device": "Enhet",
-            "dataset": "Dataset",            "switchOn": "På",
+            "file": "Fil",
+            "device": "Enhet",
+            "dataset": "Dataset",
+            "switchOn": "På",
             "switchOff": "Av",
             "upload": "Ladda upp eller släpp fil här"
         },
@@ -163,7 +166,9 @@
             "title": "Klassificerare",
             "mustTrain": "Du måst träna din klassificerare först"
         },
-        "aria": { "more": "fler alternativ" }
+        "aria": {
+            "more": "fler alternativ"
+        }
     },
     "output": {
         "labels": {

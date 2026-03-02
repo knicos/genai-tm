@@ -91,7 +91,8 @@
     },
     "heatmap": {
         "title": "Explicação",
-        "colorScaleHelp": "A escala de cores mostra em quais partes da imagem o modelo se concentra. Vermelho = alta importância, Azul = baixa importância."
+        "colorScaleHelp": "A escala de cores mostra em quais partes da imagem o modelo se concentra. Vermelho = alta importância, Azul = baixa importância.",
+        "noPoseDetected": "Sem pose"
     },
     "underTheHood": {
         "title": "Sob o capô",
@@ -165,7 +166,9 @@
             "title": "Classificador",
             "mustTrain": "Você deve treinar seu classificador primeiro"
         },
-        "aria": { "more": "mais opções" }
+        "aria": {
+            "more": "mais opções"
+        }
     },
     "output": {
         "labels": {
@@ -249,7 +252,8 @@
             "includeSamples": "Incluir imagens de amostra",
             "codeInstructions": "Permita que outras pessoas abram uma cópia do seu classificador usando o código abaixo.",
             "linkInstructions": "Copie o link para usar o classificador em outras aplicações como o <scratchLink>Scratch</scratchLink>. O link só funcionará se você mantiver esta aba do navegador aberta, ou se você salvar seu projeto e abri-lo novamente mais tarde."
-        }    },
+        }
+    },
     "datasets": {
         "categories": {
             "animals": "Animais",

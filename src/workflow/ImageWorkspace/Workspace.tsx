@@ -47,7 +47,7 @@ function alertMessage(e: Event) {
     e.returnValue = true;
     return '';
 }
- 
+
 let hasAlert = false;
 function addCloseAlert() {
     if (!hasAlert) {
@@ -70,7 +70,7 @@ export default function Workspace({ step, visitedStep, onComplete, saveTrigger, 
     const [showClone, setShowClone] = useState(false);
     const [showSidebar, setShowSidebar] = useState(false);
     const lastVariantRef = useRef(modelVariant);
-    
+
     // Ensure an initial model exists
     useModelCreator(modelVariant);
 
@@ -78,9 +78,7 @@ export default function Workspace({ step, visitedStep, onComplete, saveTrigger, 
     useEffect(() => {
         if (lastVariantRef.current !== modelVariant) {
             // Clear all samples when switching between model types
-            setData((classes) => 
-                classes.map(cls => ({ ...cls, samples: [] }))
-            );
+            setData((classes) => classes.map((cls) => ({ ...cls, samples: [] })));
             // Clear test input image and predictions
             setInputImage(null);
             setPrediction([]);
@@ -218,7 +216,6 @@ export default function Workspace({ step, visitedStep, onComplete, saveTrigger, 
                             onClone={doClone}
                             onSidebar={doSidebar}
                         />
-
                     </div>
                     <Behaviours
                         hidden={visitedStep < 1}
