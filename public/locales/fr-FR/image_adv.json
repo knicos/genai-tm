@@ -91,7 +91,8 @@
     },
     "heatmap": {
         "title": "Explanation",
-        "colorScaleHelp": "L'échelle de couleurs montre les parties de l'image sur lesquelles le modèle se concentre. Rouge = haute importance, Bleu = faible importance."
+        "colorScaleHelp": "L'échelle de couleurs montre les parties de l'image sur lesquelles le modèle se concentre. Rouge = haute importance, Bleu = faible importance.",
+        "noPoseDetected": "Pas de pose"
     },
     "underTheHood": {
         "title": "Sous le capot",
@@ -166,7 +167,9 @@
             "mustTrain": "Vous devez d'abord entraîner le Classificateur.",
             "failedTensorflow": "Votre appareil ou votre navigateur n'a pas pu exécuter notre Classificateur"
         },
-        "aria": { "more": "plus d'options" }
+        "aria": {
+            "more": "plus d'options"
+        }
     },
     "output": {
         "labels": {
@@ -250,7 +253,8 @@
             "includeSamples": "Inclure des exemples d'images",
             "codeInstructions": "Autorisez d'autres personnes à ouvrir une copie de votre Classificateur à l'aide du code ci-dessous.",
             "linkInstructions": "Copiez le lien pour utiliser le classificateur dans d’autres applications comme <scratchLink>Scratch</scratchLink>. Le lien ne fonctionnera que si vous gardez cette fenêtre de navigateur ouverte ou si vous enregistrez votre projet et l’ouvrez plus tard."
-        }    },
+        }
+    },
     "datasets": {
         "categories": {
             "animals": "Animaux",
@@ -342,13 +346,15 @@
         },
         "handPalm": {
             "name": "Paume de main",
-            "description": "Collection d'images de paumes de main"        },
+            "description": "Collection d'images de paumes de main"
+        },
         "pencils": {
             "name": "Crayons",
             "description": "Collection d'images de crayons"
         },
         "pens": {
             "name": "Stylos",
-            "description": "Collection d'images de stylos"        }
+            "description": "Collection d'images de stylos"
+        }
     }
 }

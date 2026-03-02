@@ -26,8 +26,9 @@ import {
     p2pActive,
     sessionCode,
     sharingActive,
+    poseDetected as poseDetectedAtom,
 } from '../../state';
-import { useAtomValue, useAtom } from 'jotai';
+import { useAtomValue, useAtom, useSetAtom } from 'jotai';
 import { BusyButton, canvasesFromFiles, canvasFromDataTransfer, QRCode, Widget } from '@genai-fi/base';
 
 interface Props {
@@ -48,6 +49,7 @@ export default function Input(props: Props) {
     const isActive = useTabActive();
     const [showDropError, setShowDropError] = useState(false);
     const { predict, canPredict, draw, imageSize } = useTeachableModel();
+    const predicting = useRef(false);
     const [remoteInput, setRemoteInput] = useAtom(inputImage);
     const code = useAtomValue(sessionCode);
     const sharing = useAtomValue(sharingActive);
@@ -56,6 +58,22 @@ export default function Input(props: Props) {
     const training = useAtomValue(modelTraining);
 
     const enableInput = isActive && enableInputSwitch && !training;
+    const targetSize = modelVariant === 'pose' ? 257 : imageSize;
+    const setPoseDetected = useSetAtom(poseDetectedAtom);
+
+    // Scale a canvas to targetSize so the displayed canvas and the prediction input
+    // are always the correct model resolution (fixes aspect-ratio and XAI canvas size).
+    const scaleToModelSize = useCallback(
+        (canvas: HTMLCanvasElement): HTMLCanvasElement => {
+            if (canvas.width === targetSize && canvas.height === targetSize) return canvas;
+            const scaled = document.createElement('canvas');
+            scaled.width = targetSize;
+            scaled.height = targetSize;
+            scaled.getContext('2d')!.drawImage(canvas, 0, 0, targetSize, targetSize);
+            return scaled;
+        },
+        [targetSize]
+    );
 
     useEffect(() => {
         if (fatal) setTabIndex(1);
@@ -66,6 +84,7 @@ export default function Input(props: Props) {
         setFile(null);
         setTabIndex(0);
         setRemoteInput(null);
+        setPoseDetected(null);
     }, [modelVariant]);
 
     const doCollab = useCallback(() => {
@@ -77,8 +96,9 @@ export default function Input(props: Props) {
             setTabIndex(newValue);
             setFile(null);
             setRemoteInput(null);
+            setPoseDetected(null);
         },
-        [setTabIndex, setRemoteInput]
+        [setTabIndex, setRemoteInput, setPoseDetected]
     );
 
     useEffect(() => {
@@ -101,8 +121,12 @@ export default function Input(props: Props) {
 
     const doPrediction = useCallback(
         async (image: HTMLCanvasElement) => {
-            if (canPredict) {
-                predict(image);
+            if (!canPredict || predicting.current) return;
+            predicting.current = true;
+            try {
+                await predict(image);
+            } finally {
+                predicting.current = false;
             }
         },
         [canPredict, predict]
@@ -126,7 +150,7 @@ export default function Input(props: Props) {
                 setShowDropError(true);
             } else {
                 setTabIndex(1);
-                setFile(canvases[0]);
+                setFile(scaleToModelSize(canvases[0]));
             }
         },
         collect(monitor) {
@@ -154,12 +178,12 @@ export default function Input(props: Props) {
                     setShowDropError(true);
                 } else {
                     setTabIndex(1);
-                    setFile(canvases[0]);
+                    setFile(scaleToModelSize(canvases[0]));
                 }
             });
             e.target.value = '';
         },
-        [setShowDropError, setTabIndex, setFile]
+        [setShowDropError, setTabIndex, setFile, scaleToModelSize]
     );
 
     const doPostProcess = useCallback(
@@ -173,13 +197,10 @@ export default function Input(props: Props) {
 
     const handleDatasetImageSelected = useCallback(
         (canvas: HTMLCanvasElement) => {
-            // Reset canvas styling to display at full size for prediction
-            canvas.style.width = `${imageSize}px`;
-            canvas.style.height = `${imageSize}px`;
             setTabIndex(3);
-            setFile(canvas);
+            setFile(scaleToModelSize(canvas));
         },
-        [imageSize]
+        [scaleToModelSize]
     );
 
     const handleDatasetPickerOpen = useCallback(() => {
@@ -265,8 +286,6 @@ export default function Input(props: Props) {
                                 />
                             )}
                         </Tabs>
-
-                        
                     </div>
                     <TabPanel
                         value={tabIndex}
@@ -278,7 +297,7 @@ export default function Input(props: Props) {
                             enableInput={enableInput && tabIndex === 0}
                             doPrediction={doPrediction}
                             doPostProcess={doPostProcess}
-                            size={imageSize}
+                            size={targetSize}
                         />
                     </TabPanel>
                     <TabPanel
@@ -402,7 +421,7 @@ export default function Input(props: Props) {
                 <div className={style.container}>
                     <div className={enableInput ? style.inputContainer : style.inputContainerDisable}>
                         <WebcamInput
-                            size={imageSize}
+                            size={targetSize}
                             enabled={canPredict}
                             enableInput={enableInput}
                             doPrediction={doPrediction}

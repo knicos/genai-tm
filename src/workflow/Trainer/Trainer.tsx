@@ -78,10 +78,12 @@ export default function Trainer({ onTrained, editing, ...props }: Props) {
 
     useEffect(() => {
         if (training) {
-            train(enabledData, { batchSize: settingBatch, epochs: settingEpochs, learningRate: settingRate }).then(() => {
-                setTraining(false);
-                if (onTrained) onTrained();
-            });
+            train(enabledData, { batchSize: settingBatch, epochs: settingEpochs, learningRate: settingRate }).then(
+                () => {
+                    setTraining(false);
+                    if (onTrained) onTrained();
+                }
+            );
         } else {
             setActive((old) => {
                 const nset = new Set(old);

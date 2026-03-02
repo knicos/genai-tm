@@ -51,9 +51,9 @@
             "upload": "Yükle",
             "datasets": "Veri kümeleri",
             "cancel": "İptal",
-            "deleteClass": "Sınıfı Sil",            
+            "deleteClass": "Sınıfı Sil",
             "disableClass": "Sınıfı Devre Dışı Bırak",
-            "enableClass": "Sınıfı Etkinleştir",            
+            "enableClass": "Sınıfı Etkinleştir",
             "removeAll": "Tüm Örnekleri Kaldır",
             "capture": "Yakalamak İçin Basılı Tutun",
             "collaborate": "İş Birliği Yap",
@@ -91,7 +91,8 @@
     },
     "heatmap": {
         "title": "Açıklama",
-        "colorScaleHelp": "Renk ölçeği, modelin görüntünün hangi bölümlerine odaklandığını gösterir. Kırmızı = yüksek önem, Mavi = düşük önem."
+        "colorScaleHelp": "Renk ölçeği, modelin görüntünün hangi bölümlerine odaklandığını gösterir. Kırmızı = yüksek önem, Mavi = düşük önem.",
+        "noPoseDetected": "Poz yok"
     },
     "underTheHood": {
         "title": "Kaputun altında",
@@ -146,7 +147,9 @@
             "title": "Giriş",
             "webcam": "Webcam",
             "file": "Dosya",
-            "device": "Cihaz",            "dataset": "Veri kümesi",            "switchOn": "Açık",
+            "device": "Cihaz",
+            "dataset": "Veri kümesi",
+            "switchOn": "Açık",
             "switchOff": "Kapalı",
             "upload": "Dosya yükleyin veya buraya bırakın"
         },
@@ -163,7 +166,9 @@
             "title": "Sınıflandırıcı",
             "mustTrain": "Öncelikle sınıflandırıcınızı eğitmeniz gerekmektedir"
         },
-        "aria": { "more": "Daha Fazla Seçenek" }
+        "aria": {
+            "more": "Daha Fazla Seçenek"
+        }
     },
     "output": {
         "labels": {

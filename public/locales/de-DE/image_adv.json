@@ -91,7 +91,8 @@
     },
     "heatmap": {
         "title": "Erläuterung",
-        "colorScaleHelp": "Die Farbskala zeigt, auf welche Teile des Bildes sich das Modell konzentriert. Rot = hohe Wichtigkeit, Blau = niedrige Wichtigkeit."
+        "colorScaleHelp": "Die Farbskala zeigt, auf welche Teile des Bildes sich das Modell konzentriert. Rot = hohe Wichtigkeit, Blau = niedrige Wichtigkeit.",
+        "noPoseDetected": "Keine Pose"
     },
     "underTheHood": {
         "title": "Unter der Haube",
@@ -165,7 +166,9 @@
             "title": "Klassifikator",
             "mustTrain": "Du musst deinen Klassifikator zuerst trainieren"
         },
-        "aria": { "more": "mehr Optionen" }
+        "aria": {
+            "more": "mehr Optionen"
+        }
     },
     "output": {
         "labels": {
@@ -342,13 +345,15 @@
         },
         "handPalm": {
             "name": "Handfläche",
-            "description": "Sammlung von Handflächenbildern"        },
+            "description": "Sammlung von Handflächenbildern"
+        },
         "pencils": {
             "name": "Bleistifte",
             "description": "Sammlung von Bleistift-Bildern"
         },
         "pens": {
             "name": "Kugelschreiber",
-            "description": "Sammlung von Kugelschreiber-Bildern"        }
+            "description": "Sammlung von Kugelschreiber-Bildern"
+        }
     }
 }

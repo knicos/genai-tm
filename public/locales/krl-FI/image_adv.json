@@ -91,7 +91,8 @@
     },
     "heatmap": {
         "title": "Sellitändy",
-        "colorScaleHelp": "Väri-asteikko näyttäy, mih kuvah osih malli keškittyy. Punie = korkei tärkevys, Sinie = matala tärkevys."
+        "colorScaleHelp": "Väri-asteikko näyttäy, mih kuvah osih malli keškittyy. Punie = korkei tärkevys, Sinie = matala tärkevys.",
+        "noPoseDetected": "Ei azenduo"
     },
     "underTheHood": {
         "title": "Konepellin alla",
@@ -165,7 +166,9 @@
             "title": "Luokittelii",
             "mustTrain": "Sinul pidäy opastua luokittelii ezmäi"
         },
-        "aria": { "more": "Ližiä azetustu" }
+        "aria": {
+            "more": "Ližiä azetustu"
+        }
     },
     "output": {
         "labels": {
