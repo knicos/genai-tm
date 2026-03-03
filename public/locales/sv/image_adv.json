@@ -73,7 +73,7 @@
             "qrMessage": "Du kan använda en telefon eller surfplatta för att lägga till bilder. Klicka på QR-koden för att utöka den.",
             "disabled": "INAKTIVERAD",
             "selectDataset": "Välj ett dataset",
-            "selectTestData": "Välj testdata",
+            "selectTestData": "Välj en bild",
             "searchDataset": "Sök dataset",
             "images": "bilder",
             "selected": "vald",
@@ -186,6 +186,7 @@
     "behaviours": {
         "actions": {
             "upload": "Ladda upp",
+            "dataset": "Dataset",
             "delete": "Radera",
             "record": "Spela in",
             "stop": "Stop"

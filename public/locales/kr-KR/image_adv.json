@@ -72,7 +72,7 @@
             "qrMessage": "이미지를 추가하기 위해 휴대폰이나 태블릿을 사용할 수 있습니다. QR 코드를 누르면 확장됩니다.",
             "disabled": "비활성화됨",
             "selectDataset": "데이터셋 선택",
-            "selectTestData": "테스트 데이터 선택",
+            "selectTestData": "이미지를 선택",
             "searchDataset": "데이터셋 검색",
             "images": "이미지",
             "selected": "선택됨",
@@ -186,6 +186,7 @@
     "behaviours": {
         "actions": {
             "upload": "업로드",
+            "dataset": "데이터셋",
             "delete": "삭제",
             "record": "녹화",
             "stop": "중단"

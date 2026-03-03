@@ -73,7 +73,7 @@
             "qrMessage": "Görseller eklemek için bir telefon veya tablet kullanabilirsiniz. QR kodunu genişletmek için üzerine tıklayın.",
             "disabled": "DEVRE DIŞI",
             "selectDataset": "Veri kümesi seç",
-            "selectTestData": "Test verilerini seç",
+            "selectTestData": "Bir görsel seç",
             "searchDataset": "Veri kümesi ara",
             "images": "görsel",
             "selected": "seçildi",
@@ -186,6 +186,7 @@
     "behaviours": {
         "actions": {
             "upload": "Yükle",
+            "dataset": "Veri kümesi",
             "delete": "Sil",
             "record": "Kaydet",
             "stop": "Dur"

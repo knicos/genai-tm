@@ -73,7 +73,7 @@
             "qrMessage": "ඔබේ ජංගම දුරකථනයේන් QR කේතය ස්කැන් කර රූප එක් කල හැක",
             "disabled": "අක්‍රිය කර ඇත",
             "selectDataset": "දත්ත කට්ටලයක් තෝරන්න",
-            "selectTestData": "පරීක්ෂණ දත්ත තෝරන්න",
+            "selectTestData": "පින්තූරයක් තෝරන්න",
             "searchDataset": "දත්ත කට්ටලයක් සොයන්න",
             "images": "රූප",
             "selected": "තෝරගත්තු",
@@ -186,6 +186,7 @@
     "behaviours": {
         "actions": {
             "upload": "උඩුගත කරන්න",
+            "dataset": "දත්ත කට්ටලය",
             "delete": "මකන්න",
             "record": "පටිගත කරන්න",
             "stop": "නවත්වන්න"

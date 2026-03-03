@@ -73,7 +73,7 @@
             "qrMessage": "Voit ližätä kuvua telefonači libo tabletači. Suurenda QR-koudu plikaten sidä.",
             "disabled": "POISTETTU KÄYTÖSTÄ",
             "selectDataset": "Valitte datasetti",
-            "selectTestData": "Valitte testiainehisto",
+            "selectTestData": "Valitte kuva",
             "searchDataset": "Etsi datasetti",
             "images": "kuvua",
             "selected": "valittu",
@@ -186,6 +186,7 @@
     "behaviours": {
         "actions": {
             "upload": "Lad'd'ua",
+            "dataset": "Ainehisto",
             "delete": "Iärestä",
             "record": "Iänitä",
             "stop": "Lope"

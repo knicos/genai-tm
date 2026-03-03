@@ -73,7 +73,7 @@
             "qrMessage": "Você pode usar um telefone ou tablet para adicionar imagens. Clique no código QR para expandi-lo.",
             "disabled": "DESATIVADO",
             "selectDataset": "Selecionar conjunto de dados",
-            "selectTestData": "Selecionar dados de teste",
+            "selectTestData": "Selecionar uma imagem",
             "searchDataset": "Pesquisar conjunto de dados",
             "images": "imagens",
             "selected": "selecionado",
@@ -186,6 +186,7 @@
     "behaviours": {
         "actions": {
             "upload": "Carregar",
+            "dataset": "Conjunto de dados",
             "delete": "Excluir",
             "record": "Gravar",
             "stop": "Parar"

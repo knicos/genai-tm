@@ -73,7 +73,7 @@
             "qrMessage": "画像を追加はスマホやタブレットでも可能です。QRコードをクリックすると拡大できます。",
             "disabled": "無効",
             "selectDataset": "データセットを選択",
-            "selectTestData": "テストデータを選択",
+            "selectTestData": "画像を選択",
             "searchDataset": "データセットを検索",
             "images": "画像",
             "selected": "選択済み",
@@ -186,6 +186,7 @@
     "behaviours": {
         "actions": {
             "upload": "アップロード",
+            "dataset": "データセット",
             "delete": "削除",
             "record": "記録",
             "stop": "停止"

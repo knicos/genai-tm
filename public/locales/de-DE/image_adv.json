@@ -73,7 +73,7 @@
             "qrMessage": "Du kannst ein Telefon oder Tablet benutzen, um Bilder hinzuzufügen. Klicke auf den QR-Code, um ihn zu vergrößern.",
             "disabled": "DEAKTIVIERT",
             "selectDataset": "Datensatz auswählen",
-            "selectTestData": "Testdaten auswählen",
+            "selectTestData": "Ein Bild auswählen",
             "searchDataset": "Datensatz suchen",
             "images": "Bilder",
             "selected": "ausgewählt",
@@ -186,6 +186,7 @@
     "behaviours": {
         "actions": {
             "upload": "Hochladen",
+            "dataset": "Datensatz",
             "delete": "Löschen",
             "record": "Aufzeichnung",
             "stop": "Stop"

@@ -73,7 +73,7 @@
             "qrMessage": "Voit lisätä kuvia puhelimella tai tabletilla. Laajenna QR-koodi napsauttamalla sitä.",
             "disabled": "POISTETTU KÄYTÖSTÄ",
             "selectDataset": "Valitse datasetti",
-            "selectTestData": "Valitse testitiedot",
+            "selectTestData": "Valitse kuva",
             "searchDataset": "Etsi datasetti",
             "images": "kuvaa",
             "selected": "valittu",
@@ -192,6 +192,7 @@
     "behaviours": {
         "actions": {
             "upload": "Lataa",
+            "dataset": "Aineisto",
             "delete": "Poista",
             "record": "Äänitä",
             "stop": "Lopeta"

@@ -73,7 +73,7 @@
             "qrMessage": "Unaweza kutumia simu au kishikwambi kuongeza picha. Bofya msimbo wa QR ili kupanua.",
             "disabled": "IMEZIMWA",
             "selectDataset": "Chagua seti ya data",
-            "selectTestData": "Chagua data ya mtihani",
+            "selectTestData": "Chagua picha",
             "searchDataset": "Tafuta seti ya data",
             "images": "picha",
             "selected": "imechaguliwa",
@@ -186,6 +186,7 @@
     "behaviours": {
         "actions": {
             "upload": "Pakia",
+            "dataset": "Seti ya data",
             "delete": "Futa",
             "record": "Rekodi",
             "stop": "Simanisha"
