@@ -76,7 +76,10 @@ class XAICanvas {
 
     private _getTrackedContext(): CanvasRenderingContext2D {
         if (this._proxyCtx) return this._proxyCtx;
-        const real = this.element.getContext('2d')!;
+        const real = this.element.getContext('2d');
+        if (!real) {
+            throw new Error('Failed to get 2D context');
+        }
         this._proxyCtx = new Proxy(real, {
             get: (target, prop) => {
                 if (prop === 'drawImage') {

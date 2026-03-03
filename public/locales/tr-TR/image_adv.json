@@ -159,12 +159,13 @@
     },
     "model": {
         "actions": {
-            "export": "Scratch için Dışa Aktar",
+            "export": "Harici Araç için Dışa Aktar",
             "clone": "Bir Kopya Paylaş"
         },
         "labels": {
             "title": "Sınıflandırıcı",
-            "mustTrain": "Öncelikle sınıflandırıcınızı eğitmeniz gerekmektedir"
+            "mustTrain": "Öncelikle sınıflandırıcınızı eğitmeniz gerekmektedir",
+            "mustInput": "Sınıflandırıcıyı kullanmak için girdi sağlamanız gerekir"
         },
         "aria": {
             "more": "Daha Fazla Seçenek"

@@ -7,6 +7,7 @@ import { prediction, predictionError } from '../../state';
 import PreviewMenu from './PreviewMenu';
 import { PercentageBar, Widget } from '@genai-fi/base';
 import { Colours } from '@genai-fi/base/main/components/PercentageBar/PercentageBar';
+import { useHasModel } from '@genaitm/util/TeachableModel';
 interface Props {
     onExport?: () => void;
     onClone?: () => void;
@@ -20,6 +21,7 @@ export default function Preview({ onExport, onClone, onSidebar }: Props) {
     const { t } = useTranslation(namespace);
     const preds = useAtomValue(prediction);
     const hasError = useAtomValue(predictionError);
+    const hasModel = useHasModel();
 
     const model = preds.length > 0;
 
@@ -61,9 +63,14 @@ export default function Preview({ onExport, onClone, onSidebar }: Props) {
                     </table>
                 </div>
             )}
-            {!model && (
+            {!hasModel && (
                 <div className={style.buttonContainer}>
                     <Alert severity="info">{t('model.labels.mustTrain')}</Alert>
+                </div>
+            )}
+            {hasModel && !model && (
+                <div className={style.buttonContainer}>
+                    <Alert severity="info">{t('model.labels.mustInput')}</Alert>
                 </div>
             )}
             {model && hasError && (

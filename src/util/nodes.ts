@@ -12,5 +12,5 @@ export function useActiveNode(id: string, state: boolean | number) {
             else nset.delete(id);
             return nset;
         });
-    }, [id, state]);
+    }, [id, state, setActive]);
 }

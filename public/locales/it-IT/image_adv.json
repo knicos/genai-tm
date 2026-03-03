@@ -159,12 +159,13 @@
     },
     "model": {
         "actions": {
-            "export": "Esporta per Scratch",
+            "export": "Esporta per strumento esterno",
             "clone": "Condividi una copia"
         },
         "labels": {
             "title": "Classificatore",
             "mustTrain": "Devi prima addestrare il tuo classificatore",
+            "mustInput": "Devi fornire un input per usare il classificatore",
             "failedTensorflow": "Il tuo dispositivo o browser non è riuscito a eseguire il nostro classificatore"
         },
         "aria": {

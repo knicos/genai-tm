@@ -159,12 +159,13 @@
     },
     "model": {
         "actions": {
-            "export": "Exportar para Scratch",
+            "export": "Exportar para ferramenta externa",
             "clone": "Compartilhe uma cópia"
         },
         "labels": {
             "title": "Classificador",
-            "mustTrain": "Você deve treinar seu classificador primeiro"
+            "mustTrain": "Você deve treinar seu classificador primeiro",
+            "mustInput": "Você deve fornecer uma entrada para usar o classificador"
         },
         "aria": {
             "more": "mais opções"

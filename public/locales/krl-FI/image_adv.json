@@ -159,12 +159,13 @@
     },
     "model": {
         "actions": {
-            "export": "Vie Scratchah",
+            "export": "Vie ulkoiseen työkaluun",
             "clone": "Jua koupii"
         },
         "labels": {
             "title": "Luokittelii",
-            "mustTrain": "Sinul pidäy opastua luokittelii ezmäi"
+            "mustTrain": "Sinul pidäy opastua luokittelii ezmäi",
+            "mustInput": "Luokittelijua käytykseh pidäy andua syöte"
         },
         "aria": {
             "more": "Ližiä azetustu"

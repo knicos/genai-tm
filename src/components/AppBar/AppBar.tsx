@@ -81,7 +81,7 @@ export default function ApplicationBar({ showReminder, onSave }: Props) {
                     title="About"
                 >
                     <img
-                        src="/logo48_bw_invert.png"
+                        src="/logo128_bw.png"
                         alt="GenAI logo"
                         width="48"
                         height="48"

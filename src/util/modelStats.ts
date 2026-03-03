@@ -4,7 +4,7 @@ import { IClassification } from '../state';
 export interface ModelStatistics {
     labels: string[];
     confusionMatrix: number[][];
-    accuracyPerClass: Array<{ accuracy: number; samples: number }>;
+    accuracyPerClass: { accuracy: number; samples: number }[];
     overallAccuracy: number;
 }
 
@@ -49,32 +49,35 @@ export async function calculateModelStatistics(
         validationSamplesPerClass[actualClassIdx] = validationSamples.length;
 
         // Predict each validation sample
-        validationSamples.forEach(sample => {
+        validationSamples.forEach((sample) => {
             // For pose models, sample.data is HTMLCanvasElement
             // The model internally extracts pose keypoints
-            const promise = tm.predict(sample.data).then((result) => {
-                // Skip if no predictions (shouldn't happen but be safe)
-                if (!result.predictions || result.predictions.length === 0) {
-                    console.warn('Empty predictions for validation sample');
-                    return;
-                }
+            const promise = tm
+                .predict(sample.data)
+                .then((result) => {
+                    // Skip if no predictions (shouldn't happen but be safe)
+                    if (!result.predictions || result.predictions.length === 0) {
+                        console.warn('Empty predictions for validation sample');
+                        return;
+                    }
 
-                // Find predicted class with highest probability
-                const predictedClass = result.predictions.reduce((prev, curr) =>
-                    curr.probability > prev.probability ? curr : prev
-                );
-                const predictedClassIdx = result.predictions.indexOf(predictedClass);
+                    // Find predicted class with highest probability
+                    const predictedClass = result.predictions.reduce((prev, curr) =>
+                        curr.probability > prev.probability ? curr : prev
+                    );
+                    const predictedClassIdx = result.predictions.indexOf(predictedClass);
 
-                // Update confusion matrix
-                confusionMatrix[actualClassIdx][predictedClassIdx]++;
+                    // Update confusion matrix
+                    confusionMatrix[actualClassIdx][predictedClassIdx]++;
 
-                // Track correct predictions
-                if (predictedClassIdx === actualClassIdx) {
-                    correctPerClass[actualClassIdx]++;
-                }
-            }).catch((err) => {
-                console.error('Prediction failed for validation sample:', err);
-            });
+                    // Track correct predictions
+                    if (predictedClassIdx === actualClassIdx) {
+                        correctPerClass[actualClassIdx]++;
+                    }
+                })
+                .catch((err) => {
+                    console.error('Prediction failed for validation sample:', err);
+                });
 
             predictionPromises.push(promise);
         });
@@ -85,10 +88,8 @@ export async function calculateModelStatistics(
 
     // Calculate accuracy per class
     const accuracyPerClass = labels.map((_, ix) => ({
-        accuracy: validationSamplesPerClass[ix] > 0
-            ? correctPerClass[ix] / validationSamplesPerClass[ix]
-            : 0,
-        samples: validationSamplesPerClass[ix]
+        accuracy: validationSamplesPerClass[ix] > 0 ? correctPerClass[ix] / validationSamplesPerClass[ix] : 0,
+        samples: validationSamplesPerClass[ix],
     }));
 
     // Calculate overall accuracy
@@ -100,6 +101,6 @@ export async function calculateModelStatistics(
         labels,
         confusionMatrix,
         accuracyPerClass,
-        overallAccuracy
+        overallAccuracy,
     };
 }

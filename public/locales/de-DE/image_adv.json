@@ -159,12 +159,13 @@
     },
     "model": {
         "actions": {
-            "export": "Für Scratch exportieren",
+            "export": "Für externes Werkzeug exportieren",
             "clone": "Teilen Sie eine Kopie"
         },
         "labels": {
             "title": "Klassifikator",
-            "mustTrain": "Du musst deinen Klassifikator zuerst trainieren"
+            "mustTrain": "Du musst deinen Klassifikator zuerst trainieren",
+            "mustInput": "Du musst eine Eingabe bereitstellen, um den Klassifikator zu verwenden"
         },
         "aria": {
             "more": "mehr Optionen"

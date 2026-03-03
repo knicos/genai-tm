@@ -159,12 +159,13 @@
     },
     "model": {
         "actions": {
-            "export": "Hamisha kwa ajili ya Scratch",
+            "export": "Hamisha kwa zana ya nje",
             "clone": "Shiriki nakala"
         },
         "labels": {
             "title": "kichanganuzi",
-            "mustTrain": "Unapaswa kufundisha kichanganuzi chako kwanza"
+            "mustTrain": "Unapaswa kufundisha kichanganuzi chako kwanza",
+            "mustInput": "Ni lazima utoe ingizo ili kutumia kichanganuzi"
         },
         "aria": {
             "zaidi": "chaguzi zaidi"

@@ -98,7 +98,7 @@ export function useTeachableModel() {
                     }
                 }
             },
-            [model, setPredictions, setIndex, setPoseDetected]
+            [model, setPredictions, setIndex, setPoseDetected, setError]
         ),
         draw: useCallback(
             (image: HTMLCanvasElement) => {
@@ -163,7 +163,6 @@ export function useXAICanvas() {
             if (!model.isTrained()) return;
             try {
                 model.setXAICanvas(getXAI(size).proxy);
-                // eslint-disable-next-line no-empty
             } catch {
                 console.warn('ImageModel/PoseModel not loaded yet');
             }
@@ -194,7 +193,7 @@ export function useModelTrainer() {
             model.ready().then((v) => {
                 if (v && model.isTrained()) setStage('done');
             });
-        } else setStage('none');
+        } else setTimeout(() => setStage('none'), 0);
     }, [model]);
 
     return {
@@ -291,7 +290,12 @@ export function useModelTrainer() {
                 setModel(tm);
                 setStage('done');
             },
-            [model, setModel]
+            [model, setModel, setHistory, setStats]
         ),
     };
+}
+
+export function useHasModel() {
+    const model = useAtomValue(modelState);
+    return model ? model.isTrained() : false;
 }

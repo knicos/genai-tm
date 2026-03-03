@@ -159,13 +159,14 @@
     },
     "model": {
         "actions": {
-            "export": "Export for Scratch",
+            "export": "Export for External Tool",
             "clone": "Share a copy",
             "bm": "Use with Breakable Machine"
         },
         "labels": {
             "title": "Classifier",
             "mustTrain": "You must train your classifier first",
+            "mustInput": "You must provide input to use the classifier",
             "failedTensorflow": "Your device or browser could not run our classifier"
         },
         "aria": {
@@ -176,11 +177,11 @@
         "labels": {
             "title": "Output",
             "deploy": "Deploy",
-            "serialdevice": "Serial device",
+            "serialdevice": "USB device",
             "connect": "Connect",
             "disconnect": "Disconnect",
-            "connectSuccess": "Connected to the serial device",
-            "connectError": "Unable to connect to the serial device. Please ensure it’s not in use by another application and try again."
+            "connectSuccess": "Connected to the USB device",
+            "connectError": "Unable to connect to the USB device. Please ensure it’s not in use by another application and try again."
         },
         "aria": {
             "volume": "Volume",

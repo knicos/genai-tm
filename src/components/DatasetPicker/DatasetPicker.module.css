@@ -29,10 +29,10 @@
     height: 80px;
     object-fit: cover;
     border-radius: 5px;
-    transition: all 0.2s ease-in-out;
+    /*transition: all 0.2s ease-in-out;*/
     display: block;
     box-sizing: border-box;
-    transform-origin: center;
+    /*transform-origin: center;*/
 }
 
 .expandButton {
@@ -47,6 +47,7 @@
     background-color: primaryHover;
     transition: all 0.2s ease-in-out;
     flex-shrink: 0;
+    box-sizing: border-box;
 }
 
 .expandButton:hover {
@@ -68,13 +69,13 @@
 }
 
 /* Scale for DatasetPicker and DatasetTestPicker */
-.imageContainer:hover .testImage {
+/*.imageContainer:hover .testImage {
     transform: scale(1.05);
 }
 
 .imageContainer:hover .datasetImage {
     transform: scale(1.05);
-}
+}*/
 
 /* Dialog */
 .dialogPaper {
@@ -107,13 +108,13 @@
 
 /* Search field */
 .searchField {
-    width: calc(100% - 16px);
     padding: 28px 8px 0px 8px;
     margin-bottom: 8px;
     position: sticky;
     top: 0;
     background-color: white;
     z-index: 10;
+    box-sizing: border-box;
 }
 
 /* Give the MUI outlined input a rounded appearance when used as the searchField */
@@ -198,8 +199,8 @@
 /* Checkbox overlay on image */
 .imageCheckbox {
     position: absolute;
-    top: -4px;
-    left: -4px;
+    top: 2px;
+    left: 2px;
     z-index: 1;
     padding: 2px;
     background-color: rgba(255, 255, 255, 0.9);
@@ -218,6 +219,6 @@
 .dialogActions {
     display: flex;
     gap: 0.2rem;
-    padding-right: 28px;
-    border-top: 2px solid primary;
+    padding: 1.5rem;
+    box-shadow: 0 0 10px #ddd;
 }

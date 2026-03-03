@@ -159,12 +159,13 @@
     },
     "model": {
         "actions": {
-            "export": "Scratch로 내보내기",
+            "export": "외부 도구용으로 내보내기",
             "clone": "복사본 공유"
         },
         "labels": {
             "title": "분류기",
-            "mustTrain": "분류기를 먼저 학습시켜야 합니다"
+            "mustTrain": "분류기를 먼저 학습시켜야 합니다",
+            "mustInput": "분류기를 사용하려면 입력을 제공해야 합니다"
         },
         "aria": {
             "more": "추가 옵션"

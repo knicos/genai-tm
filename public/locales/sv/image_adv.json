@@ -159,12 +159,13 @@
     },
     "model": {
         "actions": {
-            "export": "Exportera för Scratch",
+            "export": "Exportera för externt verktyg",
             "clone": "Dela en kopia"
         },
         "labels": {
             "title": "Klassificerare",
-            "mustTrain": "Du måst träna din klassificerare först"
+            "mustTrain": "Du måst träna din klassificerare först",
+            "mustInput": "Du måste ange indata för att använda klassificeraren"
         },
         "aria": {
             "more": "fler alternativ"

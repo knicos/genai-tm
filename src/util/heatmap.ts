@@ -57,9 +57,9 @@ export async function renderHeatmap(input: HTMLCanvasElement, output: HTMLCanvas
         ctx.drawImage(input, 0, 0);
         const imageData = ctx.createImageData(data.length, data.length);
         let ix = 0;
-        for (let y = 0; y < data.length; ++y) {
+        for (const row of data) {
             for (let x = 0; x < data.length; ++x) {
-                const v = data[y][x];
+                const v = row[x];
                 const [r, g, b] = hslToRgb((1 - v) * 240, 1, 0.5);
                 imageData.data[ix] = r;
                 ++ix;

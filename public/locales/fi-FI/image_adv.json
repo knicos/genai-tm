@@ -159,12 +159,13 @@
     },
     "model": {
         "actions": {
-            "export": "Vie Scratchille",
+            "export": "Vie ulkoiseen työkaluun",
             "clone": "Jaa kopio"
         },
         "labels": {
             "title": "Luokittelija",
-            "mustTrain": "Sinun pitää opettaa luokittelija ensin"
+            "mustTrain": "Sinun pitää opettaa luokittelija ensin",
+            "mustInput": "Sinun täytyy antaa syöte käyttääksesi luokittelijaa"
         },
         "aria": {
             "more": "Lisää asetuksia"
