@@ -262,7 +262,9 @@
             "colors": "Renkler",
             "fruits": "Meyveler",
             "human": "İnsan",
-            "studyTools": "Okul Malzemeleri"
+            "studyTools": "Okul Malzemeleri",
+            "recyclingMaterials": "Geri Dönüşüm Malzemeleri",
+            "transportation": "Ulaşım"
         },
         "cats": {
             "name": "Kediler",
@@ -355,6 +357,70 @@
         "pens": {
             "name": "Tükenmez Kalemler",
             "description": "Tükenmez kalem görselleri koleksiyonu"
+        },
+        "humanPose": {
+            "name": "İnsan Pozu",
+            "description": "İnsan pozu görsellerinin koleksiyonu"
+        },
+        "erasers": {
+            "name": "Silgiler",
+            "description": "Silgi görsellerinin koleksiyonu"
+        },
+        "batteries": {
+            "name": "Piller",
+            "description": "Pil görsellerinin koleksiyonu"
+        },
+        "cardboard": {
+            "name": "Karton",
+            "description": "Karton görsellerinin koleksiyonu"
+        },
+        "glass": {
+            "name": "Cam",
+            "description": "Cam görsellerinin koleksiyonu"
+        },
+        "paper": {
+            "name": "Kağıt",
+            "description": "Kağıt görsellerinin koleksiyonu"
+        },
+        "plastics": {
+            "name": "Plastikler",
+            "description": "Plastik görsellerinin koleksiyonu"
+        },
+        "airplanes": {
+            "name": "Uçaklar",
+            "description": "Uçak görsellerinin koleksiyonu"
+        },
+        "buses": {
+            "name": "Otobüsler",
+            "description": "Otobüs görsellerinin koleksiyonu"
+        },
+        "bicycles": {
+            "name": "Bisikletler",
+            "description": "Bisiklet görsellerinin koleksiyonu"
+        },
+        "cars": {
+            "name": "Arabalar",
+            "description": "Araba görsellerinin koleksiyonu"
+        },
+        "mopeds": {
+            "name": "Mopedler",
+            "description": "Moped görsellerinin koleksiyonu"
+        },
+        "motorcycles": {
+            "name": "Motosikletler",
+            "description": "Motosiklet görsellerinin koleksiyonu"
+        },
+        "pedestrians": {
+            "name": "Yayalar",
+            "description": "Yaya görsellerinin koleksiyonu"
+        },
+        "ships": {
+            "name": "Gemiler",
+            "description": "Gemi görsellerinin koleksiyonu"
+        },
+        "trains": {
+            "name": "Trenler",
+            "description": "Tren görsellerinin koleksiyonu"
         }
     }
 }

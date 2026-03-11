@@ -263,7 +263,9 @@
             "colors": "Cores",
             "fruits": "Frutas",
             "human": "Humano",
-            "studyTools": "Materiais Escolares"
+            "studyTools": "Materiais Escolares",
+            "recyclingMaterials": "Materiais Recicláveis",
+            "transportation": "Transporte"
         },
         "cats": {
             "name": "Gatos",
@@ -356,6 +358,70 @@
         "pens": {
             "name": "Canetas",
             "description": "Coleção de imagens de canetas"
+        },
+        "humanPose": {
+            "name": "Pose Humana",
+            "description": "Coleção de imagens de poses humanas"
+        },
+        "erasers": {
+            "name": "Borrachas",
+            "description": "Coleção de imagens de borrachas"
+        },
+        "batteries": {
+            "name": "Pilhas",
+            "description": "Coleção de imagens de pilhas"
+        },
+        "cardboard": {
+            "name": "Papelão",
+            "description": "Coleção de imagens de papelão"
+        },
+        "glass": {
+            "name": "Vidro",
+            "description": "Coleção de imagens de vidro"
+        },
+        "paper": {
+            "name": "Papel",
+            "description": "Coleção de imagens de papel"
+        },
+        "plastics": {
+            "name": "Plásticos",
+            "description": "Coleção de imagens de plásticos"
+        },
+        "airplanes": {
+            "name": "Aviões",
+            "description": "Coleção de imagens de aviões"
+        },
+        "buses": {
+            "name": "Ônibus",
+            "description": "Coleção de imagens de ônibus"
+        },
+        "bicycles": {
+            "name": "Bicicletas",
+            "description": "Coleção de imagens de bicicletas"
+        },
+        "cars": {
+            "name": "Carros",
+            "description": "Coleção de imagens de carros"
+        },
+        "mopeds": {
+            "name": "Motonetas",
+            "description": "Coleção de imagens de motonetas"
+        },
+        "motorcycles": {
+            "name": "Motocicletas",
+            "description": "Coleção de imagens de motocicletas"
+        },
+        "pedestrians": {
+            "name": "Pedestres",
+            "description": "Coleção de imagens de pedestres"
+        },
+        "ships": {
+            "name": "Navios",
+            "description": "Coleção de imagens de navios"
+        },
+        "trains": {
+            "name": "Trens",
+            "description": "Coleção de imagens de trens"
         }
     }
 }

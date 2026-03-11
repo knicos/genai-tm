@@ -5,10 +5,10 @@ export interface DatasetImage {
 
 export interface Dataset {
     id: string;
-    nameKey: string;  // Translation key for the name
-    descriptionKey: string;  // Translation key for the description
+    nameKey: string; // Translation key for the name
+    descriptionKey: string; // Translation key for the description
     images: DatasetImage[];
-    categoryKey: string;  // Translation key for the category
+    categoryKey: string; // Translation key for the category
 }
 
 export let DATASETS: Dataset[] = [];

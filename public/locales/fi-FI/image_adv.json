@@ -269,7 +269,9 @@
             "colors": "Värit",
             "fruits": "Hedelmät",
             "human": "Ihminen",
-            "studyTools": "Opiskeluvälineet"
+            "studyTools": "Opiskeluvälineet",
+            "recyclingMaterials": "Kierrätysmateriaalit",
+            "transportation": "Liikenne"
         },
         "cats": {
             "name": "Kissat",
@@ -362,6 +364,70 @@
         "pens": {
             "name": "Kynät",
             "description": "Kokoelma kynä kuvia"
+        },
+        "humanPose": {
+            "name": "Ihmisen asento",
+            "description": "Kokoelma ihmisen asentokuvia"
+        },
+        "erasers": {
+            "name": "Pyyhekumit",
+            "description": "Kokoelma pyyhekumikuvia"
+        },
+        "batteries": {
+            "name": "Paristot",
+            "description": "Kokoelma paristokuvia"
+        },
+        "cardboard": {
+            "name": "Pahvi",
+            "description": "Kokoelma pahvikuvia"
+        },
+        "glass": {
+            "name": "Lasi",
+            "description": "Kokoelma lasikuvia"
+        },
+        "paper": {
+            "name": "Paperi",
+            "description": "Kokoelma paperikuvia"
+        },
+        "plastics": {
+            "name": "Muovit",
+            "description": "Kokoelma muovikuvia"
+        },
+        "airplanes": {
+            "name": "Lentokoneet",
+            "description": "Kokoelma lentokoneenkuvia"
+        },
+        "buses": {
+            "name": "Bussit",
+            "description": "Kokoelma bussikuvia"
+        },
+        "bicycles": {
+            "name": "Polkupyörät",
+            "description": "Kokoelma polkupyöräkuvia"
+        },
+        "cars": {
+            "name": "Autot",
+            "description": "Kokoelma autokuvia"
+        },
+        "mopeds": {
+            "name": "Mopedit",
+            "description": "Kokoelma mopedikuvia"
+        },
+        "motorcycles": {
+            "name": "Moottoripyörät",
+            "description": "Kokoelma moottoripyöräkuvia"
+        },
+        "pedestrians": {
+            "name": "Jalankulkijat",
+            "description": "Kokoelma jalankulkijakuvia"
+        },
+        "ships": {
+            "name": "Laivat",
+            "description": "Kokoelma laivakuvia"
+        },
+        "trains": {
+            "name": "Junat",
+            "description": "Kokoelma junakuvia"
         }
     }
 }

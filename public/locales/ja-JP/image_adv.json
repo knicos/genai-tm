@@ -263,7 +263,9 @@
             "colors": "色",
             "fruits": "果物",
             "human": "人間",
-            "studyTools": "学用品"
+            "studyTools": "学用品",
+            "recyclingMaterials": "リサイクル素材",
+            "transportation": "交通機関"
         },
         "cats": {
             "name": "猫",
@@ -356,6 +358,70 @@
         "pens": {
             "name": "ペン",
             "description": "ペンの画像コレクション"
+        },
+        "humanPose": {
+            "name": "人間のポーズ",
+            "description": "人間のポーズの画像コレクション"
+        },
+        "erasers": {
+            "name": "消しゴム",
+            "description": "消しゴムの画像コレクション"
+        },
+        "batteries": {
+            "name": "電池",
+            "description": "電池の画像コレクション"
+        },
+        "cardboard": {
+            "name": "段ボール",
+            "description": "段ボールの画像コレクション"
+        },
+        "glass": {
+            "name": "ガラス",
+            "description": "ガラスの画像コレクション"
+        },
+        "paper": {
+            "name": "紙",
+            "description": "紙の画像コレクション"
+        },
+        "plastics": {
+            "name": "プラスチック",
+            "description": "プラスチックの画像コレクション"
+        },
+        "airplanes": {
+            "name": "飛行機",
+            "description": "飛行機の画像コレクション"
+        },
+        "buses": {
+            "name": "バス",
+            "description": "バスの画像コレクション"
+        },
+        "bicycles": {
+            "name": "自転車",
+            "description": "自転車の画像コレクション"
+        },
+        "cars": {
+            "name": "自動車",
+            "description": "自動車の画像コレクション"
+        },
+        "mopeds": {
+            "name": "原付バイク",
+            "description": "原付バイクの画像コレクション"
+        },
+        "motorcycles": {
+            "name": "オートバイ",
+            "description": "オートバイの画像コレクション"
+        },
+        "pedestrians": {
+            "name": "歩行者",
+            "description": "歩行者の画像コレクション"
+        },
+        "ships": {
+            "name": "船",
+            "description": "船の画像コレクション"
+        },
+        "trains": {
+            "name": "電車",
+            "description": "電車の画像コレクション"
         }
     }
 }

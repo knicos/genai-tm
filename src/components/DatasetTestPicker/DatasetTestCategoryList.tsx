@@ -54,6 +54,7 @@ export default function DatasetTestCategoryList({ datasets, open, onImageClick }
     return (
         <>
             <TextField
+                fullWidth
                 placeholder={t('trainingdata.labels.searchDataset')}
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}

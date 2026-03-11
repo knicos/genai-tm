@@ -19,8 +19,7 @@ interface DatasetCategoryListProps {
 }
 
 const DatasetCategoryList = memo(
-    forwardRef<DatasetCategoryListHandle, DatasetCategoryListProps>(
-    ({ datasets, onSelectionChange }, ref) => {
+    forwardRef<DatasetCategoryListHandle, DatasetCategoryListProps>(({ datasets, onSelectionChange }, ref) => {
         const { namespace } = useVariant();
         const { t } = useTranslation(namespace);
         const [searchQuery, setSearchQuery] = useState('');
@@ -33,21 +32,28 @@ const DatasetCategoryList = memo(
         // without any prop threading.
         const [clearGen, setClearGen] = useState(0);
 
-        useImperativeHandle(ref, () => ({
-            getSelectedImages: () => [...selectedUrlsRef.current].map((url) => ({ url })),
-            clearSelection: () => {
-                selectedUrlsRef.current.clear();
-                onSelectionChange(0);
-                setClearGen((g) => g + 1);
-            },
-        }), [onSelectionChange]);
+        useImperativeHandle(
+            ref,
+            () => ({
+                getSelectedImages: () => [...selectedUrlsRef.current].map((url) => ({ url })),
+                clearSelection: () => {
+                    selectedUrlsRef.current.clear();
+                    onSelectionChange(0);
+                    setClearGen((g) => g + 1);
+                },
+            }),
+            [onSelectionChange]
+        );
 
         // Stable callback — only changes if onSelectionChange itself changes (it's a state setter, so never).
-        const handleSelectionChange = useCallback((added: string[], removed: string[]) => {
-            added.forEach((url) => selectedUrlsRef.current.add(url));
-            removed.forEach((url) => selectedUrlsRef.current.delete(url));
-            onSelectionChange(selectedUrlsRef.current.size);
-        }, [onSelectionChange]);
+        const handleSelectionChange = useCallback(
+            (added: string[], removed: string[]) => {
+                added.forEach((url) => selectedUrlsRef.current.add(url));
+                removed.forEach((url) => selectedUrlsRef.current.delete(url));
+                onSelectionChange(selectedUrlsRef.current.size);
+            },
+            [onSelectionChange]
+        );
 
         const datasetsByCategory = useMemo(
             () =>
@@ -108,4 +114,3 @@ const DatasetCategoryList = memo(
 
 DatasetCategoryList.displayName = 'DatasetCategoryList';
 export default DatasetCategoryList;
-

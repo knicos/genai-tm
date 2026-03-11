@@ -263,7 +263,9 @@
             "colors": "Färger",
             "fruits": "Frukter",
             "human": "Människa",
-            "studyTools": "Studiematerial"
+            "studyTools": "Studiematerial",
+            "recyclingMaterials": "Återvisningsmaterial",
+            "transportation": "Transport"
         },
         "cats": {
             "name": "Katter",
@@ -356,6 +358,70 @@
         "pens": {
             "name": "Kulspetspennor",
             "description": "Samling av kulspetspennbilder"
+        },
+        "humanPose": {
+            "name": "Mänsklig pose",
+            "description": "Samling av mänskliga posebilder"
+        },
+        "erasers": {
+            "name": "Suddgummin",
+            "description": "Samling av suddgummibilder"
+        },
+        "batteries": {
+            "name": "Batterier",
+            "description": "Samling av batteribilder"
+        },
+        "cardboard": {
+            "name": "Kartong",
+            "description": "Samling av kartongbilder"
+        },
+        "glass": {
+            "name": "Glas",
+            "description": "Samling av glasbilder"
+        },
+        "paper": {
+            "name": "Papper",
+            "description": "Samling av pappersbilder"
+        },
+        "plastics": {
+            "name": "Plaster",
+            "description": "Samling av plastbilder"
+        },
+        "airplanes": {
+            "name": "Flygplan",
+            "description": "Samling av flygplansbilder"
+        },
+        "buses": {
+            "name": "Bussar",
+            "description": "Samling av bussbilder"
+        },
+        "bicycles": {
+            "name": "Cyklar",
+            "description": "Samling av cykelbilder"
+        },
+        "cars": {
+            "name": "Bilar",
+            "description": "Samling av bilbilder"
+        },
+        "mopeds": {
+            "name": "Mopeder",
+            "description": "Samling av mopedbilder"
+        },
+        "motorcycles": {
+            "name": "Motorcyklar",
+            "description": "Samling av motorcykelbilder"
+        },
+        "pedestrians": {
+            "name": "Fotgängare",
+            "description": "Samling av fotgängarbilder"
+        },
+        "ships": {
+            "name": "Skepp",
+            "description": "Samling av skeppsbilder"
+        },
+        "trains": {
+            "name": "Tåg",
+            "description": "Samling av tågbilder"
         }
     }
 }

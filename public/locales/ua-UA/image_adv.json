@@ -263,7 +263,9 @@
             "colors": "Кольори",
             "fruits": "Фрукти",
             "human": "Люди",
-            "studyTools": "Навчальне приладдя"
+            "studyTools": "Навчальне приладдя",
+            "recyclingMaterials": "Вторинна сировина",
+            "transportation": "Транспорт"
         },
         "cats": {
             "name": "Коти",
@@ -356,6 +358,70 @@
         "pens": {
             "name": "Ручки",
             "description": "Зображення ручок"
+        },
+        "humanPose": {
+            "name": "Пози людей",
+            "description": "Зображення поз людей"
+        },
+        "erasers": {
+            "name": "Гумки",
+            "description": "Зображення гумок"
+        },
+        "batteries": {
+            "name": "Батарейки",
+            "description": "Зображення батарейок"
+        },
+        "cardboard": {
+            "name": "Картон",
+            "description": "Зображення картону"
+        },
+        "glass": {
+            "name": "Скло",
+            "description": "Зображення скла"
+        },
+        "paper": {
+            "name": "Папір",
+            "description": "Зображення паперу"
+        },
+        "plastics": {
+            "name": "Пластик",
+            "description": "Зображення пластику"
+        },
+        "airplanes": {
+            "name": "Літаки",
+            "description": "Зображення літаків"
+        },
+        "buses": {
+            "name": "Автобуси",
+            "description": "Зображення автобусів"
+        },
+        "bicycles": {
+            "name": "Велосипеди",
+            "description": "Зображення велосипедів"
+        },
+        "cars": {
+            "name": "Автомобілі",
+            "description": "Зображення автомобілів"
+        },
+        "mopeds": {
+            "name": "Мопеди",
+            "description": "Зображення мопедів"
+        },
+        "motorcycles": {
+            "name": "Мотоцикли",
+            "description": "Зображення мотоциклів"
+        },
+        "pedestrians": {
+            "name": "Пішоходи",
+            "description": "Зображення пішоходів"
+        },
+        "ships": {
+            "name": "Кораблі",
+            "description": "Зображення кораблів"
+        },
+        "trains": {
+            "name": "Потяги",
+            "description": "Зображення потягів"
         }
     }
 }
