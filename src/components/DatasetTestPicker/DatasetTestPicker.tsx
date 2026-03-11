@@ -16,10 +16,16 @@ import DatasetTestCategoryList from './DatasetTestCategoryList';
 interface DatasetTestPickerProps {
     open: boolean;
     onClose: () => void;
-    onImageSelected: (canvas: HTMLCanvasElement) => void;
+    onImageSelected?: (canvas: HTMLCanvasElement) => void;
+    onImageUrlSelected?: (url: string) => void;
 }
 
-export default function DatasetTestPicker({ open, onClose, onImageSelected }: DatasetTestPickerProps) {
+export default function DatasetTestPicker({
+    open,
+    onClose,
+    onImageSelected,
+    onImageUrlSelected,
+}: DatasetTestPickerProps) {
     const { namespace } = useVariant();
     const { t } = useTranslation(namespace);
     const [localDatasets, setLocalDatasets] = useState<Dataset[]>(DATASETS);
@@ -37,16 +43,20 @@ export default function DatasetTestPicker({ open, onClose, onImageSelected }: Da
     const handleImageClick = useCallback(
         async (url: string) => {
             try {
-                const canvas = await canvasFromURL(url);
-                if (canvas) {
-                    onImageSelected(canvas);
-                    setTimeout(() => onClose(), 100);
+                onImageUrlSelected?.(url);
+
+                if (onImageSelected) {
+                    const canvas = await canvasFromURL(url);
+                    if (canvas) {
+                        onImageSelected(canvas);
+                    }
                 }
+                onClose();
             } catch (error) {
                 console.error('Error loading image:', error);
             }
         },
-        [onImageSelected, onClose]
+        [onImageSelected, onImageUrlSelected, onClose]
     );
 
     return (

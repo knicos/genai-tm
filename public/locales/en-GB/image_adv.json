@@ -73,7 +73,7 @@
             "qrMessage": "You can use a phone or tablet to add images. Click the QR code to expand it.",
             "disabled": "DISABLED",
             "selectDataset": "Select a Dataset",
-            "selectTestData": "Select test data",
+            "selectTestData": "Select an image",
             "searchDataset": "Search a dataset",
             "images": "images",
             "selected": "selected",
@@ -159,13 +159,14 @@
     },
     "model": {
         "actions": {
-            "export": "Export for Scratch",
+            "export": "Export for External Tool",
             "clone": "Share a copy",
             "bm": "Use with Breakable Machine"
         },
         "labels": {
             "title": "Classifier",
             "mustTrain": "You must train your classifier first",
+            "mustInput": "You must provide input to use the classifier",
             "failedTensorflow": "Your device or browser could not run our classifier"
         },
         "aria": {
@@ -176,11 +177,11 @@
         "labels": {
             "title": "Output",
             "deploy": "Deploy",
-            "serialdevice": "Serial device",
+            "serialdevice": "USB device",
             "connect": "Connect",
             "disconnect": "Disconnect",
-            "connectSuccess": "Connected to the serial device",
-            "connectError": "Unable to connect to the serial device. Please ensure it’s not in use by another application and try again."
+            "connectSuccess": "Connected to the USB device",
+            "connectError": "Unable to connect to the USB device. Please ensure it’s not in use by another application and try again."
         },
         "aria": {
             "volume": "Volume",
@@ -193,6 +194,7 @@
     "behaviours": {
         "actions": {
             "upload": "Upload",
+            "dataset": "Dataset",
             "delete": "Delete",
             "record": "Record",
             "stop": "Stop"
@@ -269,7 +271,9 @@
             "colors": "Colors",
             "fruits": "Fruits",
             "human": "Human",
-            "studyTools": "Study Tools"
+            "studyTools": "Study Tools",
+            "recyclingMaterials": "Recycling Materials",
+            "transportation": "Transportation"
         },
         "cats": {
             "name": "Cats",
@@ -362,6 +366,70 @@
         "pens": {
             "name": "Pens",
             "description": "Collection of pen images"
+        },
+        "humanPose": {
+            "name": "Human Pose",
+            "description": "Collection of human pose images"
+        },
+        "erasers": {
+            "name": "Erasers",
+            "description": "Collection of eraser images"
+        },
+        "batteries": {
+            "name": "Batteries",
+            "description": "Collection of battery images"
+        },
+        "cardboard": {
+            "name": "Cardboard",
+            "description": "Collection of cardboard images"
+        },
+        "glass": {
+            "name": "Glass",
+            "description": "Collection of glass images"
+        },
+        "paper": {
+            "name": "Paper",
+            "description": "Collection of paper images"
+        },
+        "plastics": {
+            "name": "Plastics",
+            "description": "Collection of plastic images"
+        },
+        "airplanes": {
+            "name": "Airplanes",
+            "description": "Collection of airplane images"
+        },
+        "buses": {
+            "name": "Buses",
+            "description": "Collection of bus images"
+        },
+        "bicycles": {
+            "name": "Bicycles",
+            "description": "Collection of bicycle images"
+        },
+        "cars": {
+            "name": "Cars",
+            "description": "Collection of car images"
+        },
+        "mopeds": {
+            "name": "Mopeds",
+            "description": "Collection of moped images"
+        },
+        "motorcycles": {
+            "name": "Motorcycles",
+            "description": "Collection of motorcycle images"
+        },
+        "pedestrians": {
+            "name": "Pedestrians",
+            "description": "Collection of pedestrian images"
+        },
+        "ships": {
+            "name": "Ships",
+            "description": "Collection of ship images"
+        },
+        "trains": {
+            "name": "Trains",
+            "description": "Collection of train images"
         }
     }
 }

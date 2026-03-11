@@ -73,7 +73,7 @@
             "qrMessage": "Puoi usare un telefono o un tablet per aggiungere immagini. Clicca sul codice QR per ingrandirlo.",
             "disabled": "DISABILITATO",
             "selectDataset": "Seleziona un dataset",
-            "selectTestData": "Seleziona dati di test",
+            "selectTestData": "Seleziona un'immagine",
             "searchDataset": "Cerca dataset",
             "images": "immagini",
             "selected": "selezionato",
@@ -159,12 +159,13 @@
     },
     "model": {
         "actions": {
-            "export": "Esporta per Scratch",
+            "export": "Esporta per strumento esterno",
             "clone": "Condividi una copia"
         },
         "labels": {
             "title": "Classificatore",
             "mustTrain": "Devi prima addestrare il tuo classificatore",
+            "mustInput": "Devi fornire un input per usare il classificatore",
             "failedTensorflow": "Il tuo dispositivo o browser non è riuscito a eseguire il nostro classificatore"
         },
         "aria": {
@@ -186,6 +187,7 @@
     "behaviours": {
         "actions": {
             "upload": "Carica",
+            "dataset": "Dataset",
             "delete": "Elimina",
             "record": "Registra",
             "stop": "Stop"
@@ -262,7 +264,9 @@
             "colors": "Colori",
             "fruits": "Frutti",
             "human": "Umano",
-            "studyTools": "Strumenti di studio"
+            "studyTools": "Strumenti di studio",
+            "recyclingMaterials": "Materiali riciclabili",
+            "transportation": "Trasporti"
         },
         "cats": {
             "name": "Gatti",
@@ -355,6 +359,70 @@
         "pens": {
             "name": "Penne",
             "description": "Raccolta di immagini di penne"
+        },
+        "humanPose": {
+            "name": "Posa umana",
+            "description": "Raccolta di immagini di pose umane"
+        },
+        "erasers": {
+            "name": "Gomme",
+            "description": "Raccolta di immagini di gomme"
+        },
+        "batteries": {
+            "name": "Batterie",
+            "description": "Raccolta di immagini di batterie"
+        },
+        "cardboard": {
+            "name": "Cartone",
+            "description": "Raccolta di immagini di cartoni"
+        },
+        "glass": {
+            "name": "Vetro",
+            "description": "Raccolta di immagini di vetro"
+        },
+        "paper": {
+            "name": "Carta",
+            "description": "Raccolta di immagini di carta"
+        },
+        "plastics": {
+            "name": "Plastiche",
+            "description": "Raccolta di immagini di plastiche"
+        },
+        "airplanes": {
+            "name": "Aerei",
+            "description": "Raccolta di immagini di aerei"
+        },
+        "buses": {
+            "name": "Autobus",
+            "description": "Raccolta di immagini di autobus"
+        },
+        "bicycles": {
+            "name": "Biciclette",
+            "description": "Raccolta di immagini di biciclette"
+        },
+        "cars": {
+            "name": "Automobili",
+            "description": "Raccolta di immagini di automobili"
+        },
+        "mopeds": {
+            "name": "Motorini",
+            "description": "Raccolta di immagini di motorini"
+        },
+        "motorcycles": {
+            "name": "Motociclette",
+            "description": "Raccolta di immagini di motociclette"
+        },
+        "pedestrians": {
+            "name": "Pedoni",
+            "description": "Raccolta di immagini di pedoni"
+        },
+        "ships": {
+            "name": "Navi",
+            "description": "Raccolta di immagini di navi"
+        },
+        "trains": {
+            "name": "Treni",
+            "description": "Raccolta di immagini di treni"
         }
     }
 }

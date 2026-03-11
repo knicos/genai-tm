@@ -73,7 +73,7 @@
             "qrMessage": "Voit ližätä kuvua telefonači libo tabletači. Suurenda QR-koudu plikaten sidä.",
             "disabled": "POISTETTU KÄYTÖSTÄ",
             "selectDataset": "Valitte datasetti",
-            "selectTestData": "Valitte testiainehisto",
+            "selectTestData": "Valitte kuva",
             "searchDataset": "Etsi datasetti",
             "images": "kuvua",
             "selected": "valittu",
@@ -159,12 +159,13 @@
     },
     "model": {
         "actions": {
-            "export": "Vie Scratchah",
+            "export": "Vie ulkoiseen työkaluun",
             "clone": "Jua koupii"
         },
         "labels": {
             "title": "Luokittelii",
-            "mustTrain": "Sinul pidäy opastua luokittelii ezmäi"
+            "mustTrain": "Sinul pidäy opastua luokittelii ezmäi",
+            "mustInput": "Luokittelijua käytykseh pidäy andua syöte"
         },
         "aria": {
             "more": "Ližiä azetustu"
@@ -185,6 +186,7 @@
     "behaviours": {
         "actions": {
             "upload": "Lad'd'ua",
+            "dataset": "Ainehisto",
             "delete": "Iärestä",
             "record": "Iänitä",
             "stop": "Lope"
@@ -261,7 +263,9 @@
             "colors": "Värit",
             "fruits": "Hedelmät",
             "human": "Ihmini",
-            "studyTools": "Opastusväliniehet"
+            "studyTools": "Opastusväliniehet",
+            "recyclingMaterials": "Kierrätysmateriaalat",
+            "transportation": "Liikenneh"
         },
         "cats": {
             "name": "Kižat",
@@ -354,6 +358,70 @@
         "pens": {
             "name": "Kynät",
             "description": "Kynäkuvien kokoelma"
+        },
+        "humanPose": {
+            "name": "Ihmizen asento",
+            "description": "Ihmizen asentokuvien kokoelma"
+        },
+        "erasers": {
+            "name": "Pyyhekumit",
+            "description": "Pyyhekumikuvien kokoelma"
+        },
+        "batteries": {
+            "name": "Paristot",
+            "description": "Paristokuvien kokoelma"
+        },
+        "cardboard": {
+            "name": "Pahvi",
+            "description": "Pahvikuvien kokoelma"
+        },
+        "glass": {
+            "name": "Lazi",
+            "description": "Lazikuvien kokoelma"
+        },
+        "paper": {
+            "name": "Papieri",
+            "description": "Papierikuvien kokoelma"
+        },
+        "plastics": {
+            "name": "Muovimateriaalat",
+            "description": "Muovimateriaalakuvien kokoelma"
+        },
+        "airplanes": {
+            "name": "Lentokoneh",
+            "description": "Lentokonetkuvien kokoelma"
+        },
+        "buses": {
+            "name": "Avtobusat",
+            "description": "Avtobusatkuvien kokoelma"
+        },
+        "bicycles": {
+            "name": "Polkupyörät",
+            "description": "Polkupyöräkuvien kokoelma"
+        },
+        "cars": {
+            "name": "Avtomat",
+            "description": "Avtomatkuvien kokoelma"
+        },
+        "mopeds": {
+            "name": "Mopiedat",
+            "description": "Mopiedatkuvien kokoelma"
+        },
+        "motorcycles": {
+            "name": "Moottoripyörät",
+            "description": "Moottoripyöräkuvien kokoelma"
+        },
+        "pedestrians": {
+            "name": "Jalakkulkijat",
+            "description": "Jalakkulkijakuvien kokoelma"
+        },
+        "ships": {
+            "name": "Laivat",
+            "description": "Laivakuvien kokoelma"
+        },
+        "trains": {
+            "name": "Junat",
+            "description": "Junatkuvien kokoelma"
         }
     }
 }

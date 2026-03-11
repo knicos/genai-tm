@@ -73,7 +73,7 @@
             "qrMessage": "Vous pouvez utiliser un téléphone ou une tablette pour ajouter des images. Cliquez sur le code QR pour l'agrandir.",
             "disabled": "DÉSACTIVÉ",
             "selectDataset": "Sélectionner un jeu de données",
-            "selectTestData": "Sélectionner des données de test",
+            "selectTestData": "Sélectionner une image",
             "searchDataset": "Rechercher un jeu de données",
             "images": "images",
             "selected": "sélectionné",
@@ -159,12 +159,13 @@
     },
     "model": {
         "actions": {
-            "export": "Exporter pour Scratch",
+            "export": "Exporter pour un outil externe",
             "clone": "Partager une copie"
         },
         "labels": {
             "title": "Classificateur",
             "mustTrain": "Vous devez d'abord entraîner le Classificateur.",
+            "mustInput": "Vous devez fournir une entrée pour utiliser le Classificateur",
             "failedTensorflow": "Votre appareil ou votre navigateur n'a pas pu exécuter notre Classificateur"
         },
         "aria": {
@@ -186,6 +187,7 @@
     "behaviours": {
         "actions": {
             "upload": "Charger",
+            "dataset": "Jeu de données",
             "delete": "Effacer",
             "record": "Enregistrer",
             "stop": "Arrêter"
@@ -262,7 +264,9 @@
             "colors": "Couleurs",
             "fruits": "Fruits",
             "human": "Humain",
-            "studyTools": "Outils d'étude"
+            "studyTools": "Outils d'étude",
+            "recyclingMaterials": "Matériaux recyclables",
+            "transportation": "Transport"
         },
         "cats": {
             "name": "Chats",
@@ -355,6 +359,70 @@
         "pens": {
             "name": "Stylos",
             "description": "Collection d'images de stylos"
+        },
+        "humanPose": {
+            "name": "Pose humaine",
+            "description": "Collection d'images de poses humaines"
+        },
+        "erasers": {
+            "name": "Gommes",
+            "description": "Collection d'images de gommes"
+        },
+        "batteries": {
+            "name": "Piles",
+            "description": "Collection d'images de piles"
+        },
+        "cardboard": {
+            "name": "Carton",
+            "description": "Collection d'images de cartons"
+        },
+        "glass": {
+            "name": "Verre",
+            "description": "Collection d'images de verres"
+        },
+        "paper": {
+            "name": "Papier",
+            "description": "Collection d'images de papiers"
+        },
+        "plastics": {
+            "name": "Plastiques",
+            "description": "Collection d'images de plastiques"
+        },
+        "airplanes": {
+            "name": "Avions",
+            "description": "Collection d'images d'avions"
+        },
+        "buses": {
+            "name": "Bus",
+            "description": "Collection d'images de bus"
+        },
+        "bicycles": {
+            "name": "Vélos",
+            "description": "Collection d'images de vélos"
+        },
+        "cars": {
+            "name": "Voitures",
+            "description": "Collection d'images de voitures"
+        },
+        "mopeds": {
+            "name": "Cyclomoteurs",
+            "description": "Collection d'images de cyclomoteurs"
+        },
+        "motorcycles": {
+            "name": "Motos",
+            "description": "Collection d'images de motos"
+        },
+        "pedestrians": {
+            "name": "Piétons",
+            "description": "Collection d'images de piétons"
+        },
+        "ships": {
+            "name": "Bateaux",
+            "description": "Collection d'images de bateaux"
+        },
+        "trains": {
+            "name": "Trains",
+            "description": "Collection d'images de trains"
         }
     }
 }

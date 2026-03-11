@@ -72,7 +72,7 @@
             "qrMessage": "이미지를 추가하기 위해 휴대폰이나 태블릿을 사용할 수 있습니다. QR 코드를 누르면 확장됩니다.",
             "disabled": "비활성화됨",
             "selectDataset": "데이터셋 선택",
-            "selectTestData": "테스트 데이터 선택",
+            "selectTestData": "이미지를 선택",
             "searchDataset": "데이터셋 검색",
             "images": "이미지",
             "selected": "선택됨",
@@ -159,12 +159,13 @@
     },
     "model": {
         "actions": {
-            "export": "Scratch로 내보내기",
+            "export": "외부 도구용으로 내보내기",
             "clone": "복사본 공유"
         },
         "labels": {
             "title": "분류기",
-            "mustTrain": "분류기를 먼저 학습시켜야 합니다"
+            "mustTrain": "분류기를 먼저 학습시켜야 합니다",
+            "mustInput": "분류기를 사용하려면 입력을 제공해야 합니다"
         },
         "aria": {
             "more": "추가 옵션"
@@ -185,6 +186,7 @@
     "behaviours": {
         "actions": {
             "upload": "업로드",
+            "dataset": "데이터셋",
             "delete": "삭제",
             "record": "녹화",
             "stop": "중단"
@@ -261,7 +263,9 @@
             "colors": "색상",
             "fruits": "과일",
             "human": "인간",
-            "studyTools": "학용품"
+            "studyTools": "학용품",
+            "recyclingMaterials": "재활용 재료",
+            "transportation": "교통"
         },
         "cats": {
             "name": "고양이",
@@ -354,6 +358,70 @@
         "pens": {
             "name": "펜",
             "description": "펜 이미지 모음"
+        },
+        "humanPose": {
+            "name": "인체 자세",
+            "description": "인체 자세 이미지 모음"
+        },
+        "erasers": {
+            "name": "지우개",
+            "description": "지우개 이미지 모음"
+        },
+        "batteries": {
+            "name": "배터리",
+            "description": "배터리 이미지 모음"
+        },
+        "cardboard": {
+            "name": "골판지",
+            "description": "골판지 이미지 모음"
+        },
+        "glass": {
+            "name": "유리",
+            "description": "유리 이미지 모음"
+        },
+        "paper": {
+            "name": "종이",
+            "description": "종이 이미지 모음"
+        },
+        "plastics": {
+            "name": "플라스틱",
+            "description": "플라스틱 이미지 모음"
+        },
+        "airplanes": {
+            "name": "비행기",
+            "description": "비행기 이미지 모음"
+        },
+        "buses": {
+            "name": "버스",
+            "description": "버스 이미지 모음"
+        },
+        "bicycles": {
+            "name": "자전거",
+            "description": "자전거 이미지 모음"
+        },
+        "cars": {
+            "name": "자동차",
+            "description": "자동차 이미지 모음"
+        },
+        "mopeds": {
+            "name": "모페드",
+            "description": "모페드 이미지 모음"
+        },
+        "motorcycles": {
+            "name": "오토바이",
+            "description": "오토바이 이미지 모음"
+        },
+        "pedestrians": {
+            "name": "보행자",
+            "description": "보행자 이미지 모음"
+        },
+        "ships": {
+            "name": "배",
+            "description": "배 이미지 모음"
+        },
+        "trains": {
+            "name": "기차",
+            "description": "기차 이미지 모음"
         }
     }
 }

@@ -8,6 +8,7 @@ describe('Image behaviour component', () => {
         const setBehaviour = vi.fn();
         render(<ImageBehaviour setBehaviour={setBehaviour} />);
         expect(screen.getByTestId('image-upload')).toBeInTheDocument();
+        expect(screen.getByTestId('image-dataset')).toBeInTheDocument();
         expect(screen.getByTestId('image-delete')).toBeDisabled();
         expect(screen.getByTestId('image-skeleton')).toBeInTheDocument();
     });
@@ -23,6 +24,7 @@ describe('Image behaviour component', () => {
             />
         );
         expect(screen.getByTestId('image-upload')).toBeInTheDocument();
+        expect(screen.getByTestId('image-dataset')).toBeInTheDocument();
         expect(screen.getByTestId('image-delete')).toBeEnabled();
         expect(screen.getByTestId('icon-image')).toBeInTheDocument();
     });

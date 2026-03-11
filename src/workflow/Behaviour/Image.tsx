@@ -1,4 +1,4 @@
-import React, { useCallback, useRef } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 import style from './Behaviour.module.css';
 import UploadFileIcon from '@mui/icons-material/UploadFile';
 import Skeleton from '@mui/material/Skeleton';
@@ -8,10 +8,15 @@ import IconImage from '@genaitm/components/IconImage/IconImage';
 import { useTranslation } from 'react-i18next';
 import { useVariant } from '../../util/variant';
 import UploadIcon from '@mui/icons-material/Upload';
+import GridViewIcon from '@mui/icons-material/GridView';
+import DatasetTestPicker from '@genaitm/components/DatasetTestPicker/DatasetTestPicker';
+import { canvasFromURL } from '@genai-fi/base';
 
 export interface ImageBehaviour {
     uri: string;
 }
+
+const OUTPUT_SIZE = 360;
 
 interface Props {
     behaviour?: ImageBehaviour;
@@ -23,6 +28,7 @@ export default function Image({ behaviour, setBehaviour, dropping }: Props) {
     const { namespace } = useVariant();
     const { t } = useTranslation(namespace);
     const fileRef = useRef<HTMLInputElement>(null);
+    const [showDatasetPicker, setShowDatasetPicker] = useState(false);
 
     const onDrop = useCallback(
         (acceptedFiles: File[]) => {
@@ -46,7 +52,17 @@ export default function Image({ behaviour, setBehaviour, dropping }: Props) {
         setBehaviour(undefined);
     }, [setBehaviour]);
 
-    const doUploadClick = useCallback(() => fileRef.current?.click(), []);
+    const doUploadClick = () => fileRef.current?.click();
+    const doDatasetClick = () => setShowDatasetPicker(true);
+    const doDatasetClose = () => setShowDatasetPicker(false);
+    const doDatasetSelected = async (url: string) => {
+        try {
+            const canvas = await canvasFromURL(url, OUTPUT_SIZE);
+            setBehaviour({ uri: canvas.toDataURL() });
+        } catch {
+            setBehaviour({ uri: url });
+        }
+    };
 
     const onFileChange = useCallback(
         (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -73,6 +89,14 @@ export default function Image({ behaviour, setBehaviour, dropping }: Props) {
                 onClick={doUploadClick}
             >
                 {t('behaviours.actions.upload')}
+            </VerticalButton>
+            <VerticalButton
+                data-testid="image-dataset"
+                variant="outlined"
+                startIcon={<GridViewIcon />}
+                onClick={doDatasetClick}
+            >
+                {t('behaviours.actions.dataset')}
             </VerticalButton>
             <VerticalButton
                 data-testid="image-delete"
@@ -108,6 +132,11 @@ export default function Image({ behaviour, setBehaviour, dropping }: Props) {
                     </div>
                 )}
             </div>
+            <DatasetTestPicker
+                open={showDatasetPicker}
+                onClose={doDatasetClose}
+                onImageUrlSelected={doDatasetSelected}
+            />
         </div>
     );
 }

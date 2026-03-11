@@ -73,7 +73,7 @@
             "qrMessage": "Unaweza kutumia simu au kishikwambi kuongeza picha. Bofya msimbo wa QR ili kupanua.",
             "disabled": "IMEZIMWA",
             "selectDataset": "Chagua seti ya data",
-            "selectTestData": "Chagua data ya mtihani",
+            "selectTestData": "Chagua picha",
             "searchDataset": "Tafuta seti ya data",
             "images": "picha",
             "selected": "imechaguliwa",
@@ -159,12 +159,13 @@
     },
     "model": {
         "actions": {
-            "export": "Hamisha kwa ajili ya Scratch",
+            "export": "Hamisha kwa zana ya nje",
             "clone": "Shiriki nakala"
         },
         "labels": {
             "title": "kichanganuzi",
-            "mustTrain": "Unapaswa kufundisha kichanganuzi chako kwanza"
+            "mustTrain": "Unapaswa kufundisha kichanganuzi chako kwanza",
+            "mustInput": "Ni lazima utoe ingizo ili kutumia kichanganuzi"
         },
         "aria": {
             "zaidi": "chaguzi zaidi"
@@ -185,6 +186,7 @@
     "behaviours": {
         "actions": {
             "upload": "Pakia",
+            "dataset": "Seti ya data",
             "delete": "Futa",
             "record": "Rekodi",
             "stop": "Simanisha"
@@ -261,7 +263,9 @@
             "colors": "Rangi",
             "fruits": "Matunda",
             "human": "Binadamu",
-            "studyTools": "Vifaa vya Kusoma"
+            "studyTools": "Vifaa vya Kusoma",
+            "recyclingMaterials": "Vifaa vya Kuchakata",
+            "transportation": "Usafiri"
         },
         "cats": {
             "name": "Paka",
@@ -354,6 +358,70 @@
         "pens": {
             "name": "Kalamu",
             "description": "Mkusanyiko wa picha za kalamu"
+        },
+        "humanPose": {
+            "name": "Mkao wa Binadamu",
+            "description": "Mkusanyiko wa picha za mkao wa binadamu"
+        },
+        "erasers": {
+            "name": "Vifutio",
+            "description": "Mkusanyiko wa picha za vifutio"
+        },
+        "batteries": {
+            "name": "Betri",
+            "description": "Mkusanyiko wa picha za betri"
+        },
+        "cardboard": {
+            "name": "Kadibodi",
+            "description": "Mkusanyiko wa picha za kadibodi"
+        },
+        "glass": {
+            "name": "Kioo",
+            "description": "Mkusanyiko wa picha za kioo"
+        },
+        "paper": {
+            "name": "Karatasi",
+            "description": "Mkusanyiko wa picha za karatasi"
+        },
+        "plastics": {
+            "name": "Plastiki",
+            "description": "Mkusanyiko wa picha za plastiki"
+        },
+        "airplanes": {
+            "name": "Ndege",
+            "description": "Mkusanyiko wa picha za ndege"
+        },
+        "buses": {
+            "name": "Basi",
+            "description": "Mkusanyiko wa picha za basi"
+        },
+        "bicycles": {
+            "name": "Baiskeli",
+            "description": "Mkusanyiko wa picha za baiskeli"
+        },
+        "cars": {
+            "name": "Magari",
+            "description": "Mkusanyiko wa picha za magari"
+        },
+        "mopeds": {
+            "name": "Mopedi",
+            "description": "Mkusanyiko wa picha za mopedi"
+        },
+        "motorcycles": {
+            "name": "Pikipiki",
+            "description": "Mkusanyiko wa picha za pikipiki"
+        },
+        "pedestrians": {
+            "name": "Watembea kwa miguu",
+            "description": "Mkusanyiko wa picha za watembea kwa miguu"
+        },
+        "ships": {
+            "name": "Meli",
+            "description": "Mkusanyiko wa picha za meli"
+        },
+        "trains": {
+            "name": "Treni",
+            "description": "Mkusanyiko wa picha za treni"
         }
     }
 }

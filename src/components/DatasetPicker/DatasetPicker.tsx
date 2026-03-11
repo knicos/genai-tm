@@ -6,7 +6,6 @@ import DialogActions from '@mui/material/DialogActions';
 import { Button } from '@genaitm/components/button/Button';
 import Typography from '@mui/material/Typography';
 import LinearProgress from '@mui/material/LinearProgress';
-import FolderIcon from '@mui/icons-material/Folder';
 import CloseIcon from '@mui/icons-material/Close';
 import IconButton from '@mui/material/IconButton';
 import { useTranslation } from 'react-i18next';
@@ -87,7 +86,6 @@ export default function DatasetPicker({ open, onClose, onDatasetSelected }: Data
             slotProps={{ paper: { className: styles.dialogPaper } }}
         >
             <DialogTitle className={styles.dialogTitle}>
-                <FolderIcon />
                 {t('trainingdata.labels.selectDataset')}
                 <IconButton
                     onClick={handleClose}

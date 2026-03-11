@@ -73,7 +73,7 @@
             "qrMessage": "Görseller eklemek için bir telefon veya tablet kullanabilirsiniz. QR kodunu genişletmek için üzerine tıklayın.",
             "disabled": "DEVRE DIŞI",
             "selectDataset": "Veri kümesi seç",
-            "selectTestData": "Test verilerini seç",
+            "selectTestData": "Bir görsel seç",
             "searchDataset": "Veri kümesi ara",
             "images": "görsel",
             "selected": "seçildi",
@@ -159,12 +159,13 @@
     },
     "model": {
         "actions": {
-            "export": "Scratch için Dışa Aktar",
+            "export": "Harici Araç için Dışa Aktar",
             "clone": "Bir Kopya Paylaş"
         },
         "labels": {
             "title": "Sınıflandırıcı",
-            "mustTrain": "Öncelikle sınıflandırıcınızı eğitmeniz gerekmektedir"
+            "mustTrain": "Öncelikle sınıflandırıcınızı eğitmeniz gerekmektedir",
+            "mustInput": "Sınıflandırıcıyı kullanmak için girdi sağlamanız gerekir"
         },
         "aria": {
             "more": "Daha Fazla Seçenek"
@@ -185,6 +186,7 @@
     "behaviours": {
         "actions": {
             "upload": "Yükle",
+            "dataset": "Veri kümesi",
             "delete": "Sil",
             "record": "Kaydet",
             "stop": "Dur"
@@ -260,7 +262,9 @@
             "colors": "Renkler",
             "fruits": "Meyveler",
             "human": "İnsan",
-            "studyTools": "Okul Malzemeleri"
+            "studyTools": "Okul Malzemeleri",
+            "recyclingMaterials": "Geri Dönüşüm Malzemeleri",
+            "transportation": "Ulaşım"
         },
         "cats": {
             "name": "Kediler",
@@ -353,6 +357,70 @@
         "pens": {
             "name": "Tükenmez Kalemler",
             "description": "Tükenmez kalem görselleri koleksiyonu"
+        },
+        "humanPose": {
+            "name": "İnsan Pozu",
+            "description": "İnsan pozu görsellerinin koleksiyonu"
+        },
+        "erasers": {
+            "name": "Silgiler",
+            "description": "Silgi görsellerinin koleksiyonu"
+        },
+        "batteries": {
+            "name": "Piller",
+            "description": "Pil görsellerinin koleksiyonu"
+        },
+        "cardboard": {
+            "name": "Karton",
+            "description": "Karton görsellerinin koleksiyonu"
+        },
+        "glass": {
+            "name": "Cam",
+            "description": "Cam görsellerinin koleksiyonu"
+        },
+        "paper": {
+            "name": "Kağıt",
+            "description": "Kağıt görsellerinin koleksiyonu"
+        },
+        "plastics": {
+            "name": "Plastikler",
+            "description": "Plastik görsellerinin koleksiyonu"
+        },
+        "airplanes": {
+            "name": "Uçaklar",
+            "description": "Uçak görsellerinin koleksiyonu"
+        },
+        "buses": {
+            "name": "Otobüsler",
+            "description": "Otobüs görsellerinin koleksiyonu"
+        },
+        "bicycles": {
+            "name": "Bisikletler",
+            "description": "Bisiklet görsellerinin koleksiyonu"
+        },
+        "cars": {
+            "name": "Arabalar",
+            "description": "Araba görsellerinin koleksiyonu"
+        },
+        "mopeds": {
+            "name": "Mopedler",
+            "description": "Moped görsellerinin koleksiyonu"
+        },
+        "motorcycles": {
+            "name": "Motosikletler",
+            "description": "Motosiklet görsellerinin koleksiyonu"
+        },
+        "pedestrians": {
+            "name": "Yayalar",
+            "description": "Yaya görsellerinin koleksiyonu"
+        },
+        "ships": {
+            "name": "Gemiler",
+            "description": "Gemi görsellerinin koleksiyonu"
+        },
+        "trains": {
+            "name": "Trenler",
+            "description": "Tren görsellerinin koleksiyonu"
         }
     }
 }

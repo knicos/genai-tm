@@ -2,7 +2,6 @@ import React, { useCallback } from 'react';
 import IconButton from '@mui/material/IconButton';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
-import Divider from '@mui/material/Divider';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import MenuIcon from '@mui/icons-material/Menu';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -29,7 +28,15 @@ interface Props {
     onDatasets?: () => void;
 }
 
-export default function ClassMenu({ hasSamples, index, isDisabled, onDeleteClass, onRemoveSamples, onToggleDisable, onDatasets }: Props) {
+export default function ClassMenu({
+    hasSamples,
+    index,
+    isDisabled,
+    onDeleteClass,
+    onRemoveSamples,
+    onToggleDisable,
+    onDatasets,
+}: Props) {
     const code = useAtomValue(sessionCode);
     const sharing = useAtomValue(sharingActive);
     const [p2penabled, setP2PEnabled] = useAtom(p2pActive);
@@ -84,7 +91,6 @@ export default function ClassMenu({ hasSamples, index, isDisabled, onDeleteClass
                         </ListItemIcon>
                         {t('trainingdata.actions.deleteClass')}
                     </MenuItem>,
-                    <Divider key="divider0" className={style.menuDivider}/>
                 ]}
                 <MenuItem
                     onClick={() => {
@@ -97,7 +103,6 @@ export default function ClassMenu({ hasSamples, index, isDisabled, onDeleteClass
                     </ListItemIcon>
                     {isDisabled ? t('trainingdata.actions.enableClass') : t('trainingdata.actions.disableClass')}
                 </MenuItem>
-                <Divider key="divider1" className={style.menuDivider}/>
                 <MenuItem
                     disabled={!hasSamples}
                     onClick={() => {
@@ -110,8 +115,7 @@ export default function ClassMenu({ hasSamples, index, isDisabled, onDeleteClass
                     </ListItemIcon>
                     {t('trainingdata.actions.removeAll')}
                 </MenuItem>
-                {sampleDatasets && onDatasets && [
-                    <Divider key="divider2" className={style.menuDivider}/>,
+                {sampleDatasets && onDatasets && (
                     <MenuItem
                         key="datasets"
                         onClick={() => {
@@ -124,37 +128,42 @@ export default function ClassMenu({ hasSamples, index, isDisabled, onDeleteClass
                         </ListItemIcon>
                         {t('trainingdata.actions.datasets')}
                     </MenuItem>
-                ]}
-                {enabledP2PData && enableCollaboration && !fatal && [
-                    <div key="sharebox" className={style.shareBox} >
-                        {!sharing && (
-                            <BusyButton
-                                busy={p2penabled && !sharing}
-                                onClick={doCollab}
-                                variant="contained"
-                                style={{ margin: '1rem 0' }}
-                                startIcon={<GroupIcon />}
-                            >
-                                {t('trainingdata.actions.collaborate')}
-                            </BusyButton>
-                        )}
-                        {sharing && (
-                            <QRCode
-                                dialog
-                                size="small"
-                                url={`${window.location.origin}/collect/${code}/${index}?lng=${i18n.language}`}
-                            />
-                        )}
-                        {index === 0 && (
-                            <Alert
-                                data-testid="alert-useqr"
-                                severity="info"
-                            >
-                                <p>{t('trainingdata.labels.qrMessage')}</p>
-                            </Alert>
-                        )}
-                    </div>
-                ]}
+                )}
+                {enabledP2PData &&
+                    enableCollaboration &&
+                    !fatal && [
+                        <div
+                            key="sharebox"
+                            className={style.shareBox}
+                        >
+                            {!sharing && (
+                                <BusyButton
+                                    busy={p2penabled && !sharing}
+                                    onClick={doCollab}
+                                    variant="contained"
+                                    style={{ margin: '1rem 0' }}
+                                    startIcon={<GroupIcon />}
+                                >
+                                    {t('trainingdata.actions.collaborate')}
+                                </BusyButton>
+                            )}
+                            {sharing && (
+                                <QRCode
+                                    dialog
+                                    size="small"
+                                    url={`${window.location.origin}/collect/${code}/${index}?lng=${i18n.language}`}
+                                />
+                            )}
+                            {index === 0 && (
+                                <Alert
+                                    data-testid="alert-useqr"
+                                    severity="info"
+                                >
+                                    <p>{t('trainingdata.labels.qrMessage')}</p>
+                                </Alert>
+                            )}
+                        </div>,
+                    ]}
             </Menu>
         </div>
     );

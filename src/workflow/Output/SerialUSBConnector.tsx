@@ -122,8 +122,15 @@ export default function SerialUSBConnector() {
                 >
                     {<UsbIcon color={serialConnection ? 'success' : 'disabled'} />}
                     <Typography>{t('output.labels.serialdevice')}</Typography>
-                    <IconButton size="small" component="a" href='https://www.gen-ai.fi/en/tools/TMMicrocontroller' target="_blank" rel="noopener noreferrer">
-                    <HelpIcon/>
+                    <IconButton
+                        size="small"
+                        color="secondary"
+                        component="a"
+                        href="https://www.gen-ai.fi/en/tools/TMMicrocontroller"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        <HelpIcon />
                     </IconButton>
                 </Stack>
 

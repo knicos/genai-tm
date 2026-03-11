@@ -73,7 +73,7 @@
             "qrMessage": "Du kan använda en telefon eller surfplatta för att lägga till bilder. Klicka på QR-koden för att utöka den.",
             "disabled": "INAKTIVERAD",
             "selectDataset": "Välj ett dataset",
-            "selectTestData": "Välj testdata",
+            "selectTestData": "Välj en bild",
             "searchDataset": "Sök dataset",
             "images": "bilder",
             "selected": "vald",
@@ -159,12 +159,13 @@
     },
     "model": {
         "actions": {
-            "export": "Exportera för Scratch",
+            "export": "Exportera för externt verktyg",
             "clone": "Dela en kopia"
         },
         "labels": {
             "title": "Klassificerare",
-            "mustTrain": "Du måst träna din klassificerare först"
+            "mustTrain": "Du måst träna din klassificerare först",
+            "mustInput": "Du måste ange indata för att använda klassificeraren"
         },
         "aria": {
             "more": "fler alternativ"
@@ -185,6 +186,7 @@
     "behaviours": {
         "actions": {
             "upload": "Ladda upp",
+            "dataset": "Dataset",
             "delete": "Radera",
             "record": "Spela in",
             "stop": "Stop"
@@ -261,7 +263,9 @@
             "colors": "Färger",
             "fruits": "Frukter",
             "human": "Människa",
-            "studyTools": "Studiematerial"
+            "studyTools": "Studiematerial",
+            "recyclingMaterials": "Återvisningsmaterial",
+            "transportation": "Transport"
         },
         "cats": {
             "name": "Katter",
@@ -354,6 +358,70 @@
         "pens": {
             "name": "Kulspetspennor",
             "description": "Samling av kulspetspennbilder"
+        },
+        "humanPose": {
+            "name": "Mänsklig pose",
+            "description": "Samling av mänskliga posebilder"
+        },
+        "erasers": {
+            "name": "Suddgummin",
+            "description": "Samling av suddgummibilder"
+        },
+        "batteries": {
+            "name": "Batterier",
+            "description": "Samling av batteribilder"
+        },
+        "cardboard": {
+            "name": "Kartong",
+            "description": "Samling av kartongbilder"
+        },
+        "glass": {
+            "name": "Glas",
+            "description": "Samling av glasbilder"
+        },
+        "paper": {
+            "name": "Papper",
+            "description": "Samling av pappersbilder"
+        },
+        "plastics": {
+            "name": "Plaster",
+            "description": "Samling av plastbilder"
+        },
+        "airplanes": {
+            "name": "Flygplan",
+            "description": "Samling av flygplansbilder"
+        },
+        "buses": {
+            "name": "Bussar",
+            "description": "Samling av bussbilder"
+        },
+        "bicycles": {
+            "name": "Cyklar",
+            "description": "Samling av cykelbilder"
+        },
+        "cars": {
+            "name": "Bilar",
+            "description": "Samling av bilbilder"
+        },
+        "mopeds": {
+            "name": "Mopeder",
+            "description": "Samling av mopedbilder"
+        },
+        "motorcycles": {
+            "name": "Motorcyklar",
+            "description": "Samling av motorcykelbilder"
+        },
+        "pedestrians": {
+            "name": "Fotgängare",
+            "description": "Samling av fotgängarbilder"
+        },
+        "ships": {
+            "name": "Skepp",
+            "description": "Samling av skeppsbilder"
+        },
+        "trains": {
+            "name": "Tåg",
+            "description": "Samling av tågbilder"
         }
     }
 }

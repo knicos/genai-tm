@@ -26,7 +26,7 @@ describe('Preview component', () => {
             return <TestWrapper initializeState={store}>{children}</TestWrapper>;
         }
         render(<Preview />, { wrapper: NoPredWrapper });
-        expect(screen.queryByText('model.labels.mustTrain')).not.toBeInTheDocument();
+        expect(screen.queryByText('model.labels.mustInput')).not.toBeInTheDocument();
     });
 
     it('shows 2 predictions', async ({ expect }) => {
