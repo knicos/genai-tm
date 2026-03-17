@@ -130,8 +130,14 @@
             "advanced": "Avanzate"
         },
         "values": {
-            "models": ["Immagine (MobileNet)", "Pose (PoseNet)"],
-            "variants": ["Uso Generale", "Aula scolastica"]
+            "models": [
+                "Immagine (MobileNet)",
+                "Pose (PoseNet)"
+            ],
+            "variants": [
+                "Uso Generale",
+                "Aula scolastica"
+            ]
         }
     },
     "widget": {
@@ -142,5 +148,21 @@
         "labels": {
             "titlePlaceholder": "Nome"
         }
+    },
+    "feedback": {
+        "button": "Dai un feedback",
+        "title": "Lasciaci un feedback!",
+        "ratingTitle": "Nel complesso, com'è stata la tua esperienza con questo strumento?",
+        "ratingVeryDissatisfied": "Molto insoddisfatto",
+        "ratingVerySatisfied": "Molto soddisfatto",
+        "recommendTitle": "Quanto è probabile che tu consigli questo strumento ad altre persone?",
+        "recommendVeryUnlikely": "Molto improbabile",
+        "recommendVeryLikely": "Molto probabile",
+        "experienceTitle": "Raccontaci la tua esperienza.",
+        "close": "Chiudi",
+        "send": "Invia feedback",
+        "error": "Ops!",
+        "errorMessage": "Non siamo riusciti a inviare il tuo feedback. Riprova più tardi.",
+        "thankYou": "Grazie per il tuo feedback!"
     }
 }

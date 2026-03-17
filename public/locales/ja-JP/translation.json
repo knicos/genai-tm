@@ -125,8 +125,14 @@
             "advanced": "詳細設定"
         },
         "values": {
-            "models": ["画像(MobileNet)", "姿勢(PoseNet)"],
-            "variants": ["一般的な使用", "教室"]
+            "models": [
+                "画像(MobileNet)",
+                "姿勢(PoseNet)"
+            ],
+            "variants": [
+                "一般的な使用",
+                "教室"
+            ]
         }
     },
     "widget": {
@@ -137,5 +143,21 @@
         "labels": {
             "titlePlaceholder": "名前"
         }
+    },
+    "feedback": {
+        "button": "フィードバックを送る",
+        "title": "ぜひフィードバックをお聞かせください！",
+        "ratingTitle": "このツールの体験は全体としていかがでしたか？",
+        "ratingVeryDissatisfied": "とても不満",
+        "ratingVerySatisfied": "とても満足",
+        "recommendTitle": "このツールを他の人に勧める可能性はどのくらいですか？",
+        "recommendVeryUnlikely": "まったくおすすめしない",
+        "recommendVeryLikely": "とてもおすすめしたい",
+        "experienceTitle": "あなたの体験を教えてください。",
+        "close": "閉じる",
+        "send": "フィードバックを送信",
+        "error": "おっと！",
+        "errorMessage": "フィードバックを送信できませんでした。時間をおいて再度お試しください。",
+        "thankYou": "フィードバックありがとうございます！"
     }
 }

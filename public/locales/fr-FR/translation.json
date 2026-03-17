@@ -130,8 +130,14 @@
             "advanced": "Avancés"
         },
         "values": {
-            "models": ["Image (MobileNet)", "Pose (PoseNet)"],
-            "variants": ["Usage général", "En classe"]
+            "models": [
+                "Image (MobileNet)",
+                "Pose (PoseNet)"
+            ],
+            "variants": [
+                "Usage général",
+                "En classe"
+            ]
         }
     },
     "widget": {
@@ -142,5 +148,21 @@
         "labels": {
             "titlePlaceholder": "Nom"
         }
+    },
+    "feedback": {
+        "button": "Donner un avis",
+        "title": "Donnez-nous votre avis !",
+        "ratingTitle": "Globalement, comment s’est passée votre expérience avec cet outil ?",
+        "ratingVeryDissatisfied": "Très insatisfait",
+        "ratingVerySatisfied": "Très satisfait",
+        "recommendTitle": "Quelle est la probabilité que vous recommandiez cet outil à d'autres ?",
+        "recommendVeryUnlikely": "Très peu probable",
+        "recommendVeryLikely": "Très probable",
+        "experienceTitle": "Parlez-nous de votre expérience.",
+        "close": "Fermer",
+        "send": "Envoyer l'avis",
+        "error": "Oups !",
+        "errorMessage": "Nous n'avons pas pu envoyer votre avis. Veuillez réessayer plus tard.",
+        "thankYou": "Merci pour votre avis !"
     }
 }

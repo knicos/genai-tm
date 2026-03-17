@@ -49,8 +49,14 @@
             "advanced": "Erweitert"
         },
         "values": {
-            "models": ["Bild (MobileNet)", "Pose (PoseNet)"],
-            "variants": ["Allgemeine Nutzung", "Klassenzimmer"]
+            "models": [
+                "Bild (MobileNet)",
+                "Pose (PoseNet)"
+            ],
+            "variants": [
+                "Allgemeine Nutzung",
+                "Klassenzimmer"
+            ]
         }
     },
     "widget": {
@@ -61,5 +67,21 @@
         "labels": {
             "titlePlaceholder": "Name"
         }
+    },
+    "feedback": {
+        "button": "Feedback geben",
+        "title": "Gib uns Feedback!",
+        "ratingTitle": "Wie war insgesamt deine Erfahrung mit diesem Tool?",
+        "ratingVeryDissatisfied": "Sehr unzufrieden",
+        "ratingVerySatisfied": "Sehr zufrieden",
+        "recommendTitle": "Wie wahrscheinlich ist es, dass du dieses Tool anderen empfiehlst?",
+        "recommendVeryUnlikely": "Sehr unwahrscheinlich",
+        "recommendVeryLikely": "Sehr wahrscheinlich",
+        "experienceTitle": "Erzähl uns von deinen Erfahrungen.",
+        "close": "Schließen",
+        "send": "Feedback senden",
+        "error": "Hoppla!",
+        "errorMessage": "Wir konnten dein Feedback nicht senden. Bitte versuche es später erneut.",
+        "thankYou": "Vielen Dank für dein Feedback!"
     }
 }

@@ -87,8 +87,14 @@
             "advanced": "Gelişmiş"
         },
         "values": {
-            "models": ["Görsel (MobileNet)", "Poz (PoseNet)"],
-            "variants": ["Genel Kullanım", "Sınıf"]
+            "models": [
+                "Görsel (MobileNet)",
+                "Poz (PoseNet)"
+            ],
+            "variants": [
+                "Genel Kullanım",
+                "Sınıf"
+            ]
         }
     },
     "widget": {
@@ -99,5 +105,21 @@
         "labels": {
             "titlePlaceholder": "İsim"
         }
+    },
+    "feedback": {
+        "button": "Geri Bildirim Ver",
+        "title": "Bize Geri Bildirim Verin!",
+        "ratingTitle": "Genel olarak, bu araçla deneyiminiz nasıldı?",
+        "ratingVeryDissatisfied": "Hiç memnun değilim",
+        "ratingVerySatisfied": "Çok memnunum",
+        "recommendTitle": "Bu aracı başkalarına önerme olasılığınız nedir?",
+        "recommendVeryUnlikely": "Hiç olası değil",
+        "recommendVeryLikely": "Çok olası",
+        "experienceTitle": "Deneyiminizi bize anlatın.",
+        "close": "Kapat",
+        "send": "Geri Bildirim Gönder",
+        "error": "Eyvah!",
+        "errorMessage": "Geri bildiriminizi gönderemedik. Lütfen daha sonra tekrar deneyin.",
+        "thankYou": "Geri bildiriminiz için teşekkürler!"
     }
 }

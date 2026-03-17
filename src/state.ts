@@ -95,3 +95,5 @@ export const modelStats = atom<ModelStats>({ labels: [] });
  * false = the last pose prediction found no human joints in the image
  */
 export const poseDetected = atom<boolean | null>(null);
+
+export const feedbackAtom = atom<boolean>(false);

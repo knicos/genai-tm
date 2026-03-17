@@ -148,5 +148,21 @@
         "labels": {
             "titlePlaceholder": "Name"
         }
+    },
+    "feedback": {
+        "button": "Give Feedback",
+        "title": "Give us Feedback!",
+        "ratingTitle": "Overall, how was your experience with this tool?",
+        "ratingVeryDissatisfied": "Very Dissatisfied",
+        "ratingVerySatisfied": "Very Satisfied",
+        "recommendTitle": "How likely are you to recommend this tool to others?",
+        "recommendVeryUnlikely": "Very Unlikely",
+        "recommendVeryLikely": "Very Likely",
+        "experienceTitle": "Tell us about your experience.",
+        "close": "Close",
+        "send": "Send Feedback",
+        "error": "Oops!",
+        "errorMessage": "We could not send your feedback. Please try again later.",
+        "thankYou": "Thank you for your feedback!"
     }
 }

@@ -130,8 +130,14 @@
             "advanced": "향상된"
         },
         "values": {
-            "models": ["이미지 (MobileNet)", "포즈 (PoseNet)"],
-            "variants": ["일반적 용도", "교실"]
+            "models": [
+                "이미지 (MobileNet)",
+                "포즈 (PoseNet)"
+            ],
+            "variants": [
+                "일반적 용도",
+                "교실"
+            ]
         }
     },
     "widget": {
@@ -142,5 +148,21 @@
         "labels": {
             "titlePlaceholder": "이름"
         }
+    },
+    "feedback": {
+        "button": "피드백 보내기",
+        "title": "피드백을 들려주세요!",
+        "ratingTitle": "전반적으로 이 도구를 사용한 경험은 어떠셨나요?",
+        "ratingVeryDissatisfied": "매우 불만족",
+        "ratingVerySatisfied": "매우 만족",
+        "recommendTitle": "이 도구를 다른 사람에게 추천할 가능성은 얼마나 되나요?",
+        "recommendVeryUnlikely": "전혀 추천하지 않음",
+        "recommendVeryLikely": "매우 추천함",
+        "experienceTitle": "사용 경험을 들려주세요.",
+        "close": "닫기",
+        "send": "피드백 보내기",
+        "error": "앗!",
+        "errorMessage": "피드백을 전송하지 못했습니다. 나중에 다시 시도해 주세요.",
+        "thankYou": "피드백을 보내주셔서 감사합니다!"
     }
 }

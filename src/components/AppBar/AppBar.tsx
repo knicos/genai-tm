@@ -5,17 +5,19 @@ import SaveAltIcon from '@mui/icons-material/SaveAlt';
 import FileOpenIcon from '@mui/icons-material/FileOpen';
 import style from './AppBar.module.css';
 import { useAtomValue, useSetAtom } from 'jotai';
-import { loadState, menuShowSettings, saveState, showOpenDialog } from '../../state';
+import { feedbackAtom, loadState, menuShowSettings, saveState, showOpenDialog } from '../../state';
 import SettingsIcon from '@mui/icons-material/Settings';
 import { IconButton, Link as MUILink, NativeSelect } from '@mui/material';
 import { Link } from 'react-router-dom';
 import Suggestion from '../Suggestion/Suggestion';
-import { BusyButton } from '@genai-fi/base';
+import { BusyButton, Feedback } from '@genai-fi/base';
 
 interface Props {
     showReminder?: boolean;
     onSave: () => void;
 }
+
+const FEEDBACK_DELAY = 30 * 1000;
 
 export const LANGS = [
     { name: 'de-DE', label: 'Deutsch' },
@@ -44,6 +46,7 @@ export default function ApplicationBar({ showReminder, onSave }: Props) {
     const setShowOpenDialog = useSetAtom(showOpenDialog);
     const isloading = useAtomValue(loadState);
     const setShowSettings = useSetAtom(menuShowSettings);
+    const showFeedback = useAtomValue(feedbackAtom);
 
     const openFile = useCallback(() => {
         setShowOpenDialog(true);
@@ -59,7 +62,7 @@ export default function ApplicationBar({ showReminder, onSave }: Props) {
     const doSettings = useCallback(() => {
         //navigate(`/settings?${createSearchParams(params)}`, { replace: false });
         setShowSettings(true);
-    }, []);
+    }, [setShowSettings]);
 
     const doSave = useCallback(() => {
         setReminder(false);
@@ -112,6 +115,15 @@ export default function ApplicationBar({ showReminder, onSave }: Props) {
                     </BusyButton>
                 </div>
                 <div className={showSettings ? style.langBarWithSettings : style.langBar}>
+                    {showFeedback && (
+                        <Feedback
+                            application="tm"
+                            variant="contained"
+                            delay={FEEDBACK_DELAY}
+                            apiUrl={import.meta.env.VITE_FEEDBACK_URL}
+                            style={{ marginRight: '1rem' }}
+                        />
+                    )}
                     <NativeSelect
                         value={i18n.language}
                         onChange={doChangeLanguage}

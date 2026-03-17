@@ -130,8 +130,14 @@
             "advanced": "Ya Juu"
         },
         "values": {
-            "models": ["Picha (MobileNet)", "Mkao wa Mwili (PoseNet)"],
-            "variants": ["Matumizi ya Kawaida", "Kundi"]
+            "models": [
+                "Picha (MobileNet)",
+                "Mkao wa Mwili (PoseNet)"
+            ],
+            "variants": [
+                "Matumizi ya Kawaida",
+                "Kundi"
+            ]
         }
     },
     "widget": {
@@ -142,5 +148,21 @@
         "labels": {
             "titlePlaceholder": "Jina"
         }
+    },
+    "feedback": {
+        "button": "Toa maoni",
+        "title": "Tupe maoni yako!",
+        "ratingTitle": "Kwa ujumla, uzoefu wako na zana hii ulikuwaje?",
+        "ratingVeryDissatisfied": "Hujaridhika kabisa",
+        "ratingVerySatisfied": "Umeridhika kabisa",
+        "recommendTitle": "Una uwezekano gani wa kupendekeza zana hii kwa wengine?",
+        "recommendVeryUnlikely": "Haiwezekani kabisa",
+        "recommendVeryLikely": "Inawezekana kabisa",
+        "experienceTitle": "Tuambie kuhusu uzoefu wako.",
+        "close": "Funga",
+        "send": "Tuma maoni",
+        "error": "Lo!",
+        "errorMessage": "Hatukuweza kutuma maoni yako. Tafadhali jaribu tena baadaye.",
+        "thankYou": "Asante kwa maoni yako!"
     }
 }
