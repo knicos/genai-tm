@@ -92,7 +92,9 @@
     "heatmap": {
         "title": "説明",
         "colorScaleHelp": "カラースケールは、モデルが画像のどの部分に注目しているかを示します。赤 = 高い重要度、青 = 低い重要度。",
-        "noPoseDetected": "ポーズなし"
+        "noPoseDetected": "ポーズなし",
+        "high": "高",
+        "low": "低"
     },
     "underTheHood": {
         "title": "内部の仕組み",

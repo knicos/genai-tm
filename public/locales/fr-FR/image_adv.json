@@ -92,7 +92,9 @@
     "heatmap": {
         "title": "Explanation",
         "colorScaleHelp": "L'échelle de couleurs montre les parties de l'image sur lesquelles le modèle se concentre. Rouge = haute importance, Bleu = faible importance.",
-        "noPoseDetected": "Pas de pose"
+        "noPoseDetected": "Pas de pose",
+        "high": "Haut",
+        "low": "Bas"
     },
     "underTheHood": {
         "title": "Sous le capot",

@@ -92,7 +92,9 @@
     "heatmap": {
         "title": "Ufafanuzi",
         "colorScaleHelp": "Mizani ya rangi inaonyesha sehemu za picha ambazo muundo unazingatia. Nyekundu = umuhimu wa juu, Bluu = umuhimu wa chini.",
-        "noPoseDetected": "Hakuna pose"
+        "noPoseDetected": "Hakuna pose",
+        "high": "Juu",
+        "low": "Chini"
     },
     "underTheHood": {
         "title": "Chini ya bonet",

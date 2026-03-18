@@ -92,7 +92,9 @@
     "heatmap": {
         "title": "Spiegazione",
         "colorScaleHelp": "La scala di colori mostra quali parti dell'immagine il modello si concentra. Rosso = alta importanza, Blu = bassa importanza.",
-        "noPoseDetected": "Nessuna posa"
+        "noPoseDetected": "Nessuna posa",
+        "high": "Alta",
+        "low": "Bassa"
     },
     "underTheHood": {
         "title": "Sotto il cofano",

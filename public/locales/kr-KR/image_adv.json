@@ -92,7 +92,9 @@
     "heatmap": {
         "title": "설명",
         "colorScaleHelp": "색상 척도는 모델이 이미지의 어느 부분에 집중하는지 보여줍니다. 빨강 = 높은 중요도, 파랑 = 낮은 중요도.",
-        "noPoseDetected": "포즈 없음"
+        "noPoseDetected": "포즈 없음",
+        "high": "높음",
+        "low": "낮음"
     },
     "underTheHood": {
         "title": "내부 작동 방식",

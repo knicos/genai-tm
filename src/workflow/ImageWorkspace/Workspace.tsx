@@ -21,7 +21,7 @@ import { useModelCreator } from '../../util/TeachableModel';
 import OpenDialog from './OpenDialog';
 import CloneDialog from './CloneDialog';
 import { IConnection, WorkflowLayout, SidePanel } from '@genai-fi/base';
-import UnderTheHood from '../../components/UnderTheHood/UnderTheHood';
+import UnderTheHood from '../../views/UnderTheHood/UnderTheHood';
 
 const SAVE_PERIOD = 5 * 60 * 1000; // 5 mins
 

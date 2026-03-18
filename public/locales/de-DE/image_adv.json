@@ -92,7 +92,9 @@
     "heatmap": {
         "title": "Erläuterung",
         "colorScaleHelp": "Die Farbskala zeigt, auf welche Teile des Bildes sich das Modell konzentriert. Rot = hohe Wichtigkeit, Blau = niedrige Wichtigkeit.",
-        "noPoseDetected": "Keine Pose"
+        "noPoseDetected": "Keine Pose",
+        "high": "Hoch",
+        "low": "Niedrig"
     },
     "underTheHood": {
         "title": "Unter der Haube",

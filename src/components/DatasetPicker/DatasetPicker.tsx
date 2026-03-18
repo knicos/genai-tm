@@ -15,6 +15,7 @@ import { useVariant } from '@genaitm/util/variant';
 import DatasetCategoryList, { DatasetCategoryListHandle } from './DatasetCategoryList';
 import { ScrollRootContext, useScrollRootRef } from './ScrollRootContext';
 import styles from './DatasetPicker.module.css';
+import { Alert } from '@mui/material';
 
 interface DatasetPickerProps {
     open: boolean;
@@ -31,6 +32,7 @@ export default function DatasetPicker({ open, onClose, onDatasetSelected }: Data
     const [selectedCount, setSelectedCount] = useState(0);
     const [scrollRoot, scrollRootRef] = useScrollRootRef();
     const listRef = useRef<DatasetCategoryListHandle>(null);
+    const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
         if (!open) return;
@@ -58,11 +60,11 @@ export default function DatasetPicker({ open, onClose, onDatasetSelected }: Data
                 listRef.current?.clearSelection();
                 onClose();
             } else {
-                alert(t('trainingdata.labels.datasetLoadError'));
+                setError(t('trainingdata.labels.datasetLoadError'));
             }
         } catch (error) {
             console.error('Error loading images:', error);
-            alert(t('trainingdata.labels.datasetLoadError'));
+            setError(t('trainingdata.labels.datasetLoadError'));
         } finally {
             setLoading(false);
         }
@@ -97,32 +99,42 @@ export default function DatasetPicker({ open, onClose, onDatasetSelected }: Data
                 </IconButton>
             </DialogTitle>
             <DialogContent ref={scrollRootRef}>
-                <ScrollRootContext.Provider value={scrollRoot}>
-                    {loading ? (
-                        <div className={styles.loadingContainer}>
-                            <Typography
-                                variant="body1"
-                                gutterBottom
-                            >
-                                {t('trainingdata.labels.loadingDataset', {
-                                    loaded: loadProgress.loaded,
-                                    total: loadProgress.total,
-                                })}
-                            </Typography>
-                            <LinearProgress
-                                variant="determinate"
-                                value={progressPercentage}
-                                className={styles.loadingProgress}
+                {!error && (
+                    <ScrollRootContext.Provider value={scrollRoot}>
+                        {loading ? (
+                            <div className={styles.loadingContainer}>
+                                <Typography
+                                    variant="body1"
+                                    gutterBottom
+                                >
+                                    {t('trainingdata.labels.loadingDataset', {
+                                        loaded: loadProgress.loaded,
+                                        total: loadProgress.total,
+                                    })}
+                                </Typography>
+                                <LinearProgress
+                                    variant="determinate"
+                                    value={progressPercentage}
+                                    className={styles.loadingProgress}
+                                />
+                            </div>
+                        ) : (
+                            <DatasetCategoryList
+                                ref={listRef}
+                                datasets={localDatasets}
+                                onSelectionChange={setSelectedCount}
                             />
-                        </div>
-                    ) : (
-                        <DatasetCategoryList
-                            ref={listRef}
-                            datasets={localDatasets}
-                            onSelectionChange={setSelectedCount}
-                        />
-                    )}
-                </ScrollRootContext.Provider>
+                        )}
+                    </ScrollRootContext.Provider>
+                )}
+                {error && (
+                    <Alert
+                        severity="error"
+                        className={styles.errorAlert}
+                    >
+                        {error}
+                    </Alert>
+                )}
             </DialogContent>
             <DialogActions className={styles.dialogActions}>
                 <Button

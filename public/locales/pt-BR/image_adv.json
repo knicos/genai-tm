@@ -92,7 +92,9 @@
     "heatmap": {
         "title": "Explicação",
         "colorScaleHelp": "A escala de cores mostra em quais partes da imagem o modelo se concentra. Vermelho = alta importância, Azul = baixa importância.",
-        "noPoseDetected": "Sem pose"
+        "noPoseDetected": "Sem pose",
+        "high": "Alta",
+        "low": "Baixa"
     },
     "underTheHood": {
         "title": "Sob o capô",

@@ -92,7 +92,9 @@
     "heatmap": {
         "title": "Sellitändy",
         "colorScaleHelp": "Väri-asteikko näyttäy, mih kuvah osih malli keškittyy. Punie = korkei tärkevys, Sinie = matala tärkevys.",
-        "noPoseDetected": "Ei azenduo"
+        "noPoseDetected": "Ei azenduo",
+        "high": "Korkei",
+        "low": "Matala"
     },
     "underTheHood": {
         "title": "Konepellin alla",

@@ -13,7 +13,6 @@ import Tooltip, { TooltipProps, tooltipClasses } from '@mui/material/Tooltip';
 import { styled } from '@mui/material/styles';
 import { useTranslation } from 'react-i18next';
 import { useVariant } from '@genaitm/util/variant';
-import TrainingAnimation from '@genaitm/components/TrainingAnimation/TrainingAnimation';
 import { useModelTrainer } from '@genaitm/util/TeachableModel';
 import { useAtom, useAtomValue, useSetAtom } from 'jotai';
 import { BusyButton, Widget } from '@genai-fi/base';
@@ -42,7 +41,7 @@ const HelpTooltip = styled(({ className, ...props }: TooltipProps) => (
 }));
 
 export default function Trainer({ onTrained, editing, ...props }: Props) {
-    const { namespace, advancedMenu, showTrainingAnimation } = useVariant();
+    const { namespace, advancedMenu } = useVariant();
     const { t } = useTranslation(namespace);
     const [training, setTraining] = useAtom(modelTraining);
     const [settingEpochs, setSettingEpochs] = useState(50);
@@ -128,7 +127,6 @@ export default function Trainer({ onTrained, editing, ...props }: Props) {
             activated={isTrainable}
             {...props}
         >
-            {showTrainingAnimation && <TrainingAnimation active={stage === 'training'} />}
             <div className={prompt ? style.buttonPrompt : style.buttonContainer}>
                 <BusyButton
                     data-testid="train-button"

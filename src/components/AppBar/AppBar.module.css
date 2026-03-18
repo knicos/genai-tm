@@ -37,6 +37,7 @@
     align-items: center;
     margin-right: 0.5rem;
     color: white;
+    flex-wrap: wrap;
 }
 
 .langBar :global .MuiNativeSelect-root::before {

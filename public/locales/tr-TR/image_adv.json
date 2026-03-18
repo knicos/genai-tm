@@ -92,7 +92,9 @@
     "heatmap": {
         "title": "Açıklama",
         "colorScaleHelp": "Renk ölçeği, modelin görüntünün hangi bölümlerine odaklandığını gösterir. Kırmızı = yüksek önem, Mavi = düşük önem.",
-        "noPoseDetected": "Poz yok"
+        "noPoseDetected": "Poz yok",
+        "high": "Yüksek",
+        "low": "Düşük"
     },
     "underTheHood": {
         "title": "Kaputun altında",
