@@ -5,7 +5,16 @@
         "save": "保存",
         "load": "開く",
         "language": "言語",
-        "reminder": "分類器の保存を忘れないでください。"
+        "reminder": "分類器の保存を忘れないでください。",
+        "models": {
+            "image": "画像",
+            "pose": "ポーズ"
+        },
+        "github": "GitHub",
+        "teachingMaterials": "教材",
+        "selectModel": "何を分類したいですか？",
+        "enableUSB": "USB デバイスを使用",
+        "subtitle": "コーディング不要で、自分のデータを使って分類器を作成"
     },
     "load": {
         "title": "分類器を開く",

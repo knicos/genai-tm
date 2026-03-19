@@ -5,7 +5,16 @@
         "save": "저장",
         "load": "열기",
         "language": "언어",
-        "reminder": "분류기를 저장하는 것을 기억하세요."
+        "reminder": "분류기를 저장하는 것을 기억하세요.",
+        "models": {
+            "image": "이미지",
+            "pose": "자세"
+        },
+        "github": "GitHub",
+        "teachingMaterials": "학습 자료",
+        "selectModel": "무엇을 분류하고 싶나요?",
+        "enableUSB": "USB 장치 사용",
+        "subtitle": "코딩 없이 나만의 데이터로 분류기를 만들어 보세요"
     },
     "load": {
         "title": "분류기 열기",

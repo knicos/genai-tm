@@ -5,7 +5,16 @@
         "save": "Salva",
         "load": "Apri",
         "language": "Lingua",
-        "reminder": "Ricorda di salvare il tuo classificatore."
+        "reminder": "Ricorda di salvare il tuo classificatore.",
+        "models": {
+            "image": "Immagini",
+            "pose": "Pose"
+        },
+        "github": "GitHub",
+        "teachingMaterials": "Materiali didattici",
+        "selectModel": "Cosa vuoi classificare?",
+        "enableUSB": "Usa dispositivo USB",
+        "subtitle": "Crea classificatori con i tuoi dati, senza bisogno di programmare"
     },
     "load": {
         "title": "Apri classificatore",

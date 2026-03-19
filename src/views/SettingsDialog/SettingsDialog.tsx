@@ -13,7 +13,7 @@ import { VARIANTS } from '../ImageGeneral/ImageGeneral';
 function delta(data: IVariantContext, template: VARIANTS): Partial<IVariantContext> {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const result: any = {};
-    const keys = Object.keys(data) as Array<keyof IVariantContext>;
+    const keys = Object.keys(data) as (keyof IVariantContext)[];
     const merged = {
         ...DEFAULTS.base,
         ...DEFAULTS[data.modelVariant],
@@ -42,7 +42,7 @@ export default function SettingsDialog() {
         navigate(str === '{}' ? `/${state.modelVariant}/general` : `/${state.modelVariant}/general?c=${urlCode}`, {
             replace: false,
         });
-    }, [state]);
+    }, [state, navigate, setShowDialog]);
 
     return (
         <Dialog

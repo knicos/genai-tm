@@ -5,7 +5,16 @@
         "save": "Speichern",
         "load": "Öffnen",
         "language": "Sprache",
-        "reminder": "Denk daran, deinen Klassifikator zu speichern."
+        "reminder": "Denk daran, deinen Klassifikator zu speichern.",
+        "models": {
+            "image": "Bilder",
+            "pose": "Posen"
+        },
+        "github": "GitHub",
+        "teachingMaterials": "Lehrmaterialien",
+        "selectModel": "Was möchtest du klassifizieren?",
+        "enableUSB": "USB-Gerät verwenden",
+        "subtitle": "Erstelle Klassifikatoren mit deinen eigenen Daten, ganz ohne Programmierung"
     },
     "load": {
         "title": "Klassifikator öffnen",

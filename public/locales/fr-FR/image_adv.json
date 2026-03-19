@@ -5,7 +5,16 @@
         "save": "Enregistrer",
         "load": "Ouvrir",
         "language": "Langue",
-        "reminder": "N'oubliez pas d'enregistrer votre Classificateur."
+        "reminder": "N'oubliez pas d'enregistrer votre Classificateur.",
+        "models": {
+            "image": "Images",
+            "pose": "Postures"
+        },
+        "github": "GitHub",
+        "teachingMaterials": "Ressources pédagogiques",
+        "selectModel": "Que voulez-vous classifier ?",
+        "enableUSB": "Utiliser un appareil USB",
+        "subtitle": "Créez des classificateurs avec vos propres données, sans coder"
     },
     "load": {
         "title": "Ouvrir le Classificateur",

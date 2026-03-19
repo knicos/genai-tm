@@ -5,7 +5,16 @@
         "save": "Spara",
         "load": "Öppna",
         "language": "Språk",
-        "reminder": "Kom ihåg att spara din klassificerare."
+        "reminder": "Kom ihåg att spara din klassificerare.",
+        "models": {
+            "image": "Bilder",
+            "pose": "Poser"
+        },
+        "github": "GitHub",
+        "teachingMaterials": "Undervisningsmaterial",
+        "selectModel": "Vad vill du klassificera?",
+        "enableUSB": "Använd USB-enhet",
+        "subtitle": "Skapa klassificerare med dina egna data, utan kodning"
     },
     "save": {
         "title": "Spara Klassificerare",

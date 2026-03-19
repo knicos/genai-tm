@@ -5,7 +5,16 @@
         "save": "Hifadhi",
         "load": "Fungua",
         "language": "Lugha",
-        "reminder": "Kumbuka kuhifadhi kichanganuzi chako."
+        "reminder": "Kumbuka kuhifadhi kichanganuzi chako.",
+        "models": {
+            "image": "Picha",
+            "pose": "Mikao"
+        },
+        "github": "GitHub",
+        "teachingMaterials": "Nyenzo za kufundishia",
+        "selectModel": "Unataka kuainisha nini?",
+        "enableUSB": "Tumia kifaa cha USB",
+        "subtitle": "Unda vichanganuzi kwa kutumia data yako mwenyewe bila kuandika msimbo"
     },
     "load": {
         "title": "Fungua Kichanganuzi",

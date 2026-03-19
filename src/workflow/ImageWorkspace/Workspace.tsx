@@ -226,15 +226,13 @@ export default function Workspace({ step, visitedStep, onComplete, saveTrigger, 
                 </WorkflowLayout>
             </div>
 
-            {showSidebar && (
-                <SidePanel
-                    open={showSidebar}
-                    position="right"
-                    onClose={() => setShowSidebar(false)}
-                >
-                    <UnderTheHood />
-                </SidePanel>
-            )}
+            <SidePanel
+                open={showSidebar}
+                position="right"
+                onClose={() => setShowSidebar(false)}
+            >
+                {showSidebar && <UnderTheHood />}
+            </SidePanel>
 
             <SaveDialog
                 trigger={saveTrigger}

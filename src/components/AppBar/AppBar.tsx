@@ -1,4 +1,4 @@
-import React, { useCallback, useRef, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useVariant } from '../../util/variant';
 import SaveAltIcon from '@mui/icons-material/SaveAlt';
@@ -7,10 +7,10 @@ import style from './AppBar.module.css';
 import { useAtomValue, useSetAtom } from 'jotai';
 import { feedbackAtom, loadState, menuShowSettings, saveState, showOpenDialog } from '../../state';
 import SettingsIcon from '@mui/icons-material/Settings';
-import { IconButton, Link as MUILink, NativeSelect } from '@mui/material';
+import { IconButton, Link as MUILink } from '@mui/material';
 import { Link } from 'react-router-dom';
 import Suggestion from '../Suggestion/Suggestion';
-import { BusyButton, Feedback } from '@genai-fi/base';
+import { BusyButton, Feedback, LangSelect } from '@genai-fi/base';
 
 interface Props {
     showReminder?: boolean;
@@ -39,7 +39,7 @@ export const LANGS = [
 
 export default function ApplicationBar({ showReminder, onSave }: Props) {
     const { namespace, showSettings, showSaveReminder } = useVariant();
-    const { t, i18n } = useTranslation(namespace);
+    const { t } = useTranslation(namespace);
     const saving = useAtomValue(saveState);
     const saveButtonRef = useRef(null);
     const [reminder, setReminder] = useState(true);
@@ -51,13 +51,6 @@ export default function ApplicationBar({ showReminder, onSave }: Props) {
     const openFile = useCallback(() => {
         setShowOpenDialog(true);
     }, [setShowOpenDialog]);
-
-    const doChangeLanguage = useCallback(
-        (e: React.ChangeEvent<HTMLSelectElement>) => {
-            i18n.changeLanguage(e.target.value || 'en-GB');
-        },
-        [i18n]
-    );
 
     const doSettings = useCallback(() => {
         //navigate(`/settings?${createSearchParams(params)}`, { replace: false });
@@ -89,7 +82,6 @@ export default function ApplicationBar({ showReminder, onSave }: Props) {
                         width="48"
                         height="48"
                     />
-                    <h1>{t('app.title')}</h1>
                 </Link>
                 <div className={style.buttonBar}>
                     <BusyButton
@@ -124,22 +116,11 @@ export default function ApplicationBar({ showReminder, onSave }: Props) {
                             style={{ marginRight: '1rem' }}
                         />
                     )}
-                    <NativeSelect
-                        value={i18n.language}
-                        onChange={doChangeLanguage}
-                        variant="outlined"
-                        data-testid="select-lang"
-                        inputProps={{ 'aria-label': t('app.language') }}
-                    >
-                        {LANGS.map((lng) => (
-                            <option
-                                key={lng.name}
-                                value={lng.name}
-                            >
-                                {lng.label}
-                            </option>
-                        ))}
-                    </NativeSelect>
+                    <LangSelect
+                        languages={LANGS}
+                        dark
+                        ns="image_adv"
+                    />
                 </div>
                 {showSettings && (
                     <IconButton

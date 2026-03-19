@@ -5,7 +5,16 @@
         "save": "Tallenda",
         "load": "Avua",
         "language": "Kieli",
-        "reminder": "Musta tallendua luokittelii."
+        "reminder": "Musta tallendua luokittelii.",
+        "models": {
+            "image": "Kuvua",
+            "pose": "Azennot"
+        },
+        "github": "GitHub",
+        "teachingMaterials": "Opastusmaterjalat",
+        "selectModel": "Midä sie tahtot luokitella?",
+        "enableUSB": "Käytä USB-laitettu",
+        "subtitle": "Lua luokittelijat omil tiedoloil, ei koodandoa pidä"
     },
     "save": {
         "title": "Tallenda luokittelii",

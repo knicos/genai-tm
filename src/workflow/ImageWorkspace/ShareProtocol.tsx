@@ -97,7 +97,7 @@ export default function ShareProtocol() {
             });
             setModelShared(false);
         }
-    }, [share, model, send]);
+    }, [share, model, send, setModelShared]);
 
     return null;
 }

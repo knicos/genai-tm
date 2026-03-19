@@ -14,6 +14,7 @@ import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { StyledEngineProvider } from '@mui/material/styles';
 import About from './views/About/About';
+import Home from './views/Home/Home';
 
 function ErrorComponent() {
     const error = useRouteError();
@@ -57,7 +58,7 @@ export const routes = createRoutesFromElements(
             element={
                 <Navigate
                     replace
-                    to="/image/general"
+                    to="/home"
                 />
             }
         />
@@ -76,6 +77,10 @@ export const routes = createRoutesFromElements(
         <Route
             path="about"
             element={<About />}
+        />
+        <Route
+            path="home"
+            element={<Home />}
         />
         <Route
             path=":kind/:variant"

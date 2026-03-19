@@ -5,7 +5,16 @@
         "save": "Kaydet",
         "load": "Aç",
         "language": "Dil",
-        "reminder": "Sınıflandırıcınızı kaydetmeyi unutmayın."
+        "reminder": "Sınıflandırıcınızı kaydetmeyi unutmayın.",
+        "models": {
+            "image": "Görseller",
+            "pose": "Pozlar"
+        },
+        "github": "GitHub",
+        "teachingMaterials": "Öğretim Materyalleri",
+        "selectModel": "Neyi sınıflandırmak istiyorsunuz?",
+        "enableUSB": "USB cihazı kullan",
+        "subtitle": "Kendi verilerinizle, kodlama gerekmeden sınıflandırıcılar oluşturun"
     },
     "save": {
         "title": "Sınıflandırıcıyı Kaydet",

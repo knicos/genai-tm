@@ -40,31 +40,6 @@
     flex-wrap: wrap;
 }
 
-.langBar :global .MuiNativeSelect-root::before {
-    border-bottom: 1px solid white;
-}
-
-.langBar :global .MuiNativeSelect-root:hover::before {
-    border-bottom: 2px solid white;
-}
-
-.langBar :global .Mui-focused {
-    border-bottom: 1px solid #444;
-}
-
-.langBar :global .MuiNativeSelect-icon {
-    color: white;
-}
-
-.langBar select {
-    color: white;
-    font-size: 0.8rem;
-}
-
-.langBar option {
-    color: black;
-}
-
 .langBarWithSettings {
     composes: langBar;
 }
@@ -72,7 +47,7 @@
 .logo {
     background: primary;
     padding-left: 0.5rem;
-    padding-right: 2rem;
+    padding-right: 0.5rem;
     gap: 0.8rem;
     display: flex;
     align-items: center;

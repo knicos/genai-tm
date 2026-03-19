@@ -4,8 +4,17 @@
         "about": "Sobre",
         "save": "Salvar",
         "load": "Carregar",
-        "language": "Language",
-        "reminder": "Remember to save your classifier."
+        "language": "Idioma",
+        "reminder": "Lembre-se de salvar seu classificador.",
+        "models": {
+            "image": "Imagens",
+            "pose": "Poses"
+        },
+        "github": "GitHub",
+        "teachingMaterials": "Materiais didáticos",
+        "selectModel": "O que você quer classificar?",
+        "enableUSB": "Usar dispositivo USB",
+        "subtitle": "Crie classificadores com seus próprios dados, sem precisar programar"
     },
     "save": {
         "title": "Salvar Classificador",

@@ -4,8 +4,17 @@
         "about": "Tietoa sovelluksesta",
         "save": "Tallenna",
         "load": "Avaa",
-        "language": "Language",
-        "reminder": "Remember to save your classifier."
+        "language": "Kieli",
+        "reminder": "Muista tallentaa luokittelijasi.",
+        "models": {
+            "image": "Kuvat",
+            "pose": "Asennot"
+        },
+        "github": "GitHub",
+        "teachingMaterials": "Oppimateriaalit",
+        "selectModel": "Mitä haluat luokitella?",
+        "enableUSB": "Käytä USB-laitetta",
+        "subtitle": "Luo luokittelijoita omilla tiedoillasi ilman koodausta"
     },
     "save": {
         "title": "Tallenna luokittelija",

@@ -20,6 +20,15 @@ body {
     overflow: hidden;
 }
 
+:root {
+    --secondary: rgb(156, 39, 176);
+    --secondaryLight: #e996e9;
+    --primary: #008297;
+    --primary-dark: #016f80;
+    --paleBlue: #e8f0fe;
+    --dropShadow: #a4acbb;
+}
+
 code {
     font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
