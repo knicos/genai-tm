@@ -207,7 +207,7 @@
             "message": "Tekstu",
             "link": "Linku",
             "linkError": "Linkua ei tugieta",
-            "embedInfo": "Ozuta kuva libo video linkaspäi. (Ezimerkikse Youtube, Vimeo, SoundCloud)",
+            "embedInfo": "Ozuta videjot da kuvat linkaspäi. Vain erähät linkit toimitah, ku YouTube, Vimeo, SoundCloud, videotiedostot, äänitiedostot libo kuvat. Kačo lisätieduo \"react-player\"-dokumentacijas.",
             "voiceRecording": "Iänitallendeh",
             "dropError": "Täh voit pakuttua vaiku kuvua libo iändy",
             "loop": "Toista"

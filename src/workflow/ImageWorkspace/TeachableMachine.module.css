@@ -1,9 +1,11 @@
 .workspace {
-    position: relative;
     flex-grow: 1;
     display: flex;
     flex-direction: row;
     min-height: 0;
+    overflow-x: hidden;
+    overflow-y: auto;
+    position: relative;
 }
 
 .workspace > section {

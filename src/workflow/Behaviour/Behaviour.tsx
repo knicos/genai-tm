@@ -257,7 +257,6 @@ export default function Behaviour({ classLabel, behaviour, setBehaviour, index, 
                     <Embed
                         behaviour={behaviour.embed}
                         setBehaviour={doSetEmbedBehaviour}
-                        firstBehaviour={index === 0}
                     />
                 )}
             </div>

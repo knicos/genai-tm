@@ -207,7 +207,7 @@
             "message": "Mensagem",
             "link": "Link",
             "linkError": "Esse link não é suportado",
-            "embedInfo": "Mostrar vídeos e imagens a partir de um link. Apenas alguns links funcionarão, por exemplo, YouTube, Vimeo, SoundCloud, arquivos de vídeo ou imagens.",
+            "embedInfo": "Mostrar vídeos e imagens a partir de um link. Apenas alguns links funcionarão, por exemplo, YouTube, Vimeo, SoundCloud, arquivos de vídeo, arquivos de áudio ou imagens. Consulte a documentação do \"react-player\" para mais detalhes.",
             "voiceRecording": "Gravação de Voz",
             "dropError": "Apenas imagens ou sons podem ser soltos aqui",
             "loop": "Loop"

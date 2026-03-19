@@ -207,7 +207,7 @@
             "message": "Meddelande",
             "link": "Länk",
             "linkError": "Denna länk stöds inte",
-            "embedInfo": "Visa videor och bilder från en länk. Endast vissa länkar kommer att fungera, till exempel YouTube, Vimeo, SoundCloud, videofiler eller bilder.",
+            "embedInfo": "Visa videor och bilder från en länk. Endast vissa länkar kommer att fungera, till exempel YouTube, Vimeo, SoundCloud, videofiler, ljudfiler eller bilder. Se \"react-player\"-dokumentationen för mer information.",
             "voiceRecording": "Röstinspelning",
             "dropError": "Endast bilder eller ljud kan släppas här",
             "loop": "Loop"

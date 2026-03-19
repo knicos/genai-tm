@@ -207,7 +207,7 @@
             "message": "Ujumbe",
             "link": "Kiungo",
             "linkError": "Kiungo hicho hakihitilafiani",
-            "embedInfo": "Onyesha video na picha kutoka kwenye kiungo. Viungo vichache tuu vitafanya kazi, mfano YouTube, Vimeo, SoundCloud, faili za video au picha.",
+            "embedInfo": "Onyesha video na picha kutoka kwenye kiungo. Ni baadhi tu ya viungo vitafanya kazi, kwa mfano YouTube, Vimeo, SoundCloud, faili za video, faili za sauti au picha. Tazama nyaraka za \"react-player\" kwa maelezo zaidi.",
             "voiceRecording": "Rekodi ya Sauti",
             "dropError": "Ni picha au sauti pekee zinakubaliwa",
             "loop": "Rudia"
