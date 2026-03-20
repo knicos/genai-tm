@@ -102,8 +102,14 @@
             "advanced": "උසස්"
         },
         "values": {
-            "models": ["පින්තූර (MobileNet)", "උරහිස් තත්ත්වය (PoseNet)"],
-            "variants": ["සාමාන්‍ය භාවිතය", "පාසල් භාවිතය"]
+            "models": [
+                "පින්තූර (MobileNet)",
+                "උරහිස් තත්ත්වය (PoseNet)"
+            ],
+            "variants": [
+                "සාමාන්‍ය භාවිතය",
+                "පාසල් භාවිතය"
+            ]
         }
     },
     "widget": {
@@ -114,5 +120,21 @@
         "labels": {
             "titlePlaceholder": "මාතෘකාව"
         }
+    },
+    "feedback": {
+        "button": "ප්‍රතිචාරය ලබාදෙන්න",
+        "title": "අපට ප්‍රතිචාරය ලබාදෙන්න!",
+        "ratingTitle": "සමස්තයෙන්, මෙම මෙවලම සමඟ ඔබගේ අත්දැකීම කෙසේද?",
+        "ratingVeryDissatisfied": "ඉතා අසතුටුයි",
+        "ratingVerySatisfied": "ඉතා සතුටුයි",
+        "recommendTitle": "මෙම මෙවලම වෙනත් අයට නිර්දේශ කිරීමට ඔබට ඇති හැකියාව කීයද?",
+        "recommendVeryUnlikely": "ඉතා අසම්භාව්‍යයි",
+        "recommendVeryLikely": "ඉතා සම්භාව්‍යයි",
+        "experienceTitle": "ඔබගේ අත්දැකීම අපට කියන්න.",
+        "close": "වසන්න",
+        "send": "ප්‍රතිචාරය යවන්න",
+        "error": "අපොයි!",
+        "errorMessage": "ඔබගේ ප්‍රතිචාරය යැවිය නොහැකි විය. කරුණාකර පසුව නැවත උත්සාහ කරන්න.",
+        "thankYou": "ඔබගේ ප්‍රතිචාරයට ස්තුතියි!"
     }
 }

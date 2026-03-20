@@ -1,7 +1,7 @@
 import React, { useCallback, useState, useEffect } from 'react';
 import TextField from '@mui/material/TextField';
 import style from './Behaviour.module.css';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import { useVariant } from '../../util/variant';
 import YouTubeIcon from '@mui/icons-material/YouTube';
 import BlockIcon from '@mui/icons-material/Block';
@@ -10,6 +10,7 @@ import Alert from '@mui/material/Alert';
 import LinkIcon from '@mui/icons-material/Link';
 import { linkType, LinkDetails } from './links';
 import VideocamIcon from '@mui/icons-material/Videocam';
+import { Help } from '@genai-fi/base';
 
 export interface EmbedBehaviour {
     url: string;
@@ -18,10 +19,9 @@ export interface EmbedBehaviour {
 interface Props {
     behaviour?: EmbedBehaviour;
     setBehaviour: (behaviour: EmbedBehaviour | undefined) => void;
-    firstBehaviour?: boolean;
 }
 
-export default function Embed({ behaviour, setBehaviour, firstBehaviour }: Props) {
+export default function Embed({ behaviour, setBehaviour }: Props) {
     const { namespace } = useVariant();
     const { t } = useTranslation(namespace);
     const [content, setContent] = useState('');
@@ -44,7 +44,6 @@ export default function Embed({ behaviour, setBehaviour, firstBehaviour }: Props
             const type = linkType(content).type;
             if (type !== 'invalid' && type !== 'plain') {
                 setBehaviour({ ...behaviour, url: content });
-            } else {
             }
         } else {
             setBehaviour(undefined);
@@ -86,6 +85,29 @@ export default function Embed({ behaviour, setBehaviour, firstBehaviour }: Props
                     onChange={doChange}
                     onBlur={doBlur}
                 />
+                <Help
+                    message={
+                        <div>
+                            <Trans
+                                t={t}
+                                i18nKey="behaviours.labels.embedInfo"
+                                components={{
+                                    l: (
+                                        <a
+                                            href="https://www.npmjs.com/package/react-player"
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className={style.link}
+                                        />
+                                    ),
+                                }}
+                            />
+                        </div>
+                    }
+                    inplace
+                    placement="bottom"
+                    keepOpen
+                />
             </div>
             {details.type === 'plain' && (
                 <Alert
@@ -93,14 +115,6 @@ export default function Embed({ behaviour, setBehaviour, firstBehaviour }: Props
                     sx={{ maxWidth: '280px' }}
                 >
                     <p>{t('behaviours.labels.linkError')}</p>
-                </Alert>
-            )}
-            {firstBehaviour && (
-                <Alert
-                    severity="info"
-                    sx={{ maxWidth: '280px' }}
-                >
-                    <p>{t('behaviours.labels.embedInfo')}</p>
                 </Alert>
             )}
         </div>

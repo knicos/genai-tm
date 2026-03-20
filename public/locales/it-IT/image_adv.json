@@ -5,7 +5,16 @@
         "save": "Salva",
         "load": "Apri",
         "language": "Lingua",
-        "reminder": "Ricorda di salvare il tuo classificatore."
+        "reminder": "Ricorda di salvare il tuo classificatore.",
+        "models": {
+            "image": "Immagini",
+            "pose": "Pose"
+        },
+        "github": "GitHub",
+        "teachingMaterials": "Materiali didattici",
+        "selectModel": "Cosa vuoi classificare?",
+        "enableUSB": "Usa dispositivo USB",
+        "subtitle": "Crea classificatori con i tuoi dati, senza bisogno di programmare"
     },
     "load": {
         "title": "Apri classificatore",
@@ -92,7 +101,9 @@
     "heatmap": {
         "title": "Spiegazione",
         "colorScaleHelp": "La scala di colori mostra quali parti dell'immagine il modello si concentra. Rosso = alta importanza, Blu = bassa importanza.",
-        "noPoseDetected": "Nessuna posa"
+        "noPoseDetected": "Nessuna posa",
+        "high": "Alta",
+        "low": "Bassa"
     },
     "underTheHood": {
         "title": "Sotto il cofano",
@@ -197,7 +208,7 @@
             "message": "Messaggio",
             "link": "Link",
             "linkError": "Il link non è supportato",
-            "embedInfo": "Mostra video e immagini da un link. Solo alcuni link funzioneranno, ad esempio YouTube, Vimeo, SoundCloud, file video o immagini.",
+            "embedInfo": "Mostra video e immagini da un link. Solo alcuni link funzioneranno, ad esempio YouTube, Vimeo, SoundCloud, file video, file audio o immagini.<br/><br/>Consulta la documentazione <l>react-player</l> per maggiori informazioni.",
             "voiceRecording": "Registrazione Vocale",
             "dropError": "Solo immagini o suoni possono essere rilasciati qui",
             "loop": "Loop"

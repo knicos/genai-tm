@@ -5,7 +5,16 @@
         "save": "Hifadhi",
         "load": "Fungua",
         "language": "Lugha",
-        "reminder": "Kumbuka kuhifadhi kichanganuzi chako."
+        "reminder": "Kumbuka kuhifadhi kichanganuzi chako.",
+        "models": {
+            "image": "Picha",
+            "pose": "Mikao"
+        },
+        "github": "GitHub",
+        "teachingMaterials": "Nyenzo za kufundishia",
+        "selectModel": "Unataka kuainisha nini?",
+        "enableUSB": "Tumia kifaa cha USB",
+        "subtitle": "Unda vichanganuzi kwa kutumia data yako mwenyewe bila kuandika msimbo"
     },
     "load": {
         "title": "Fungua Kichanganuzi",
@@ -92,7 +101,9 @@
     "heatmap": {
         "title": "Ufafanuzi",
         "colorScaleHelp": "Mizani ya rangi inaonyesha sehemu za picha ambazo muundo unazingatia. Nyekundu = umuhimu wa juu, Bluu = umuhimu wa chini.",
-        "noPoseDetected": "Hakuna pose"
+        "noPoseDetected": "Hakuna pose",
+        "high": "Juu",
+        "low": "Chini"
     },
     "underTheHood": {
         "title": "Chini ya bonet",
@@ -196,7 +207,7 @@
             "message": "Ujumbe",
             "link": "Kiungo",
             "linkError": "Kiungo hicho hakihitilafiani",
-            "embedInfo": "Onyesha video na picha kutoka kwenye kiungo. Viungo vichache tuu vitafanya kazi, mfano YouTube, Vimeo, SoundCloud, faili za video au picha.",
+            "embedInfo": "Onyesha video na picha kutoka kwenye kiungo. Ni baadhi tu ya viungo vitafanya kazi, kwa mfano YouTube, Vimeo, SoundCloud, faili za video, faili za sauti au picha.<br/><br/>Tazama nyaraka za <l>react-player</l> kwa maelezo zaidi.",
             "voiceRecording": "Rekodi ya Sauti",
             "dropError": "Ni picha au sauti pekee zinakubaliwa",
             "loop": "Rudia"

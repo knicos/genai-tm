@@ -1,21 +1,23 @@
-import React, { useCallback, useRef, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useVariant } from '../../util/variant';
 import SaveAltIcon from '@mui/icons-material/SaveAlt';
 import FileOpenIcon from '@mui/icons-material/FileOpen';
 import style from './AppBar.module.css';
 import { useAtomValue, useSetAtom } from 'jotai';
-import { loadState, menuShowSettings, saveState, showOpenDialog } from '../../state';
+import { feedbackAtom, loadState, menuShowSettings, saveState, showOpenDialog } from '../../state';
 import SettingsIcon from '@mui/icons-material/Settings';
-import { IconButton, Link as MUILink, NativeSelect } from '@mui/material';
+import { IconButton, Link as MUILink } from '@mui/material';
 import { Link } from 'react-router-dom';
 import Suggestion from '../Suggestion/Suggestion';
-import { BusyButton } from '@genai-fi/base';
+import { BusyButton, Feedback, LangSelect } from '@genai-fi/base';
 
 interface Props {
     showReminder?: boolean;
     onSave: () => void;
 }
+
+const FEEDBACK_DELAY = 30 * 1000;
 
 export const LANGS = [
     { name: 'de-DE', label: 'Deutsch' },
@@ -37,29 +39,23 @@ export const LANGS = [
 
 export default function ApplicationBar({ showReminder, onSave }: Props) {
     const { namespace, showSettings, showSaveReminder } = useVariant();
-    const { t, i18n } = useTranslation(namespace);
+    const { t } = useTranslation(namespace);
     const saving = useAtomValue(saveState);
     const saveButtonRef = useRef(null);
     const [reminder, setReminder] = useState(true);
     const setShowOpenDialog = useSetAtom(showOpenDialog);
     const isloading = useAtomValue(loadState);
     const setShowSettings = useSetAtom(menuShowSettings);
+    const showFeedback = useAtomValue(feedbackAtom);
 
     const openFile = useCallback(() => {
         setShowOpenDialog(true);
     }, [setShowOpenDialog]);
 
-    const doChangeLanguage = useCallback(
-        (e: React.ChangeEvent<HTMLSelectElement>) => {
-            i18n.changeLanguage(e.target.value || 'en-GB');
-        },
-        [i18n]
-    );
-
     const doSettings = useCallback(() => {
         //navigate(`/settings?${createSearchParams(params)}`, { replace: false });
         setShowSettings(true);
-    }, []);
+    }, [setShowSettings]);
 
     const doSave = useCallback(() => {
         setReminder(false);
@@ -86,7 +82,6 @@ export default function ApplicationBar({ showReminder, onSave }: Props) {
                         width="48"
                         height="48"
                     />
-                    <h1>{t('app.title')}</h1>
                 </Link>
                 <div className={style.buttonBar}>
                     <BusyButton
@@ -112,22 +107,20 @@ export default function ApplicationBar({ showReminder, onSave }: Props) {
                     </BusyButton>
                 </div>
                 <div className={showSettings ? style.langBarWithSettings : style.langBar}>
-                    <NativeSelect
-                        value={i18n.language}
-                        onChange={doChangeLanguage}
-                        variant="outlined"
-                        data-testid="select-lang"
-                        inputProps={{ 'aria-label': t('app.language') }}
-                    >
-                        {LANGS.map((lng) => (
-                            <option
-                                key={lng.name}
-                                value={lng.name}
-                            >
-                                {lng.label}
-                            </option>
-                        ))}
-                    </NativeSelect>
+                    {showFeedback && (
+                        <Feedback
+                            application="tm"
+                            variant="contained"
+                            delay={FEEDBACK_DELAY}
+                            apiUrl={import.meta.env.VITE_FEEDBACK_URL}
+                            style={{ marginRight: '1rem' }}
+                        />
+                    )}
+                    <LangSelect
+                        languages={LANGS}
+                        dark
+                        ns="image_adv"
+                    />
                 </div>
                 {showSettings && (
                     <IconButton

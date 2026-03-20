@@ -5,7 +5,16 @@
         "save": "保存",
         "load": "開く",
         "language": "言語",
-        "reminder": "分類器の保存を忘れないでください。"
+        "reminder": "分類器の保存を忘れないでください。",
+        "models": {
+            "image": "画像",
+            "pose": "ポーズ"
+        },
+        "github": "GitHub",
+        "teachingMaterials": "教材",
+        "selectModel": "何を分類したいですか？",
+        "enableUSB": "USB デバイスを使用",
+        "subtitle": "コーディング不要で、自分のデータを使って分類器を作成"
     },
     "load": {
         "title": "分類器を開く",
@@ -92,7 +101,9 @@
     "heatmap": {
         "title": "説明",
         "colorScaleHelp": "カラースケールは、モデルが画像のどの部分に注目しているかを示します。赤 = 高い重要度、青 = 低い重要度。",
-        "noPoseDetected": "ポーズなし"
+        "noPoseDetected": "ポーズなし",
+        "high": "高",
+        "low": "低"
     },
     "underTheHood": {
         "title": "内部の仕組み",
@@ -196,7 +207,7 @@
             "message": "メッセージ",
             "link": "リンク",
             "linkError": "このリンクはサポートされていません。",
-            "embedInfo": "リンク先の動画や画像を表示します(YouTube、Vimeo、SoundCloud、動画ファイル、画像など、一部のリンクのみ対応)",
+            "embedInfo": "リンク先の動画や画像を表示します。対応するのは一部のリンクのみで、例えば YouTube、Vimeo、SoundCloud、動画ファイル、音声ファイル、画像などです。詳しくは <l>react-player</l> のドキュメントをご覧ください。",
             "voiceRecording": "音声録音",
             "dropError": "ここには画像または音声のみドロップ可能です。",
             "loop": "ループ"

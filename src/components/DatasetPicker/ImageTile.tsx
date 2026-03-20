@@ -87,6 +87,7 @@ export default function ImageTile({
                 alt={alt}
                 className={imgClassName ?? ''}
                 onError={onError}
+                data-testid="dataset-image"
             />
         </Box>
     );

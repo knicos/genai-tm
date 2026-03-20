@@ -1,5 +1,7 @@
 import { useEffect, useRef } from 'react';
 import style from './ColorLegend.module.css';
+import { useTranslation } from 'react-i18next';
+import { useVariant } from '@genaitm/util/variant';
 
 interface ColorLegendProps {
     height?: number;
@@ -7,6 +9,8 @@ interface ColorLegendProps {
 }
 
 export function ColorLegend({ height = 224, width = 10 }: ColorLegendProps) {
+    const { namespace } = useVariant();
+    const { t } = useTranslation(namespace);
     const canvasRef = useRef<HTMLCanvasElement>(null);
 
     useEffect(() => {
@@ -18,7 +22,7 @@ export function ColorLegend({ height = 224, width = 10 }: ColorLegendProps) {
 
         // Create gradient from high activation (red) to low activation (blue)
         const gradient = ctx.createLinearGradient(0, 0, 0, height);
-        
+
         // HSL color mapping: reversed so red is at top
         // Saturation 70% and lightness 50% for balanced visibility
         // value = 0 (top) -> hue = 0 (red - high)
@@ -35,14 +39,14 @@ export function ColorLegend({ height = 224, width = 10 }: ColorLegendProps) {
 
     return (
         <div className={style.legendContainer}>
-            <div className={style.legendLabel}>High</div>
+            <div className={style.legendLabel}>{t('heatmap.high')}</div>
             <canvas
                 ref={canvasRef}
                 width={width}
                 height={height}
                 className={style.legendCanvas}
             />
-            <div className={style.legendLabel}>Low</div>
+            <div className={style.legendLabel}>{t('heatmap.low')}</div>
         </div>
     );
 }

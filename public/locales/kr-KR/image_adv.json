@@ -5,7 +5,16 @@
         "save": "저장",
         "load": "열기",
         "language": "언어",
-        "reminder": "분류기를 저장하는 것을 기억하세요."
+        "reminder": "분류기를 저장하는 것을 기억하세요.",
+        "models": {
+            "image": "이미지",
+            "pose": "자세"
+        },
+        "github": "GitHub",
+        "teachingMaterials": "학습 자료",
+        "selectModel": "무엇을 분류하고 싶나요?",
+        "enableUSB": "USB 장치 사용",
+        "subtitle": "코딩 없이 나만의 데이터로 분류기를 만들어 보세요"
     },
     "load": {
         "title": "분류기 열기",
@@ -92,7 +101,9 @@
     "heatmap": {
         "title": "설명",
         "colorScaleHelp": "색상 척도는 모델이 이미지의 어느 부분에 집중하는지 보여줍니다. 빨강 = 높은 중요도, 파랑 = 낮은 중요도.",
-        "noPoseDetected": "포즈 없음"
+        "noPoseDetected": "포즈 없음",
+        "high": "높음",
+        "low": "낮음"
     },
     "underTheHood": {
         "title": "내부 작동 방식",
@@ -196,7 +207,7 @@
             "message": "메세지",
             "link": "링크",
             "linkError": "지원되지 않는 링크입니다",
-            "embedInfo": "링크의 비디오나 이미지 보기. YouTube, Vimeo, SoundCloud, video 파일이나 이미지 등 일부 링크만 가능합니다.",
+            "embedInfo": "링크에서 비디오와 이미지를 표시합니다. YouTube, Vimeo, SoundCloud, 비디오 파일, 오디오 파일 또는 이미지 등 일부 링크만 작동합니다.<br/><br/>자세한 내용은 <l>react-player</l> 문서를 참고하세요.",
             "voiceRecording": "음성 녹음",
             "dropError": "이미지나 소리만 놓을 수 있습니다",
             "loop": "반복"

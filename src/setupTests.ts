@@ -64,6 +64,20 @@ class ResizeObserver {
 
 global.ResizeObserver = ResizeObserver;
 
+class IntersectionObserver {
+    observe() {}
+    unobserve() {}
+    disconnect() {}
+    root = null;
+    rootMargin = '';
+    thresholds = [];
+    takeRecords() {
+        return [];
+    }
+}
+
+global.IntersectionObserver = IntersectionObserver;
+
 // runs a cleanup after each test case (e.g. clearing jsdom)
 afterEach(() => {
     cleanup();

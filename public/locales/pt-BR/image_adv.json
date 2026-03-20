@@ -4,8 +4,17 @@
         "about": "Sobre",
         "save": "Salvar",
         "load": "Carregar",
-        "language": "Language",
-        "reminder": "Remember to save your classifier."
+        "language": "Idioma",
+        "reminder": "Lembre-se de salvar seu classificador.",
+        "models": {
+            "image": "Imagens",
+            "pose": "Poses"
+        },
+        "github": "GitHub",
+        "teachingMaterials": "Materiais didáticos",
+        "selectModel": "O que você quer classificar?",
+        "enableUSB": "Usar dispositivo USB",
+        "subtitle": "Crie classificadores com seus próprios dados, sem precisar programar"
     },
     "save": {
         "title": "Salvar Classificador",
@@ -92,7 +101,9 @@
     "heatmap": {
         "title": "Explicação",
         "colorScaleHelp": "A escala de cores mostra em quais partes da imagem o modelo se concentra. Vermelho = alta importância, Azul = baixa importância.",
-        "noPoseDetected": "Sem pose"
+        "noPoseDetected": "Sem pose",
+        "high": "Alta",
+        "low": "Baixa"
     },
     "underTheHood": {
         "title": "Sob o capô",
@@ -196,7 +207,7 @@
             "message": "Mensagem",
             "link": "Link",
             "linkError": "Esse link não é suportado",
-            "embedInfo": "Mostrar vídeos e imagens a partir de um link. Apenas alguns links funcionarão, por exemplo, YouTube, Vimeo, SoundCloud, arquivos de vídeo ou imagens.",
+            "embedInfo": "Mostrar vídeos e imagens a partir de um link. Apenas alguns links funcionarão, por exemplo, YouTube, Vimeo, SoundCloud, arquivos de vídeo, arquivos de áudio ou imagens.<br/><br/>Consulte a documentação do <l>react-player</l> para mais detalhes.",
             "voiceRecording": "Gravação de Voz",
             "dropError": "Apenas imagens ou sons podem ser soltos aqui",
             "loop": "Loop"

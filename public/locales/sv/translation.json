@@ -46,8 +46,14 @@
             "advanced": "Avancerad"
         },
         "values": {
-            "models": ["Bild (MobileNet)", "Pose (PoseNet)"],
-            "variants": ["Allmän användning", "Klassrum"]
+            "models": [
+                "Bild (MobileNet)",
+                "Pose (PoseNet)"
+            ],
+            "variants": [
+                "Allmän användning",
+                "Klassrum"
+            ]
         }
     },
     "widget": {
@@ -58,5 +64,21 @@
         "labels": {
             "titlePlaceholder": "Namn"
         }
+    },
+    "feedback": {
+        "button": "Ge feedback",
+        "title": "Ge oss feedback!",
+        "ratingTitle": "Hur var din upplevelse av det här verktyget överlag?",
+        "ratingVeryDissatisfied": "Mycket missnöjd",
+        "ratingVerySatisfied": "Mycket nöjd",
+        "recommendTitle": "Hur sannolikt är det att du skulle rekommendera det här verktyget till andra?",
+        "recommendVeryUnlikely": "Mycket osannolikt",
+        "recommendVeryLikely": "Mycket sannolikt",
+        "experienceTitle": "Berätta om din upplevelse.",
+        "close": "Stäng",
+        "send": "Skicka feedback",
+        "error": "Hoppsan!",
+        "errorMessage": "Vi kunde inte skicka din feedback. Försök igen senare.",
+        "thankYou": "Tack för din feedback!"
     }
 }

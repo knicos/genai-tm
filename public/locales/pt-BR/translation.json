@@ -49,8 +49,14 @@
             "advanced": "Avançado"
         },
         "values": {
-            "models": ["Image (MobileNet)", "Pose (PoseNet)"],
-            "variants": ["General Use", "Classroom"]
+            "models": [
+                "Image (MobileNet)",
+                "Pose (PoseNet)"
+            ],
+            "variants": [
+                "General Use",
+                "Classroom"
+            ]
         }
     },
     "widget": {
@@ -61,5 +67,21 @@
         "labels": {
             "titlePlaceholder": "Nome"
         }
+    },
+    "feedback": {
+        "button": "Enviar feedback",
+        "title": "Queremos seu feedback!",
+        "ratingTitle": "No geral, como foi sua experiência com esta ferramenta?",
+        "ratingVeryDissatisfied": "Muito insatisfeito",
+        "ratingVerySatisfied": "Muito satisfeito",
+        "recommendTitle": "Qual a probabilidade de você recomendar esta ferramenta para outras pessoas?",
+        "recommendVeryUnlikely": "Muito improvável",
+        "recommendVeryLikely": "Muito provável",
+        "experienceTitle": "Conte-nos sobre a sua experiência.",
+        "close": "Fechar",
+        "send": "Enviar feedback",
+        "error": "Ops!",
+        "errorMessage": "Não foi possível enviar seu feedback. Tente novamente mais tarde.",
+        "thankYou": "Obrigado pelo seu feedback!"
     }
 }

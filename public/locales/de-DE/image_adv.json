@@ -5,7 +5,16 @@
         "save": "Speichern",
         "load": "Öffnen",
         "language": "Sprache",
-        "reminder": "Denk daran, deinen Klassifikator zu speichern."
+        "reminder": "Denk daran, deinen Klassifikator zu speichern.",
+        "models": {
+            "image": "Bilder",
+            "pose": "Posen"
+        },
+        "github": "GitHub",
+        "teachingMaterials": "Lehrmaterialien",
+        "selectModel": "Was möchtest du klassifizieren?",
+        "enableUSB": "USB-Gerät verwenden",
+        "subtitle": "Erstelle Klassifikatoren mit deinen eigenen Daten, ganz ohne Programmierung"
     },
     "load": {
         "title": "Klassifikator öffnen",
@@ -92,7 +101,9 @@
     "heatmap": {
         "title": "Erläuterung",
         "colorScaleHelp": "Die Farbskala zeigt, auf welche Teile des Bildes sich das Modell konzentriert. Rot = hohe Wichtigkeit, Blau = niedrige Wichtigkeit.",
-        "noPoseDetected": "Keine Pose"
+        "noPoseDetected": "Keine Pose",
+        "high": "Hoch",
+        "low": "Niedrig"
     },
     "underTheHood": {
         "title": "Unter der Haube",
@@ -196,7 +207,7 @@
             "message": "Nachricht",
             "link": "Link",
             "linkError": "Dieser Link wird nicht unterstützt",
-            "embedInfo": "Zeige Videos und Bilder von einem Link. Nur einige Links funktionieren, zum Beispiel YouTube, Vimeo, SoundCloud, Videodateien oder Bilder.",
+            "embedInfo": "Zeige Videos und Bilder von einem Link. Nur einige Links funktionieren, zum Beispiel YouTube, Vimeo, SoundCloud, Videodateien, Audiodateien oder Bilder.<br/><br/>Weitere Informationen findest du in der <l>react-player</l>-Dokumentation.",
             "voiceRecording": "Sprachaufzeichnung",
             "dropError": "Hier können nur Bilder oder Töne abgelegt werden",
             "loop": "Schleife"

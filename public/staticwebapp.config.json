@@ -25,6 +25,10 @@
             "rewrite": "index.html"
         },
         {
+            "route": "/home",
+            "rewrite": "index.html"
+        },
+        {
             "route": "/settings",
             "rewrite": "index.html"
         }

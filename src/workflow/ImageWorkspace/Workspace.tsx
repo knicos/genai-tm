@@ -22,7 +22,7 @@ import { useModelCreator } from '../../util/TeachableModel';
 import OpenDialog from './OpenDialog';
 import CloneDialog from './CloneDialog';
 import { IConnection, WorkflowLayout, SidePanel } from '@genai-fi/base';
-import UnderTheHood from '../../components/UnderTheHood/UnderTheHood';
+import UnderTheHood from '../../views/UnderTheHood/UnderTheHood';
 
 const SAVE_PERIOD = 5 * 60 * 1000; // 5 mins
 
@@ -200,7 +200,10 @@ export default function Workspace({ step, visitedStep, onComplete, saveTrigger, 
             />
             <ModelSaver onSaved={doSaved} />
             <div className={`${style.workspaceContent} ${showSidebar ? style.workspaceContentPanelOpen : ''}`}>
-                <WorkflowLayout connections={CONNECTIONS}>
+                <WorkflowLayout
+                    connections={CONNECTIONS}
+                    ignoredColumns={visitedStep < 1 ? 2 : 0}
+                >
                     <TrainingData
                         data={data}
                         setData={doSetData}

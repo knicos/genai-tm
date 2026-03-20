@@ -24,7 +24,6 @@ describe('AppBar component', () => {
         expect(screen.getByTestId('open-project')).toBeInTheDocument();
         expect(screen.getByTestId('save-project')).toBeInTheDocument();
         expect(screen.getByText('English')).toBeInTheDocument();
-        expect(screen.getByText('app.title')).toBeInTheDocument();
     });
 
     it('can change language', async ({ expect }) => {

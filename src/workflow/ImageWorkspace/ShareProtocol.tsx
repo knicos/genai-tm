@@ -84,20 +84,24 @@ export default function ShareProtocol() {
             send();
             return () => clearInterval(timer);
         } else if (!share && model) {
-            fetch(`${import.meta.env.VITE_APP_API || 'http://localhost:9001'}/model/${cache.current.code}/`, {
-                method: 'DELETE',
-            }).catch((err) => {
-                // Silently handle connection errors when collaboration server isn't running
-                if (err instanceof TypeError && err.message?.includes('Failed to fetch')) {
-                    // Collaboration server not available - this is expected when not using P2P features
-                    console.debug('Collaboration server not available');
-                } else {
-                    console.error('Failed to unshare model', err);
+            setModelShared((wasShared) => {
+                if (wasShared) {
+                    fetch(`${import.meta.env.VITE_APP_API || 'http://localhost:9001'}/model/${cache.current.code}/`, {
+                        method: 'DELETE',
+                    }).catch((err) => {
+                        // Silently handle connection errors when collaboration server isn't running
+                        if (err instanceof TypeError && err.message?.includes('Failed to fetch')) {
+                            // Collaboration server not available - this is expected when not using P2P features
+                            console.debug('Collaboration server not available');
+                        } else {
+                            console.error('Failed to unshare model', err);
+                        }
+                    });
                 }
+                return false;
             });
-            setModelShared(false);
         }
-    }, [share, model, send]);
+    }, [share, model, send, setModelShared]);
 
     return null;
 }

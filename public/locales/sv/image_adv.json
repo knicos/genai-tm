@@ -5,7 +5,16 @@
         "save": "Spara",
         "load": "Öppna",
         "language": "Språk",
-        "reminder": "Kom ihåg att spara din klassificerare."
+        "reminder": "Kom ihåg att spara din klassificerare.",
+        "models": {
+            "image": "Bilder",
+            "pose": "Poser"
+        },
+        "github": "GitHub",
+        "teachingMaterials": "Undervisningsmaterial",
+        "selectModel": "Vad vill du klassificera?",
+        "enableUSB": "Använd USB-enhet",
+        "subtitle": "Skapa klassificerare med dina egna data, utan kodning"
     },
     "save": {
         "title": "Spara Klassificerare",
@@ -92,7 +101,9 @@
     "heatmap": {
         "title": "Förklaring",
         "colorScaleHelp": "Färgskalan visar vilka delar av bilden som modellen fokuserar på. Röd = hög betydelse, Blå = låg betydelse.",
-        "noPoseDetected": "Ingen pose"
+        "noPoseDetected": "Ingen pose",
+        "high": "Hög",
+        "low": "Låg"
     },
     "underTheHood": {
         "title": "Under huven",
@@ -196,7 +207,7 @@
             "message": "Meddelande",
             "link": "Länk",
             "linkError": "Denna länk stöds inte",
-            "embedInfo": "Visa videor och bilder från en länk. Endast vissa länkar kommer att fungera, till exempel YouTube, Vimeo, SoundCloud, videofiler eller bilder.",
+            "embedInfo": "Visa videor och bilder från en länk. Endast vissa länkar kommer att fungera, till exempel YouTube, Vimeo, SoundCloud, videofiler, ljudfiler eller bilder.<br/><br/>Se <l>react-player</l>-dokumentationen för mer information.",
             "voiceRecording": "Röstinspelning",
             "dropError": "Endast bilder eller ljud kan släppas här",
             "loop": "Loop"

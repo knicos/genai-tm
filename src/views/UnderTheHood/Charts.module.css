@@ -128,7 +128,8 @@
     min-height: 40px;
     position: relative;
     cursor: pointer;
-    border: none;
+    border: 2px solid transparent;
+    box-sizing: border-box;
 }
 
 .matrixCell:hover {

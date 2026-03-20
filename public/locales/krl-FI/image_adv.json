@@ -5,7 +5,16 @@
         "save": "Tallenda",
         "load": "Avua",
         "language": "Kieli",
-        "reminder": "Musta tallendua luokittelii."
+        "reminder": "Musta tallendua luokittelii.",
+        "models": {
+            "image": "Kuvua",
+            "pose": "Azennot"
+        },
+        "github": "GitHub",
+        "teachingMaterials": "Opastusmaterjalat",
+        "selectModel": "Midä sie tahtot luokitella?",
+        "enableUSB": "Käytä USB-laitettu",
+        "subtitle": "Lua luokittelijat omil tiedoloil, ei koodandoa pidä"
     },
     "save": {
         "title": "Tallenda luokittelii",
@@ -92,7 +101,9 @@
     "heatmap": {
         "title": "Sellitändy",
         "colorScaleHelp": "Väri-asteikko näyttäy, mih kuvah osih malli keškittyy. Punie = korkei tärkevys, Sinie = matala tärkevys.",
-        "noPoseDetected": "Ei azenduo"
+        "noPoseDetected": "Ei azenduo",
+        "high": "Korkei",
+        "low": "Matala"
     },
     "underTheHood": {
         "title": "Konepellin alla",
@@ -196,7 +207,7 @@
             "message": "Tekstu",
             "link": "Linku",
             "linkError": "Linkua ei tugieta",
-            "embedInfo": "Ozuta kuva libo video linkaspäi. (Ezimerkikse Youtube, Vimeo, SoundCloud)",
+            "embedInfo": "Ozuta videjot da kuvat linkaspäi. Vain erähät linkit toimitah, ku YouTube, Vimeo, SoundCloud, videotiedostot, äänitiedostot libo kuvat.<br/><br/>Kačo lisätieduo <l>react-player</l>-dokumentacijas.",
             "voiceRecording": "Iänitallendeh",
             "dropError": "Täh voit pakuttua vaiku kuvua libo iändy",
             "loop": "Toista"

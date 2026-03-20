@@ -49,8 +49,14 @@
             "advanced": "Ližäazetukset"
         },
         "values": {
-            "models": ["Kuva (MobileNet)", "Azendo (PoseNet)"],
-            "variants": ["Kaikkeh käyttöh", "Kluassupertih"]
+            "models": [
+                "Kuva (MobileNet)",
+                "Azendo (PoseNet)"
+            ],
+            "variants": [
+                "Kaikkeh käyttöh",
+                "Kluassupertih"
+            ]
         }
     },
     "widget": {
@@ -61,5 +67,21 @@
         "labels": {
             "titlePlaceholder": "Nimi"
         }
+    },
+    "feedback": {
+        "button": "Anna palautettu",
+        "title": "Anna meile palautettu!",
+        "ratingTitle": "Kuin hyvä oli sinun kokemus täs sobivutukses kaiken kaikkijah?",
+        "ratingVeryDissatisfied": "Hyvin tyytymätöi",
+        "ratingVerySatisfied": "Hyvin tyytyväi",
+        "recommendTitle": "Kuin todennäköi on, gu suosittelizit tädä sobivutustu toizile?",
+        "recommendVeryUnlikely": "Hyvin epätodennäköi",
+        "recommendVeryLikely": "Hyvin todennäköi",
+        "experienceTitle": "Kerro meile sinun kokemus.",
+        "close": "Salbua",
+        "send": "Lähetä palauteh",
+        "error": "Ups!",
+        "errorMessage": "Emmo voinnuh lähettyä sinun palautettu. Kokeile uvvessah myöhembi.",
+        "thankYou": "Kiitokseh sinun palauttehes!"
     }
 }

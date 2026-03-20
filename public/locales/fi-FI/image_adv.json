@@ -4,8 +4,17 @@
         "about": "Tietoa sovelluksesta",
         "save": "Tallenna",
         "load": "Avaa",
-        "language": "Language",
-        "reminder": "Remember to save your classifier."
+        "language": "Kieli",
+        "reminder": "Muista tallentaa luokittelijasi.",
+        "models": {
+            "image": "Kuvat",
+            "pose": "Asennot"
+        },
+        "github": "GitHub",
+        "teachingMaterials": "Oppimateriaalit",
+        "selectModel": "Mitä haluat luokitella?",
+        "enableUSB": "Käytä USB-laitetta",
+        "subtitle": "Luo luokittelijoita omilla tiedoillasi ilman koodausta"
     },
     "save": {
         "title": "Tallenna luokittelija",
@@ -92,7 +101,9 @@
     "heatmap": {
         "title": "Selitys",
         "colorScaleHelp": "Väriasteikko näyttää, mihin kuvaan osiin malli keskittyy. Punainen = korkea tärkeys, Sininen = matala tärkeys.",
-        "noPoseDetected": "Ei asentoa"
+        "noPoseDetected": "Ei asentoa",
+        "high": "Korkea",
+        "low": "Matala"
     },
     "underTheHood": {
         "title": "Konepellin alla",
@@ -202,7 +213,7 @@
             "message": "Teksti",
             "link": "Linkki",
             "linkError": "Linkkiä ei tueta",
-            "embedInfo": "Näytä kuvia tai videoita linkistä. (Esimerksi YouTube, Vimeo, SoundCloud)",
+            "embedInfo": "Näytä videoita ja kuvia linkistä. Vain jotkin linkit toimivat, esimerkiksi YouTube, Vimeo, SoundCloud, videotiedostot, äänitiedostot tai kuvat.<br/><br/>Katso lisätietoja <l>react-player</l>-dokumentaatiosta.",
             "voiceRecording": "Äänite",
             "dropError": "Tähän voi pudottaa vai kuvia tai ääniä",
             "loop": "Toista"

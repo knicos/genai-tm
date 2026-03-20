@@ -49,8 +49,14 @@
             "advanced": "Lisäasetukset"
         },
         "values": {
-            "models": ["Kuva (MobileNet)", "Asento (PoseNet)"],
-            "variants": ["Kaikkeen käyttöön", "Luokkahuoneeseen"]
+            "models": [
+                "Kuva (MobileNet)",
+                "Asento (PoseNet)"
+            ],
+            "variants": [
+                "Kaikkeen käyttöön",
+                "Luokkahuoneeseen"
+            ]
         }
     },
     "widget": {
@@ -61,5 +67,21 @@
         "labels": {
             "titlePlaceholder": "Nimi"
         }
+    },
+    "feedback": {
+        "button": "Anna palautetta",
+        "title": "Anna meille palautetta!",
+        "ratingTitle": "Millainen kokemuksesi tästä työkalusta oli kokonaisuutena?",
+        "ratingVeryDissatisfied": "Erittäin tyytymätön",
+        "ratingVerySatisfied": "Erittäin tyytyväinen",
+        "recommendTitle": "Kuinka todennäköisesti suosittelisit tätä työkalua muille?",
+        "recommendVeryUnlikely": "Erittäin epätodennäköisesti",
+        "recommendVeryLikely": "Erittäin todennäköisesti",
+        "experienceTitle": "Kerro meille kokemuksestasi.",
+        "close": "Sulje",
+        "send": "Lähetä palaute",
+        "error": "Hups!",
+        "errorMessage": "Palautteen lähettäminen ei onnistunut. Yritä myöhemmin uudelleen.",
+        "thankYou": "Kiitos palautteestasi!"
     }
 }

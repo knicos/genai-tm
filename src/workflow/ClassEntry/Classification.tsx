@@ -13,7 +13,6 @@ import { useDrop } from 'react-dnd';
 import { useVariant } from '@genaitm/util/variant';
 import { NativeTypes } from 'react-dnd-html5-backend';
 import UploadIcon from '@mui/icons-material/Upload';
-import DnDAnimation from '@genaitm/components/DnDAnimation/DnDAnimation';
 import AlertModal from '@genaitm/components/AlertModal';
 import { useAtomValue } from 'jotai';
 import { AlertPara, canvasesFromFiles, canvasFromDataTransfer, Widget } from '@genai-fi/base';
@@ -33,7 +32,17 @@ interface Props {
     onSampleClick?: (classIndex: number, sampleIndex: number) => void;
 }
 
-export function Classification({ name, active, data, index, setData, onActivate, setActive, onDelete, onSampleClick }: Props) {
+export function Classification({
+    name,
+    active,
+    data,
+    index,
+    setData,
+    onActivate,
+    setActive,
+    onDelete,
+    onSampleClick,
+}: Props) {
     const { namespace, sampleUploadFile, disableClassNameEdit, showDragTip } = useVariant();
     const { t } = useTranslation(namespace);
     const fileRef = useRef<HTMLInputElement>(null);
@@ -169,11 +178,14 @@ export function Classification({ name, active, data, index, setData, onActivate,
 
     const doDatasetPickerClose = useCallback(() => setShowDatasetPicker(false), [setShowDatasetPicker]);
 
-    const handleSampleClick = useCallback((ix: number) => {
-        if (onSampleClick) {
-            onSampleClick(index, data.samples.length - ix);
-        }
-    }, [onSampleClick, index, data.samples.length]);
+    const handleSampleClick = useCallback(
+        (ix: number) => {
+            if (onSampleClick) {
+                onSampleClick(index, data.samples.length - ix);
+            }
+        },
+        [onSampleClick, index, data.samples.length]
+    );
 
     const doDatasetSelected = useCallback(
         (canvases: HTMLCanvasElement[]) => {
@@ -235,96 +247,97 @@ export function Classification({ name, active, data, index, setData, onActivate,
                     </div>
                 )}
                 <div
-                    className={`${active ? style.containerLarge : style.containerSmall} ${data.disabled ? style.disabledClass : ''}`}
+                    className={`${active ? style.containerLarge : style.containerSmall} ${
+                        data.disabled ? style.disabledClass : ''
+                    }`}
                     onMouseEnter={doShowTip}
                 >
-                {active ? (
-                    <WebcamCapture
-                        visible={true}
-                        onCapture={onCapture}
-                        onClose={doCloseWebcam}
-                    />
-                ) : null}
-                <div
-                    className={style.listContainer}
-                    ref={drop as unknown as RefObject<HTMLDivElement>}
-                >
-                    <input
-                        data-testid={`file-${data.label}`}
-                        hidden
-                        type="file"
-                        ref={fileRef}
-                        accept="image/*"
-                        onChange={onFileChange}
-                        multiple
-                    />
-                    <AlertPara
-                        severity={data.samples.length === 1 ? 'info' : 'none'}
-                        hideIcon={active}
-                        isolated={active}
+                    {active ? (
+                        <WebcamCapture
+                            visible={true}
+                            onCapture={onCapture}
+                            onClose={doCloseWebcam}
+                        />
+                    ) : null}
+                    <div
+                        className={style.listContainer}
+                        ref={drop as unknown as RefObject<HTMLDivElement>}
                     >
-                        {data.samples.length === 0 && t('trainingdata.labels.addSamples')}
-                        {data.samples.length >= SAMPLEMIN &&
-                            t('trainingdata.labels.imageSamples', { count: data.samples.length })}
-                        {data.samples.length > 0 &&
-                            data.samples.length < SAMPLEMIN &&
-                            t('trainingdata.labels.needsMore')}
-                    </AlertPara>
+                        <input
+                            data-testid={`file-${data.label}`}
+                            hidden
+                            type="file"
+                            ref={fileRef}
+                            accept="image/*"
+                            onChange={onFileChange}
+                            multiple
+                        />
+                        <AlertPara
+                            severity={data.samples.length === 1 ? 'info' : 'none'}
+                            hideIcon={active}
+                            isolated={active}
+                        >
+                            {data.samples.length === 0 && t('trainingdata.labels.addSamples')}
+                            {data.samples.length >= SAMPLEMIN &&
+                                t('trainingdata.labels.imageSamples', { count: data.samples.length })}
+                            {data.samples.length > 0 &&
+                                data.samples.length < SAMPLEMIN &&
+                                t('trainingdata.labels.needsMore')}
+                        </AlertPara>
 
-                    {doAnimation && <DnDAnimation />}
-                    <ol
-                        ref={scrollRef}
-                        className={active ? style.samplelistLarge : style.samplelistSmall}
-                    >
-                        {!active && (
-                            <li className={style.sample}>
-                                <VerticalButton
-                                    data-testid="webcambutton"
-                                    variant="outlined"
-                                    startIcon={<VideocamIcon />}
-                                    onClick={doActivate}
-                                    disabled={fatal}
-                                >
-                                    {t('trainingdata.actions.webcam')}
-                                </VerticalButton>
-                            </li>
-                        )}
-                        {!active && sampleUploadFile && (
-                            <li className={style.sample}>
-                                <VerticalButton
-                                    data-testid="uploadbutton"
-                                    variant="outlined"
-                                    startIcon={<UploadFileIcon />}
-                                    onClick={doUploadClick}
-                                >
-                                    {t('trainingdata.actions.upload')}
-                                </VerticalButton>
-                            </li>
-                        )}
-                        {data.samples.length === 0 && !active && !dropProps.hovered && !loading && (
-                            <li>
-                                <div className={doAnimation ? style.dropSuggestAnimated : style.dropSuggest}>
-                                    {t('trainingdata.labels.dropFiles')}
-                                </div>
-                            </li>
-                        )}
-                        {dropProps.highlighted && dropProps.hovered && (
-                            <li className={style.dropSample}>
-                                <UploadIcon />
-                            </li>
-                        )}
-                        {data.samples.map((s, ix) => (
-                            <Sample
-                                key={data.samples.length - ix}
-                                index={data.samples.length - ix}
-                                image={s.data}
-                                onDelete={doDelete}
-                                onClick={handleSampleClick}
-                            />
-                        ))}
-                    </ol>
+                        <ol
+                            ref={scrollRef}
+                            className={active ? style.samplelistLarge : style.samplelistSmall}
+                        >
+                            {!active && (
+                                <li className={style.sample}>
+                                    <VerticalButton
+                                        data-testid="webcambutton"
+                                        variant="outlined"
+                                        startIcon={<VideocamIcon />}
+                                        onClick={doActivate}
+                                        disabled={fatal}
+                                    >
+                                        {t('trainingdata.actions.webcam')}
+                                    </VerticalButton>
+                                </li>
+                            )}
+                            {!active && sampleUploadFile && (
+                                <li className={style.sample}>
+                                    <VerticalButton
+                                        data-testid="uploadbutton"
+                                        variant="outlined"
+                                        startIcon={<UploadFileIcon />}
+                                        onClick={doUploadClick}
+                                    >
+                                        {t('trainingdata.actions.upload')}
+                                    </VerticalButton>
+                                </li>
+                            )}
+                            {data.samples.length === 0 && !active && !dropProps.hovered && !loading && (
+                                <li>
+                                    <div className={doAnimation ? style.dropSuggestAnimated : style.dropSuggest}>
+                                        {t('trainingdata.labels.dropFiles')}
+                                    </div>
+                                </li>
+                            )}
+                            {dropProps.highlighted && dropProps.hovered && (
+                                <li className={style.dropSample}>
+                                    <UploadIcon />
+                                </li>
+                            )}
+                            {data.samples.map((s, ix) => (
+                                <Sample
+                                    key={data.samples.length - ix}
+                                    index={data.samples.length - ix}
+                                    image={s.data}
+                                    onDelete={doDelete}
+                                    onClick={handleSampleClick}
+                                />
+                            ))}
+                        </ol>
+                    </div>
                 </div>
-            </div>
             </div>
             <AlertModal
                 open={showDropError}

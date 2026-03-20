@@ -1,10 +1,10 @@
-import { FormControlLabel, Switch, Tooltip, IconButton } from '@mui/material';
-import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
+import { FormControlLabel, Switch } from '@mui/material';
 import WarningAmberIcon from '@mui/icons-material/WarningAmber';
 import { useTranslation } from 'react-i18next';
 import { useVariant } from '@genaitm/util/variant';
 import style from './UnderTheHood.module.css';
 import { ColorLegend } from './ColorLegend';
+import { Help } from '@genai-fi/base';
 
 interface HeatmapPanelProps {
     enabled: boolean;
@@ -60,22 +60,15 @@ export function HeatmapPanel({
                                 </div>
                             </div>
                         )}
-                        <Tooltip
-                            title={t('heatmap.colorScaleHelp')}
-                            placement="top"
-                            arrow
-                        >
-                            <IconButton
-                                size="small"
-                                className={style.helpButton}
-                            >
-                                <HelpOutlineIcon fontSize="small" />
-                            </IconButton>
-                        </Tooltip>
                     </div>
                     <ColorLegend
                         height={size}
                         width={10}
+                    />
+                    <Help
+                        inplace
+                        placement="left"
+                        message={t('heatmap.colorScaleHelp')}
                     />
                 </div>
             )}
