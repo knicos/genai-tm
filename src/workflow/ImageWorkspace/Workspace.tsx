@@ -15,6 +15,7 @@ import { useAtom, useSetAtom } from 'jotai';
 import { ModelLoader } from './loader';
 import Alert from '@mui/material/Alert';
 import Snackbar from '@mui/material/Snackbar';
+import useOrientation from '../../util/useOrientation';
 import DeployWrapper from './DeployWrapper';
 import ExportDialog from './ExportDialog';
 import { useModelCreator } from '../../util/TeachableModel';
@@ -69,6 +70,8 @@ export default function Workspace({ step, visitedStep, onComplete, saveTrigger, 
     const [showShare, setShowShare] = useState(false);
     const [showClone, setShowClone] = useState(false);
     const [showSidebar, setShowSidebar] = useState(false);
+    const orientation = useOrientation();
+    const sidePanelPosition = orientation === 'portrait' ? 'bottom' : 'right';
     const lastVariantRef = useRef(modelVariant);
 
     // Ensure an initial model exists
@@ -186,7 +189,10 @@ export default function Workspace({ step, visitedStep, onComplete, saveTrigger, 
     );
 
     return (
-        <main className={style.workspace}>
+        <main
+            className={style.workspace}
+            style={{ flexDirection: orientation === 'portrait' ? 'column' : 'row' }}
+        >
             <DeployWrapper />
             <ModelLoader
                 onLoaded={doLoaded}
@@ -231,10 +237,11 @@ export default function Workspace({ step, visitedStep, onComplete, saveTrigger, 
 
             <SidePanel
                 open={showSidebar}
-                position="right"
+                position={sidePanelPosition}
                 onClose={() => setShowSidebar(false)}
+                onOpen={() => setShowSidebar(true)}
             >
-                {showSidebar && <UnderTheHood />}
+                <UnderTheHood />
             </SidePanel>
 
             <SaveDialog
