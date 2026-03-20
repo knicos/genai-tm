@@ -1,7 +1,7 @@
 import React, { useCallback, useState, useEffect } from 'react';
 import TextField from '@mui/material/TextField';
 import style from './Behaviour.module.css';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import { useVariant } from '../../util/variant';
 import YouTubeIcon from '@mui/icons-material/YouTube';
 import BlockIcon from '@mui/icons-material/Block';
@@ -86,9 +86,27 @@ export default function Embed({ behaviour, setBehaviour }: Props) {
                     onBlur={doBlur}
                 />
                 <Help
-                    message={t('behaviours.labels.embedInfo')}
+                    message={
+                        <div>
+                            <Trans
+                                t={t}
+                                i18nKey="behaviours.labels.embedInfo"
+                                components={{
+                                    l: (
+                                        <a
+                                            href="https://www.npmjs.com/package/react-player"
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className={style.link}
+                                        />
+                                    ),
+                                }}
+                            />
+                        </div>
+                    }
                     inplace
                     placement="bottom"
+                    keepOpen
                 />
             </div>
             {details.type === 'plain' && (

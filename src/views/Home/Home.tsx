@@ -64,7 +64,7 @@ export default function Home() {
                         <Model
                             id="pose"
                             usb={usb}
-                            image="/pose3.jpg"
+                            image="/body.jpg"
                         />
                     </div>
                     {hasSerial && (

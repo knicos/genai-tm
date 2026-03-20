@@ -194,7 +194,10 @@ export default function Workspace({ step, visitedStep, onComplete, saveTrigger, 
             />
             <ModelSaver onSaved={doSaved} />
             <div className={`${style.workspaceContent} ${showSidebar ? style.workspaceContentPanelOpen : ''}`}>
-                <WorkflowLayout connections={CONNECTIONS}>
+                <WorkflowLayout
+                    connections={CONNECTIONS}
+                    ignoredColumns={visitedStep < 1 ? 2 : 0}
+                >
                     <TrainingData
                         data={data}
                         setData={doSetData}

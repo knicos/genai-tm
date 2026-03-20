@@ -208,7 +208,7 @@
             "message": "Message",
             "link": "Lien",
             "linkError": "Ce lien n'est pas supporté",
-            "embedInfo": "Afficher des vidéos et des images à partir d'un lien. Seuls certains liens fonctionneront, par exemple YouTube, Vimeo, SoundCloud, des fichiers vidéo, des fichiers audio ou des images. Voir la documentation \"react-player\" pour en savoir plus.",
+            "embedInfo": "Afficher des vidéos et des images à partir d'un lien. Seuls certains liens fonctionneront, par exemple YouTube, Vimeo, SoundCloud, des fichiers vidéo, des fichiers audio ou des images.<br/><br/>Voir la documentation <l>react-player</l> pour en savoir plus.",
             "voiceRecording": "Enregistrement de la voix",
             "dropError": "Seules des images ou des sons peuvent être déposés ici",
             "loop": "Boucle"

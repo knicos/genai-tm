@@ -207,7 +207,7 @@
             "message": "메세지",
             "link": "링크",
             "linkError": "지원되지 않는 링크입니다",
-            "embedInfo": "링크에서 비디오와 이미지를 표시합니다. YouTube, Vimeo, SoundCloud, 비디오 파일, 오디오 파일 또는 이미지 등 일부 링크만 작동합니다. 자세한 내용은 \"react-player\" 문서를 참고하세요.",
+            "embedInfo": "링크에서 비디오와 이미지를 표시합니다. YouTube, Vimeo, SoundCloud, 비디오 파일, 오디오 파일 또는 이미지 등 일부 링크만 작동합니다.<br/><br/>자세한 내용은 <l>react-player</l> 문서를 참고하세요.",
             "voiceRecording": "음성 녹음",
             "dropError": "이미지나 소리만 놓을 수 있습니다",
             "loop": "반복"

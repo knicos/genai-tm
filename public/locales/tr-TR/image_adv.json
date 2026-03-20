@@ -207,7 +207,7 @@
             "message": "Mesaj",
             "link": "Bağlantı",
             "linkError": "Bu bağlantı desteklenmiyor",
-            "embedInfo": "Bir bağlantıdan video ve görselleri göster. Yalnızca bazı bağlantılar çalışacaktır; örneğin YouTube, Vimeo, SoundCloud, video dosyaları, ses dosyaları veya görseller. Daha fazla bilgi için \"react-player\" belgelerine bakın.",
+            "embedInfo": "Bir bağlantıdan video ve görselleri göster. Yalnızca bazı bağlantılar çalışacaktır; örneğin YouTube, Vimeo, SoundCloud, video dosyaları, ses dosyaları veya görseller.<br/><br/>Daha fazla bilgi için <l>react-player</l> belgelerine bakın.",
             "voiceRecording": "Ses Kaydı",
             "dropError": "Buraya yalnızca görseller veya sesler bırakılabilir",
             "loop": "Döngü"

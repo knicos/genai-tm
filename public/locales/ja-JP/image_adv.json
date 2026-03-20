@@ -207,7 +207,7 @@
             "message": "メッセージ",
             "link": "リンク",
             "linkError": "このリンクはサポートされていません。",
-            "embedInfo": "リンク先の動画や画像を表示します。対応するのは一部のリンクのみで、例えば YouTube、Vimeo、SoundCloud、動画ファイル、音声ファイル、画像などです。詳しくは \"react-player\" のドキュメントをご覧ください。",
+            "embedInfo": "リンク先の動画や画像を表示します。対応するのは一部のリンクのみで、例えば YouTube、Vimeo、SoundCloud、動画ファイル、音声ファイル、画像などです。詳しくは <l>react-player</l> のドキュメントをご覧ください。",
             "voiceRecording": "音声録音",
             "dropError": "ここには画像または音声のみドロップ可能です。",
             "loop": "ループ"

@@ -213,7 +213,7 @@
             "message": "Teksti",
             "link": "Linkki",
             "linkError": "Linkkiä ei tueta",
-            "embedInfo": "Näytä videoita ja kuvia linkistä. Vain jotkin linkit toimivat, esimerkiksi YouTube, Vimeo, SoundCloud, videotiedostot, äänitiedostot tai kuvat. Katso lisätietoja \"react-player\"-dokumentaatiosta.",
+            "embedInfo": "Näytä videoita ja kuvia linkistä. Vain jotkin linkit toimivat, esimerkiksi YouTube, Vimeo, SoundCloud, videotiedostot, äänitiedostot tai kuvat.<br/><br/>Katso lisätietoja <l>react-player</l>-dokumentaatiosta.",
             "voiceRecording": "Äänite",
             "dropError": "Tähän voi pudottaa vai kuvia tai ääniä",
             "loop": "Toista"
