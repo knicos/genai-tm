@@ -83,5 +83,15 @@
         "error": "Ops!",
         "errorMessage": "Não foi possível enviar seu feedback. Tente novamente mais tarde.",
         "thankYou": "Obrigado pelo seu feedback!"
+    },
+    "clock": {
+        "hours": "h",
+        "minutes": "min",
+        "seconds": "s"
+    },
+    "aria": {
+        "close": "Fechar",
+        "stop": "Parar",
+        "play": "Reproduzir"
     }
 }

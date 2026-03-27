@@ -1,10 +1,11 @@
-import React, { RefObject, useCallback, useRef, useState } from 'react';
+import React, { RefObject, useCallback, useEffect, useRef, useState } from 'react';
 import style from './classification.module.css';
 import { IClassification, fatalWebcam } from '@genaitm/state';
 import { VerticalButton } from '@genaitm/components/button/Button';
 import Sample from './Sample';
 import WebcamCapture from './WebcamCapture';
 import VideocamIcon from '@mui/icons-material/Videocam';
+import MicIcon from '@mui/icons-material/Mic';
 import UploadFileIcon from '@mui/icons-material/UploadFile';
 import WarningIcon from '@mui/icons-material/Warning';
 import ClassMenu from './ClassMenu';
@@ -17,8 +18,12 @@ import AlertModal from '@genaitm/components/AlertModal';
 import { useAtomValue } from 'jotai';
 import { AlertPara, canvasesFromFiles, canvasFromDataTransfer, Widget } from '@genai-fi/base';
 import DatasetPicker from '@genaitm/components/DatasetPicker/DatasetPicker';
+import AudioExampleRecorder from '@genaitm/components/AudioExampleRecorder/AudioExampleRecorder';
+import { AudioExample } from '@genai-fi/classifier';
+import { validateAudioBlob } from '@genaitm/util/audio';
 
-const SAMPLEMIN = 2;
+const SAMPLEMIN_DEFAULT = 2;
+const SAMPLEMIN_AUDIO_NOISE = 20;
 
 interface Props {
     name: string;
@@ -43,7 +48,7 @@ export function Classification({
     onDelete,
     onSampleClick,
 }: Props) {
-    const { namespace, sampleUploadFile, disableClassNameEdit, showDragTip } = useVariant();
+    const { namespace, sampleUploadFile, disableClassNameEdit, showDragTip, modelVariant } = useVariant();
     const { t } = useTranslation(namespace);
     const fileRef = useRef<HTMLInputElement>(null);
     const scrollRef = useRef<HTMLOListElement>(null);
@@ -51,43 +56,43 @@ export function Classification({
     const [showTip, setShowTip] = useState(false);
     const [showDropError, setShowDropError] = useState(false);
     const [showDatasetPicker, setShowDatasetPicker] = useState(false);
+    const [audioBlob, setAudioBlob] = useState<Blob | null>(null);
     const fatal = useAtomValue(fatalWebcam);
+
+    const isAudio = modelVariant === 'speech';
+
+    const SAMPLEMIN = isAudio && index === 0 ? SAMPLEMIN_AUDIO_NOISE : SAMPLEMIN_DEFAULT;
+
+    useEffect(() => {
+        if (!active) setAudioBlob(null);
+    }, [active]);
 
     const doShowTip = useCallback(() => data.samples.length === 0 && setShowTip(true), [data, setShowTip]);
 
     const onFileChange = useCallback(
         (e: React.ChangeEvent<HTMLInputElement>) => {
             setLoading(true);
-            canvasesFromFiles(Array.from(e.target.files || [])).then((canvases) => {
-                if (canvases.length > 0) {
-                    canvases.forEach((v) => {
-                        v.style.width = '58px';
-                        v.style.height = '58px';
-                    });
-                    setData(
-                        (data) => ({
-                            label: data.label,
-                            samples: [...canvases.map((c) => ({ data: c, id: '' })), ...data.samples],
-                        }),
-                        index
-                    );
+
+            if (isAudio) {
+                const files = e.target.files;
+                if (files && files.length > 0) {
+                    const file = files[0];
+                    validateAudioBlob(file)
+                        .then((isValid) => {
+                            if (isValid) {
+                                setActive(true, index);
+                                setAudioBlob(file);
+                            }
+                            setLoading(false);
+                        })
+                        .catch(() => {
+                            setLoading(false);
+                        });
+                } else {
+                    setLoading(false);
                 }
-                setLoading(false);
-            });
-            e.target.value = '';
-        },
-        [setLoading, setData, index]
-    );
-
-    const [dropProps, drop] = useDrop(
-        {
-            accept: [NativeTypes.URL, NativeTypes.HTML, NativeTypes.FILE],
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            async drop(items: any) {
-                setLoading(true);
-                try {
-                    const canvases = await canvasFromDataTransfer(items);
-
+            } else {
+                canvasesFromFiles(Array.from(e.target.files || [])).then((canvases) => {
                     if (canvases.length > 0) {
                         canvases.forEach((v) => {
                             v.style.width = '58px';
@@ -100,14 +105,79 @@ export function Classification({
                             }),
                             index
                         );
+                    }
+                    setLoading(false);
+                });
+            }
+            e.target.value = '';
+        },
+        [setLoading, setData, index, isAudio, setActive]
+    );
+
+    const [dropProps, drop] = useDrop(
+        {
+            accept: [NativeTypes.URL, NativeTypes.HTML, NativeTypes.FILE],
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            async drop(items: any) {
+                setLoading(true);
+                try {
+                    if (isAudio) {
+                        // Create audio blob from dropped files or URLs
+                        let audioBlob: Blob | null = null;
+
+                        if (items.files && items.files.length > 0) {
+                            audioBlob = items.files[0];
+                        } else if (items.urls && items.urls.length > 0) {
+                            const response = await fetch(items.urls[0]);
+                            const arrayBuffer = await response.arrayBuffer();
+                            audioBlob = new Blob([arrayBuffer], { type: 'audio/*' });
+                        }
+
+                        if (audioBlob) {
+                            validateAudioBlob(audioBlob)
+                                .then((isValid) => {
+                                    if (isValid) {
+                                        setActive(true, index);
+                                        setAudioBlob(audioBlob);
+                                    } else {
+                                        setShowDropError(true);
+                                    }
+                                    setLoading(false);
+                                })
+                                .catch(() => {
+                                    setShowDropError(true);
+                                    setLoading(false);
+                                });
+                        } else {
+                            setShowDropError(true);
+                            setLoading(false);
+                        }
                     } else {
-                        setShowDropError(true);
+                        const canvases = await canvasFromDataTransfer(items);
+
+                        if (canvases.length > 0) {
+                            canvases.forEach((v) => {
+                                v.style.width = '58px';
+                                v.style.height = '58px';
+                            });
+                            setData(
+                                (data) => ({
+                                    label: data.label,
+                                    samples: [...canvases.map((c) => ({ data: c, id: '' })), ...data.samples],
+                                }),
+                                index
+                            );
+                        } else {
+                            setShowDropError(true);
+                        }
+
+                        setLoading(false);
                     }
                 } catch (e) {
                     setShowDropError(true);
                     console.error('Error processing drop:', e);
+                    setLoading(false);
                 }
-                setLoading(false);
             },
             collect(monitor) {
                 const can = monitor.canDrop();
@@ -117,7 +187,7 @@ export function Classification({
                 };
             },
         },
-        [setData, index, setShowDropError]
+        [setData, index, setShowDropError, setLoading, isAudio, setActive]
     );
 
     const setTitle = useCallback(
@@ -153,6 +223,24 @@ export function Classification({
         [setData, index, name]
     );
 
+    const onAudioExample = useCallback(
+        (example: AudioExample) => {
+            const image = example.spectrogramCanvas;
+            if (image) {
+                image.style.width = '58px';
+                image.style.height = '58px';
+            }
+            setData(
+                (data) => ({
+                    label: name,
+                    samples: [{ data: example, id: '' }, ...data.samples],
+                }),
+                index
+            );
+        },
+        [setData, index, name]
+    );
+
     const doDelete = useCallback(
         (ix: number) => {
             setData(
@@ -168,7 +256,10 @@ export function Classification({
 
     const doDeleteClass = useCallback(() => onDelete(index), [index, onDelete]);
 
-    const doCloseWebcam = useCallback(() => setActive(false, index), [setActive, index]);
+    const doCloseWebcam = useCallback(() => {
+        setActive(false, index);
+        setAudioBlob(null);
+    }, [setActive, index]);
 
     const doActivate = useCallback(() => onActivate(index), [onActivate, index]);
 
@@ -226,16 +317,17 @@ export function Classification({
             dataWidget="class"
             id={`class-${index}`}
             activated={!data.disabled && data.samples.length >= SAMPLEMIN}
-            setTitle={disableClassNameEdit ? undefined : setTitle}
+            setTitle={disableClassNameEdit || (isAudio && index === 0) ? undefined : setTitle}
             menu={
                 <ClassMenu
                     index={index}
                     hasSamples={data.samples.length > 0}
                     isDisabled={data.disabled}
-                    onDeleteClass={doDeleteClass}
+                    onDeleteClass={isAudio && index === 0 ? undefined : doDeleteClass}
                     onRemoveSamples={removeSamples}
-                    onToggleDisable={doToggleDisable}
-                    onDatasets={doDatasetClick}
+                    onToggleDisable={isAudio && index === 0 ? undefined : doToggleDisable}
+                    onDatasets={!isAudio ? doDatasetClick : undefined}
+                    disableCollaboration={isAudio}
                 />
             }
         >
@@ -253,11 +345,20 @@ export function Classification({
                     onMouseEnter={doShowTip}
                 >
                     {active ? (
-                        <WebcamCapture
-                            visible={true}
-                            onCapture={onCapture}
-                            onClose={doCloseWebcam}
-                        />
+                        isAudio ? (
+                            <AudioExampleRecorder
+                                className={data.label}
+                                onExample={onAudioExample}
+                                onClose={doCloseWebcam}
+                                blob={audioBlob ?? undefined}
+                            />
+                        ) : (
+                            <WebcamCapture
+                                visible={true}
+                                onCapture={onCapture}
+                                onClose={doCloseWebcam}
+                            />
+                        )
                     ) : null}
                     <div
                         className={style.listContainer}
@@ -268,7 +369,7 @@ export function Classification({
                             hidden
                             type="file"
                             ref={fileRef}
-                            accept="image/*"
+                            accept={isAudio ? 'audio/*' : 'image/*'}
                             onChange={onFileChange}
                             multiple
                         />
@@ -277,9 +378,12 @@ export function Classification({
                             hideIcon={active}
                             isolated={active}
                         >
-                            {data.samples.length === 0 && t('trainingdata.labels.addSamples')}
+                            {data.samples.length === 0 &&
+                                t(isAudio ? 'trainingdata.labels.addAudioSamples' : 'trainingdata.labels.addSamples')}
                             {data.samples.length >= SAMPLEMIN &&
-                                t('trainingdata.labels.imageSamples', { count: data.samples.length })}
+                                t(isAudio ? 'trainingdata.labels.audioSamples' : 'trainingdata.labels.imageSamples', {
+                                    count: data.samples.length,
+                                })}
                             {data.samples.length > 0 &&
                                 data.samples.length < SAMPLEMIN &&
                                 t('trainingdata.labels.needsMore')}
@@ -289,21 +393,26 @@ export function Classification({
                             ref={scrollRef}
                             className={active ? style.samplelistLarge : style.samplelistSmall}
                         >
-                            {!active && (
-                                <li className={style.sample}>
-                                    <VerticalButton
-                                        data-testid="webcambutton"
-                                        variant="outlined"
-                                        startIcon={<VideocamIcon />}
-                                        onClick={doActivate}
-                                        disabled={fatal}
-                                    >
-                                        {t('trainingdata.actions.webcam')}
-                                    </VerticalButton>
-                                </li>
-                            )}
-                            {!active && sampleUploadFile && (
-                                <li className={style.sample}>
+                            <li
+                                className={style.sample}
+                                style={{ display: !active ? undefined : 'none' }}
+                            >
+                                <VerticalButton
+                                    data-testid="webcambutton"
+                                    variant="outlined"
+                                    startIcon={isAudio ? <MicIcon /> : <VideocamIcon />}
+                                    onClick={doActivate}
+                                    disabled={fatal}
+                                >
+                                    {t(isAudio ? 'trainingdata.actions.audio' : 'trainingdata.actions.webcam')}
+                                </VerticalButton>
+                            </li>
+
+                            {sampleUploadFile && (
+                                <li
+                                    className={style.sample}
+                                    style={{ display: !active ? undefined : 'none' }}
+                                >
                                     <VerticalButton
                                         data-testid="uploadbutton"
                                         variant="outlined"
@@ -317,7 +426,11 @@ export function Classification({
                             {data.samples.length === 0 && !active && !dropProps.hovered && !loading && (
                                 <li>
                                     <div className={doAnimation ? style.dropSuggestAnimated : style.dropSuggest}>
-                                        {t('trainingdata.labels.dropFiles')}
+                                        {t(
+                                            isAudio
+                                                ? 'trainingdata.labels.dropAudioFiles'
+                                                : 'trainingdata.labels.dropFiles'
+                                        )}
                                     </div>
                                 </li>
                             )}
@@ -330,7 +443,7 @@ export function Classification({
                                 <Sample
                                     key={data.samples.length - ix}
                                     index={data.samples.length - ix}
-                                    image={s.data}
+                                    image={s.data instanceof HTMLCanvasElement ? s.data : s.data.spectrogramCanvas}
                                     onDelete={doDelete}
                                     onClick={handleSampleClick}
                                 />
@@ -344,7 +457,7 @@ export function Classification({
                 onClose={doDropErrorClose}
                 severity="error"
             >
-                {t('trainingdata.labels.dropError')}
+                {t(isAudio ? 'trainingdata.labels.dropAudioError' : 'trainingdata.labels.dropError')}
             </AlertModal>
             <DatasetPicker
                 open={showDatasetPicker}

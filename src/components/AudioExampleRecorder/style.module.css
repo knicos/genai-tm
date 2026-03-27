@@ -1,0 +1,34 @@
+.canvasContainer {
+    overflow: hidden;
+    background: rgb(71, 0, 77);
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    box-shadow: 0 0 4px #bbb;
+    display: flex;
+    width: min-content;
+    position: relative;
+}
+
+.canvasContainer button {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+}
+
+.time {
+    font-size: 1.6em;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.timeLabel {
+    font-size: 0.8em;
+    color: #005d6b;
+}
+
+.timeRow {
+    display: flex;
+    line-height: 1;
+    margin: 0 0 1.5rem 0.5rem;
+}

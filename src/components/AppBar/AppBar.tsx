@@ -8,7 +8,6 @@ import { useAtomValue, useSetAtom } from 'jotai';
 import { feedbackAtom, loadState, menuShowSettings, saveState, showOpenDialog } from '../../state';
 import SettingsIcon from '@mui/icons-material/Settings';
 import { IconButton, Link as MUILink } from '@mui/material';
-import { Link } from 'react-router-dom';
 import Suggestion from '../Suggestion/Suggestion';
 import { BusyButton, Feedback, LangSelect } from '@genai-fi/base';
 
@@ -71,10 +70,10 @@ export default function ApplicationBar({ showReminder, onSave }: Props) {
                 Remember to save your classifier.
             </Suggestion>
             <div className={style.toolbar}>
-                <Link
-                    to="/about"
+                <a
+                    href="/"
                     className={style.logo}
-                    title="About"
+                    title="Home"
                 >
                     <img
                         src="/logo128_bw.png"
@@ -82,7 +81,7 @@ export default function ApplicationBar({ showReminder, onSave }: Props) {
                         width="48"
                         height="48"
                     />
-                </Link>
+                </a>
                 <div className={style.buttonBar}>
                     <BusyButton
                         busy={isloading}

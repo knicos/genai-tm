@@ -1,0 +1,22 @@
+.container {
+    background: #e8f0fe;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    height: 100%;
+    box-sizing: border-box;
+}
+
+.header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.header > h2 {
+    font-size: 12pt;
+    color: #005d6b;
+    font-weight: bold;
+    margin: 0.2rem;
+}

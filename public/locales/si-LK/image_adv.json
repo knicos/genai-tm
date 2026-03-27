@@ -8,7 +8,8 @@
         "reminder": "වර්ගීකරණය සුරකින්න අමතක කරන්න එපා",
         "models": {
             "image": "රූප",
-            "pose": "ඉරියව්"
+            "pose": "ඉරියව්",
+            "speech": "කථනය"
         },
         "github": "GitHub",
         "teachingMaterials": "ඉගෙනුම් ද්‍රව්‍ය",
@@ -57,6 +58,7 @@
         "actions": {
             "addClass": "නව පන්තියක් එක් කරන්න",
             "webcam": "වෙබ් කැමරාව",
+            "audio": "මයික්",
             "upload": "උඩුගත කරන්න",
             "datasets": "දත්ත කට්ටල",
             "cancel": "අවලංගු කරන්න",
@@ -65,6 +67,8 @@
             "enableClass": "පන්තිය සක්‍රිය කරන්න",
             "removeAll": "සියලුම උදාහරණ ඉවත් කරන්න",
             "capture": "පිංතූරය ගන්න",
+            "fileCapture": "උපුටා ගන්න",
+            "record": "පටිගත කරන්න",
             "collaborate": "සහාය දක්වන්න",
             "use": "භාවිතා කරන්න ({{count}})",
             "displayMore": "පින්තූර {{count}} ක් පෙන්වන්න"
@@ -73,11 +77,17 @@
             "title": "පුහුණු දත්ත",
             "addSamples": "උදාහරණ රූප එක් කරන්න",
             "imageSamples": "{{count}} රූප",
+            "addAudioSamples": "ශ්‍රව්‍ය නියැදි එක් කරන්න",
+            "audioSamples": "{{count}} ශ්‍රව්‍ය නියැදි",
             "class": "පන්තිය",
+            "noiseClass": "පසුබිම් ශබ්දය",
             "wait": "කරුණාකර රැඳී සිටින්න...",
+            "stop": "නවත්වන්න",
             "dropFiles": "රූප ඇදගෙන මෙතැනට දමන්න",
+            "dropAudioFiles": "ශ්‍රව්‍ය ගොනු ඇදගෙන මෙතැනට දමන්න",
             "needsMore": "තව උදාහරණ අවශ්‍යයි",
             "dropError": "පිළිගන්නා රූප පමණි",
+            "dropAudioError": "පිළිගන්නේ ශ්‍රව්‍ය ගොනු පමණි",
             "emptyClass": "This class is empty.",
             "qrMessage": "ඔබේ ජංගම දුරකථනයේන් QR කේතය ස්කැන් කර රූප එක් කල හැක",
             "disabled": "අක්‍රිය කර ඇත",
@@ -157,6 +167,7 @@
         "labels": {
             "title": "ආදානය",
             "webcam": "වෙබ් කැමරාව",
+            "audio": "මයික්",
             "file": "ගොනුව",
             "device": "උපාංගය",
             "dataset": "දත්ත කට්ටලය",

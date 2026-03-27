@@ -121,5 +121,15 @@
         "error": "Eyvah!",
         "errorMessage": "Geri bildiriminizi gönderemedik. Lütfen daha sonra tekrar deneyin.",
         "thankYou": "Geri bildiriminiz için teşekkürler!"
+    },
+    "clock": {
+        "hours": "Sa",
+        "minutes": "Dak",
+        "seconds": "Sn"
+    },
+    "aria": {
+        "close": "Kapat",
+        "stop": "Durdur",
+        "play": "Oynat"
     }
 }

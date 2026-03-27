@@ -1,10 +1,10 @@
 import { Link } from 'react-router-dom';
 import style from './style.module.css';
 import { useTranslation } from 'react-i18next';
-import { useMemo } from 'react';
+import { ReactNode, useMemo } from 'react';
 import { compressToEncodedURIComponent } from 'lz-string';
 import { IVariantContext } from '@genaitm/util/variant';
-import { VARIANTS } from '../ImageGeneral/ImageGeneral';
+import { VARIANTS } from '../General/General';
 import { DEFAULTS } from '../SettingsDialog/SettingsForm';
 import { TMType } from '@genaitm/util/TeachableModel';
 
@@ -29,9 +29,10 @@ interface Props {
     id: string;
     usb?: boolean;
     image?: string;
+    icon?: ReactNode;
 }
 
-export default function Model({ id, usb, image }: Props) {
+export default function Model({ id, usb, image, icon }: Props) {
     const { t } = useTranslation('image_adv');
 
     const url = useMemo(() => {
@@ -59,6 +60,7 @@ export default function Model({ id, usb, image }: Props) {
                     className={style.stepImage}
                 />
             )}
+            {icon && <div className={style.icon}>{icon}</div>}
             <div className={style.stepContent}>
                 <h2>{t(`app.models.${id}`)}</h2>
             </div>

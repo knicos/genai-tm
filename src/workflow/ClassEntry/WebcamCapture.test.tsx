@@ -19,7 +19,7 @@ describe('WebcamCapture component', () => {
         );
         expect(screen.getByTestId('webcamwindow')).toBeInTheDocument();
         expect(onClose).toHaveBeenCalledTimes(0);
-        const buttonElement = screen.getByTestId('webcamclose');
+        const buttonElement = screen.getByTestId('captureclose');
         await user.click(buttonElement);
         expect(onClose).toHaveBeenCalledTimes(2);
     });

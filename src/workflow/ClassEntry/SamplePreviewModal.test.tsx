@@ -5,12 +5,12 @@ import SamplePreviewModal from './SamplePreviewModal';
 import userEvent from '@testing-library/user-event';
 import TestWrapper from '../../util/TestWrapper';
 
-const createCanvas = () => {
+function createCanvas() {
     const canvas = document.createElement('canvas');
     canvas.width = 224;
     canvas.height = 224;
     return canvas;
-};
+}
 
 describe('SamplePreviewModal Component', () => {
     describe('Image navigation', () => {

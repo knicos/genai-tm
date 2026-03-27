@@ -19,7 +19,7 @@ const IconButton = styled(MIconButton)({
 });
 
 interface Props {
-    image: HTMLCanvasElement;
+    image?: HTMLCanvasElement;
     onDelete: (index: number) => void;
     onClick?: (index: number) => void;
     index: number;
@@ -28,28 +28,38 @@ interface Props {
 export default function Sample({ image, index, onDelete, onClick }: Props) {
     const { namespace } = useVariant();
     const { t } = useTranslation(namespace);
-    const ref = useRef<HTMLImageElement>(null);
+    const ref = useRef<HTMLCanvasElement>(null);
 
     useEffect(() => {
         if (ref.current && image) {
-            ref.current.src = image.toDataURL();
+            const ctx = ref.current.getContext('2d');
+            if (ctx) {
+                ctx.clearRect(0, 0, ref.current.width, ref.current.height);
+                ctx.drawImage(image, 0, 0, ref.current.width, ref.current.height);
+            }
             if (image.hasAttribute('data-testid')) {
                 ref.current.setAttribute('data-testid', image.getAttribute('data-testid') || '');
             }
         }
     }, [image]);
 
-    const doClick = useCallback((e: React.MouseEvent) => {
-        e.stopPropagation();
-        onDelete(index);
-    }, [onDelete, index]);
-
-    const handleImageClick = useCallback((e: React.MouseEvent) => {
-        if (onClick) {
+    const doClick = useCallback(
+        (e: React.MouseEvent) => {
             e.stopPropagation();
-            onClick(index);
-        }
-    }, [onClick, index]);
+            onDelete(index);
+        },
+        [onDelete, index]
+    );
+
+    const handleImageClick = useCallback(
+        (e: React.MouseEvent) => {
+            if (onClick) {
+                e.stopPropagation();
+                onClick(index);
+            }
+        },
+        [onClick, index]
+    );
 
     return (
         <li
@@ -63,12 +73,14 @@ export default function Sample({ image, index, onDelete, onClick }: Props) {
             >
                 <DeleteForeverIcon />
             </IconButton>
-            <img
+
+            <canvas
                 ref={ref}
-                alt={t('trainingdata.aria.sample')}
                 onClick={handleImageClick}
+                width={58}
+                height={58}
+                role="img"
             />
         </li>
     );
 }
-

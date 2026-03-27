@@ -84,7 +84,7 @@ export const routes = createRoutesFromElements(
         />
         <Route
             path=":kind/:variant"
-            lazy={() => import('./views/ImageGeneral/ImageGeneral')}
+            lazy={() => import('./views/General/General')}
         />
     </Route>
 );

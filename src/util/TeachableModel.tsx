@@ -11,11 +11,11 @@ import {
 } from '../state';
 import { useAtom, useSetAtom, useAtomValue } from 'jotai';
 import { useCallback, useEffect, useState, useRef } from 'react';
-import { TeachableModel } from '@genai-fi/classifier';
+import { AudioExample, createModel, TeachableModel } from '@genai-fi/classifier';
 import { calculateModelStatistics } from './modelStats';
 import { getXAI, resetXAIDrawn, wasXAIDrawn } from './xaiCanvas';
 
-export type TMType = 'image' | 'pose';
+export type TMType = 'image' | 'pose' | 'speech';
 
 export interface PredictionsOutput {
     className: string;
@@ -49,9 +49,9 @@ export function useTeachableModel() {
         imageSize: model?.getImageSize() || 224,
         hasModel: !!model,
         canPredict: model?.isTrained() || false,
-        variant: model?.getVariant() || 'image',
+        variant: model?.variant || 'image',
         predict: useCallback(
-            async (image: HTMLCanvasElement) => {
+            async (image: HTMLCanvasElement | AudioExample) => {
                 if (model && model.isTrained()) {
                     try {
                         // Ensure the XAI canvas is registered before predicting.
@@ -65,12 +65,12 @@ export function useTeachableModel() {
                             console.warn('Model not loaded yet');
                         }
 
-                        const isPose = model.getVariant() === 'pose';
+                        const isPose = model.variant === 'pose';
                         if (isPose) resetXAIDrawn();
 
                         const p = await model.predict(image);
 
-                        if (isPose) {
+                        if (isPose && image instanceof HTMLCanvasElement) {
                             const detected = wasXAIDrawn();
                             if (!detected) {
                                 // No pose found — draw the raw input image onto the XAI canvas so
@@ -109,7 +109,12 @@ export function useTeachableModel() {
             },
             [model]
         ),
-        estimate: useCallback(async (image: HTMLCanvasElement): Promise<void> => model?.estimate(image), [model]),
+        estimate: useCallback(
+            async (image: HTMLCanvasElement): Promise<void> => {
+                model?.estimate(image);
+            },
+            [model]
+        ),
         labels: model?.getLabels() || ([] as string[]),
     };
 }
@@ -125,7 +130,7 @@ export function useModelCreator(variant: TMType) {
     // Create new model when variant changes
     useEffect(() => {
         setModel((old) => {
-            if (old?.getVariant() === variant) return old;
+            if (old?.variant === variant) return old;
 
             if (old) {
                 try {
@@ -135,7 +140,7 @@ export function useModelCreator(variant: TMType) {
                 }
             }
 
-            return new TeachableModel(variant);
+            return createModel(variant);
         });
     }, [variant, setModel]);
 
@@ -212,7 +217,7 @@ export function useModelTrainer() {
                 setStage('loading');
                 setEpochs(0);
                 setHistory([]);
-                const tm = new TeachableModel(model.getVariant() || 'image');
+                const tm = createModel(model.variant || 'image');
 
                 const isReady = await tm.ready();
                 if (!isReady) {

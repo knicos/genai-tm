@@ -8,7 +8,7 @@ import SettingsForm, { DEFAULTS } from './SettingsForm';
 import { IVariantContext } from '@genaitm/util/variant';
 import { useNavigate } from 'react-router-dom';
 import { compressToEncodedURIComponent } from 'lz-string';
-import { VARIANTS } from '../ImageGeneral/ImageGeneral';
+import { VARIANTS } from '../General/General';
 
 function delta(data: IVariantContext, template: VARIANTS): Partial<IVariantContext> {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any

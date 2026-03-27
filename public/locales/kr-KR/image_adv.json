@@ -8,7 +8,8 @@
         "reminder": "분류기를 저장하는 것을 기억하세요.",
         "models": {
             "image": "이미지",
-            "pose": "자세"
+            "pose": "자세",
+            "speech": "음성"
         },
         "github": "GitHub",
         "teachingMaterials": "학습 자료",
@@ -57,6 +58,7 @@
         "actions": {
             "addClass": "클래스 추가",
             "webcam": "웹캡",
+            "audio": "마이크",
             "upload": "업로드",
             "datasets": "데이터셋",
             "cancel": "취소",
@@ -65,6 +67,8 @@
             "enableClass": "클래스 활성화",
             "removeAll": "모든 샘플 삭제",
             "capture": "캡처를 위해 홀드하세요요",
+            "fileCapture": "추출",
+            "record": "녹음",
             "collaborate": "협업업",
             "use": "사용 ({{count}})",
             "displayMore": "{{count}}개 이미지 표시"
@@ -73,11 +77,17 @@
             "title": "데이터 학습시키기",
             "addSamples": "이미지 샘플 추가",
             "imageSamples": "{{count}} 이미지 샘플",
+            "addAudioSamples": "오디오 샘플 추가",
+            "audioSamples": "{{count}} 오디오 샘플",
             "class": "클래스",
+            "noiseClass": "배경 소음",
             "wait": "진행 중...",
+            "stop": "중지",
             "dropFiles": "웹사이트나 파일에서 이미지 파일을 드래그하세요",
+            "dropAudioFiles": "웹사이트나 파일에서 오디오 파일을 드래그하세요",
             "needsMore": "더 많은 샘플이 필요합니다",
             "dropError": "이미지만 가능합니다",
+            "dropAudioError": "오디오 파일만 여기에 드롭할 수 있습니다",
             "qrMessage": "이미지를 추가하기 위해 휴대폰이나 태블릿을 사용할 수 있습니다. QR 코드를 누르면 확장됩니다.",
             "disabled": "비활성화됨",
             "selectDataset": "데이터셋 선택",
@@ -157,6 +167,7 @@
         "labels": {
             "title": "입력",
             "webcam": "웹캠",
+            "audio": "마이크",
             "file": "파일",
             "device": "기기",
             "dataset": "데이터셋",

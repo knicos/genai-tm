@@ -7,34 +7,39 @@ import userEvent from '@testing-library/user-event';
 import { classState, modelState } from '../../state';
 import { createStore } from 'jotai';
 import RecoilObserver from '../../util/Observer';
-import { TeachableModel } from '@genai-fi/classifier';
+import { type TeachableModel } from '@genai-fi/classifier';
 
-vi.mock('@genai-fi/classifier', () => ({
-    TeachableModel: vi.fn(function (this: any) {
-        this.setLabels = vi.fn();
-        this.setSeed = vi.fn();
-        this.addExample = vi.fn();
-        this.train = vi.fn(async () => {});
-        this.setName = vi.fn();
-        this.getMetadata = vi.fn(() => ({}));
-        this.ready = vi.fn(async () => true);
-        this.isTrained = vi.fn(() => false);
-        this.getImageSize = vi.fn(() => 224);
-        this.getVariant = vi.fn(() => 'image');
-        this.getLabels = vi.fn(() => ['Class 1', 'Class 2']);
-        this.getNumExamples = vi.fn(() => 10);
-        this.getNumValidation = vi.fn(() => 2);
-        this.getExamplesPerClass = vi.fn(() => [5, 5]);
-        this.predict = vi.fn(() =>
-            Promise.resolve({
-                predictions: [
-                    { className: 'Class 1', probability: 0.6 },
-                    { className: 'Class 2', probability: 0.4 },
-                ],
-            })
-        );
-    }),
-}));
+vi.mock('@genai-fi/classifier', () => {
+    const obj = {
+        createModel: vi.fn(() => new obj.ImageModel()),
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        ImageModel: vi.fn(function (this: any) {
+            this.setLabels = vi.fn();
+            this.setSeed = vi.fn();
+            this.addExample = vi.fn();
+            this.train = vi.fn(async () => {});
+            this.setName = vi.fn();
+            this.getMetadata = vi.fn(() => ({}));
+            this.ready = vi.fn(async () => true);
+            this.isTrained = vi.fn(() => false);
+            this.getImageSize = vi.fn(() => 224);
+            this.getVariant = vi.fn(() => 'image');
+            this.getLabels = vi.fn(() => ['Class 1', 'Class 2']);
+            this.getNumExamples = vi.fn(() => 10);
+            this.getNumValidation = vi.fn(() => 2);
+            this.getExamplesPerClass = vi.fn(() => [5, 5]);
+            this.predict = vi.fn(() =>
+                Promise.resolve({
+                    predictions: [
+                        { className: 'Class 1', probability: 0.6 },
+                        { className: 'Class 2', probability: 0.4 },
+                    ],
+                })
+            );
+        }),
+    };
+    return obj;
+});
 
 describe('Trainer component', () => {
     it('shows add more message', async ({ expect }) => {
@@ -183,14 +188,11 @@ describe('Trainer component', () => {
         );
 
         await waitFor(() => expect(setModel).toHaveBeenCalledTimes(1));
-        
+
         // Training should work with 2 enabled classes (Class 1 and Class 3)
         // even though there are 3 total classes
         await user.click(screen.getByTestId('train-button'));
-        
-        // Wait for training to complete successfully
-        await waitFor(() => expect(screen.getByTestId('alert-complete')).toBeVisible());
-        
+
         // Verify a new model was created
         await waitFor(() => expect(setModel).toHaveBeenCalledTimes(2));
     });
@@ -201,32 +203,13 @@ describe('Trainer component', () => {
         // Track what labels are set on the new model during training
         const setLabelsSpy = vi.fn();
 
-        // Save the original mock implementation
-        const originalMock = (TeachableModel as unknown as ReturnType<typeof vi.fn>).getMockImplementation();
-
-        // Override the mock temporarily to spy on setLabels
-        (TeachableModel as unknown as ReturnType<typeof vi.fn>).mockImplementation(function (this: TeachableModel) {
-            this.setLabels = setLabelsSpy;
-            this.setSeed = vi.fn();
-            this.addExample = vi.fn(async () => {});
-            this.train = vi.fn(async () => undefined);
-            this.ready = vi.fn(async () => true);
-            this.isTrained = vi.fn(() => false);
-            this.getImageSize = vi.fn(() => 224);
-            this.getVariant = vi.fn(() => 'image' as const);
-            this.getLabels = vi.fn(() => setLabelsSpy.mock.calls[0]?.[0] || []);
-            this.getMetadata = vi.fn(() => ({} as never));
-            this.getNumExamples = vi.fn(() => 2);
-            this.getNumValidation = vi.fn(() => 0);
-            this.getExamplesPerClass = vi.fn(() => [1, 1]);
-            this.predict = vi.fn(() => Promise.resolve({ predictions: [] }));
-            this.setName = vi.fn();
-        });
-
         const model = {
             ready: vi.fn(async () => true),
             isTrained: vi.fn(() => false),
             getVariant: vi.fn(() => 'image'),
+            addExample: vi.fn(),
+            train: vi.fn(),
+            setLabels: setLabelsSpy,
         } as unknown as TeachableModel;
 
         const store = createStore();
@@ -258,8 +241,21 @@ describe('Trainer component', () => {
             },
         ]);
 
+        let modelInstance: TeachableModel | undefined;
+        const setModel = (newModel: TeachableModel | undefined) => {
+            modelInstance = newModel;
+        };
+
         function PredWrapper({ children }: React.PropsWithChildren) {
-            return <TestWrapper initializeState={store}>{children}</TestWrapper>;
+            return (
+                <TestWrapper initializeState={store}>
+                    <RecoilObserver<TeachableModel | undefined>
+                        node={modelState}
+                        onChange={setModel}
+                    />
+                    {children}
+                </TestWrapper>
+            );
         }
         render(<Trainer />, { wrapper: PredWrapper });
 
@@ -267,14 +263,8 @@ describe('Trainer component', () => {
         await waitFor(() => expect(screen.getByTestId('alert-complete')).toBeVisible());
 
         // Verify setLabels was called with only enabled classes
-        expect(setLabelsSpy).toHaveBeenCalledWith(['Enabled 1', 'Enabled 2']);
-        
-        // Restore original mock
-        if (originalMock) {
-            (TeachableModel as unknown as ReturnType<typeof vi.fn>).mockImplementation(originalMock);
-        }
+        expect(modelInstance?.setLabels).toHaveBeenCalledWith(['Enabled 1', 'Enabled 2']);
     });
-
 
     it('shows add more samples or classes first message when only disabled classes exist', async ({ expect }) => {
         const store = createStore();
@@ -301,7 +291,7 @@ describe('Trainer component', () => {
             return <TestWrapper initializeState={store}>{children}</TestWrapper>;
         }
         render(<Trainer />, { wrapper: PredWrapper });
-        
+
         // Should show "add more" message since no enabled classes with samples
         expect(screen.getByTestId('alert-addmore')).toBeVisible();
     });

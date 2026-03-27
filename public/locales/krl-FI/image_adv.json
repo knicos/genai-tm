@@ -8,7 +8,8 @@
         "reminder": "Musta tallendua luokittelii.",
         "models": {
             "image": "Kuvua",
-            "pose": "Azennot"
+            "pose": "Azennot",
+            "speech": "Puheh"
         },
         "github": "GitHub",
         "teachingMaterials": "Opastusmaterjalat",
@@ -57,6 +58,7 @@
         "actions": {
             "addClass": "Ližiä luokku",
             "webcam": "Webkameru",
+            "audio": "Mikrofoni",
             "upload": "Lad'd'ua",
             "datasets": "Datasetit",
             "cancel": "Perävytä",
@@ -65,6 +67,8 @@
             "enableClass": "Ota luokka käyttöön",
             "removeAll": "Iärestä kai tiijot",
             "capture": "Pie nybläine painetunnu",
+            "fileCapture": "Pura",
+            "record": "Nauhoita",
             "collaborate": "Rua yhtes",
             "use": "Käytä ({{count}})",
             "displayMore": "Näytä {{count}} kuvua"
@@ -73,11 +77,17 @@
             "title": "Opastusdata",
             "addSamples": "Ližiä kuvua",
             "imageSamples": "{{count}} kuvua",
+            "addAudioSamples": "Ližiä iäninäyttehii",
+            "audioSamples": "{{count}} iäninäytettä",
             "class": "Luokku",
+            "noiseClass": "Taustamelu",
             "wait": "Otetah kuvua...",
+            "stop": "Pysäytä",
             "dropFiles": "libo vie kuvua täh nettusaitoilpäi libo tiijostoloispäi",
+            "dropAudioFiles": "libo vie iänitiedostoloi täh nettusaitoilpäi libo tiijostoloispäi",
             "needsMore": "Ližiä opastusdatua pidäy",
             "dropError": "Täh voibi pakuttua vaiku kuvua",
+            "dropAudioError": "Täh voibi pakuttua vaiku iänitiedostoloi",
             "emptyClass": "This class is empty.",
             "qrMessage": "Voit ližätä kuvua telefonači libo tabletači. Suurenda QR-koudu plikaten sidä.",
             "disabled": "POISTETTU KÄYTÖSTÄ",
@@ -157,6 +167,7 @@
         "labels": {
             "title": "Syöteh",
             "webcam": "Webkameru",
+            "audio": "Mikrofoni",
             "file": "Tiijosto",
             "device": "Laiteh",
             "dataset": "Ainehisto",

@@ -164,5 +164,15 @@
         "error": "Lo!",
         "errorMessage": "Hatukuweza kutuma maoni yako. Tafadhali jaribu tena baadaye.",
         "thankYou": "Asante kwa maoni yako!"
+    },
+    "clock": {
+        "hours": "Saa",
+        "minutes": "Dak",
+        "seconds": "Sek"
+    },
+    "aria": {
+        "close": "Funga",
+        "stop": "Simamisha",
+        "play": "Cheza"
     }
 }

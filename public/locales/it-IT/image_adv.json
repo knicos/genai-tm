@@ -8,7 +8,8 @@
         "reminder": "Ricorda di salvare il tuo classificatore.",
         "models": {
             "image": "Immagini",
-            "pose": "Pose"
+            "pose": "Pose",
+            "speech": "Voce"
         },
         "github": "GitHub",
         "teachingMaterials": "Materiali didattici",
@@ -57,6 +58,7 @@
         "actions": {
             "addClass": "Aggiungi una classe",
             "webcam": "Webcam",
+            "audio": "Microfono",
             "upload": "Carica",
             "datasets": "Dataset",
             "cancel": "Annulla",
@@ -65,6 +67,8 @@
             "enableClass": "Attiva Classe",
             "removeAll": "Rimuovi tutti i campioni",
             "capture": "Tieni premuto per scattare",
+            "fileCapture": "Estrai",
+            "record": "Registra",
             "collaborate": "Collabora",
             "use": "Usa ({{count}})",
             "displayMore": "Mostra {{count}} immagini"
@@ -73,11 +77,17 @@
             "title": "Dati di Addestramento",
             "addSamples": "Aggiungi campioni di immagini",
             "imageSamples": "{{count}} immagini campione",
+            "addAudioSamples": "Aggiungi campioni audio",
+            "audioSamples": "{{count}} campioni audio",
             "class": "Classe",
+            "noiseClass": "Rumore di fondo",
             "wait": "Cattura in corso...",
+            "stop": "Stop",
             "dropFiles": "o trascina le immagini qui da un sito web o un file",
+            "dropAudioFiles": "o trascina qui file audio da un sito web o da un file",
             "needsMore": "Servono altri campioni",
             "dropError": "Solo le immagini possono essere trascinate qui",
+            "dropAudioError": "Qui possono essere trascinati solo file audio",
             "emptyClass": "Questa classe è vuota.",
             "qrMessage": "Puoi usare un telefono o un tablet per aggiungere immagini. Clicca sul codice QR per ingrandirlo.",
             "disabled": "DISABILITATO",
@@ -157,6 +167,7 @@
         "labels": {
             "title": "Input",
             "webcam": "Webcam",
+            "audio": "Microfono",
             "file": "File",
             "device": "Dispositivo",
             "dataset": "Dataset",

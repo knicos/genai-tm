@@ -12,7 +12,19 @@ describe('ShareProtocol', () => {
         const store = createStore();
 
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        const model = new TeachableModel('fake' as any);
+        const model = {
+            ready: vi.fn(async () => true),
+            isTrained: vi.fn(() => false),
+            getVariant: vi.fn(() => 'image'),
+            getImageSize: vi.fn(() => 224),
+            getLabels: vi.fn(() => ['class1', 'class2']),
+            save: vi.fn(() => Promise.resolve(new Blob())),
+            getMetadata: vi.fn(() => ({
+                imageSize: 224,
+            })),
+            addExample: vi.fn(),
+            train: vi.fn(),
+        } as unknown as TeachableModel;
         store.set(modelState, model);
         store.set(sessionCode, 'test-session');
 
@@ -50,7 +62,19 @@ describe('ShareProtocol', () => {
         const store = createStore();
 
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        const model = new TeachableModel('fake' as any);
+        const model = {
+            ready: vi.fn(async () => true),
+            isTrained: vi.fn(() => false),
+            getVariant: vi.fn(() => 'image'),
+            getImageSize: vi.fn(() => 224),
+            getLabels: vi.fn(() => ['class1', 'class2']),
+            save: vi.fn(() => Promise.resolve(new Blob())),
+            getMetadata: vi.fn(() => ({
+                imageSize: 224,
+            })),
+            addExample: vi.fn(),
+            train: vi.fn(),
+        } as unknown as TeachableModel;
         store.set(modelState, model);
         store.set(sessionCode, 'test-session');
 

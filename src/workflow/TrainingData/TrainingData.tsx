@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { Classification } from '../ClassEntry/Classification';
 import SamplePreviewModal from '../ClassEntry/SamplePreviewModal';
 import { Button } from '../../components/button/Button';
@@ -7,6 +7,7 @@ import style from './trainingdata.module.css';
 import AddBoxIcon from '@mui/icons-material/AddBox';
 import { useTranslation } from 'react-i18next';
 import { useVariant } from '../../util/variant';
+import { AudioExample } from '@genai-fi/classifier';
 
 interface Props {
     active?: boolean;
@@ -17,41 +18,52 @@ interface Props {
 }
 
 export function TrainingData({ active, data, setData, disabled, onFocused }: Props) {
-    const { namespace, disableAddClass } = useVariant();
+    const { namespace, disableAddClass, modelVariant } = useVariant();
     const { t } = useTranslation(namespace);
     const [activeIndex, setActiveIndex] = useState(-1);
     const [modalState, setModalState] = useState<{ classIndex: number; imageIndex: number } | null>(null);
+    const sectionRef = useRef<HTMLElement>(null);
+
+    const isAudio = modelVariant === 'speech';
+
+    if (isAudio && data.length > 0) {
+        data[0].label = t('trainingdata.labels.noiseClass');
+    }
 
     useEffect(() => {
-        if (disabled) setActiveIndex(-1);
+        if (disabled) {
+            setActiveIndex(-1);
+        } else {
+            const h = (e: MouseEvent) => {
+                if (sectionRef.current && !sectionRef.current.contains(e.target as Node)) {
+                    setActiveIndex(-1);
+                }
+            };
+            window.addEventListener('mouseup', h);
+            return () => {
+                window.removeEventListener('mouseup', h);
+            };
+        }
     }, [disabled]);
 
-    const setDataIx = (samples: (old: IClassification) => IClassification, ix: number) => {
-        setData((data) => {
-            const newdata = [...data];
-            newdata[ix] = samples(data[ix]);
-            return newdata;
-        });
-    };
+    const setDataIx = useCallback(
+        (samples: (old: IClassification) => IClassification, ix: number) => {
+            setData((data) => {
+                const newdata = [...data];
+                newdata[ix] = samples(data[ix]);
+                return newdata;
+            });
+        },
+        [setData]
+    );
 
     const doActivate = (ix: number) => active && setActiveIndex(ix);
 
     const doDelete = (ix: number) => setData(data.filter((_, index) => index !== ix));
 
-    const doSetActive = (a: boolean, ix: number) => setActiveIndex(a ? ix : -1);
+    const doSetActive = useCallback((a: boolean, ix: number) => setActiveIndex(a ? ix : -1), []);
 
-    const doDeactivate = (e: React.FocusEvent<HTMLElement>) => {
-        const relTarget = e.relatedTarget;
-        const curTarget = e.currentTarget;
-        const doClose = () => {
-            if (relTarget && !curTarget.contains(relTarget)) {
-                setActiveIndex(-1);
-            } else if (!relTarget) {
-                setActiveIndex(-1);
-            }
-            window.removeEventListener('mouseup', doClose);
-        };
-        window.addEventListener('mouseup', doClose);
+    const doDeactivate = () => {
         onFocused(false);
     };
 
@@ -103,7 +115,7 @@ export function TrainingData({ active, data, setData, disabled, onFocused }: Pro
                 };
                 return newData;
             });
-            
+
             // Adjust modal state after delete
             const remainingCount = data[classIndex].samples.length - 1;
             if (remainingCount > 0) {
@@ -120,11 +132,11 @@ export function TrainingData({ active, data, setData, disabled, onFocused }: Pro
     const handleMoveToClass = (toClassIndex: number) => {
         if (modalState && toClassIndex !== modalState.classIndex) {
             const { classIndex: fromClassIndex, imageIndex } = modalState;
-            
+
             setData((oldData) => {
                 const newData = [...oldData];
                 const sampleToMove = oldData[fromClassIndex].samples[imageIndex];
-                
+
                 // Remove from source class
                 newData[fromClassIndex] = {
                     ...newData[fromClassIndex],
@@ -135,24 +147,25 @@ export function TrainingData({ active, data, setData, disabled, onFocused }: Pro
                     ...newData[toClassIndex],
                     samples: [...newData[toClassIndex].samples, sampleToMove],
                 };
-                
+
                 // Update modal state synchronously within the same update
                 const newImageIndex = newData[toClassIndex].samples.length - 1;
-                setModalState({ 
-                    classIndex: toClassIndex, 
-                    imageIndex: newImageIndex 
+                setModalState({
+                    classIndex: toClassIndex,
+                    imageIndex: newImageIndex,
                 });
-                
+
                 return newData;
             });
         }
     };
 
     const allClassNames = data.map((c) => c.label);
-    
-    const currentSample = modalState && data[modalState.classIndex]?.samples[modalState.imageIndex]
-        ? data[modalState.classIndex].samples[modalState.imageIndex]
-        : null;
+
+    const currentSample =
+        modalState && data[modalState.classIndex]?.samples[modalState.imageIndex]
+            ? data[modalState.classIndex].samples[modalState.imageIndex]
+            : null;
 
     return (
         <section
@@ -162,6 +175,7 @@ export function TrainingData({ active, data, setData, disabled, onFocused }: Pro
             onBlur={doDeactivate}
             onFocus={doFocus}
             aria-labelledby="training-data-header"
+            ref={sectionRef}
         >
             <h1 id="training-data-header">{t('trainingdata.labels.title')}</h1>
             {data.map((c, ix) => (
@@ -189,15 +203,23 @@ export function TrainingData({ active, data, setData, disabled, onFocused }: Pro
                     {t('trainingdata.actions.addClass')}
                 </Button>
             )}
-            {modalState && data[modalState.classIndex] && (
+
+            {!!modalState && !!data[modalState.classIndex] && (
                 <SamplePreviewModal
                     open={true}
                     onClose={handleModalClose}
-                    imageUrl={currentSample?.data.toDataURL()}
-                    currentIndex={modalState.imageIndex}
-                    totalCount={data[modalState.classIndex].samples.length}
+                    imageUrl={
+                        currentSample && modalState
+                            ? !isAudio
+                                ? (currentSample.data as HTMLCanvasElement).toDataURL()
+                                : (currentSample.data as AudioExample).spectrogramCanvas?.toDataURL()
+                            : undefined
+                    }
+                    audio={currentSample && isAudio ? (currentSample.data as AudioExample) : undefined}
+                    currentIndex={modalState?.imageIndex ?? 0}
+                    totalCount={data[modalState?.classIndex ?? 0]?.samples.length ?? 0}
                     classNames={allClassNames}
-                    currentClassIndex={modalState.classIndex}
+                    currentClassIndex={modalState?.classIndex ?? 0}
                     onPrevious={handleModalPrevious}
                     onNext={handleModalNext}
                     onClassChange={handleClassChange}

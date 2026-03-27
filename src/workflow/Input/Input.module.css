@@ -39,7 +39,6 @@
     min-width: 60px;
     min-height: 34px;
     padding: 5px 12px;
-    border-radius: 20px;
     font-size: 0.875rem;
     font-weight: 500;
     color: textDark;
@@ -125,4 +124,20 @@
     margin-top: 1rem;
     margin-bottom: 1rem;
     flex-wrap: wrap;
+}
+
+.canvasContainer {
+    max-width: 200px;
+    background: rgb(71, 0, 77);
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    box-shadow: 0 0 4px #bbb;
+    display: flex;
+    margin: 0.5rem;
+}
+
+.fileInputContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
 }

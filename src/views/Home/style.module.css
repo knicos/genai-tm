@@ -182,3 +182,11 @@
     gap: 1rem;
     flex-wrap: wrap;
 }
+
+.icon {
+    position: absolute;
+    top: 64px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: white;
+}

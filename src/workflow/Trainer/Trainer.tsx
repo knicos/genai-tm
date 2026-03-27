@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback, useRef } from 'react';
+import React, { useEffect, useState, useCallback, useRef, useMemo } from 'react';
 import Accordion from '@mui/material/Accordion';
 import { activeNodes, classState, modelTraining } from '@genaitm/state';
 import style from './trainer.module.css';
@@ -53,7 +53,7 @@ export default function Trainer({ onTrained, editing, ...props }: Props) {
     const data = useAtomValue(classState);
     const setActive = useSetAtom(activeNodes);
 
-    const enabledData = data.filter((data) => !data.disabled);
+    const enabledData = useMemo(() => data.filter((data) => !data.disabled), [data]);
     const sampleMin = Math.min(...enabledData.map((v) => v.samples.length));
     const isTrainable = enabledData.length >= 2 && sampleMin >= 2;
 
@@ -94,7 +94,7 @@ export default function Trainer({ onTrained, editing, ...props }: Props) {
                 return nset;
             });
         }
-    }, [training]);
+    }, [training, train, enabledData, settingBatch, settingEpochs, settingRate, onTrained, setTraining, setActive]);
 
     const doStartTraining = useCallback(() => setTraining(true), [setTraining]);
 

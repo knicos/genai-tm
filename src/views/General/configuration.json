@@ -39,6 +39,9 @@
     "pose": {
         "modelVariant": "pose"
     },
+    "speech": {
+        "modelVariant": "speech"
+    },
     "general": {},
     "classroom": {
         "namespace": "image_adv",

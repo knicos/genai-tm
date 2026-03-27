@@ -2,7 +2,7 @@ import { IVariantContext, VariantContext } from '../../util/variant';
 import _settings from './configuration.json';
 import { useSearchParams, useParams } from 'react-router-dom';
 import { decompressFromEncodedURIComponent } from 'lz-string';
-import ImageClassifier from './ImageClassifier';
+import Classifier from './Classifier';
 import { Privacy } from '@genai-fi/base';
 import gitInfo from '../../generatedGitInfo.json';
 
@@ -34,7 +34,7 @@ export function Component() {
 
     return (
         <VariantContext.Provider value={merged}>
-            <ImageClassifier />
+            <Classifier />
             <Privacy
                 position="bottomLeft"
                 appName="tm"

@@ -2,8 +2,8 @@ import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import { createStore, Provider } from 'jotai';
 import { VariantContext } from './variant';
-import _settings from '../views/ImageGeneral/configuration.json';
-import { VariantConfiguration } from '../views/ImageGeneral/ImageGeneral';
+import _settings from '../views/General/configuration.json';
+import { VariantConfiguration } from '../views/General/General';
 import { WorkflowLayout } from '@genai-fi/base';
 
 const settings = _settings as VariantConfiguration;

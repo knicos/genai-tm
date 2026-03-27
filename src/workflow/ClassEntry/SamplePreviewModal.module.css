@@ -1,20 +1,9 @@
 @value textDark, textLight, bgColourful1, bgSubdued1, backgroundDark, borderGrey, primary from "@genai-fi/base/css/colours.module.css";
 
-.dialog :global(.MuiDialog-paper) {
-    max-width: 600px;
-    max-height: 85vh;
-    width: auto;
-    height: auto;
-    border-radius: 12px;
-    margin: 16px;
-}
-
 .header {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 12px 16px;
-    border-bottom: 1px solid borderGrey;
     position: relative;
 }
 
@@ -50,14 +39,27 @@
     justify-content: center;
     align-items: center;
     padding: 16px;
-    min-height: 300px;
-    min-width: 300px;
-    background-color: textLight;
+    min-height: 224px;
+    min-width: 224px;
+    position: relative;
+    color: white;
+}
+
+.imageContainer button {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 4rem;
+}
+
+.imageContainer button:disabled {
+    color: rgba(255, 255, 255, 0.8);
 }
 
 .imageContainer img {
-    width: 300px;
-    height: 300px;
+    width: 224px;
+    height: 224px;
     object-fit: contain;
 }
 
@@ -67,8 +69,8 @@
     background-color: bgSubdued1;
     border-radius: 4px;
     text-align: center;
-    min-width: 300px;
-    min-height: 300px;
+    min-width: 224px;
+    min-height: 224px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -108,7 +110,7 @@
 }
 
 .moveSelect {
-    width: 250px;    
+    width: 250px;
 }
 
 .moveSelect :global(.MuiSelect-select) {

@@ -83,5 +83,15 @@
         "error": "Ups!",
         "errorMessage": "Emmo voinnuh lähettyä sinun palautettu. Kokeile uvvessah myöhembi.",
         "thankYou": "Kiitokseh sinun palauttehes!"
+    },
+    "clock": {
+        "hours": "h",
+        "minutes": "min",
+        "seconds": "s"
+    },
+    "aria": {
+        "close": "Salbua",
+        "stop": "Azeta",
+        "play": "Zavedi"
     }
 }

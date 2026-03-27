@@ -83,5 +83,15 @@
         "error": "Hoppla!",
         "errorMessage": "Wir konnten dein Feedback nicht senden. Bitte versuche es später erneut.",
         "thankYou": "Vielen Dank für dein Feedback!"
+    },
+    "clock": {
+        "hours": "Std",
+        "minutes": "Min",
+        "seconds": "Sek"
+    },
+    "aria": {
+        "close": "Schließen",
+        "stop": "Stopp",
+        "play": "Wiedergabe"
     }
 }

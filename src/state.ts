@@ -2,9 +2,9 @@ import { atom } from 'jotai';
 import { BehaviourType } from './workflow/Behaviour/Behaviour';
 import { SaveProperties } from './workflow/ImageWorkspace/SaveDialog';
 import randomId from './util/randomId';
-import { TeachableModel } from '@genai-fi/classifier';
+import { AudioExample, TeachableModel } from '@genai-fi/classifier';
 export interface ISample {
-    data: HTMLCanvasElement;
+    data: HTMLCanvasElement | AudioExample;
     id: string;
 }
 

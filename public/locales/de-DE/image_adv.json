@@ -8,7 +8,8 @@
         "reminder": "Denk daran, deinen Klassifikator zu speichern.",
         "models": {
             "image": "Bilder",
-            "pose": "Posen"
+            "pose": "Posen",
+            "speech": "Sprache"
         },
         "github": "GitHub",
         "teachingMaterials": "Lehrmaterialien",
@@ -57,6 +58,7 @@
         "actions": {
             "addClass": "Eine Klasse hinzufügen",
             "webcam": "Webcam",
+            "audio": "Mikrofon",
             "upload": "Hochladen",
             "datasets": "Datensätze",
             "deleteClass": "Klasse löschen",
@@ -64,6 +66,8 @@
             "enableClass": "Klasse aktivieren",
             "removeAll": "Alle Beispiele entfernen",
             "capture": "Zum Aufnehmen anhalten",
+            "fileCapture": "Extrahieren",
+            "record": "Aufnehmen",
             "collaborate": "Zusammenarbeiten",
             "cancel": "Abbrechen",
             "use": "Verwenden ({{count}})",
@@ -73,11 +77,17 @@
             "title": "Trainingsdaten",
             "addSamples": "Bildbeispiele hinzufügen",
             "imageSamples": "{{count}} Bildbeispiele",
+            "addAudioSamples": "Audiobeispiele hinzufügen",
+            "audioSamples": "{{count}} Audiobeispiele",
             "class": "Klasse",
+            "noiseClass": "Hintergrundgeräusch",
             "wait": "Erfassen...",
+            "stop": "Stopp",
             "dropFiles": "oder ziehe Bilder von einer Website oder Datei hierher",
+            "dropAudioFiles": "oder ziehe Audiodateien von einer Website oder Datei hierher",
             "needsMore": "Es werden mehr Beispiele benötigt",
             "dropError": "Hier können nur Bilder abgelegt werden",
+            "dropAudioError": "Hier können nur Audiodateien abgelegt werden",
             "emptyClass": "Diese Klasse ist leer.",
             "qrMessage": "Du kannst ein Telefon oder Tablet benutzen, um Bilder hinzuzufügen. Klicke auf den QR-Code, um ihn zu vergrößern.",
             "disabled": "DEAKTIVIERT",
@@ -157,6 +167,7 @@
         "labels": {
             "title": "Eingabe",
             "webcam": "Webcam",
+            "audio": "Mikrofon",
             "file": "Datei",
             "device": "Gerät",
             "dataset": "Datensatz",

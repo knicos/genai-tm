@@ -1,6 +1,6 @@
 import { describe, it, vi } from 'vitest';
 import { render, screen, waitFor } from '@testing-library/react';
-import ImageClassifier from '../../views/ImageGeneral/ImageClassifier';
+import ImageClassifier from './Classifier';
 import TestWrapper from '../../util/TestWrapper';
 import userEvent from '@testing-library/user-event';
 // import { axe, toHaveNoViolations } from 'jest-axe';
@@ -50,39 +50,43 @@ vi.mock('@genai-fi/base', async (importOriginal) => ({
     },
 }));
 
-vi.mock('@genai-fi/classifier', () => ({
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    TeachableModel: vi.fn(function (this: any) {
-        this.setLabels = vi.fn();
-        this.setName = vi.fn();
-        this.getLabels = vi.fn(() => mockLabels);
-        this.setSeed = vi.fn();
-        this.addExample = vi.fn();
-        this.train = vi.fn(async () => {});
-        this.getMetadata = vi.fn(() => ({
-            imageSize: 224,
-        }));
-        this.predict = vi.fn(() =>
-            Promise.resolve({
-                predictions: [
-                    { className: 'class 1', probability: 0.2 },
-                    { className: 'class 2', probability: 0.4 },
-                ],
-            })
-        );
-        this.ready = vi.fn(async () => true);
-        this.isTrained = vi.fn(() => true);
-        this.getImageSize = vi.fn(() => 224);
-        this.getVariant = vi.fn(() => 'image');
-        this.dispose = vi.fn();
-        this.estimate = vi.fn();
-        this.draw = vi.fn();
-        this.setXAICanvas = vi.fn();
-        this.getNumExamples = vi.fn(() => 10);
-        this.getNumValidation = vi.fn(() => 2);
-        this.getExamplesPerClass = vi.fn(() => [5, 5]);
-    }),
-}));
+vi.mock('@genai-fi/classifier', () => {
+    const obj = {
+        createModel: vi.fn(() => new obj.ImageModel()),
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        ImageModel: vi.fn(function (this: any) {
+            this.setLabels = vi.fn();
+            this.setName = vi.fn();
+            this.getLabels = vi.fn(() => mockLabels);
+            this.setSeed = vi.fn();
+            this.addExample = vi.fn();
+            this.train = vi.fn(async () => {});
+            this.getMetadata = vi.fn(() => ({
+                imageSize: 224,
+            }));
+            this.predict = vi.fn(() =>
+                Promise.resolve({
+                    predictions: [
+                        { className: 'class 1', probability: 0.2 },
+                        { className: 'class 2', probability: 0.4 },
+                    ],
+                })
+            );
+            this.ready = vi.fn(async () => true);
+            this.isTrained = vi.fn(() => true);
+            this.getImageSize = vi.fn(() => 224);
+            this.getVariant = vi.fn(() => 'image');
+            this.dispose = vi.fn();
+            this.estimate = vi.fn();
+            this.draw = vi.fn();
+            this.setXAICanvas = vi.fn();
+            this.getNumExamples = vi.fn(() => 10);
+            this.getNumValidation = vi.fn(() => 2);
+            this.getExamplesPerClass = vi.fn(() => [5, 5]);
+        }),
+    };
+    return obj;
+});
 
 describe('ImageClassifier component', () => {
     it('renders', async ({ expect }) => {

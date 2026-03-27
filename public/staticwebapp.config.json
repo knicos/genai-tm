@@ -9,6 +9,14 @@
             "rewrite": "index.html"
         },
         {
+            "route": "/speech*",
+            "rewrite": "index.html"
+        },
+        {
+            "route": "/hand*",
+            "rewrite": "index.html"
+        },
+        {
             "route": "/deploy*",
             "rewrite": "index.html"
         },

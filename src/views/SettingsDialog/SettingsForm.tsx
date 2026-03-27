@@ -13,9 +13,9 @@ import {
 } from '@mui/material';
 import { FormEvent, useCallback, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { VariantConfiguration, VARIANTS } from '../ImageGeneral/ImageGeneral';
+import { VariantConfiguration, VARIANTS } from '../General/General';
 import style from './style.module.css';
-import _settings from '../ImageGeneral/configuration.json';
+import _settings from '../General/configuration.json';
 import { LANGS } from '@genaitm/components/AppBar/AppBar';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
@@ -376,10 +376,12 @@ export default function SettingsForm({ state, setState }: Props) {
                                         checked={state.allowSerialUSB}
                                         name="allowSerialUSB"
                                         onChange={doCheckChange}
-                                        disabled={!("serial" in navigator)}
+                                        disabled={!('serial' in navigator)}
                                     />
                                 }
-                                label={("serial" in navigator)?"Allow Serial USB connectivity":"Serial usb not supported"}
+                                label={
+                                    'serial' in navigator ? 'Allow Serial USB connectivity' : 'Serial usb not supported'
+                                }
                             />
                         </div>
                     </AccordionDetails>

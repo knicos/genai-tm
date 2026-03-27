@@ -164,5 +164,15 @@
         "error": "Oups !",
         "errorMessage": "Nous n'avons pas pu envoyer votre avis. Veuillez réessayer plus tard.",
         "thankYou": "Merci pour votre avis !"
+    },
+    "clock": {
+        "hours": "h",
+        "minutes": "min",
+        "seconds": "s"
+    },
+    "aria": {
+        "close": "Fermer",
+        "stop": "Arrêter",
+        "play": "Lire"
     }
 }

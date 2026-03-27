@@ -11,6 +11,7 @@ import GitHubIcon from '@mui/icons-material/GitHub';
 import SchoolIcon from '@mui/icons-material/School';
 import LinkButton from './LinkButton';
 import { LANGS } from '@genaitm/components/AppBar/AppBar';
+import RecordVoiceOverIcon from '@mui/icons-material/RecordVoiceOver';
 
 export default function Home() {
     const { t } = useTranslation('image_adv');
@@ -65,6 +66,12 @@ export default function Home() {
                             id="pose"
                             usb={usb}
                             image="/body.jpg"
+                        />
+                        <Model
+                            id="speech"
+                            usb={usb}
+                            image="/sound1.jpg"
+                            icon={<RecordVoiceOverIcon sx={{ fontSize: 64 }} />}
                         />
                     </div>
                     {hasSerial && (

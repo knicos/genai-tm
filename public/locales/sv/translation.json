@@ -80,5 +80,15 @@
         "error": "Hoppsan!",
         "errorMessage": "Vi kunde inte skicka din feedback. Försök igen senare.",
         "thankYou": "Tack för din feedback!"
+    },
+    "clock": {
+        "hours": "tim",
+        "minutes": "min",
+        "seconds": "sek"
+    },
+    "aria": {
+        "close": "Stäng",
+        "stop": "Stoppa",
+        "play": "Spela upp"
     }
 }

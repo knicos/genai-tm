@@ -21,7 +21,7 @@ interface Props {
 }
 
 export default function PreviewMenu({ disabled, onExport, onClone, onSidebar }: Props) {
-    const { namespace, usep2p, allowModelSharing } = useVariant();
+    const { namespace, usep2p, allowModelSharing, modelVariant } = useVariant();
     const { t } = useTranslation(namespace);
     const fatal = useAtomValue(fatalWebcam);
     const setShared = useSetAtom(shareModel);
@@ -81,30 +81,32 @@ export default function PreviewMenu({ disabled, onExport, onClone, onSidebar }: 
                     </ListItemIcon>
                     <ListItemText>{t('model.actions.export')}</ListItemText>
                 </MenuItem>
-                <MenuItem
-                    disabled={disabled || !allowModelSharing}
-                    onClick={() => {
-                        handleClose();
-                        setShared(true);
-                        // Allow some time for the sharing state to propagate before opening the new window
-                        // This should be done properly.
-                        setTimeout(
-                            () =>
-                                window.open(
-                                    `https://spoof.gen-ai.fi/teacher/?origin=remote&model=${encodeURIComponent(
-                                        `${import.meta.env.VITE_APP_API}/model/${code}/project.zip`
-                                    )}&view=connect&overlay=share`,
-                                    '_blank'
-                                ),
-                            500
-                        );
-                    }}
-                >
-                    <ListItemIcon>
-                        <LinkIcon />
-                    </ListItemIcon>
-                    <ListItemText>{t('model.actions.bm')}</ListItemText>
-                </MenuItem>
+                {modelVariant === 'image' && (
+                    <MenuItem
+                        disabled={disabled || !allowModelSharing}
+                        onClick={() => {
+                            handleClose();
+                            setShared(true);
+                            // Allow some time for the sharing state to propagate before opening the new window
+                            // This should be done properly.
+                            setTimeout(
+                                () =>
+                                    window.open(
+                                        `https://spoof.gen-ai.fi/teacher/?origin=remote&model=${encodeURIComponent(
+                                            `${import.meta.env.VITE_APP_API}/model/${code}/project.zip`
+                                        )}&view=connect&overlay=share`,
+                                        '_blank'
+                                    ),
+                                500
+                            );
+                        }}
+                    >
+                        <ListItemIcon>
+                            <LinkIcon />
+                        </ListItemIcon>
+                        <ListItemText>{t('model.actions.bm')}</ListItemText>
+                    </MenuItem>
+                )}
 
                 <MenuItem
                     disabled={disabled || !onSidebar}

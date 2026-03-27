@@ -164,5 +164,15 @@
         "error": "Oops!",
         "errorMessage": "We could not send your feedback. Please try again later.",
         "thankYou": "Thank you for your feedback!"
+    },
+    "clock": {
+        "hours": "Hr",
+        "minutes": "Min",
+        "seconds": "Sec"
+    },
+    "aria": {
+        "close": "Close",
+        "stop": "Stop",
+        "play": "Play"
     }
 }

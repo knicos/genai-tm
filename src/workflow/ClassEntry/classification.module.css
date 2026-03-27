@@ -125,6 +125,7 @@
 .sampleImage {
     composes: sample;
     width: 58px;
+    height: 58px;
 }
 
 .sampleImage > button {

@@ -164,5 +164,15 @@
         "error": "앗!",
         "errorMessage": "피드백을 전송하지 못했습니다. 나중에 다시 시도해 주세요.",
         "thankYou": "피드백을 보내주셔서 감사합니다!"
+    },
+    "clock": {
+        "hours": "시간",
+        "minutes": "분",
+        "seconds": "초"
+    },
+    "aria": {
+        "close": "닫기",
+        "stop": "중지",
+        "play": "재생"
     }
 }

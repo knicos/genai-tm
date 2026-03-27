@@ -164,5 +164,15 @@
         "error": "Ops!",
         "errorMessage": "Non siamo riusciti a inviare il tuo feedback. Riprova più tardi.",
         "thankYou": "Grazie per il tuo feedback!"
+    },
+    "clock": {
+        "hours": "h",
+        "minutes": "min",
+        "seconds": "sec"
+    },
+    "aria": {
+        "close": "Chiudi",
+        "stop": "Ferma",
+        "play": "Riproduci"
     }
 }

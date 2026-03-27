@@ -83,5 +83,15 @@
         "error": "Hups!",
         "errorMessage": "Palautteen lähettäminen ei onnistunut. Yritä myöhemmin uudelleen.",
         "thankYou": "Kiitos palautteestasi!"
+    },
+    "clock": {
+        "hours": "h",
+        "minutes": "min",
+        "seconds": "s"
+    },
+    "aria": {
+        "close": "Sulje",
+        "stop": "Pysäytä",
+        "play": "Toista"
     }
 }

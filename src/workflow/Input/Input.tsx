@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useRef, useEffect, RefObject } from 'react';
+import React, { useState, useCallback, useRef, useEffect } from 'react';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
 import style from './Input.module.css';
@@ -7,16 +7,12 @@ import { useVariant } from '@genaitm/util/variant';
 import Skeleton from '@mui/material/Skeleton';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
-import UploadFileIcon from '@mui/icons-material/UploadFile';
 import GridViewIcon from '@mui/icons-material/GridView';
 import { Button } from '@genaitm/components/button/Button';
-import { useDrop } from 'react-dnd';
-import { NativeTypes } from 'react-dnd-html5-backend';
 import TabPanel from './TabPanel';
 import WebcamInput from './WebcamInput';
 import DatasetTestPicker from '@genaitm/components/DatasetTestPicker/DatasetTestPicker';
 import { useTabActive } from '@genaitm/util/useTabActive';
-import AlertModal from '@genaitm/components/AlertModal';
 import { useTeachableModel } from '@genaitm/util/TeachableModel';
 import {
     enableCamInput,
@@ -29,7 +25,10 @@ import {
     poseDetected as poseDetectedAtom,
 } from '../../state';
 import { useAtomValue, useAtom, useSetAtom } from 'jotai';
-import { BusyButton, canvasesFromFiles, canvasFromDataTransfer, QRCode, Widget } from '@genai-fi/base';
+import { BusyButton, QRCode, Widget } from '@genai-fi/base';
+import { AudioExample } from '@genai-fi/classifier';
+import FileInput from './FileInput';
+import AudioInput from '@genaitm/components/AudioExampleRecorder/AudioInput';
 
 interface Props {
     disabled?: boolean;
@@ -41,13 +40,11 @@ export default function Input(props: Props) {
     const { t, i18n } = useTranslation(namespace);
     const [enableInputSwitch, setEnableInput] = useAtom(enableCamInput);
     const [tabIndex, setTabIndex] = useState(0);
-    const fileRef = useRef<HTMLInputElement>(null);
     const fileImageRef = useRef<HTMLDivElement>(null);
     const remoteImageRef = useRef<HTMLDivElement>(null);
-    const [file, setFile] = useState<HTMLCanvasElement | null>(null);
+    const [file, setFile] = useState<HTMLCanvasElement | AudioExample | null>(null);
     const [showDatasetPicker, setShowDatasetPicker] = useState(false);
     const isActive = useTabActive();
-    const [showDropError, setShowDropError] = useState(false);
     const { predict, canPredict, draw, imageSize } = useTeachableModel();
     const predicting = useRef(false);
     const [remoteInput, setRemoteInput] = useAtom(inputImage);
@@ -59,17 +56,17 @@ export default function Input(props: Props) {
 
     const enableInput = isActive && enableInputSwitch && !training;
     const targetSize = modelVariant === 'pose' ? 257 : imageSize;
+    const isAudio = modelVariant === 'speech';
     const setPoseDetected = useSetAtom(poseDetectedAtom);
 
-    // Scale a canvas to targetSize so the displayed canvas and the prediction input
-    // are always the correct model resolution (fixes aspect-ratio and XAI canvas size).
     const scaleToModelSize = useCallback(
         (canvas: HTMLCanvasElement): HTMLCanvasElement => {
             if (canvas.width === targetSize && canvas.height === targetSize) return canvas;
             const scaled = document.createElement('canvas');
             scaled.width = targetSize;
             scaled.height = targetSize;
-            scaled.getContext('2d')!.drawImage(canvas, 0, 0, targetSize, targetSize);
+            const ctx = scaled.getContext('2d');
+            ctx?.drawImage(canvas, 0, 0, targetSize, targetSize);
             return scaled;
         },
         [targetSize]
@@ -85,7 +82,7 @@ export default function Input(props: Props) {
         setTabIndex(0);
         setRemoteInput(null);
         setPoseDetected(null);
-    }, [modelVariant]);
+    }, [modelVariant, setRemoteInput, setPoseDetected]);
 
     const doCollab = useCallback(() => {
         setP2PEnabled(true);
@@ -102,25 +99,16 @@ export default function Input(props: Props) {
     );
 
     useEffect(() => {
-        if (fileImageRef.current && file) {
-            while (fileImageRef.current.firstChild) {
-                fileImageRef.current.removeChild(fileImageRef.current.firstChild);
-            }
-            fileImageRef.current.appendChild(file);
-        }
-    }, [file, fileImageRef.current]);
-
-    useEffect(() => {
         if (remoteImageRef.current && remoteInput) {
             while (remoteImageRef.current.firstChild) {
                 remoteImageRef.current.removeChild(remoteImageRef.current.firstChild);
             }
             remoteImageRef.current.appendChild(remoteInput);
         }
-    }, [remoteInput, remoteImageRef.current]);
+    }, [remoteInput]);
 
     const doPrediction = useCallback(
-        async (image: HTMLCanvasElement) => {
+        async (image: HTMLCanvasElement | AudioExample) => {
             if (!canPredict || predicting.current) return;
             predicting.current = true;
             try {
@@ -140,50 +128,11 @@ export default function Input(props: Props) {
         }
     }, [tabIndex, remoteInput, file, doPrediction]);
 
-    const [dropProps, drop] = useDrop({
-        accept: [NativeTypes.FILE, NativeTypes.URL, NativeTypes.HTML],
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        async drop(items: any) {
-            const canvases = await canvasFromDataTransfer(items);
-
-            if (canvases.length === 0) {
-                setShowDropError(true);
-            } else {
-                setTabIndex(1);
-                setFile(scaleToModelSize(canvases[0]));
-            }
-        },
-        collect(monitor) {
-            const can = monitor.canDrop();
-            return {
-                highlighted: can,
-                hovered: monitor.isOver(),
-            };
-        },
-    });
-
     const changeWebcamToggle = useCallback(
         (_: React.ChangeEvent<HTMLInputElement>, checked: boolean) => {
             setEnableInput(checked);
         },
         [setEnableInput]
-    );
-
-    const doUploadClick = useCallback(() => fileRef.current?.click(), []);
-
-    const onFileChange = useCallback(
-        (e: React.ChangeEvent<HTMLInputElement>) => {
-            canvasesFromFiles(Array.from(e.target.files || [])).then((canvases) => {
-                if (canvases.length === 0) {
-                    setShowDropError(true);
-                } else {
-                    setTabIndex(1);
-                    setFile(scaleToModelSize(canvases[0]));
-                }
-            });
-            e.target.value = '';
-        },
-        [setShowDropError, setTabIndex, setFile, scaleToModelSize]
     );
 
     const doPostProcess = useCallback(
@@ -192,8 +141,6 @@ export default function Input(props: Props) {
         },
         [draw]
     );
-
-    const doDropErrorClose = useCallback(() => setShowDropError(false), [setShowDropError]);
 
     const handleDatasetImageSelected = useCallback(
         (canvas: HTMLCanvasElement) => {
@@ -214,7 +161,6 @@ export default function Input(props: Props) {
     return (
         <Widget
             noPadding
-            active={dropProps.hovered}
             dataWidget="input"
             activated={enableInput}
             title={t('input.labels.title')}
@@ -243,7 +189,6 @@ export default function Input(props: Props) {
                 <div
                     className={style.container}
                     data-variant={modelVariant}
-                    ref={drop as unknown as RefObject<HTMLDivElement>}
                 >
                     <div className={style.tabsRow}>
                         <Tabs
@@ -254,13 +199,24 @@ export default function Input(props: Props) {
                             scrollButtons="auto"
                             allowScrollButtonsMobile
                         >
-                            <Tab
-                                disabled={!canPredict || fatal}
-                                label={t('input.labels.webcam')}
-                                id="input-tab-0"
-                                aria-controls="input-panel-0"
-                                value={0}
-                            />
+                            {isAudio && (
+                                <Tab
+                                    disabled={!canPredict}
+                                    label={t('input.labels.audio')}
+                                    id="input-tab-0"
+                                    aria-controls="input-panel-0"
+                                    value={0}
+                                />
+                            )}
+                            {!isAudio && (
+                                <Tab
+                                    disabled={!canPredict || fatal}
+                                    label={t('input.labels.webcam')}
+                                    id="input-tab-0"
+                                    aria-controls="input-panel-0"
+                                    value={0}
+                                />
+                            )}
                             <Tab
                                 disabled={!canPredict}
                                 label={t('input.labels.file')}
@@ -268,14 +224,16 @@ export default function Input(props: Props) {
                                 aria-controls="input-panel-1"
                                 value={1}
                             />
-                            <Tab
-                                disabled={!canPredict || fatal}
-                                label={t('input.labels.device')}
-                                id="input-tab-2"
-                                aria-controls="input-panel-2"
-                                value={2}
-                            />
-                            {sampleDatasets && (
+                            {!isAudio && (
+                                <Tab
+                                    disabled={!canPredict || fatal}
+                                    label={t('input.labels.device')}
+                                    id="input-tab-2"
+                                    aria-controls="input-panel-2"
+                                    value={2}
+                                />
+                            )}
+                            {sampleDatasets && !isAudio && (
                                 <Tab
                                     disabled={!canPredict}
                                     className={style.datasetTab}
@@ -287,101 +245,92 @@ export default function Input(props: Props) {
                             )}
                         </Tabs>
                     </div>
-                    <TabPanel
-                        value={tabIndex}
-                        index={0}
-                        enabled={enableInput}
-                    >
-                        <WebcamInput
-                            enabled={canPredict}
-                            enableInput={enableInput && tabIndex === 0}
-                            doPrediction={doPrediction}
-                            doPostProcess={doPostProcess}
-                            size={targetSize}
-                        />
-                    </TabPanel>
+                    {isAudio && (
+                        <TabPanel
+                            value={tabIndex}
+                            index={0}
+                            enabled={enableInput}
+                        >
+                            <AudioInput
+                                recording={canPredict && enableInput && tabIndex === 0}
+                                onExample={doPrediction}
+                                includeCanvas={false}
+                                includeRawAudio={false}
+                                showDuration={false}
+                            />
+                        </TabPanel>
+                    )}
+                    {!isAudio && (
+                        <TabPanel
+                            value={tabIndex}
+                            index={0}
+                            enabled={enableInput}
+                        >
+                            <WebcamInput
+                                enabled={canPredict}
+                                enableInput={enableInput && tabIndex === 0}
+                                doPrediction={doPrediction}
+                                doPostProcess={doPostProcess}
+                                size={targetSize}
+                            />
+                        </TabPanel>
+                    )}
                     <TabPanel
                         value={tabIndex}
                         index={1}
                         enabled={enableInput}
                     >
-                        <input
-                            type="file"
-                            hidden
-                            onChange={onFileChange}
-                            accept="image/*"
-                            ref={fileRef}
+                        <FileInput
+                            enableInput={enableInput && tabIndex === 1}
+                            isAudio={isAudio}
+                            onExample={setFile}
+                            example={file ?? undefined}
                         />
-                        <div className={style.fileActionsRow}>
-                            <Button
-                                className={dropProps.hovered ? style.filesButtonHighlight : style.filesButton}
-                                onClick={doUploadClick}
-                                disabled={!canPredict || !enableInput}
-                                startIcon={<UploadFileIcon fontSize="large" />}
-                                variant="outlined"
-                            >
-                                {t('input.labels.upload')}
-                            </Button>
-                        </div>
-                        {!!file && (
-                            <div
-                                role="img"
-                                aria-label={t('input.aria.imageFile')}
-                                ref={fileImageRef}
-                                className={style.fileImage}
-                            />
-                        )}
-                        {!file && (
-                            <Skeleton
-                                sx={{ marginTop: '1rem' }}
-                                variant="rounded"
-                                width={imageSize}
-                                height={imageSize}
-                            />
-                        )}
                     </TabPanel>
-                    <TabPanel
-                        value={tabIndex}
-                        index={2}
-                        enabled={enableInput}
-                    >
-                        <div className={style.qrcode}>
-                            {!sharing && (
-                                <BusyButton
-                                    busy={p2penabled && !sharing}
-                                    onClick={doCollab}
-                                    variant="contained"
-                                    style={{ margin: '1rem 0' }}
-                                >
-                                    {t('trainingdata.actions.collaborate')}
-                                </BusyButton>
-                            )}
-                            {sharing && (
-                                <QRCode
-                                    dialog
-                                    size="small"
-                                    url={`${window.location.origin}/input/${code}?lng=${i18n.language}`}
+                    {!isAudio && (
+                        <TabPanel
+                            value={tabIndex}
+                            index={2}
+                            enabled={enableInput}
+                        >
+                            <div className={style.qrcode}>
+                                {!sharing && (
+                                    <BusyButton
+                                        busy={p2penabled && !sharing}
+                                        onClick={doCollab}
+                                        variant="contained"
+                                        style={{ margin: '1rem 0' }}
+                                    >
+                                        {t('trainingdata.actions.collaborate')}
+                                    </BusyButton>
+                                )}
+                                {sharing && (
+                                    <QRCode
+                                        dialog
+                                        size="small"
+                                        url={`${window.location.origin}/input/${code}?lng=${i18n.language}`}
+                                    />
+                                )}
+                            </div>
+                            {!!remoteInput && (
+                                <div
+                                    role="img"
+                                    aria-label={t('input.aria.imageFile')}
+                                    ref={remoteImageRef}
+                                    className={style.fileImage}
                                 />
                             )}
-                        </div>
-                        {!!remoteInput && (
-                            <div
-                                role="img"
-                                aria-label={t('input.aria.imageFile')}
-                                ref={remoteImageRef}
-                                className={style.fileImage}
-                            />
-                        )}
-                        {!remoteInput && (
-                            <Skeleton
-                                sx={{ marginTop: '1rem' }}
-                                variant="rounded"
-                                width={imageSize}
-                                height={imageSize}
-                            />
-                        )}
-                    </TabPanel>
-                    {sampleDatasets && (
+                            {!remoteInput && (
+                                <Skeleton
+                                    sx={{ marginTop: '1rem' }}
+                                    variant="rounded"
+                                    width={imageSize}
+                                    height={imageSize}
+                                />
+                            )}
+                        </TabPanel>
+                    )}
+                    {sampleDatasets && !isAudio && (
                         <TabPanel
                             value={tabIndex}
                             index={3}
@@ -430,13 +379,6 @@ export default function Input(props: Props) {
                     </div>
                 </div>
             )}
-            <AlertModal
-                open={showDropError}
-                onClose={doDropErrorClose}
-                severity="error"
-            >
-                {t('trainingdata.labels.dropError')}
-            </AlertModal>
             {sampleDatasets && (
                 <DatasetTestPicker
                     open={showDatasetPicker}

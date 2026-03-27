@@ -25,6 +25,7 @@ export function UnderTheHood() {
     const hasHistory = history.length > 0;
     const canPredict = (model?.isTrained() || false) && !training;
     const imageSize = model?.getImageSize();
+    const canXAI = canPredict && modelVariant !== 'speech';
 
     const displayCanvasRef = useRef<HTMLCanvasElement | null>(null);
 
@@ -60,14 +61,16 @@ export function UnderTheHood() {
             <div className={style.header}>
                 <h2 className={style.title}>{t('underTheHood.title')}</h2>
             </div>
-            <HeatmapPanel
-                enabled={enabled}
-                canPredict={canPredict}
-                onToggle={handleToggle}
-                canvasRef={handleCanvasRef}
-                size={imageSize}
-                poseDetected={modelVariant === 'pose' ? poseDetected : null}
-            />
+            {canXAI && (
+                <HeatmapPanel
+                    enabled={enabled}
+                    canPredict={canPredict}
+                    onToggle={handleToggle}
+                    canvasRef={handleCanvasRef}
+                    size={imageSize}
+                    poseDetected={modelVariant === 'pose' ? poseDetected : null}
+                />
+            )}
             {canPredict && (hasStats || hasHistory) && (
                 <div className={style.statsSection}>
                     <h2 className={style.statsTitle}>{t('underTheHood.statistics')}</h2>

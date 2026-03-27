@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-import { Dialog, IconButton, Select, MenuItem, SelectChangeEvent } from '@mui/material';
+import { useState, useEffect, useCallback } from 'react';
+import { Dialog, IconButton, Select, MenuItem, SelectChangeEvent, DialogTitle } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
@@ -10,6 +10,9 @@ import DriveFileMoveIcon from '@mui/icons-material/DriveFileMove';
 import { useTranslation } from 'react-i18next';
 import { useVariant } from '../../util/variant';
 import style from './SamplePreviewModal.module.css';
+import { AudioExample } from '@genai-fi/classifier';
+import PlayArrowIcon from '@mui/icons-material/PlayArrow';
+import StopIcon from '@mui/icons-material/Stop';
 
 interface Props {
     open: boolean;
@@ -19,6 +22,7 @@ interface Props {
     totalCount: number;
     classNames: string[];
     currentClassIndex: number;
+    audio?: AudioExample;
     onPrevious: () => void;
     onNext: () => void;
     onClassChange: (classIndex: number) => void;
@@ -34,6 +38,7 @@ export default function SamplePreviewModal({
     totalCount,
     classNames,
     currentClassIndex,
+    audio,
     onPrevious,
     onNext,
     onClassChange,
@@ -43,6 +48,7 @@ export default function SamplePreviewModal({
     const { namespace } = useVariant();
     const { t } = useTranslation(namespace);
     const [moveToClassIndex, setMoveToClassIndex] = useState(currentClassIndex);
+    const [playing, setPlaying] = useState(false);
 
     // Update moveToClassIndex when currentClassIndex changes
     useEffect(() => {
@@ -79,20 +85,52 @@ export default function SamplePreviewModal({
         }
     };
 
+    const doPlay = useCallback(async () => {
+        const raw = audio?.rawAudio;
+        if (!raw?.data?.length) return;
+
+        const ctx = new AudioContext();
+
+        if (ctx.state === 'suspended') {
+            await ctx.resume();
+        }
+
+        // Recorder is mono, so 1 channel is correct
+        const buffer = ctx.createBuffer(1, raw.data.length, raw.sampleRateHz);
+        buffer.copyToChannel(raw.data as Float32Array<ArrayBuffer>, 0, 0);
+
+        const source = ctx.createBufferSource();
+        source.buffer = buffer;
+        source.connect(ctx.destination);
+        source.onended = () => {
+            //if (sourceRef.current === source) sourceRef.current = null;
+            source.disconnect();
+            setPlaying(false);
+        };
+
+        //sourceRef.current = source;
+        source.start(0);
+        setPlaying(true);
+    }, [audio]);
+
     return (
-        <Dialog open={open} onClose={onClose} maxWidth={false} className={style.dialog}>
-            <div className={style.header}>
+        <Dialog
+            open={open}
+            onClose={onClose}
+            maxWidth={false}
+        >
+            <DialogTitle className={style.header}>
                 <div className={style.classNavigation}>
-                    <IconButton 
-                        onClick={handlePreviousClass} 
+                    <IconButton
+                        onClick={handlePreviousClass}
                         disabled={currentClassIndex === 0}
                         size="large"
                         aria-label="previous class"
                     >
                         <KeyboardArrowUpIcon sx={{ fontSize: '1.75rem' }} />
                     </IconButton>
-                    <IconButton 
-                        onClick={handleNextClass} 
+                    <IconButton
+                        onClick={handleNextClass}
                         disabled={currentClassIndex >= classNames.length - 1}
                         size="large"
                         aria-label="next class"
@@ -100,18 +138,46 @@ export default function SamplePreviewModal({
                         <KeyboardArrowDownIcon sx={{ fontSize: '1.75rem' }} />
                     </IconButton>
                 </div>
-                <div className={style.className} data-testid="modal-class-name">{classNames[currentClassIndex]}</div>
-                <IconButton onClick={onClose} aria-label="close" className={style.closeButton}>
+                <div
+                    className={style.className}
+                    data-testid="modal-class-name"
+                >
+                    {classNames[currentClassIndex]}
+                </div>
+                <IconButton
+                    onClick={onClose}
+                    aria-label="close"
+                    className={style.closeButton}
+                >
                     <CloseIcon />
                 </IconButton>
-            </div>
+            </DialogTitle>
 
             <div className={style.imageContainer}>
                 {imageUrl ? (
-                    <img src={imageUrl} alt={`Sample ${currentIndex + 1}`} />
+                    <img
+                        src={imageUrl}
+                        alt={`Sample ${currentIndex + 1}`}
+                    />
                 ) : (
-                    <div className={style.emptyMessage} data-testid="empty-class-message">{t('trainingdata.labels.emptyClass')}</div>
+                    <div
+                        className={style.emptyMessage}
+                        data-testid="empty-class-message"
+                    >
+                        {t('trainingdata.labels.emptyClass')}
+                    </div>
                 )}
+                {audio && audio.rawAudio?.data?.length ? (
+                    <IconButton
+                        aria-label={t('trainingdata.aria.play')}
+                        onClick={!playing ? doPlay : undefined}
+                        size="large"
+                        color="inherit"
+                        disabled={playing}
+                    >
+                        {playing ? <StopIcon fontSize="inherit" /> : <PlayArrowIcon fontSize="inherit" />}
+                    </IconButton>
+                ) : null}
             </div>
 
             <div className={style.navigation}>
@@ -156,7 +222,10 @@ export default function SamplePreviewModal({
                         }
                     >
                         {classNames.map((name, index) => (
-                            <MenuItem key={index} value={index}>
+                            <MenuItem
+                                key={index}
+                                value={index}
+                            >
                                 {name}
                             </MenuItem>
                         ))}

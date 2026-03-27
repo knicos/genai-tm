@@ -22,9 +22,10 @@ interface Props {
     index: number;
     hasSamples: boolean;
     isDisabled?: boolean;
-    onDeleteClass: () => void;
+    disableCollaboration?: boolean;
+    onDeleteClass?: () => void;
     onRemoveSamples: () => void;
-    onToggleDisable: () => void;
+    onToggleDisable?: () => void;
     onDatasets?: () => void;
 }
 
@@ -32,6 +33,7 @@ export default function ClassMenu({
     hasSamples,
     index,
     isDisabled,
+    disableCollaboration,
     onDeleteClass,
     onRemoveSamples,
     onToggleDisable,
@@ -78,7 +80,7 @@ export default function ClassMenu({
                 open={open}
                 onClose={handleClose}
             >
-                {!disabledClassRemove && [
+                {!disabledClassRemove && onDeleteClass && (
                     <MenuItem
                         key="delete"
                         onClick={() => {
@@ -90,19 +92,21 @@ export default function ClassMenu({
                             <DeleteIcon fontSize="small" />
                         </ListItemIcon>
                         {t('trainingdata.actions.deleteClass')}
-                    </MenuItem>,
-                ]}
-                <MenuItem
-                    onClick={() => {
-                        handleClose();
-                        onToggleDisable();
-                    }}
-                >
-                    <ListItemIcon>
-                        {isDisabled ? <CheckCircleIcon fontSize="small" /> : <BlockIcon fontSize="small" />}
-                    </ListItemIcon>
-                    {isDisabled ? t('trainingdata.actions.enableClass') : t('trainingdata.actions.disableClass')}
-                </MenuItem>
+                    </MenuItem>
+                )}
+                {onToggleDisable && (
+                    <MenuItem
+                        onClick={() => {
+                            handleClose();
+                            onToggleDisable();
+                        }}
+                    >
+                        <ListItemIcon>
+                            {isDisabled ? <CheckCircleIcon fontSize="small" /> : <BlockIcon fontSize="small" />}
+                        </ListItemIcon>
+                        {isDisabled ? t('trainingdata.actions.enableClass') : t('trainingdata.actions.disableClass')}
+                    </MenuItem>
+                )}
                 <MenuItem
                     disabled={!hasSamples}
                     onClick={() => {
@@ -129,7 +133,8 @@ export default function ClassMenu({
                         {t('trainingdata.actions.datasets')}
                     </MenuItem>
                 )}
-                {enabledP2PData &&
+                {!disableCollaboration &&
+                    enabledP2PData &&
                     enableCollaboration &&
                     !fatal && [
                         <div
