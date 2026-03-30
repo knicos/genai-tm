@@ -1,7 +1,8 @@
 @value primary from "@genai-fi/base/css/colours.module.css";
 
 .listContainer {
-    width: 100%;
+    flex: 1;
+    min-width: 0;
     display: flex;
     flex-direction: column;
     position: relative;
@@ -91,6 +92,7 @@
 .samplelistLarge {
     composes: samplelist;
     flex-wrap: wrap;
+    overflow-x: hidden;
 }
 
 .samplelistSmall {
@@ -143,6 +145,9 @@
 .container {
     display: flex;
     flex-direction: row;
+    min-width: 0;
+    max-width: 100%;
+    overflow-x: hidden;
 }
 
 .containerSmall {

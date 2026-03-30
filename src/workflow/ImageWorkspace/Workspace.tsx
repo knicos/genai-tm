@@ -15,7 +15,6 @@ import { useAtom, useSetAtom } from 'jotai';
 import { ModelLoader } from './loader';
 import Alert from '@mui/material/Alert';
 import Snackbar from '@mui/material/Snackbar';
-import useOrientation from '../../util/useOrientation';
 import DeployWrapper from './DeployWrapper';
 import ExportDialog from './ExportDialog';
 import { useModelCreator } from '../../util/TeachableModel';
@@ -70,8 +69,6 @@ export default function Workspace({ step, visitedStep, onComplete, saveTrigger, 
     const [showShare, setShowShare] = useState(false);
     const [showClone, setShowClone] = useState(false);
     const [showSidebar, setShowSidebar] = useState(false);
-    const orientation = useOrientation();
-    const sidePanelPosition = orientation === 'portrait' ? 'bottom' : 'right';
     const lastVariantRef = useRef(modelVariant);
 
     // Ensure an initial model exists
@@ -189,17 +186,14 @@ export default function Workspace({ step, visitedStep, onComplete, saveTrigger, 
     );
 
     return (
-        <main
-            className={style.workspace}
-            style={{ flexDirection: orientation === 'portrait' ? 'column' : 'row' }}
-        >
+        <main className={style.workspace}>
             <DeployWrapper />
             <ModelLoader
                 onLoaded={doLoaded}
                 onError={doLoadError}
             />
             <ModelSaver onSaved={doSaved} />
-            <div className={`${style.workspaceContent} ${showSidebar ? style.workspaceContentPanelOpen : ''}`}>
+            <div className={style.workspaceContent}>
                 <WorkflowLayout
                     connections={CONNECTIONS}
                     ignoredColumns={visitedStep < 1 ? 2 : 0}
@@ -235,14 +229,15 @@ export default function Workspace({ step, visitedStep, onComplete, saveTrigger, 
                 </WorkflowLayout>
             </div>
 
-            <SidePanel
-                open={showSidebar}
-                position={sidePanelPosition}
-                onClose={() => setShowSidebar(false)}
-                onOpen={() => setShowSidebar(true)}
-            >
-                <UnderTheHood />
-            </SidePanel>
+            {showSidebar && (
+                <SidePanel
+                    open={true}
+                    position="right"
+                    onClose={() => setShowSidebar(false)}
+                >
+                    <UnderTheHood />
+                </SidePanel>
+            )}
 
             <SaveDialog
                 trigger={saveTrigger}

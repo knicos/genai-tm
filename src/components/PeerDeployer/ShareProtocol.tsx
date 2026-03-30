@@ -32,7 +32,7 @@ export default function ShareProtocol() {
         if (data.event === 'request') {
             if (blob.current === undefined && cache.current.model) {
                 const app = new ClassifierApp(
-                    cache.current.model.getVariant(),
+                    cache.current.model.variant,
                     model,
                     behaviours,
                     cache.current.rawSamples?.map((s) => s.samples)

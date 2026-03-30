@@ -34,6 +34,14 @@
     gap: 4px;
 }
 
+.container[data-variant='hand'] :global .MuiTabs-root {
+    max-width: 289px;
+}
+
+.container[data-variant='hand'] :global .MuiTabs-flexContainer {
+    gap: 4px;
+}
+
 .container :global .MuiTabs-root .MuiTab-root {
     text-transform: none;
     min-width: 60px;
@@ -113,6 +121,8 @@
 
 .fileActionsRow {
     display: flex;
+    justify-content: center;
+    width: 100%;
     gap: 8px;
     margin-bottom: 16px;
     flex-wrap: wrap;
@@ -140,4 +150,5 @@
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
+    align-items: center;
 }

@@ -107,6 +107,7 @@ export default function SettingsForm({ state, setState }: Props) {
                     >
                         <MenuItem value="image">{t('settings.values.models.0')}</MenuItem>
                         <MenuItem value="pose">{t('settings.values.models.1')}</MenuItem>
+                        <MenuItem value="hand">{t('settings.values.models.2')}</MenuItem>
                     </Select>
                 </FormControl>
                 <Accordion

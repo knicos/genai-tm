@@ -27,7 +27,7 @@ export default function Deployer() {
         channel.onmessage = async (ev: MessageEvent<DeployEventRequest>) => {
             if (ev.data.event === 'request') {
                 if (blob.current === null && model) {
-                    const app = new ClassifierApp(model.getVariant(), model, behaviours);
+                    const app = new ClassifierApp(model.variant, model, behaviours);
                     app.projectId = code;
                     blob.current = await app.save();
                 }

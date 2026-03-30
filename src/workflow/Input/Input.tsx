@@ -45,7 +45,7 @@ export default function Input(props: Props) {
     const [file, setFile] = useState<HTMLCanvasElement | AudioExample | null>(null);
     const [showDatasetPicker, setShowDatasetPicker] = useState(false);
     const isActive = useTabActive();
-    const { predict, canPredict, draw, imageSize } = useTeachableModel();
+    const { model, predict, canPredict, draw, imageSize } = useTeachableModel();
     const predicting = useRef(false);
     const [remoteInput, setRemoteInput] = useAtom(inputImage);
     const code = useAtomValue(sessionCode);
@@ -55,8 +55,11 @@ export default function Input(props: Props) {
     const training = useAtomValue(modelTraining);
 
     const enableInput = isActive && enableInputSwitch && !training;
-    const targetSize = modelVariant === 'pose' ? 257 : imageSize;
+
+    const isPoseLikeModel = modelVariant === 'pose' || modelVariant === 'hand';
+    const [targetSize, setTargetSize] = useState(imageSize);
     const isAudio = modelVariant === 'speech';
+
     const setPoseDetected = useSetAtom(poseDetectedAtom);
 
     const scaleToModelSize = useCallback(
@@ -75,6 +78,16 @@ export default function Input(props: Props) {
     useEffect(() => {
         if (fatal) setTabIndex(1);
     }, [fatal]);
+
+    useEffect(() => {
+        setTargetSize(imageSize);
+        if (!model) return;
+
+        const sizeFromModel = model.getImageSize();
+        if (sizeFromModel > 0) {
+            setTargetSize(sizeFromModel);
+        }
+    }, [model, imageSize, modelVariant]);
 
     // Reset all local input state when the model variant changes (e.g. image <-> pose)
     useEffect(() => {
@@ -113,11 +126,14 @@ export default function Input(props: Props) {
             predicting.current = true;
             try {
                 await predict(image);
+                if (isPoseLikeModel && tabIndex !== 0 && image instanceof HTMLCanvasElement) {
+                    draw(image);
+                }
             } finally {
                 predicting.current = false;
             }
         },
-        [canPredict, predict]
+        [canPredict, predict, isPoseLikeModel, draw, tabIndex]
     );
 
     useEffect(() => {

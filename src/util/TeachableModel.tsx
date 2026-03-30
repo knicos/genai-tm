@@ -15,7 +15,7 @@ import { AudioExample, createModel, TeachableModel } from '@genai-fi/classifier'
 import { calculateModelStatistics } from './modelStats';
 import { getXAI, resetXAIDrawn, wasXAIDrawn } from './xaiCanvas';
 
-export type TMType = 'image' | 'pose' | 'speech';
+export type TMType = 'image' | 'pose' | 'hand' | 'speech';
 
 export interface PredictionsOutput {
     className: string;
@@ -111,7 +111,9 @@ export function useTeachableModel() {
         ),
         estimate: useCallback(
             async (image: HTMLCanvasElement): Promise<void> => {
-                model?.estimate(image);
+                if (model) {
+                    await model.estimate(image);
+                }
             },
             [model]
         ),

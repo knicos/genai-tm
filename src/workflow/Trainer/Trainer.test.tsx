@@ -86,7 +86,7 @@ describe('Trainer component', () => {
             isTrained: vi.fn(() => false),
             addExample: vi.fn(),
             train: vi.fn(),
-            getVariant: vi.fn(() => 'image'),
+            variant: 'image',
         } as unknown as TeachableModel;
 
         const setModel = vi.fn(() => {});
@@ -139,7 +139,7 @@ describe('Trainer component', () => {
             isTrained: vi.fn(() => false),
             addExample: vi.fn(),
             train: vi.fn(),
-            getVariant: vi.fn(() => 'image'),
+            variant: 'image',
         } as unknown as TeachableModel;
 
         const setModel = vi.fn(() => {});

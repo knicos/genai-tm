@@ -39,6 +39,9 @@
     "pose": {
         "modelVariant": "pose"
     },
+    "hand": {
+        "modelVariant": "hand"
+    },
     "speech": {
         "modelVariant": "speech"
     },

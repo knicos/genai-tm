@@ -75,6 +75,7 @@ describe('ShareProtocol', () => {
             addExample: vi.fn(),
             train: vi.fn(),
         } as unknown as TeachableModel;
+
         store.set(modelState, model);
         store.set(sessionCode, 'test-session');
 
