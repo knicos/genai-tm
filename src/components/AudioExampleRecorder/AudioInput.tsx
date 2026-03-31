@@ -72,6 +72,7 @@ export default function AudioInput({
                         columnTruncateLength: 232,
                         includeRawAudio: includeRawAudio,
                         includeCanvas: includeCanvas,
+                        warmupMillis: 500,
                     },
                     blob ?? undefined
                 )

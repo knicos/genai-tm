@@ -96,16 +96,16 @@ export default function Workspace({ step, visitedStep, onComplete, saveTrigger, 
         }
     }, []);
 
-    const doCloseShare = useCallback(() => setShowShare(false), [setShowShare]);
+    const doCloseShare = useCallback(() => setShowShare(false), []);
     const doShare = useCallback(() => {
         setShowShare(true);
-    }, [setShowShare]);
+    }, []);
     const doClone = useCallback(() => {
         setShowClone(true);
-    }, [setShowClone]);
+    }, []);
     const doSidebar = useCallback(() => {
         setShowSidebar(true);
-    }, [setShowSidebar]);
+    }, []);
 
     const saveTimer = useRef(-1);
 
@@ -228,16 +228,13 @@ export default function Workspace({ step, visitedStep, onComplete, saveTrigger, 
                     <Output hidden={visitedStep < 1} />
                 </WorkflowLayout>
             </div>
-
-            {showSidebar && (
-                <SidePanel
-                    open={true}
-                    position="right"
-                    onClose={() => setShowSidebar(false)}
-                >
-                    <UnderTheHood />
-                </SidePanel>
-            )}
+            <SidePanel
+                open={showSidebar}
+                position="right"
+                onClose={() => setShowSidebar(false)}
+            >
+                <UnderTheHood />
+            </SidePanel>
 
             <SaveDialog
                 trigger={saveTrigger}

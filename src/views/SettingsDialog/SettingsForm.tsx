@@ -38,11 +38,11 @@ export default function SettingsForm({ state, setState }: Props) {
             ...DEFAULTS[old.modelVariant],
             ...DEFAULTS[template],
         }));
-    }, [template]);
+    }, [template, setState]);
 
     useEffect(() => {
         setState((old) => ({ ...old, ...variant }));
-    }, [variant]);
+    }, [variant, setState]);
 
     const doCheckChange = useCallback(
         (event: FormEvent<HTMLInputElement>) => {
@@ -108,6 +108,7 @@ export default function SettingsForm({ state, setState }: Props) {
                         <MenuItem value="image">{t('settings.values.models.0')}</MenuItem>
                         <MenuItem value="pose">{t('settings.values.models.1')}</MenuItem>
                         <MenuItem value="hand">{t('settings.values.models.2')}</MenuItem>
+                        <MenuItem value="speech">{t('settings.values.models.3')}</MenuItem>
                     </Select>
                 </FormControl>
                 <Accordion
