@@ -5,6 +5,7 @@ import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import StopIcon from '@mui/icons-material/Stop';
 import style from './style.module.css';
 import { IconButton } from '@mui/material';
+import MicSelect from './MicSelect';
 
 interface Props {
     onExample: (example: AudioExample) => void;
@@ -17,6 +18,7 @@ interface Props {
     onStop?: () => void;
     showDuration?: boolean;
     allowReplay?: boolean;
+    showMicSelect?: boolean;
 }
 
 export default function AudioInput({
@@ -29,12 +31,14 @@ export default function AudioInput({
     recording,
     showDuration = true,
     allowReplay = false,
+    showMicSelect = true,
     onStop,
 }: Props) {
     const outputCanvas = useRef<HTMLCanvasElement>(null);
     const canvContainer = useRef<HTMLDivElement>(null);
     const [elapsedTime, setElapsedTime] = useState(0);
     const [allowPlay, setAllowPlay] = useState(false);
+    const [selectedDeviceId, setSelectedDeviceId] = useState<string | undefined>();
 
     const active = recording && (!allowReplay || allowPlay);
 
@@ -72,7 +76,8 @@ export default function AudioInput({
                         columnTruncateLength: 232,
                         includeRawAudio: includeRawAudio,
                         includeCanvas: includeCanvas,
-                        warmupMillis: 500,
+                        warmupMillis: 200,
+                        deviceId: selectedDeviceId,
                     },
                     blob ?? undefined
                 )
@@ -85,10 +90,16 @@ export default function AudioInput({
                 recorder.removeAllListeners();
             };
         }
-    }, [active, label, blob, duration, includeCanvas, includeRawAudio, onStop, onExample]);
+    }, [active, label, blob, duration, includeCanvas, includeRawAudio, onStop, onExample, selectedDeviceId]);
 
     return (
         <>
+            {showMicSelect && !blob && (
+                <MicSelect
+                    deviceId={selectedDeviceId}
+                    onSelect={setSelectedDeviceId}
+                />
+            )}
             <div
                 className={style.canvasContainer}
                 ref={canvContainer}
