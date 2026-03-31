@@ -190,3 +190,7 @@
     transform: translateX(-50%);
     color: white;
 }
+
+.selectGroup {
+    padding: 0 0.5rem;
+}

@@ -68,6 +68,11 @@ export default function Home() {
                             image="/body.jpg"
                         />
                         <Model
+                            id="hand"
+                            usb={usb}
+                            image="/gesture1.jpg"
+                        />
+                        <Model
                             id="speech"
                             usb={usb}
                             image="/sound1.jpg"
