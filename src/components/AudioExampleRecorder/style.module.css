@@ -1,5 +1,5 @@
 .canvasContainer {
-    overflow: hidden;
+    /*overflow: hidden;*/
     background: rgb(71, 0, 77);
     border-radius: 5px;
     border: 1px solid #ccc;
@@ -31,4 +31,15 @@
     display: flex;
     line-height: 1;
     margin: 0 0 1.5rem 0.5rem;
+}
+
+.overlay {
+    position: absolute;
+    width: 142px;
+    height: 58px;
+    left: 0;
+    top: 0;
+    box-sizing: border-box;
+    border-right: 2px solid var(--secondary);
+    background: rgba(0, 0, 0, 0.2);
 }

@@ -110,6 +110,7 @@ export default function AudioInput({
                     height={58}
                     aria-hidden={true}
                 />
+                <div className={style.overlay} />
                 {blob && allowReplay && (
                     <IconButton onClick={() => setAllowPlay((old) => !old)}>
                         {!allowPlay ? <PlayArrowIcon fontSize="large" /> : <StopIcon fontSize="large" />}
