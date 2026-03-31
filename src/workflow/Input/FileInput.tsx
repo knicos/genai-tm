@@ -116,6 +116,8 @@ export default function FileInput({ isAudio, example, onExample, enableInput }: 
 
     useEffect(() => {
         if (fileImageRef.current && example && example instanceof HTMLCanvasElement) {
+            example.style.width = '224px';
+            example.style.height = '224px';
             while (fileImageRef.current.firstChild) {
                 fileImageRef.current.removeChild(fileImageRef.current.firstChild);
             }
@@ -155,6 +157,7 @@ export default function FileInput({ isAudio, example, onExample, enableInput }: 
                     includeRawAudio={false}
                     showDuration
                     allowReplay
+                    showMicSelect={false}
                 />
             )}
             {!isAudio && !!example && (
@@ -169,8 +172,8 @@ export default function FileInput({ isAudio, example, onExample, enableInput }: 
                 <Skeleton
                     sx={{ marginTop: '1rem' }}
                     variant="rounded"
-                    width={isAudio ? 200 : imageSize}
-                    height={isAudio ? 58 : imageSize}
+                    width={isAudio ? 200 : 224}
+                    height={isAudio ? 58 : 224}
                 />
             )}
             <AlertModal

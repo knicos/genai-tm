@@ -3,6 +3,7 @@ import { Webcam } from '@genai-fi/base';
 import Skeleton from '@mui/material/Skeleton';
 import { useCallback } from 'react';
 import { useSetAtom } from 'jotai';
+import style from './Input.module.css';
 
 interface Props {
     enabled?: boolean;
@@ -17,7 +18,7 @@ export default function WebcamInput({ size, enabled, enableInput, doPrediction, 
     const doFatal = useCallback(() => setFatal(true), [setFatal]);
 
     return (
-        <>
+        <div className={style.webcamcontainer}>
             {enabled && (
                 <Webcam
                     disable={!enableInput}
@@ -33,10 +34,10 @@ export default function WebcamInput({ size, enabled, enableInput, doPrediction, 
             {!enabled && (
                 <Skeleton
                     variant="rounded"
-                    width={size}
-                    height={size}
+                    width={224}
+                    height={224}
                 />
             )}
-        </>
+        </div>
     );
 }

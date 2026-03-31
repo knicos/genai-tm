@@ -178,6 +178,11 @@
     border-radius: 6px;
 }
 
+.webcamcontainer canvas {
+    width: 224px;
+    height: 224px;
+}
+
 .webcamheader {
     display: flex;
     flex-direction: row;

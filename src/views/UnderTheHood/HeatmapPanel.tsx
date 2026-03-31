@@ -69,6 +69,7 @@ export function HeatmapPanel({
                         inplace
                         placement="left"
                         message={t('heatmap.colorScaleHelp')}
+                        dark
                     />
                 </div>
             )}

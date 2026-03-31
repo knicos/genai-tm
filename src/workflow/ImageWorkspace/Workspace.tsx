@@ -232,6 +232,7 @@ export default function Workspace({ step, visitedStep, onComplete, saveTrigger, 
                 open={showSidebar}
                 position="right"
                 onClose={() => setShowSidebar(false)}
+                dark
             >
                 <UnderTheHood />
             </SidePanel>

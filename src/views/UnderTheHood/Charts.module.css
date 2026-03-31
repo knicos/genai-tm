@@ -5,9 +5,29 @@
     position: relative;
 }
 
+.chartContainer :global .MuiChartsAxis-label {
+    fill: white;
+}
+
+.chartContainer :global .MuiChartsAxis-line {
+    stroke: white;
+}
+
+.chartContainer :global .MuiChartsAxis-tickLabel {
+    fill: white;
+}
+
+.chartContainer :global .MuiChartsAxis-tick {
+    stroke: white;
+}
+
+.chartContainer :global .MuiChartsLegend-label {
+    color: white;
+}
+
 .chartTitle {
     font-size: 1rem;
-    color: primary;
+    color: white;
     margin-bottom: 0.5rem;
 }
 

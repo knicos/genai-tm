@@ -5,7 +5,7 @@
     display: flex;
     flex-direction: column;
     transition: height 0.5s;
-    max-width: 100%;
+    max-width: calc(224px + 2rem);
 }
 
 .container :global .MuiTabs-root {
@@ -16,8 +16,7 @@
     height: 34px;
 }
 
-/* image/mobilenet: narrower tabs, tighter gap */
-.container[data-variant='image'] :global .MuiTabs-root {
+/*.container[data-variant='image'] :global .MuiTabs-root {
     max-width: 280px;
 }
 
@@ -25,7 +24,6 @@
     gap: 2px;
 }
 
-/* pose/posenet: wider tabs, larger gap */
 .container[data-variant='pose'] :global .MuiTabs-root {
     max-width: 289px;
 }
@@ -40,7 +38,7 @@
 
 .container[data-variant='hand'] :global .MuiTabs-flexContainer {
     gap: 4px;
-}
+}*/
 
 .container :global .MuiTabs-root .MuiTab-root {
     text-transform: none;
@@ -151,4 +149,9 @@
     flex-direction: column;
     gap: 0.5rem;
     align-items: center;
+}
+
+.webcamcontainer canvas {
+    width: 224px;
+    height: 224px;
 }

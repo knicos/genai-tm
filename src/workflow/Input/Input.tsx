@@ -4,31 +4,20 @@ import Switch from '@mui/material/Switch';
 import style from './Input.module.css';
 import { useTranslation } from 'react-i18next';
 import { useVariant } from '@genaitm/util/variant';
-import Skeleton from '@mui/material/Skeleton';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
-import GridViewIcon from '@mui/icons-material/GridView';
-import { Button } from '@genaitm/components/button/Button';
 import TabPanel from './TabPanel';
 import WebcamInput from './WebcamInput';
-import DatasetTestPicker from '@genaitm/components/DatasetTestPicker/DatasetTestPicker';
 import { useTabActive } from '@genaitm/util/useTabActive';
 import { useTeachableModel } from '@genaitm/util/TeachableModel';
-import {
-    enableCamInput,
-    fatalWebcam,
-    inputImage,
-    modelTraining,
-    p2pActive,
-    sessionCode,
-    sharingActive,
-    poseDetected as poseDetectedAtom,
-} from '../../state';
+import { enableCamInput, fatalWebcam, inputImage, modelTraining, poseDetected as poseDetectedAtom } from '../../state';
 import { useAtomValue, useAtom, useSetAtom } from 'jotai';
-import { BusyButton, QRCode, Widget } from '@genai-fi/base';
+import { Widget } from '@genai-fi/base';
 import { AudioExample } from '@genai-fi/classifier';
 import FileInput from './FileInput';
 import AudioInput from '@genaitm/components/AudioExampleRecorder/AudioInput';
+import RemoteInput from './RemoteInput';
+import DatasetInput from './DatasetInput';
 
 interface Props {
     disabled?: boolean;
@@ -37,20 +26,14 @@ interface Props {
 
 export default function Input(props: Props) {
     const { namespace, enableFileInput, sampleDatasets, modelVariant } = useVariant();
-    const { t, i18n } = useTranslation(namespace);
+    const { t } = useTranslation(namespace);
     const [enableInputSwitch, setEnableInput] = useAtom(enableCamInput);
     const [tabIndex, setTabIndex] = useState(0);
-    const fileImageRef = useRef<HTMLDivElement>(null);
-    const remoteImageRef = useRef<HTMLDivElement>(null);
     const [file, setFile] = useState<HTMLCanvasElement | AudioExample | null>(null);
-    const [showDatasetPicker, setShowDatasetPicker] = useState(false);
     const isActive = useTabActive();
     const { model, predict, canPredict, draw, imageSize } = useTeachableModel();
     const predicting = useRef(false);
     const [remoteInput, setRemoteInput] = useAtom(inputImage);
-    const code = useAtomValue(sessionCode);
-    const sharing = useAtomValue(sharingActive);
-    const [p2penabled, setP2PEnabled] = useAtom(p2pActive);
     const fatal = useAtomValue(fatalWebcam);
     const training = useAtomValue(modelTraining);
 
@@ -61,19 +44,6 @@ export default function Input(props: Props) {
     const isAudio = modelVariant === 'speech';
 
     const setPoseDetected = useSetAtom(poseDetectedAtom);
-
-    const scaleToModelSize = useCallback(
-        (canvas: HTMLCanvasElement): HTMLCanvasElement => {
-            if (canvas.width === targetSize && canvas.height === targetSize) return canvas;
-            const scaled = document.createElement('canvas');
-            scaled.width = targetSize;
-            scaled.height = targetSize;
-            const ctx = scaled.getContext('2d');
-            ctx?.drawImage(canvas, 0, 0, targetSize, targetSize);
-            return scaled;
-        },
-        [targetSize]
-    );
 
     useEffect(() => {
         if (fatal) setTabIndex(1);
@@ -97,10 +67,6 @@ export default function Input(props: Props) {
         setPoseDetected(null);
     }, [modelVariant, setRemoteInput, setPoseDetected]);
 
-    const doCollab = useCallback(() => {
-        setP2PEnabled(true);
-    }, [setP2PEnabled]);
-
     const doChangeTab = useCallback(
         (_: React.SyntheticEvent, newValue: number) => {
             setTabIndex(newValue);
@@ -110,15 +76,6 @@ export default function Input(props: Props) {
         },
         [setTabIndex, setRemoteInput, setPoseDetected]
     );
-
-    useEffect(() => {
-        if (remoteImageRef.current && remoteInput) {
-            while (remoteImageRef.current.firstChild) {
-                remoteImageRef.current.removeChild(remoteImageRef.current.firstChild);
-            }
-            remoteImageRef.current.appendChild(remoteInput);
-        }
-    }, [remoteInput]);
 
     const doPrediction = useCallback(
         async (image: HTMLCanvasElement | AudioExample) => {
@@ -157,22 +114,6 @@ export default function Input(props: Props) {
         },
         [draw]
     );
-
-    const handleDatasetImageSelected = useCallback(
-        (canvas: HTMLCanvasElement) => {
-            setTabIndex(3);
-            setFile(scaleToModelSize(canvas));
-        },
-        [scaleToModelSize]
-    );
-
-    const handleDatasetPickerOpen = useCallback(() => {
-        setShowDatasetPicker(true);
-    }, []);
-
-    const handleDatasetPickerClose = useCallback(() => {
-        setShowDatasetPicker(false);
-    }, []);
 
     return (
         <Widget
@@ -309,41 +250,7 @@ export default function Input(props: Props) {
                             index={2}
                             enabled={enableInput}
                         >
-                            <div className={style.qrcode}>
-                                {!sharing && (
-                                    <BusyButton
-                                        busy={p2penabled && !sharing}
-                                        onClick={doCollab}
-                                        variant="contained"
-                                        style={{ margin: '1rem 0' }}
-                                    >
-                                        {t('trainingdata.actions.collaborate')}
-                                    </BusyButton>
-                                )}
-                                {sharing && (
-                                    <QRCode
-                                        dialog
-                                        size="small"
-                                        url={`${window.location.origin}/input/${code}?lng=${i18n.language}`}
-                                    />
-                                )}
-                            </div>
-                            {!!remoteInput && (
-                                <div
-                                    role="img"
-                                    aria-label={t('input.aria.imageFile')}
-                                    ref={remoteImageRef}
-                                    className={style.fileImage}
-                                />
-                            )}
-                            {!remoteInput && (
-                                <Skeleton
-                                    sx={{ marginTop: '1rem' }}
-                                    variant="rounded"
-                                    width={imageSize}
-                                    height={imageSize}
-                                />
-                            )}
+                            <RemoteInput />
                         </TabPanel>
                     )}
                     {sampleDatasets && !isAudio && (
@@ -352,32 +259,11 @@ export default function Input(props: Props) {
                             index={3}
                             enabled={enableInput}
                         >
-                            <div className={style.datasetActionsRow}>
-                                <Button
-                                    onClick={handleDatasetPickerOpen}
-                                    disabled={!canPredict || !enableInput}
-                                    startIcon={<GridViewIcon fontSize="large" />}
-                                    variant="outlined"
-                                >
-                                    {t('trainingdata.labels.selectDataset')}
-                                </Button>
-                            </div>
-                            {!!file && (
-                                <div
-                                    role="img"
-                                    aria-label={t('input.aria.imageFile')}
-                                    ref={fileImageRef}
-                                    className={style.fileImage}
-                                />
-                            )}
-                            {!file && (
-                                <Skeleton
-                                    sx={{ marginTop: '1rem' }}
-                                    variant="rounded"
-                                    width={imageSize}
-                                    height={imageSize}
-                                />
-                            )}
+                            <DatasetInput
+                                example={file ?? undefined}
+                                onExample={setFile}
+                                enableInput={enableInput && tabIndex === 3}
+                            />
                         </TabPanel>
                     )}
                 </div>
@@ -394,13 +280,6 @@ export default function Input(props: Props) {
                         />
                     </div>
                 </div>
-            )}
-            {sampleDatasets && (
-                <DatasetTestPicker
-                    open={showDatasetPicker}
-                    onClose={handleDatasetPickerClose}
-                    onImageSelected={handleDatasetImageSelected}
-                />
             )}
         </Widget>
     );

@@ -3,7 +3,6 @@
 .underTheHood {
     padding: 2rem;
     width: 100%;
-    background: #fff;
     /*height: 100vh;
     max-height: 100vh;*/
     box-sizing: border-box;
@@ -67,20 +66,7 @@
 .statsTitle {
     font-size: 1.2rem;
     margin-bottom: 1rem;
-    color: textDark;
-}
-
-.helpButton {
-    position: absolute;
-    right: 0px;
-    color: #999;
-    background-color: rgba(255, 255, 255, 0.9);
-    font-size: '1.5rem';
-}
-
-.helpButton:hover {
-    color: #666;
-    background-color: rgba(255, 255, 255, 1);
+    color: white;
 }
 
 .noPoseOverlay {
