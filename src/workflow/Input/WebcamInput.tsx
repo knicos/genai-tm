@@ -8,8 +8,8 @@ import style from './Input.module.css';
 interface Props {
     enabled?: boolean;
     enableInput?: boolean;
-    doPrediction: (image: HTMLCanvasElement) => Promise<void>;
-    doPostProcess?: (image: HTMLCanvasElement) => void;
+    doPrediction: (image: HTMLCanvasElement, timestamp: number) => Promise<void>;
+    doPostProcess?: (input: HTMLCanvasElement, output: HTMLCanvasElement, timestamp: number) => void;
     size: number;
 }
 

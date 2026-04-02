@@ -5,9 +5,9 @@ import style from './classification.module.css';
 import { useTranslation } from 'react-i18next';
 import { useVariant } from '../../util/variant';
 import { useTeachableModel } from '../../util/TeachableModel';
-import { useAtom } from 'jotai';
-import { fatalWebcam } from '@genaitm/state';
-import { Webcam } from '@genai-fi/base';
+import { useAtom, useAtomValue } from 'jotai';
+import { fatalWebcam, modelLoaded } from '@genaitm/state';
+import { Spinner, Webcam } from '@genai-fi/base';
 import CapturePanel from '@genaitm/components/CapturePanel/CapturePanel';
 
 interface Props {
@@ -23,6 +23,7 @@ export default function WebcamCapture({ visible, onCapture, onClose }: Props) {
     const [fatal, setFatal] = useAtom(fatalWebcam);
     const buttonRef = useRef<HTMLButtonElement>(null);
     const { draw, imageSize } = useTeachableModel();
+    const loaded = useAtomValue(modelLoaded);
 
     const startCapture = useCallback(() => setCapturing(true), [setCapturing]);
     const startTouchCapture = useCallback(
@@ -87,6 +88,12 @@ export default function WebcamCapture({ visible, onCapture, onClose }: Props) {
                         <SettingsIcon />
                     </IconButton>*/}
             </div>
+            {!loaded && (
+                <div className={style.loadingOverlay}>
+                    <Spinner />
+                    <div className={style.loadingText}>{t('training.labels.loading')}</div>
+                </div>
+            )}
         </CapturePanel>
     ) : null;
 }

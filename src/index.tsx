@@ -1,3 +1,4 @@
+// import '@tensorflow/tfjs-backend-webgpu';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './i18n';
@@ -10,8 +11,7 @@ smoothscroll.polyfill();
 
 // Suppress harmless video playback interruption errors
 window.addEventListener('unhandledrejection', (event) => {
-    if (event.reason?.name === 'AbortError' && 
-        event.reason?.message?.includes('play() request was interrupted')) {
+    if (event.reason?.name === 'AbortError' && event.reason?.message?.includes('play() request was interrupted')) {
         // Suppress: Video playback interrupted (happens during webcam switching)
         event.preventDefault();
     }

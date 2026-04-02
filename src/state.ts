@@ -37,6 +37,8 @@ export const classState = atom<IClassification[]>([]);
 
 export const modelState = atom<TeachableModel | undefined>(undefined);
 
+export const modelLoaded = atom<boolean>(false);
+
 export const saveState = atom<SaveProperties | null>(null);
 
 export const loadState = atom<boolean>(false);

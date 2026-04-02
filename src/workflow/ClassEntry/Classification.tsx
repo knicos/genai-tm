@@ -261,7 +261,10 @@ export function Classification({
         setAudioBlob(null);
     }, [setActive, index]);
 
-    const doActivate = useCallback(() => onActivate(index), [onActivate, index]);
+    const doActivate = useCallback(() => {
+        onActivate(-1);
+        setTimeout(() => onActivate(index), 20);
+    }, [onActivate, index]);
 
     const doUploadClick = useCallback(() => fileRef.current?.click(), []);
 

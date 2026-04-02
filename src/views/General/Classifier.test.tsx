@@ -37,14 +37,14 @@ vi.mock('@genai-fi/base', async (importOriginal) => ({
         onPostprocess,
     }: {
         onCapture: (img: HTMLCanvasElement) => void;
-        onPostprocess: (img: HTMLCanvasElement) => void;
+        onPostprocess: (img: HTMLCanvasElement, output: HTMLCanvasElement) => void;
     }) {
         setTimeout(() => {
             const canvas = document.createElement('canvas');
             canvas.width = 224;
             canvas.height = 224;
             onCapture(canvas);
-            onPostprocess(canvas);
+            onPostprocess(canvas, canvas);
         }, 10);
         return <div data-testid="webcam"></div>;
     },

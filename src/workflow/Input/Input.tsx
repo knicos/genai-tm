@@ -36,10 +36,10 @@ export default function Input(props: Props) {
     const [remoteInput, setRemoteInput] = useAtom(inputImage);
     const fatal = useAtomValue(fatalWebcam);
     const training = useAtomValue(modelTraining);
+    const timeRef = useRef(0);
 
     const enableInput = isActive && enableInputSwitch && !training;
 
-    const isPoseLikeModel = modelVariant === 'pose' || modelVariant === 'hand';
     const [targetSize, setTargetSize] = useState(imageSize);
     const isAudio = modelVariant === 'speech';
 
@@ -78,26 +78,24 @@ export default function Input(props: Props) {
     );
 
     const doPrediction = useCallback(
-        async (image: HTMLCanvasElement | AudioExample) => {
+        async (image: HTMLCanvasElement | AudioExample, timestamp: number) => {
+            timeRef.current = timestamp;
             if (!canPredict || predicting.current) return;
             predicting.current = true;
             try {
                 await predict(image);
-                if (isPoseLikeModel && tabIndex !== 0 && image instanceof HTMLCanvasElement) {
-                    draw(image);
-                }
             } finally {
                 predicting.current = false;
             }
         },
-        [canPredict, predict, isPoseLikeModel, draw, tabIndex]
+        [canPredict, predict]
     );
 
     useEffect(() => {
         if (tabIndex === 2 && remoteInput) {
-            doPrediction(remoteInput);
+            doPrediction(remoteInput, timeRef.current);
         } else if (file) {
-            doPrediction(file);
+            doPrediction(file, timeRef.current);
         }
     }, [tabIndex, remoteInput, file, doPrediction]);
 
@@ -109,8 +107,8 @@ export default function Input(props: Props) {
     );
 
     const doPostProcess = useCallback(
-        (image: HTMLCanvasElement) => {
-            draw(image);
+        (input: HTMLCanvasElement, output: HTMLCanvasElement, timestamp: number) => {
+            draw(input, output, timestamp, timestamp === timeRef.current);
         },
         [draw]
     );

@@ -8,7 +8,7 @@ import { IconButton } from '@mui/material';
 import MicSelect from './MicSelect';
 
 interface Props {
-    onExample: (example: AudioExample) => void;
+    onExample: (example: AudioExample, timestamp: number) => void;
     blob?: Blob;
     label?: string;
     duration?: number;
@@ -46,7 +46,7 @@ export default function AudioInput({
         if (active) {
             const recorder = new SoundRecorder();
             recorder.on('example', (example) => {
-                onExample(example);
+                onExample(example, 0);
             });
             recorder.on('update', (prog: RecordingProgress) => {
                 setElapsedTime(prog.elapsedTimeMillis ?? 0);

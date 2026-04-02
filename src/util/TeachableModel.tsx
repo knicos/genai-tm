@@ -8,6 +8,7 @@ import {
     modelStats,
     TrainingMetrics,
     poseDetected as poseDetectedAtom,
+    modelLoaded,
 } from '../state';
 import { useAtom, useSetAtom, useAtomValue } from 'jotai';
 import { useCallback, useEffect, useState, useRef } from 'react';
@@ -101,10 +102,21 @@ export function useTeachableModel() {
             [model, setPredictions, setIndex, setPoseDetected, setError]
         ),
         draw: useCallback(
-            (image: HTMLCanvasElement) => {
+            (input: HTMLCanvasElement, output: HTMLCanvasElement, _: number, noEstimate?: boolean) => {
                 if (model) {
-                    model.estimate(image);
-                    model.draw(image);
+                    if (noEstimate) {
+                        const ctx = output.getContext('2d');
+                        if (!ctx) return;
+                        ctx.drawImage(input, 0, 0);
+                        model.draw(output);
+                    } else {
+                        model.estimate(input).then((i) => {
+                            const ctx = output.getContext('2d');
+                            if (!ctx) return;
+                            ctx.drawImage(i, 0, 0);
+                            model.draw(output);
+                        });
+                    }
                 }
             },
             [model]
@@ -123,6 +135,7 @@ export function useTeachableModel() {
 
 export function useModelCreator(variant: TMType) {
     const [model, setModel] = useAtom(modelState);
+    const setLoaded = useSetAtom(modelLoaded);
     const currentModelRef = useRef<TeachableModel | undefined>(model);
 
     useEffect(() => {
@@ -134,6 +147,8 @@ export function useModelCreator(variant: TMType) {
         setModel((old) => {
             if (old?.variant === variant) return old;
 
+            setLoaded(false);
+
             if (old) {
                 try {
                     old.dispose();
@@ -142,9 +157,15 @@ export function useModelCreator(variant: TMType) {
                 }
             }
 
-            return createModel(variant);
+            const newModel = createModel(variant);
+            newModel.ready().then((isReady) => {
+                if (isReady) {
+                    setLoaded(true);
+                }
+            });
+            return newModel;
         });
-    }, [variant, setModel]);
+    }, [variant, setModel, setLoaded]);
 
     // Cleanup on unmount
     useEffect(() => {
@@ -232,19 +253,25 @@ export function useModelTrainer() {
 
                 try {
                     await new Promise((resolve, reject) => {
-                        setTimeout(() => {
+                        setTimeout(async () => {
                             tm.setLabels(data.map((t) => t.label));
                             tm.setSeed('something');
-                            const promises = data.reduce<Promise<void>[]>(
-                                (p, v, ix) => [...p, ...v.samples.map((s) => tm.addExample(ix, s.data))],
-                                []
-                            );
-                            Promise.all(promises)
-                                .then(() => resolve(undefined))
-                                .catch((err) => {
-                                    console.error('[Training] Error during sample preparation:', err);
-                                    reject(err);
-                                });
+
+                            for (let i = 0; i < data.length; i++) {
+                                const c = data[i];
+                                for (const s of c.samples) {
+                                    try {
+                                        // Note: Must await each in turn to avoid MediaPipe errors.
+                                        await tm.addExample(i, s.data);
+                                    } catch (err) {
+                                        console.error(`[Training] Error adding example for label ${c.label}:`, err);
+                                        reject(err);
+                                        return;
+                                    }
+                                }
+                            }
+
+                            resolve(undefined);
                         }, 10);
                     });
                 } catch (e) {
