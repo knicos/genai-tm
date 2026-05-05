@@ -135,10 +135,25 @@
         "count": "Количество",
         "acc": "точн.",
         "testAcc": "тест точн.",
-        "loss": "потери",
+        "loss": "Потери",
         "testLoss": "тест потери",
         "epochs": "Эпохи",
-        "epoch": "Эпоха"
+        "epoch": "Эпоха",
+        "transferLearningMatrix": "Матрица переноса обучения",
+        "transferLearningMatrixHelp": "Профили концептов ImageNet по классам (из классификатора) и то, как текущий ввод с ними соотносится.",
+        "transferLearningGraph": "Граф переноса обучения",
+        "transferLearningGraphHelp": "Эта диаграмма показывает, как модель связывает текущее изображение с уже изученными классами. Слева: текущий ввод и классы-кандидаты. Справа: классы предобученной модели. Чем толще линия, тем сильнее совпадение.",
+        "transferLearningFlow": "Поток переноса обучения",
+        "transferLearningUserClass": "Пользовательский класс",
+        "transferLearningCurrentInput": "Текущий ввод",
+        "transferLearningSimilarity": "Сходство",
+        "transferLearningSimilarityHelp": "Cosine similarity compares the Current Input with each user class using all 1000 ImageNet probabilities. Values range 0–1, close to 1: high similarity, close to 0: no similarity.",
+        "transferLearningSamples": "{{count}} образцов",
+        "pretrainedStatisticsTitle": "Что предобученная модель видит в выделенной области",
+        "pretrainedStatisticsHelp": "Эти метки показывают, что ИИ считает похожим на выделенную область. Более высокий % означает большую уверенность.",
+        "pretrainedModelLayers": "Предобученная модель",
+        "pretrainedTrainingStepComplete": "Этап обучения завершён",
+        "pretrainedSampleAlt": "{{label}} образец {{index}}"
     },
     "training": {
         "actions": {

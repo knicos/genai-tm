@@ -135,10 +135,25 @@
         "count": "Sayı",
         "acc": "doğ.",
         "testAcc": "test doğ.",
-        "loss": "kayıp",
+        "loss": "Kayıp",
         "testLoss": "test kayıp",
         "epochs": "Devirler",
-        "epoch": "Devir"
+        "epoch": "Devir",
+        "transferLearningMatrix": "Transfer öğrenme matrisi",
+        "transferLearningMatrixHelp": "Sınıf düzeyindeki ImageNet kavram profilleri (sınıflandırıcıdan) ve mevcut girdinin bunlarla nasıl eşleştiği.",
+        "transferLearningGraph": "Transfer öğrenme grafiği",
+        "transferLearningGraphHelp": "Bu diyagram, modelin mevcut görselinizi daha önce öğrendiği sınıflarla nasıl ilişkilendirdiğini gösterir. Sol taraf: mevcut girdi ve aday sınıflar. Sağ taraf: önceden eğitilmiş modelin sınıfları. Daha kalın çizgiler daha güçlü eşleşme anlamına gelir.",
+        "transferLearningFlow": "Transfer öğrenme akışı",
+        "transferLearningUserClass": "Kullanıcı sınıfı",
+        "transferLearningCurrentInput": "Mevcut girdi",
+        "transferLearningSimilarity": "Benzerlik",
+        "transferLearningSimilarityHelp": "Cosine similarity compares the Current Input with each user class using all 1000 ImageNet probabilities. Values range 0–1, close to 1: high similarity, close to 0: no similarity.",
+        "transferLearningSamples": "{{count}} örnek",
+        "pretrainedStatisticsTitle": "Önceden eğitilmiş modelin vurgulanan alanda gördüğü şey",
+        "pretrainedStatisticsHelp": "Bu etiketler, yapay zekânın vurgulanan alanın neye benzediğini düşündüğünü gösterir. Daha yüksek % daha yüksek güven anlamına gelir.",
+        "pretrainedModelLayers": "Önceden eğitilmiş model",
+        "pretrainedTrainingStepComplete": "Eğitim adımı tamamlandı",
+        "pretrainedSampleAlt": "{{label}} örnek {{index}}"
     },
     "training": {
         "actions": {

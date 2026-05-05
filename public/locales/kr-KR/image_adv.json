@@ -138,7 +138,22 @@
         "loss": "손실",
         "testLoss": "테스트 손실",
         "epochs": "에포크",
-        "epoch": "에포크"
+        "epoch": "에포크",
+        "transferLearningMatrix": "전이 학습 행렬",
+        "transferLearningMatrixHelp": "클래스별 ImageNet 개념 프로필(분류기 기준)과 현재 입력이 얼마나 일치하는지 보여줍니다.",
+        "transferLearningGraph": "전이 학습 그래프",
+        "transferLearningGraphHelp": "이 다이어그램은 모델이 현재 이미지를 이미 학습한 클래스와 어떻게 연결하는지 보여줍니다. 왼쪽: 현재 입력과 후보 클래스. 오른쪽: 사전 학습 모델 클래스. 선이 두꺼울수록 일치도가 높습니다.",
+        "transferLearningFlow": "전이 학습 흐름",
+        "transferLearningUserClass": "사용자 클래스",
+        "transferLearningCurrentInput": "현재 입력",
+        "transferLearningSimilarity": "유사도",
+        "transferLearningSimilarityHelp": "Cosine similarity compares the Current Input with each user class using all 1000 ImageNet probabilities. Values range 0–1, close to 1: high similarity, close to 0: no similarity.",
+        "transferLearningSamples": "{{count}}개 샘플",
+        "pretrainedStatisticsTitle": "강조된 영역에서 사전 학습 모델이 보는 것",
+        "pretrainedStatisticsHelp": "이 라벨은 AI가 강조된 영역을 무엇으로 인식하는지 보여줍니다. %가 높을수록 신뢰도가 높습니다.",
+        "pretrainedModelLayers": "사전 학습된 모델",
+        "pretrainedTrainingStepComplete": "학습 단계 완료",
+        "pretrainedSampleAlt": "{{label}} 샘플 {{index}}"
     },
     "training": {
         "actions": {

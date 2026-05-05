@@ -41,6 +41,9 @@ class XAICanvas {
     markCopied(): void {
         this._copied = true;
     }
+    markUncopied(): void {
+        this._copied = false;
+    }
     wasDrawn(): boolean {
         return this._drawn;
     }
@@ -114,6 +117,9 @@ export function isXAICopied(): boolean {
 }
 export function markXAICopied(): void {
     _instance?.markCopied();
+}
+export function markXAIUncopied(): void {
+    _instance?.markUncopied();
 }
 export function resetXAIDrawn(): void {
     _instance?.resetDrawn();

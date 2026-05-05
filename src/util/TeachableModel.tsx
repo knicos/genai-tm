@@ -1,8 +1,11 @@
 import {
     IClassification,
+    ITransferLearningExplanation,
     modelState,
     predictedIndex,
     prediction,
+    imageNetTop5,
+    transferLearningExplanation,
     predictionError,
     trainingHistory,
     modelStats,
@@ -14,7 +17,7 @@ import { useAtom, useSetAtom, useAtomValue } from 'jotai';
 import { useCallback, useEffect, useState, useRef } from 'react';
 import { AudioExample, createModel, TeachableModel } from '@genai-fi/classifier';
 import { calculateModelStatistics } from './modelStats';
-import { getXAI, resetXAIDrawn, wasXAIDrawn } from './xaiCanvas';
+import { getXAI, wasXAIDrawn } from './xaiCanvas';
 
 export type TMType = 'image' | 'pose' | 'hand' | 'speech';
 
@@ -26,6 +29,7 @@ export interface PredictionsOutput {
 export interface ExplainedPredictionsOutput {
     predictions: PredictionsOutput[];
     heatmap?: number[][];
+    transferLearning?: ITransferLearningExplanation;
 }
 
 export function usePredictions() {
@@ -41,6 +45,8 @@ export function usePredictions() {
 export function useTeachableModel() {
     const model = useAtomValue(modelState);
     const setPredictions = useSetAtom(prediction);
+    const setImageNetTop5 = useSetAtom(imageNetTop5);
+    const setTransferLearningExplanation = useSetAtom(transferLearningExplanation);
     const setError = useSetAtom(predictionError);
     const setIndex = useSetAtom(predictedIndex);
     const setPoseDetected = useSetAtom(poseDetectedAtom);
@@ -53,53 +59,60 @@ export function useTeachableModel() {
         variant: model?.variant || 'image',
         predict: useCallback(
             async (image: HTMLCanvasElement | AudioExample) => {
-                if (model && model.isTrained()) {
-                    try {
-                        // Ensure the XAI canvas is registered before predicting.
-                        // Fixes a React effect-ordering race: Input.tsx (child) fires
-                        // doPrediction on the same render that setModel() completes,
-                        // before Workspace.tsx (parent) useXAICanvas effect runs.
-                        const xaiSize = model.getImageSize() || 224;
-                        try {
-                            model.setXAICanvas(getXAI(xaiSize).proxy);
-                        } catch {
-                            console.warn('Model not loaded yet');
-                        }
+                if (!model || !model.isTrained()) return;
 
-                        const isPose = model.variant === 'pose';
-                        if (isPose) resetXAIDrawn();
+                try {
+                    const xaiSize = model.getImageSize() || 224;
+                    const variant = model.getVariant();
+                    const isPose = variant === 'pose';
+                    const isMobileNet = variant === 'image';
 
-                        const p = await model.predict(image);
+                    const p = await model.predict(image);
 
-                        if (isPose && image instanceof HTMLCanvasElement) {
-                            const detected = wasXAIDrawn();
-                            if (!detected) {
-                                // No pose found — draw the raw input image onto the XAI canvas so
-                                // the explanation panel shows the input instead of a stale heatmap.
-                                getXAI(xaiSize).drawInputImage(image);
-                            }
-                            setPoseDetected(detected);
-                        }
+                    setTransferLearningExplanation(p.transferLearning || null);
 
-                        if (p.predictions.length === 0) return;
-                        if (p.predictions.some((p) => isNaN(p.probability))) {
-                            setError(true);
-                            return;
-                        }
-                        setPredictions(p.predictions);
-                        const nameOfMax = p.predictions.reduce((prev, val) =>
-                            val.probability > prev.probability ? val : prev
-                        );
-                        setIndex(p.predictions.indexOf(nameOfMax));
-                    } catch (e) {
-                        console.error('Prediction failed', e);
-                        setPredictions([]);
-                        setIndex(-1);
-                        setError(true);
+                    if (isMobileNet) {
+                        setImageNetTop5(p.transferLearning?.currentImageTopConcepts.slice(0, 5) || []);
                     }
+
+                    if (isPose && image instanceof HTMLCanvasElement) {
+                        const detected = wasXAIDrawn();
+                        if (!detected && xaiSize > 0) {
+                            // No pose found — draw the raw input image onto the XAI canvas so
+                            // the explanation panel shows the input instead of a stale heatmap.
+                            getXAI(xaiSize).drawInputImage(image);
+                        }
+                        setPoseDetected(detected);
+                    }
+
+                    if (p.predictions.length === 0) return;
+                    if (p.predictions.some((pred) => isNaN(pred.probability))) {
+                        setError(true);
+                        return;
+                    }
+                    setPredictions(p.predictions);
+                    const nameOfMax = p.predictions.reduce((prev, val) =>
+                        val.probability > prev.probability ? val : prev
+                    );
+                    setIndex(p.predictions.indexOf(nameOfMax));
+                } catch (e) {
+                    console.error('Prediction failed', e);
+                    setPredictions([]);
+                    setImageNetTop5([]);
+                    setTransferLearningExplanation(null);
+                    setIndex(-1);
+                    setError(true);
                 }
             },
-            [model, setPredictions, setIndex, setPoseDetected, setError]
+            [
+                model,
+                setPredictions,
+                setImageNetTop5,
+                setTransferLearningExplanation,
+                setIndex,
+                setPoseDetected,
+                setError,
+            ]
         ),
         draw: useCallback(
             (input: HTMLCanvasElement, output: HTMLCanvasElement, _: number, noEstimate?: boolean) => {
@@ -145,7 +158,8 @@ export function useModelCreator(variant: TMType) {
     // Create new model when variant changes
     useEffect(() => {
         setModel((old) => {
-            if (old?.variant === variant) return old;
+            const currentVariant = old?.getVariant();
+            if (currentVariant === variant) return old;
 
             setLoaded(false);
 
@@ -180,15 +194,16 @@ export function useModelCreator(variant: TMType) {
         };
     }, []);
 }
-export function useXAICanvas() {
+export function useXAICanvas(active: boolean) {
     const model = useAtomValue(modelState);
 
     useEffect(() => {
-        if (!model) return;
-        const size = model.getImageSize() || 224;
+        if (!model || !active) return;
 
         const register = () => {
             if (!model.isTrained()) return;
+            const size = model.getImageSize();
+            if (!size || size <= 0) return;
             try {
                 model.setXAICanvas(getXAI(size).proxy);
             } catch {
@@ -198,7 +213,7 @@ export function useXAICanvas() {
 
         register();
         model.ready().then(() => register());
-    }, [model]);
+    }, [model, active]);
 }
 
 export type TrainingState = 'none' | 'loading' | 'prepare' | 'training' | 'done';
@@ -215,6 +230,11 @@ export function useModelTrainer() {
     const [epochs, setEpochs] = useState(0);
     const setHistory = useSetAtom(trainingHistory);
     const setStats = useSetAtom(modelStats);
+    const setPredictions = useSetAtom(prediction);
+    const setImageNetTop5 = useSetAtom(imageNetTop5);
+    const setTransferLearningExpl = useSetAtom(transferLearningExplanation);
+    const setPredictedIndex = useSetAtom(predictedIndex);
+    const setPredictionError = useSetAtom(predictionError);
 
     useEffect(() => {
         if (model) {
@@ -240,7 +260,13 @@ export function useModelTrainer() {
                 setStage('loading');
                 setEpochs(0);
                 setHistory([]);
-                const tm = createModel(model.variant || 'image');
+                setPredictions([]);
+                setImageNetTop5([]);
+                setTransferLearningExpl(null);
+                setPredictedIndex(-1);
+                setPredictionError(false);
+                const modelVariant = model.variant;
+                const tm = createModel(modelVariant);
 
                 const isReady = await tm.ready();
                 if (!isReady) {
@@ -324,7 +350,17 @@ export function useModelTrainer() {
                 setModel(tm);
                 setStage('done');
             },
-            [model, setModel, setHistory, setStats]
+            [
+                model,
+                setModel,
+                setHistory,
+                setStats,
+                setPredictions,
+                setImageNetTop5,
+                setTransferLearningExpl,
+                setPredictedIndex,
+                setPredictionError,
+            ]
         ),
     };
 }

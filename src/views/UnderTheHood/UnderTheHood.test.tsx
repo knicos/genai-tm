@@ -96,7 +96,6 @@ describe('UnderTheHood component', () => {
     });
 
     it('shows history', async ({ expect }) => {
-        render(<UnderTheHood />, { wrapper: TestWrapper });
         const store = createStore();
         store.set(trainingHistory, [
             {
@@ -120,14 +119,13 @@ describe('UnderTheHood component', () => {
             return <TestWrapper initializeState={store}>{children}</TestWrapper>;
         }
 
-        render(<UnderTheHood />, { wrapper: NoPredWrapper });
+        render(<UnderTheHood mode="statistics" />, { wrapper: NoPredWrapper });
 
-        await waitFor(() => expect(screen.getByText('charts.accuracy')).toBeVisible());
-        expect(screen.getAllByText('charts.loss')).toHaveLength(2);
+        await waitFor(() => expect(screen.getByText('charts.accuracyPerEpoch')).toBeVisible());
+        expect(screen.getByText('charts.lossPerEpoch')).toBeVisible();
     });
 
     it('shows stats', async ({ expect }) => {
-        render(<UnderTheHood />, { wrapper: TestWrapper });
         const store = createStore();
         const stats: ModelStats = {
             labels: ['class1', 'class2'],
@@ -148,7 +146,7 @@ describe('UnderTheHood component', () => {
             return <TestWrapper initializeState={store}>{children}</TestWrapper>;
         }
 
-        render(<UnderTheHood />, { wrapper: NoPredWrapper });
+        render(<UnderTheHood mode="statistics" />, { wrapper: NoPredWrapper });
 
         await waitFor(() => expect(screen.getByText('charts.samples')).toBeVisible());
         expect(screen.getAllByText('class1')).toHaveLength(3);

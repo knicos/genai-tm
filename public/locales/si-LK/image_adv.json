@@ -138,7 +138,22 @@
         "loss": "සන්තොෂය",
         "testLoss": "පරීක්ෂණ සන්තොෂය",
         "epochs": "එපොක්",
-        "epoch": "එපොක්"
+        "epoch": "එපොක්",
+        "transferLearningMatrix": "හුවමාරු ඉගෙනුම් මැට්‍රික්ස්",
+        "transferLearningMatrixHelp": "පංති මට්ටමේ ImageNet සංකල්ප පැතිකඩ (වර්ගීකරණකයෙන්) සහ වර්තමාන ආදානය ඒවාට ගැළපෙන ආකාරය පෙන්වයි.",
+        "transferLearningGraph": "හුවමාරු ඉගෙනුම් ප්‍රස්ථාරය",
+        "transferLearningGraphHelp": "මෙම රූපසටහන ඔබගේ වර්තමාන රූපය පෙර ඉගෙනගත් පංති සමඟ ආකෘතිය සම්බන්ධ කරන ආකාරය පෙන්වයි. වමට: වර්තමාන ආදානය සහ අපේක්ෂක පංති. දකුණට: පෙර පුහුණු කළ ආකෘතියේ පංති. රේඛා ඝන වුවහොත් ගැළපීම බලවත් වේ.",
+        "transferLearningFlow": "හුවමාරු ඉගෙනුම් ප්‍රවාහය",
+        "transferLearningUserClass": "පරිශීලක පංතිය",
+        "transferLearningCurrentInput": "වර්තමාන ආදානය",
+        "transferLearningSimilarity": "සමානතාව",
+        "transferLearningSimilarityHelp": "Cosine similarity compares the Current Input with each user class using all 1000 ImageNet probabilities. Values range 0–1, close to 1: high similarity, close to 0: no similarity.",
+        "transferLearningSamples": "{{count}} නියැදි",
+        "pretrainedStatisticsTitle": "ඉස්මතු කළ ප්‍රදේශයේ පෙර පුහුණු කළ ආකෘතිය දකින්නේ කුමක්ද",
+        "pretrainedStatisticsHelp": "මෙම ලේබල් AI එකට ඉස්මතු කළ ප්‍රදේශය කෙසේ පෙනෙයිදැයි පෙන්වයි. % අගය වැඩි වීමෙන් විශ්වාසය වැඩි බව අර්ථ දක්වයි.",
+        "pretrainedModelLayers": "පූර්ව-පුහුණු ආකෘතිය",
+        "pretrainedTrainingStepComplete": "පුහුණු පියවර සම්පූර්ණයි",
+        "pretrainedSampleAlt": "{{label}} නියැදි {{index}}"
     },
     "training": {
         "actions": {

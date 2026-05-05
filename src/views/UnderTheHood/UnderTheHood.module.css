@@ -3,8 +3,6 @@
 .underTheHood {
     padding: 2rem;
     width: 100%;
-    /*height: 100vh;
-    max-height: 100vh;*/
     box-sizing: border-box;
 }
 
@@ -25,7 +23,6 @@
 
 .heatmapLabel {
     font-weight: bold;
-    margin-bottom: 0.5rem;
 }
 
 .label {
@@ -55,12 +52,6 @@
     border-radius: 6px;
     background: backgroundLight;
     display: block;
-}
-
-.statsSection {
-    margin-top: 2rem;
-    padding-top: 2rem;
-    border-top: 1px solid borderGrey;
 }
 
 .statsTitle {

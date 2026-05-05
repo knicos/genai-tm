@@ -135,10 +135,25 @@
         "count": "Кількість",
         "acc": "точн.",
         "testAcc": "тест точн.",
-        "loss": "втрати",
+        "loss": "Втрати",
         "testLoss": "тест втрати",
         "epochs": "Епохи",
-        "epoch": "Епоха"
+        "epoch": "Епоха",
+        "transferLearningMatrix": "Матриця трансферного навчання",
+        "transferLearningMatrixHelp": "Профілі концептів ImageNet на рівні класів (із класифікатора) та те, як поточний вхід із ними узгоджується.",
+        "transferLearningGraph": "Графік трансферного навчання",
+        "transferLearningGraphHelp": "Ця діаграма показує, як модель пов’язує поточне зображення з класами, які вже вивчила. Ліворуч: поточний вхід і класи-кандидати. Праворуч: класи попередньо натренованої моделі. Товстіші лінії означають сильніший збіг.",
+        "transferLearningFlow": "Потік трансферного навчання",
+        "transferLearningUserClass": "Клас користувача",
+        "transferLearningCurrentInput": "Поточний вхід",
+        "transferLearningSimilarity": "Схожість",
+        "transferLearningSimilarityHelp": "Cosine similarity compares the Current Input with each user class using all 1000 ImageNet probabilities. Values range 0–1, close to 1: high similarity, close to 0: no similarity.",
+        "transferLearningSamples": "{{count}} зразків",
+        "pretrainedStatisticsTitle": "Що попередньо натренована модель бачить у виділеній області",
+        "pretrainedStatisticsHelp": "Ці мітки показують, на що, на думку ШІ, схожа виділена область. Вищий % означає вищу впевненість.",
+        "pretrainedModelLayers": "Попередньо навчена модель",
+        "pretrainedTrainingStepComplete": "Крок навчання завершено",
+        "pretrainedSampleAlt": "{{label}} зразок {{index}}"
     },
     "training": {
         "actions": {

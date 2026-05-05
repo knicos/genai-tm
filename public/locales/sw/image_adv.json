@@ -135,10 +135,25 @@
         "count": "Idadi",
         "acc": "usahihi",
         "testAcc": "usahihi wa jaribio",
-        "loss": "hasara",
+        "loss": "Hasara",
         "testLoss": "hasara ya jaribio",
         "epochs": "Vipindi",
-        "epoch": "Kipindi"
+        "epoch": "Kipindi",
+        "transferLearningMatrix": "Jedwali la ujifunzaji wa uhamisho",
+        "transferLearningMatrixHelp": "Wasifu wa dhana za ImageNet kwa kila darasa (kutoka kwa kianishaji) na jinsi ingizo la sasa linavyolingana nazo.",
+        "transferLearningGraph": "Grafu ya ujifunzaji wa uhamisho",
+        "transferLearningGraphHelp": "Mchoro huu unaonyesha jinsi modeli inavyohusianisha picha yako ya sasa na madarasa iliyojifunza tayari. Upande wa kushoto: ingizo la sasa na madarasa ya wagombea. Upande wa kulia: madarasa ya modeli iliyofundishwa awali. Mistari minene inaonyesha ulinganifu mkubwa zaidi.",
+        "transferLearningFlow": "Mtiririko wa ujifunzaji wa uhamisho",
+        "transferLearningUserClass": "Darasa la mtumiaji",
+        "transferLearningCurrentInput": "Ingizo la sasa",
+        "transferLearningSimilarity": "Ufanano",
+        "transferLearningSimilarityHelp": "Cosine similarity compares the Current Input with each user class using all 1000 ImageNet probabilities. Values range 0–1, close to 1: high similarity, close to 0: no similarity.",
+        "transferLearningSamples": "Sampuli {{count}}",
+        "pretrainedStatisticsTitle": "Kile modeli iliyofundishwa awali inaona kwenye eneo lililoangaziwa",
+        "pretrainedStatisticsHelp": "Lebo hizi zinaonyesha AI inadhani eneo lililoangaziwa linafanana na nini. Asilimia (%) ya juu ina maana ya uhakika mkubwa.",
+        "pretrainedModelLayers": "Modeli iliyofunzishwa",
+        "pretrainedTrainingStepComplete": "Hatua ya mafunzo imekamilika",
+        "pretrainedSampleAlt": "{{label}} sampuli {{index}}"
     },
     "training": {
         "actions": {

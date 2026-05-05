@@ -135,10 +135,25 @@
         "count": "Antal",
         "acc": "nogr.",
         "testAcc": "test nogr.",
-        "loss": "förlust",
+        "loss": "Förlust",
         "testLoss": "test förlust",
         "epochs": "Epoker",
-        "epoch": "Epok"
+        "epoch": "Epok",
+        "transferLearningMatrix": "Överföringsinlärningsmatris",
+        "transferLearningMatrixHelp": "Klassvisa ImageNet-konceptprofiler (från klassificeraren) och hur den aktuella inmatningen stämmer överens med dem.",
+        "transferLearningGraph": "Överföringsinlärningsgraf",
+        "transferLearningGraphHelp": "Det här diagrammet visar hur modellen kopplar din aktuella bild till klasser den redan har lärt sig. Vänster sida: din aktuella inmatning och kandidatklasser. Höger sida: klasser från den förtränade modellen. Tjockare linjer betyder starkare matchning.",
+        "transferLearningFlow": "Överföringsinlärningsflöde",
+        "transferLearningUserClass": "Användarklass",
+        "transferLearningCurrentInput": "Aktuell inmatning",
+        "transferLearningSimilarity": "Likhet",
+        "transferLearningSimilarityHelp": "Cosine similarity compares the Current Input with each user class using all 1000 ImageNet probabilities. Values range 0–1, close to 1: high similarity, close to 0: no similarity.",
+        "transferLearningSamples": "{{count}} exempel",
+        "pretrainedStatisticsTitle": "Vad den förtränade modellen ser i det markerade området",
+        "pretrainedStatisticsHelp": "Dessa etiketter visar vad AI tror att det markerade området föreställer. Högre % betyder högre säkerhet.",
+        "pretrainedModelLayers": "Förtränad modell",
+        "pretrainedTrainingStepComplete": "Träningssteg slutfört",
+        "pretrainedSampleAlt": "{{label}} exempel {{index}}"
     },
     "training": {
         "actions": {

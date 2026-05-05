@@ -21,7 +21,44 @@ export interface IPrediction {
     probability: number;
 }
 
+export interface IImageNetTopClass {
+    classId: number;
+    className: string;
+    probability: number;
+    imageUrls: string[];
+}
+
+export interface ITransferLearningConcept {
+    classId: number;
+    className: string;
+    probability: number;
+    imageUrls: string[];
+}
+
+export interface ITransferLearningClassProfile {
+    userClassIndex: number;
+    userClassLabel: string;
+    sampleCount: number;
+    topConcepts: ITransferLearningConcept[];
+}
+
+export interface ITransferLearningSimilarity {
+    userClassIndex: number;
+    userClassLabel: string;
+    score: number;
+}
+
+export interface ITransferLearningExplanation {
+    currentImageTopConcepts: ITransferLearningConcept[];
+    userClassProfiles: ITransferLearningClassProfile[];
+    userClassSimilarity: ITransferLearningSimilarity[];
+}
+
 export const prediction = atom<IPrediction[]>([]);
+
+export const imageNetTop5 = atom<IImageNetTopClass[]>([]);
+
+export const transferLearningExplanation = atom<ITransferLearningExplanation | null>(null);
 
 export const predictionError = atom<boolean>(false);
 
@@ -97,5 +134,5 @@ export const modelStats = atom<ModelStats>({ labels: [] });
  * false = the last pose prediction found no human joints in the image
  */
 export const poseDetected = atom<boolean | null>(null);
-
+export const underTheHoodOpen = atom<boolean>(false);
 export const feedbackAtom = atom<boolean>(false);

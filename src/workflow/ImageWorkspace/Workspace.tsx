@@ -5,22 +5,32 @@ import Preview from '../Preview/Preview';
 import Output from '../Output/Output';
 import Behaviours from '../../workflow/Behaviours/Behaviours';
 import { useTranslation } from 'react-i18next';
-import { classState, IClassification, saveState, inputImage, prediction, predictedIndex } from '../../state';
+import {
+    classState,
+    IClassification,
+    saveState,
+    inputImage,
+    prediction,
+    predictedIndex,
+    underTheHoodOpen,
+    xaiEnabled,
+} from '../../state';
 import style from './TeachableMachine.module.css';
 import { useVariant } from '../../util/variant';
 import Input from '../Input/Input';
 import SaveDialog, { SaveProperties } from './SaveDialog';
 import { ModelSaver } from './saver';
-import { useAtom, useSetAtom } from 'jotai';
+import { useAtom, useAtomValue, useSetAtom } from 'jotai';
 import { ModelLoader } from './loader';
 import Alert from '@mui/material/Alert';
 import Snackbar from '@mui/material/Snackbar';
 import DeployWrapper from './DeployWrapper';
 import ExportDialog from './ExportDialog';
-import { useModelCreator } from '../../util/TeachableModel';
+import { useModelCreator, useXAICanvas } from '../../util/TeachableModel';
 import OpenDialog from './OpenDialog';
 import CloneDialog from './CloneDialog';
 import { IConnection, WorkflowLayout, SidePanel } from '@genai-fi/base';
+import { SidebarMode } from '../Preview/PreviewMenu';
 import UnderTheHood from '../../views/UnderTheHood/UnderTheHood';
 
 const SAVE_PERIOD = 5 * 60 * 1000; // 5 mins
@@ -68,11 +78,14 @@ export default function Workspace({ step, visitedStep, onComplete, saveTrigger, 
     const [editingData, setEditingData] = useState(false);
     const [showShare, setShowShare] = useState(false);
     const [showClone, setShowClone] = useState(false);
-    const [showSidebar, setShowSidebar] = useState(false);
+    const [showSidebar, setShowSidebar] = useAtom(underTheHoodOpen);
+    const [sidebarMode, setSidebarMode] = useState<SidebarMode>('visualization');
+    const heatmapEnabled = useAtomValue(xaiEnabled);
     const lastVariantRef = useRef(modelVariant);
 
     // Ensure an initial model exists
     useModelCreator(modelVariant);
+    useXAICanvas(showSidebar && sidebarMode === 'visualization' && heatmapEnabled);
 
     // Clear samples when model variant changes (pose <-> image)
     useEffect(() => {
@@ -96,16 +109,20 @@ export default function Workspace({ step, visitedStep, onComplete, saveTrigger, 
         }
     }, []);
 
-    const doCloseShare = useCallback(() => setShowShare(false), []);
+    const doCloseShare = useCallback(() => setShowShare(false), [setShowShare]);
     const doShare = useCallback(() => {
         setShowShare(true);
-    }, []);
+    }, [setShowShare]);
     const doClone = useCallback(() => {
         setShowClone(true);
-    }, []);
-    const doSidebar = useCallback(() => {
-        setShowSidebar(true);
-    }, []);
+    }, [setShowClone]);
+    const doSidebar = useCallback(
+        (mode: SidebarMode) => {
+            setSidebarMode(mode);
+            setShowSidebar(true);
+        },
+        [setShowSidebar, setSidebarMode]
+    );
 
     const saveTimer = useRef(-1);
 
@@ -228,13 +245,14 @@ export default function Workspace({ step, visitedStep, onComplete, saveTrigger, 
                     <Output hidden={visitedStep < 1} />
                 </WorkflowLayout>
             </div>
+
             <SidePanel
                 open={showSidebar}
                 position="right"
                 onClose={() => setShowSidebar(false)}
                 dark
             >
-                <UnderTheHood />
+                <UnderTheHood mode={sidebarMode} />
             </SidePanel>
 
             <SaveDialog

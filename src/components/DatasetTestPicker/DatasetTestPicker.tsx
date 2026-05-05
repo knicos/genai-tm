@@ -1,4 +1,5 @@
-import { useCallback, useState, useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
+import { useAtom } from 'jotai';
 import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
 import DialogContent from '@mui/material/DialogContent';
@@ -6,7 +7,7 @@ import FolderIcon from '@mui/icons-material/Folder';
 import CloseIcon from '@mui/icons-material/Close';
 import IconButton from '@mui/material/IconButton';
 import { useTranslation } from 'react-i18next';
-import { Dataset, DATASETS, fetchAndCacheDatasets } from '@genaitm/util/datasets';
+import { datasetsAtom, fetchAndCacheDatasets } from '@genaitm/util/datasets';
 import { canvasFromURL } from '@genai-fi/base';
 import { useVariant } from '@genaitm/util/variant';
 import styles from '../DatasetPicker/DatasetPicker.module.css';
@@ -28,17 +29,13 @@ export default function DatasetTestPicker({
 }: DatasetTestPickerProps) {
     const { namespace } = useVariant();
     const { t } = useTranslation(namespace);
-    const [localDatasets, setLocalDatasets] = useState<Dataset[]>(DATASETS);
+    const [datasets, setDatasets] = useAtom(datasetsAtom);
     const [scrollRoot, scrollRootRef] = useScrollRootRef();
 
     useEffect(() => {
-        if (!open) return;
-        if (DATASETS.length > 0) {
-            setLocalDatasets([...DATASETS]);
-            return;
-        }
-        fetchAndCacheDatasets().then(setLocalDatasets);
-    }, [open]);
+        if (!open || datasets.length > 0) return;
+        fetchAndCacheDatasets().then(setDatasets);
+    }, [open, datasets.length, setDatasets]);
 
     const handleImageClick = useCallback(
         async (url: string) => {
@@ -81,7 +78,7 @@ export default function DatasetTestPicker({
             <DialogContent ref={scrollRootRef}>
                 <ScrollRootContext.Provider value={scrollRoot}>
                     <DatasetTestCategoryList
-                        datasets={localDatasets}
+                        datasets={datasets}
                         open={open}
                         onImageClick={handleImageClick}
                     />

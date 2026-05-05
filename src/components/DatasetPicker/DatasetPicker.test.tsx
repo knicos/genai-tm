@@ -1,9 +1,10 @@
 import { describe, it, vi } from 'vitest';
 import { render, screen, waitFor } from '@testing-library/react';
+import { atom } from 'jotai';
 import DatasetPicker from './DatasetPicker';
 
 vi.mock('@genaitm/util/datasets', () => ({
-    DATASETS: [],
+    datasetsAtom: atom([]),
     fetchAndCacheDatasets: vi.fn().mockResolvedValue([
         {
             id: 'dataset1',

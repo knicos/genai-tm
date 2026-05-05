@@ -3,41 +3,23 @@
 .chartContainer {
     margin-bottom: 2rem;
     position: relative;
-}
-
-.chartContainer :global .MuiChartsAxis-label {
-    fill: white;
-}
-
-.chartContainer :global .MuiChartsAxis-line {
-    stroke: white;
-}
-
-.chartContainer :global .MuiChartsAxis-tickLabel {
-    fill: white;
-}
-
-.chartContainer :global .MuiChartsAxis-tick {
-    stroke: white;
-}
-
-.chartContainer :global .MuiChartsLegend-label {
-    color: white;
+    color: inherit;
 }
 
 .chartTitle {
     font-size: 1rem;
-    color: white;
+    color: inherit;
     margin-bottom: 0.5rem;
 }
 
 .chartScrollWrapper {
     overflow-x: auto;
+    scrollbar-gutter: stable;
 }
 
 .chartSvg {
     border: 1px solid borderGrey;
-    background: white;
+    background: transparent;
 }
 
 .table {
@@ -65,6 +47,7 @@
 
 .matrixScrollWrapper {
     overflow-x: auto;
+    scrollbar-gutter: stable;
 }
 
 .matrixContainer {

@@ -135,10 +135,25 @@
         "count": "Määrä",
         "acc": "tark.",
         "testAcc": "tešti tark.",
-        "loss": "häviö",
+        "loss": "Häviö",
         "testLoss": "tešti häviö",
         "epochs": "Epookit",
-        "epoch": "Epookki"
+        "epoch": "Epookki",
+        "transferLearningMatrix": "Siirto-oppimismatriisi",
+        "transferLearningMatrixHelp": "Luokkakohtaiset ImageNet-käsiteprofiilit (luokittelijasta) ja miten nykyinen syöte vastaa niitä.",
+        "transferLearningGraph": "Siirto-oppimiskaavio",
+        "transferLearningGraphHelp": "Tämä kaavio näyttää, miten malli yhdistää nykyisen kuvasi aiemmin opittuihin luokkiin. Vasen puoli: nykyinen syöte ja ehdokasluokat. Oikea puoli: esikoulutetun mallin luokat. Paksummat viivat tarkoittavat vahvempaa osumaa.",
+        "transferLearningFlow": "Siirto-oppimisvirta",
+        "transferLearningUserClass": "Käyttäjäluokka",
+        "transferLearningCurrentInput": "Nykyinen syöte",
+        "transferLearningSimilarity": "Samankaltaisuus",
+        "transferLearningSimilarityHelp": "Cosine similarity compares the Current Input with each user class using all 1000 ImageNet probabilities. Values range 0–1, close to 1: high similarity, close to 0: no similarity.",
+        "transferLearningSamples": "{{count}} näytettä",
+        "pretrainedStatisticsTitle": "Mitä esikoulutettu malli näkee korostetulla alueella",
+        "pretrainedStatisticsHelp": "Nämä tunnisteet kertovat, miltä korostettu alue AI:n mielestä näyttää. Suurempi % tarkoittaa suurempaa varmuutta.",
+        "pretrainedModelLayers": "Esiopetettu malli",
+        "pretrainedTrainingStepComplete": "Koulutusvaihe valmis",
+        "pretrainedSampleAlt": "{{label}} näyte {{index}}"
     },
     "training": {
         "actions": {

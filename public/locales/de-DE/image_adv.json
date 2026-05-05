@@ -138,7 +138,22 @@
         "loss": "Verlust",
         "testLoss": "Test-Verlust",
         "epochs": "Epochen",
-        "epoch": "Epoche"
+        "epoch": "Epoche",
+        "transferLearningMatrix": "Transferlernmatrix",
+        "transferLearningMatrixHelp": "Klassenbezogene ImageNet-Konzeptprofile (vom Klassifikator) und wie die aktuelle Eingabe dazu passt.",
+        "transferLearningGraph": "Transferlern-Graph",
+        "transferLearningGraphHelp": "Dieses Diagramm zeigt, wie das Modell dein aktuelles Bild mit bereits gelernten Klassen verknüpft. Links: deine aktuelle Eingabe und Kandidatenklassen. Rechts: Klassen aus dem vortrainierten Modell. Dickere Linien bedeuten eine stärkere Übereinstimmung.",
+        "transferLearningFlow": "Transferlern-Fluss",
+        "transferLearningUserClass": "Benutzerklasse",
+        "transferLearningCurrentInput": "Aktuelle Eingabe",
+        "transferLearningSimilarity": "Ähnlichkeit",
+        "transferLearningSimilarityHelp": "Cosine similarity compares the Current Input with each user class using all 1000 ImageNet probabilities. Values range 0–1, close to 1: high similarity, close to 0: no similarity.",
+        "transferLearningSamples": "{{count}} Beispiele",
+        "pretrainedStatisticsTitle": "Was das vortrainierte Modell im markierten Bereich sieht",
+        "pretrainedStatisticsHelp": "Diese Bezeichnungen zeigen, was die KI im markierten Bereich erkennt. Ein höherer %-Wert bedeutet mehr Sicherheit.",
+        "pretrainedModelLayers": "Vortrainiertes Modell",
+        "pretrainedTrainingStepComplete": "Trainingsschritt abgeschlossen",
+        "pretrainedSampleAlt": "{{label}} Beispiel {{index}}"
     },
     "training": {
         "actions": {

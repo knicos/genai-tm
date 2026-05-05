@@ -138,7 +138,22 @@
         "loss": "損失",
         "testLoss": "テスト損失",
         "epochs": "エポック",
-        "epoch": "エポック"
+        "epoch": "エポック",
+        "transferLearningMatrix": "転移学習マトリクス",
+        "transferLearningMatrixHelp": "クラスごとの ImageNet 概念プロファイル（分類器由来）と、現在の入力がそれらにどれだけ一致するかを示します。",
+        "transferLearningGraph": "転移学習グラフ",
+        "transferLearningGraphHelp": "この図は、モデルが現在の画像を既に学習したクラスにどう関連付けるかを示します。左側は現在の入力と候補クラス、右側は事前学習モデルのクラスです。線が太いほど一致度が高くなります。",
+        "transferLearningFlow": "転移学習フロー",
+        "transferLearningUserClass": "ユーザークラス",
+        "transferLearningCurrentInput": "現在の入力",
+        "transferLearningSimilarity": "類似度",
+        "transferLearningSimilarityHelp": "Cosine similarity compares the Current Input with each user class using all 1000 ImageNet probabilities. Values range 0–1, close to 1: high similarity, close to 0: no similarity.",
+        "transferLearningSamples": "{{count}} サンプル",
+        "pretrainedStatisticsTitle": "ハイライト領域で事前学習モデルが見ているもの",
+        "pretrainedStatisticsHelp": "これらのラベルは、AI がハイライト領域を何に見えると判断したかを示します。% が高いほど確信度が高いことを意味します。",
+        "pretrainedModelLayers": "事前学習済みモデル",
+        "pretrainedTrainingStepComplete": "学習ステップ完了",
+        "pretrainedSampleAlt": "{{label}} サンプル {{index}}"
     },
     "training": {
         "actions": {

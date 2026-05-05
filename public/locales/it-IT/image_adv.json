@@ -135,10 +135,25 @@
         "count": "Conteggio",
         "acc": "prec.",
         "testAcc": "prec. test",
-        "loss": "perdita",
+        "loss": "Perdita",
         "testLoss": "perdita test",
         "epochs": "Epoche",
-        "epoch": "Epoca"
+        "epoch": "Epoca",
+        "transferLearningMatrix": "Matrice di transfer learning",
+        "transferLearningMatrixHelp": "Profili dei concetti ImageNet a livello di classe (dal classificatore) e allineamento dell'input corrente con essi.",
+        "transferLearningGraph": "Grafico di transfer learning",
+        "transferLearningGraphHelp": "Questo diagramma mostra come il modello collega l'immagine corrente alle classi già apprese. A sinistra: input corrente e classi candidate. A destra: classi del modello preaddestrato. Linee più spesse indicano una corrispondenza più forte.",
+        "transferLearningFlow": "Flusso di transfer learning",
+        "transferLearningUserClass": "Classe utente",
+        "transferLearningCurrentInput": "Input corrente",
+        "transferLearningSimilarity": "Similarità",
+        "transferLearningSimilarityHelp": "Cosine similarity compares the Current Input with each user class using all 1000 ImageNet probabilities. Values range 0–1, close to 1: high similarity, close to 0: no similarity.",
+        "transferLearningSamples": "{{count}} campioni",
+        "pretrainedStatisticsTitle": "Cosa vede il modello preaddestrato nell'area evidenziata",
+        "pretrainedStatisticsHelp": "Queste etichette mostrano cosa pensa l'IA dell'area evidenziata. Una % più alta indica maggiore confidenza.",
+        "pretrainedModelLayers": "Modello preaddestrato",
+        "pretrainedTrainingStepComplete": "Fase di addestramento completata",
+        "pretrainedSampleAlt": "{{label}} campione {{index}}"
     },
     "training": {
         "actions": {

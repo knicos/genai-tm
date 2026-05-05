@@ -1,4 +1,5 @@
 import { useCallback, useState, useRef, useEffect } from 'react';
+import { useAtom } from 'jotai';
 import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
 import DialogContent from '@mui/material/DialogContent';
@@ -9,7 +10,7 @@ import LinearProgress from '@mui/material/LinearProgress';
 import CloseIcon from '@mui/icons-material/Close';
 import IconButton from '@mui/material/IconButton';
 import { useTranslation } from 'react-i18next';
-import { Dataset, DATASETS, fetchAndCacheDatasets, DatasetImage } from '@genaitm/util/datasets';
+import { datasetsAtom, fetchAndCacheDatasets, DatasetImage } from '@genaitm/util/datasets';
 import { loadDatasetImagesInParallel, LoadProgress } from '@genaitm/util/datasetLoader';
 import { useVariant } from '@genaitm/util/variant';
 import DatasetCategoryList, { DatasetCategoryListHandle } from './DatasetCategoryList';
@@ -28,20 +29,16 @@ export default function DatasetPicker({ open, onClose, onDatasetSelected }: Data
     const { t } = useTranslation(namespace);
     const [loading, setLoading] = useState(false);
     const [loadProgress, setLoadProgress] = useState<LoadProgress>({ loaded: 0, total: 0 });
-    const [localDatasets, setLocalDatasets] = useState<Dataset[]>(DATASETS);
+    const [datasets, setDatasets] = useAtom(datasetsAtom);
     const [selectedCount, setSelectedCount] = useState(0);
     const [scrollRoot, scrollRootRef] = useScrollRootRef();
     const listRef = useRef<DatasetCategoryListHandle>(null);
     const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
-        if (!open) return;
-        if (DATASETS.length > 0) {
-            setLocalDatasets([...DATASETS]);
-            return;
-        }
-        fetchAndCacheDatasets().then(setLocalDatasets);
-    }, [open]);
+        if (!open || datasets.length > 0) return;
+        fetchAndCacheDatasets().then(setDatasets);
+    }, [open, datasets.length, setDatasets]);
 
     const handleUse = useCallback(async () => {
         const images = listRef.current?.getSelectedImages() ?? [];
@@ -121,7 +118,7 @@ export default function DatasetPicker({ open, onClose, onDatasetSelected }: Data
                         ) : (
                             <DatasetCategoryList
                                 ref={listRef}
-                                datasets={localDatasets}
+                                datasets={datasets}
                                 onSelectionChange={setSelectedCount}
                             />
                         )}
