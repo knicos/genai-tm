@@ -78,12 +78,12 @@ export default function Input(props: Props) {
     );
 
     const doPrediction = useCallback(
-        async (image: HTMLCanvasElement | AudioExample, timestamp: number) => {
+        async (image: HTMLCanvasElement | AudioExample, timestamp: number, staticImageMode = false) => {
             timeRef.current = timestamp;
             if (!canPredict || predicting.current) return;
             predicting.current = true;
             try {
-                await predict(image);
+                await predict(image, staticImageMode);
             } finally {
                 predicting.current = false;
             }
@@ -95,9 +95,13 @@ export default function Input(props: Props) {
         if (tabIndex === 2 && remoteInput) {
             doPrediction(remoteInput, timeRef.current);
         } else if (file) {
-            doPrediction(file, timeRef.current);
+            doPrediction(file, timeRef.current, true).then(() => {
+                if (file instanceof HTMLCanvasElement) {
+                    draw(file, file, timeRef.current, true);
+                }
+            });
         }
-    }, [tabIndex, remoteInput, file, doPrediction]);
+    }, [tabIndex, remoteInput, file, doPrediction, draw]);
 
     const changeWebcamToggle = useCallback(
         (_: React.ChangeEvent<HTMLInputElement>, checked: boolean) => {

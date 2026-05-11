@@ -116,8 +116,7 @@ export default function FileInput({ isAudio, example, onExample, enableInput }: 
 
     useEffect(() => {
         if (fileImageRef.current && example && example instanceof HTMLCanvasElement) {
-            example.style.width = '224px';
-            example.style.height = '224px';
+            example.style.width = example.style.height = '224px';
             while (fileImageRef.current.firstChild) {
                 fileImageRef.current.removeChild(fileImageRef.current.firstChild);
             }

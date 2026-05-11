@@ -58,7 +58,7 @@ export function useTeachableModel() {
         canPredict: model?.isTrained() || false,
         variant: model?.variant || 'image',
         predict: useCallback(
-            async (image: HTMLCanvasElement | AudioExample) => {
+            async (image: HTMLCanvasElement | AudioExample, staticImageMode = false) => {
                 if (!model || !model.isTrained()) return;
 
                 try {
@@ -67,7 +67,7 @@ export function useTeachableModel() {
                     const isPose = variant === 'pose';
                     const isMobileNet = variant === 'image';
 
-                    const p = await model.predict(image);
+                    const p = await model.predict(image, staticImageMode);
 
                     setTransferLearningExplanation(p.transferLearning || null);
 
@@ -115,7 +115,13 @@ export function useTeachableModel() {
             ]
         ),
         draw: useCallback(
-            (input: HTMLCanvasElement, output: HTMLCanvasElement, _: number, noEstimate?: boolean) => {
+            (
+                input: HTMLCanvasElement,
+                output: HTMLCanvasElement,
+                _: number,
+                noEstimate?: boolean,
+                staticImageMode = false
+            ) => {
                 if (model) {
                     if (noEstimate) {
                         const ctx = output.getContext('2d');
@@ -123,7 +129,7 @@ export function useTeachableModel() {
                         ctx.drawImage(input, 0, 0);
                         model.draw(output);
                     } else {
-                        model.estimate(input).then((i) => {
+                        model.estimate(input, staticImageMode).then((i) => {
                             const ctx = output.getContext('2d');
                             if (!ctx) return;
                             ctx.drawImage(i, 0, 0);
