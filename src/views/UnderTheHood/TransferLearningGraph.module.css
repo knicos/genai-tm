@@ -1,4 +1,4 @@
-@value borderGrey, bgSubdued1, bgColourful2, bgOk, secondaryLight, primaryLight, bgSubdued3 from "@genai-fi/base/css/colours.module.css";
+@value borderGrey, chartDark1, chartDark2, chartDark3, chartDark4, chartDark5, chartDark6, chartDark7, chartDark8 from "@genai-fi/base/css/colours.module.css";
 
 .section {
     margin-top: 2rem;

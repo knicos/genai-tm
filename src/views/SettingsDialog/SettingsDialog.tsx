@@ -9,6 +9,7 @@ import { IVariantContext } from '@genaitm/util/variant';
 import { useNavigate } from 'react-router-dom';
 import { compressToEncodedURIComponent } from 'lz-string';
 import { VARIANTS } from '../General/General';
+import { useWorkspaceRoute } from '../../util/useWorkspaceRoute';
 
 function delta(data: IVariantContext, template: VARIANTS): Partial<IVariantContext> {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -30,6 +31,7 @@ function delta(data: IVariantContext, template: VARIANTS): Partial<IVariantConte
 export default function SettingsDialog() {
     const { t } = useTranslation();
     const navigate = useNavigate();
+    const { subPath } = useWorkspaceRoute();
     const [showDialog, setShowDialog] = useAtom(menuShowSettings);
     const [state, setState] = useState<IVariantContext>(DEFAULTS.base);
 
@@ -39,10 +41,10 @@ export default function SettingsDialog() {
         const str = JSON.stringify(delta(state, 'general'));
         const urlCode = compressToEncodedURIComponent(str);
         setShowDialog(false);
-        navigate(str === '{}' ? `/${state.modelVariant}/general` : `/${state.modelVariant}/general?c=${urlCode}`, {
-            replace: false,
-        });
-    }, [state, navigate, setShowDialog]);
+        const basePath = `/${state.modelVariant}/general`;
+        const query = str === '{}' ? '' : `?c=${urlCode}`;
+        navigate(`${basePath}${subPath}${query}`, { replace: false });
+    }, [state, navigate, setShowDialog, subPath]);
 
     return (
         <Dialog

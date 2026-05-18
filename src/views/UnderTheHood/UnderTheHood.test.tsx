@@ -91,7 +91,7 @@ vi.mock('@genai-fi/classifier', () => {
 
 describe('UnderTheHood component', () => {
     it('renders', async ({ expect }) => {
-        render(<UnderTheHood />, { wrapper: TestWrapper });
+        render(<UnderTheHood mode="visualization" />, { wrapper: TestWrapper });
         await waitFor(() => expect(screen.getByText('underTheHood.title')).toBeVisible());
     });
 

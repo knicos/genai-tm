@@ -1,7 +1,14 @@
 import { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useAtom, useAtomValue } from 'jotai';
-import { modelState, modelTraining, modelStats, trainingHistory, poseDetected as poseDetectedAtom, xaiEnabled } from '../../state';
+import {
+    modelState,
+    modelTraining,
+    modelStats,
+    trainingHistory,
+    poseDetected as poseDetectedAtom,
+    xaiEnabled,
+} from '../../state';
 import { useVariant } from '@genaitm/util/variant';
 import { getXAI, isXAICopied, markXAICopied, markXAIUncopied } from '../../util/xaiCanvas';
 import style from './UnderTheHood.module.css';
@@ -16,11 +23,11 @@ import { TransferLearningMatrix } from './TransferLearningMatrix';
 import { TransferLearningGraph } from './TransferLearningGraph';
 
 interface Props {
-    mode?: SidebarMode;
+    mode: SidebarMode;
 }
 
 export function UnderTheHood({ mode }: Props) {
-    const { namespace, modelVariant } = useVariant();
+    const { namespace, modelVariant, showTransferLearning, allowHeatmap } = useVariant();
     const { t } = useTranslation(namespace);
     const model = useAtomValue(modelState);
     const training = useAtomValue(modelTraining);
@@ -35,7 +42,7 @@ export function UnderTheHood({ mode }: Props) {
     const imageSize = model?.getImageSize();
     const showVisualization = mode === 'visualization';
     const showStatistics = mode === 'statistics';
-    const canXAI = canPredict && modelVariant !== 'speech';
+    const canXAI = canPredict && modelVariant !== 'speech' && allowHeatmap;
 
     const displayCanvasRef = useRef<HTMLCanvasElement | null>(null);
 
@@ -87,15 +94,11 @@ export function UnderTheHood({ mode }: Props) {
                             poseDetected={modelVariant === 'pose' ? poseDetected : null}
                         />
                     )}
-                    {modelVariant === 'image' && (
+                    {modelVariant === 'image' && canPredict && showTransferLearning && (
                         <>
                             <PretrainedStatistics />
-                            {canPredict && (
-                                <>
-                                    <TransferLearningMatrix />
-                                    <TransferLearningGraph />
-                                </>
-                            )}
+                            <TransferLearningMatrix />
+                            <TransferLearningGraph />
                         </>
                     )}
                 </>

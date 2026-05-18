@@ -1,4 +1,5 @@
 import { useRef, useEffect, useState, useCallback } from 'react';
+import { useOutlet, useLocation } from 'react-router-dom';
 import { TrainingData } from '../TrainingData/TrainingData';
 import Trainer from '../Trainer/Trainer';
 import Preview from '../Preview/Preview';
@@ -12,7 +13,6 @@ import {
     inputImage,
     prediction,
     predictedIndex,
-    underTheHoodOpen,
     xaiEnabled,
 } from '../../state';
 import style from './TeachableMachine.module.css';
@@ -27,11 +27,11 @@ import Snackbar from '@mui/material/Snackbar';
 import DeployWrapper from './DeployWrapper';
 import ExportDialog from './ExportDialog';
 import { useModelCreator, useXAICanvas } from '../../util/TeachableModel';
+import { useWorkspaceRoute } from '../../util/useWorkspaceRoute';
 import OpenDialog from './OpenDialog';
 import CloneDialog from './CloneDialog';
 import { IConnection, WorkflowLayout, SidePanel } from '@genai-fi/base';
 import { SidebarMode } from '../Preview/PreviewMenu';
-import UnderTheHood from '../../views/UnderTheHood/UnderTheHood';
 
 const SAVE_PERIOD = 5 * 60 * 1000; // 5 mins
 
@@ -78,14 +78,17 @@ export default function Workspace({ step, visitedStep, onComplete, saveTrigger, 
     const [editingData, setEditingData] = useState(false);
     const [showShare, setShowShare] = useState(false);
     const [showClone, setShowClone] = useState(false);
-    const [showSidebar, setShowSidebar] = useAtom(underTheHoodOpen);
-    const [sidebarMode, setSidebarMode] = useState<SidebarMode>('visualization');
+    const outlet = useOutlet();
+    const location = useLocation();
+    const { closeSidebar, openSidebar } = useWorkspaceRoute();
+    const showSidebar = !!outlet;
     const heatmapEnabled = useAtomValue(xaiEnabled);
+    const { allowHeatmap } = useVariant();
     const lastVariantRef = useRef(modelVariant);
 
     // Ensure an initial model exists
     useModelCreator(modelVariant);
-    useXAICanvas(showSidebar && sidebarMode === 'visualization' && heatmapEnabled);
+    useXAICanvas(showSidebar && location.pathname.endsWith('/visualization') && heatmapEnabled && !!allowHeatmap);
 
     // Clear samples when model variant changes (pose <-> image)
     useEffect(() => {
@@ -97,10 +100,10 @@ export default function Workspace({ step, visitedStep, onComplete, saveTrigger, 
             setPrediction([]);
             setPredictedIndex(-1);
             // Close Actions sidebar
-            setShowSidebar(false);
+            closeSidebar();
             lastVariantRef.current = modelVariant;
         }
-    }, [modelVariant, setData, setInputImage, setPrediction, setPredictedIndex]);
+    }, [modelVariant, setData, setInputImage, setPrediction, setPredictedIndex, closeSidebar]);
 
     // Set default sidebar width to 400px
     useEffect(() => {
@@ -118,10 +121,9 @@ export default function Workspace({ step, visitedStep, onComplete, saveTrigger, 
     }, [setShowClone]);
     const doSidebar = useCallback(
         (mode: SidebarMode) => {
-            setSidebarMode(mode);
-            setShowSidebar(true);
+            openSidebar(mode);
         },
-        [setShowSidebar, setSidebarMode]
+        [openSidebar]
     );
 
     const saveTimer = useRef(-1);
@@ -249,10 +251,10 @@ export default function Workspace({ step, visitedStep, onComplete, saveTrigger, 
             <SidePanel
                 open={showSidebar}
                 position="right"
-                onClose={() => setShowSidebar(false)}
+                onClose={closeSidebar}
                 dark
             >
-                <UnderTheHood mode={sidebarMode} />
+                {outlet}
             </SidePanel>
 
             <SaveDialog

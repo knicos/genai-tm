@@ -375,6 +375,16 @@ export default function SettingsForm({ state, setState }: Props) {
                             <FormControlLabel
                                 control={
                                     <Checkbox
+                                        checked={state.showTransferLearning}
+                                        name="showTransferLearning"
+                                        onChange={doCheckChange}
+                                    />
+                                }
+                                label="Show Transfer Learning"
+                            />
+                            <FormControlLabel
+                                control={
+                                    <Checkbox
                                         checked={state.allowSerialUSB}
                                         name="allowSerialUSB"
                                         onChange={doCheckChange}

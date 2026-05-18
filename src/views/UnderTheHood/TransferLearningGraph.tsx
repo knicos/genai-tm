@@ -19,12 +19,14 @@ const SANKEY_LABEL_FONT = {
 };
 
 const SANKEY_SOURCE_COLORS = [
-    style.bgSubdued1,
-    style.bgColourful2,
-    style.bgOk,
-    style.secondaryLight,
-    style.primaryLight,
-    style.bgSubdued3,
+    style.chartDark1,
+    style.chartDark2,
+    style.chartDark3,
+    style.chartDark4,
+    style.chartDark5,
+    style.chartDark6,
+    style.chartDark7,
+    style.chartDark8,
 ];
 
 function hexToRgb(hex: string) {

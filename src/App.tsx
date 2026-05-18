@@ -85,7 +85,16 @@ export const routes = createRoutesFromElements(
         <Route
             path=":kind/:variant"
             lazy={() => import('./views/General/General')}
-        />
+        >
+            <Route
+                path="visualization"
+                lazy={() => import('./views/UnderTheHood')}
+            />
+            <Route
+                path="statistics"
+                lazy={() => import('./views/UnderTheHood')}
+            />
+        </Route>
     </Route>
 );
 const defaultRouter = createBrowserRouter(routes);
