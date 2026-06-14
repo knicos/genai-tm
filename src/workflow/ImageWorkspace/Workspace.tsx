@@ -8,6 +8,8 @@ import Behaviours from '../../workflow/Behaviours/Behaviours';
 import { useTranslation } from 'react-i18next';
 import {
     classState,
+    classLabelModifiedState,
+    behaviourState,
     IClassification,
     saveState,
     inputImage,
@@ -68,13 +70,15 @@ function addCloseAlert() {
 
 export default function Workspace({ step, visitedStep, onComplete, saveTrigger, onSkip, onSaveRemind }: Props) {
     const { namespace, resetOnLoad, modelVariant } = useVariant();
-    const { t } = useTranslation(namespace);
+    const { t, i18n } = useTranslation(namespace);
     const [data, setData] = useAtom(classState);
+    const [labelModified, setLabelModified] = useAtom(classLabelModifiedState);
     const [errMsg, setErrMsg] = useState<string | null>(null);
     const setSaving = useSetAtom(saveState);
     const setInputImage = useSetAtom(inputImage);
     const setPrediction = useSetAtom(prediction);
     const setPredictedIndex = useSetAtom(predictedIndex);
+    const setBehaviours = useSetAtom(behaviourState);
     const [editingData, setEditingData] = useState(false);
     const [showShare, setShowShare] = useState(false);
     const [showClone, setShowClone] = useState(false);
@@ -86,15 +90,39 @@ export default function Workspace({ step, visitedStep, onComplete, saveTrigger, 
     const { allowHeatmap } = useVariant();
     const lastVariantRef = useRef(modelVariant);
 
+    const getDefaultLabel = useCallback(
+        (index: number, variant: string) => {
+            const noiseLabel = t('trainingdata.labels.noiseClass');
+            const classLabel = t('trainingdata.labels.class');
+            if (variant === 'speech') {
+                return index === 0 ? noiseLabel : `${classLabel} ${index}`;
+            }
+            return `${classLabel} ${index + 1}`;
+        },
+        [t]
+    );
+
     // Ensure an initial model exists
     useModelCreator(modelVariant);
     useXAICanvas(showSidebar && location.pathname.endsWith('/visualization') && heatmapEnabled && !!allowHeatmap);
 
-    // Clear samples when model variant changes (pose <-> image)
+    // Clear samples when model variant changes
     useEffect(() => {
         if (lastVariantRef.current !== modelVariant) {
             // Clear all samples when switching between model types
-            setData((classes) => classes.map((cls) => ({ ...cls, samples: [] })));
+            setLabelModified((classes) => classes.map(() => false));
+            setData((classes) => {
+                const nextClasses = classes.map((cls, index) => {
+                    return { ...cls, label: getDefaultLabel(index, modelVariant), samples: [] };
+                });
+                setBehaviours(
+                    nextClasses.map((cls) => ({
+                        label: cls.label,
+                        text: { text: cls.label },
+                    }))
+                );
+                return nextClasses;
+            });
             // Clear test input image and predictions
             setInputImage(null);
             setPrediction([]);
@@ -103,7 +131,31 @@ export default function Workspace({ step, visitedStep, onComplete, saveTrigger, 
             closeSidebar();
             lastVariantRef.current = modelVariant;
         }
-    }, [modelVariant, setData, setInputImage, setPrediction, setPredictedIndex, closeSidebar]);
+    }, [
+        modelVariant,
+        setData,
+        setLabelModified,
+        setInputImage,
+        setPrediction,
+        setPredictedIndex,
+        setBehaviours,
+        closeSidebar,
+        getDefaultLabel,
+    ]);
+
+    useEffect(() => {
+        setData((classes) => {
+            let changed = false;
+            const nextClasses = classes.map((cls, index) => {
+                if (labelModified[index]) return cls;
+                const nextLabel = getDefaultLabel(index, modelVariant);
+                if (nextLabel === cls.label) return cls;
+                changed = true;
+                return { ...cls, label: nextLabel };
+            });
+            return changed ? nextClasses : classes;
+        });
+    }, [i18n.language, modelVariant, labelModified, setData, getDefaultLabel]);
 
     // Set default sidebar width to 400px
     useEffect(() => {
@@ -145,16 +197,40 @@ export default function Workspace({ step, visitedStep, onComplete, saveTrigger, 
         if (data.length === 0) {
             setData([
                 {
-                    label: `${t('trainingdata.labels.class')} 1`,
+                    label: getDefaultLabel(0, modelVariant),
                     samples: [],
                 },
                 {
-                    label: `${t('trainingdata.labels.class')} 2`,
+                    label: getDefaultLabel(1, modelVariant),
                     samples: [],
                 },
             ]);
+            setLabelModified([false, false]);
         }
-    }, []);
+    }, [data.length, setData, modelVariant, getDefaultLabel, setLabelModified]);
+
+    useEffect(() => {
+        setLabelModified((old) => {
+            if (old.length === data.length) return old;
+            return data.map((cls, index) => {
+                if (index < old.length) return old[index];
+                return cls.label !== getDefaultLabel(index, modelVariant);
+            });
+        });
+    }, [data, setLabelModified, getDefaultLabel, modelVariant]);
+
+    const doLabelEdited = useCallback(
+        (index: number) => {
+            setLabelModified((old) => {
+                if (old[index]) return old;
+                const next = [...old];
+                while (next.length <= index) next.push(false);
+                next[index] = true;
+                return next;
+            });
+        },
+        [setLabelModified]
+    );
 
     const doTrained = useCallback(() => {
         addCloseAlert();
@@ -222,6 +298,7 @@ export default function Workspace({ step, visitedStep, onComplete, saveTrigger, 
                         setData={doSetData}
                         active={true}
                         onFocused={setEditingData}
+                        onLabelEdited={doLabelEdited}
                     />
                     <Trainer
                         focus={step === 0}

@@ -46,14 +46,8 @@
             "advanced": "Avancerad"
         },
         "values": {
-            "models": [
-                "Bild (MobileNet)",
-                "Pose (PoseNet)"
-            ],
-            "variants": [
-                "Allmän användning",
-                "Klassrum"
-            ]
+            "models": ["Bild (MobileNet)", "Pose (PoseNet)", "Gest (MediaPipe)", "Tal (SpeechCommands)"],
+            "variants": ["Allmän användning", "Klassrum"]
         }
     },
     "widget": {

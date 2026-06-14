@@ -87,14 +87,8 @@
             "advanced": "Gelişmiş"
         },
         "values": {
-            "models": [
-                "Görsel (MobileNet)",
-                "Poz (PoseNet)"
-            ],
-            "variants": [
-                "Genel Kullanım",
-                "Sınıf"
-            ]
+            "models": ["Görsel (MobileNet)", "Poz (PoseNet)", "El Hareketi (MediaPipe)", "Ses (SpeechCommands)"],
+            "variants": ["Genel Kullanım", "Sınıf"]
         }
     },
     "widget": {

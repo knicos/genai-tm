@@ -130,14 +130,8 @@
             "advanced": "Ya Juu"
         },
         "values": {
-            "models": [
-                "Picha (MobileNet)",
-                "Mkao wa Mwili (PoseNet)"
-            ],
-            "variants": [
-                "Matumizi ya Kawaida",
-                "Kundi"
-            ]
+            "models": ["Picha (MobileNet)", "Mkao (PoseNet)", "Ishara (MediaPipe)", "Sauti (SpeechCommands)"],
+            "variants": ["Matumizi ya Kawaida", "Kundi"]
         }
     },
     "widget": {

@@ -9,6 +9,7 @@
         "models": {
             "image": "Görseller",
             "pose": "Pozlar",
+            "hand": "El Hareketleri",
             "speech": "Ses"
         },
         "github": "GitHub",

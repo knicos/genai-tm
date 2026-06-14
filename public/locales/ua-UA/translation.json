@@ -49,14 +49,8 @@
             "advanced": "Розширений"
         },
         "values": {
-            "models": [
-                "Зображення (MobileNet)",
-                "Поза (PoseNet)"
-            ],
-            "variants": [
-                "Загальне використання",
-                "Класна кімната"
-            ]
+            "models": ["Зображення (MobileNet)", "Поза (PoseNet)", "Жести (MediaPipe)", "Мовлення (SpeechCommands)"],
+            "variants": ["Загальне використання", "Класна кімната"]
         }
     },
     "widget": {

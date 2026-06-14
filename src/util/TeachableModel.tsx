@@ -323,6 +323,7 @@ export function useModelTrainer() {
                             epochs: settings.epochs,
                             learningRate: settings.learningRate,
                             batchSize: settings.batchSize,
+                            ...(modelVariant === 'speech' ? { validationSplit: 0.15 } : {}),
                         },
                         {
                             onEpochEnd: (epoch: number, logs?: Record<string, number>) => {

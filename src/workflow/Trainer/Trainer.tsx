@@ -41,7 +41,7 @@ const HelpTooltip = styled(({ className, ...props }: TooltipProps) => (
 }));
 
 export default function Trainer({ onTrained, editing, ...props }: Props) {
-    const { namespace, advancedMenu } = useVariant();
+    const { namespace, advancedMenu, modelVariant } = useVariant();
     const { t } = useTranslation(namespace);
     const [training, setTraining] = useAtom(modelTraining);
     const [settingEpochs, setSettingEpochs] = useState(50);
@@ -55,7 +55,8 @@ export default function Trainer({ onTrained, editing, ...props }: Props) {
 
     const enabledData = useMemo(() => data.filter((data) => !data.disabled), [data]);
     const sampleMin = Math.min(...enabledData.map((v) => v.samples.length));
-    const isTrainable = enabledData.length >= 2 && sampleMin >= 2;
+    const backgroundNoiseNum = modelVariant === 'speech' ? enabledData[0]?.samples.length ?? 0 : Infinity;
+    const isTrainable = enabledData.length >= 2 && sampleMin >= 2 && backgroundNoiseNum >= 20;
 
     useEffect(() => {
         clearTraining();

@@ -49,14 +49,8 @@
             "advanced": "Lisäasetukset"
         },
         "values": {
-            "models": [
-                "Kuva (MobileNet)",
-                "Asento (PoseNet)"
-            ],
-            "variants": [
-                "Kaikkeen käyttöön",
-                "Luokkahuoneeseen"
-            ]
+            "models": ["Kuva (MobileNet)", "Asento (PoseNet)", "Käsi (MediaPipe)", "Puhe (SpeechCommands)"],
+            "variants": ["Kaikkeen käyttöön", "Luokkahuoneeseen"]
         }
     },
     "widget": {

@@ -49,14 +49,8 @@
             "advanced": "Дополнительные параметры"
         },
         "values": {
-            "models": [
-                "Изображение (MobileNet)",
-                "Поза (PoseNet)"
-            ],
-            "variants": [
-                "Общее использование",
-                "Учебный класс"
-            ]
+            "models": ["Изображение (MobileNet)", "Поза (PoseNet)", "Жест (MediaPipe)", "Речь (SpeechCommands)"],
+            "variants": ["Общее использование", "Учебный класс"]
         }
     },
     "widget": {

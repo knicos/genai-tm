@@ -1,4 +1,4 @@
-import React, { RefObject, useCallback, useEffect, useRef, useState } from 'react';
+import React, { RefObject, useCallback, useRef, useState } from 'react';
 import style from './classification.module.css';
 import { IClassification, fatalWebcam } from '@genaitm/state';
 import { VerticalButton } from '@genaitm/components/button/Button';
@@ -35,6 +35,7 @@ interface Props {
     setActive: (active: boolean, ix: number) => void;
     index: number;
     onSampleClick?: (classIndex: number, sampleIndex: number) => void;
+    onLabelEdited?: (index: number) => void;
 }
 
 export function Classification({
@@ -47,6 +48,7 @@ export function Classification({
     setActive,
     onDelete,
     onSampleClick,
+    onLabelEdited,
 }: Props) {
     const { namespace, sampleUploadFile, disableClassNameEdit, showDragTip, modelVariant } = useVariant();
     const { t } = useTranslation(namespace);
@@ -62,10 +64,6 @@ export function Classification({
     const isAudio = modelVariant === 'speech';
 
     const SAMPLEMIN = isAudio && index === 0 ? SAMPLEMIN_AUDIO_NOISE : SAMPLEMIN_DEFAULT;
-
-    useEffect(() => {
-        if (!active) setAudioBlob(null);
-    }, [active]);
 
     const doShowTip = useCallback(() => data.samples.length === 0 && setShowTip(true), [data, setShowTip]);
 
@@ -192,6 +190,7 @@ export function Classification({
 
     const setTitle = useCallback(
         (title: string) => {
+            onLabelEdited?.(index);
             setData(
                 (data) => ({
                     label: title,
@@ -200,7 +199,7 @@ export function Classification({
                 index
             );
         },
-        [setData, index]
+        [setData, index, onLabelEdited]
     );
 
     const removeSamples = useCallback(() => {

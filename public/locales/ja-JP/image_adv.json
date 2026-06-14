@@ -9,6 +9,7 @@
         "models": {
             "image": "画像",
             "pose": "ポーズ",
+            "hand": "ジェスチャー",
             "speech": "音声"
         },
         "github": "GitHub",

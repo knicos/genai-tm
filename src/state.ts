@@ -72,6 +72,8 @@ export const behaviourState = atom<BehaviourType[]>([]);
 
 export const classState = atom<IClassification[]>([]);
 
+export const classLabelModifiedState = atom<boolean[]>([]);
+
 export const modelState = atom<TeachableModel | undefined>(undefined);
 
 export const modelLoaded = atom<boolean>(false);

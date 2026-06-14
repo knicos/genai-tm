@@ -49,14 +49,8 @@
             "advanced": "Erweitert"
         },
         "values": {
-            "models": [
-                "Bild (MobileNet)",
-                "Pose (PoseNet)"
-            ],
-            "variants": [
-                "Allgemeine Nutzung",
-                "Klassenzimmer"
-            ]
+            "models": ["Bild (MobileNet)", "Pose (PoseNet)", "Geste (MediaPipe)", "Sprache (SpeechCommands)"],
+            "variants": ["Allgemeine Nutzung", "Klassenzimmer"]
         }
     },
     "widget": {

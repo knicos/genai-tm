@@ -49,14 +49,8 @@
             "advanced": "Avançado"
         },
         "values": {
-            "models": [
-                "Image (MobileNet)",
-                "Pose (PoseNet)"
-            ],
-            "variants": [
-                "General Use",
-                "Classroom"
-            ]
+            "models": ["Imagem (MobileNet)", "Postura (PoseNet)", "Mão (MediaPipe)", "Voz (SpeechCommands)"],
+            "variants": ["General Use", "Classroom"]
         }
     },
     "widget": {

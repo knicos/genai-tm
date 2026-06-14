@@ -49,14 +49,8 @@
             "advanced": "Ližäazetukset"
         },
         "values": {
-            "models": [
-                "Kuva (MobileNet)",
-                "Azendo (PoseNet)"
-            ],
-            "variants": [
-                "Kaikkeh käyttöh",
-                "Kluassupertih"
-            ]
+            "models": ["Kuva (MobileNet)", "Asento (PoseNet)", "Käsi (MediaPipe)", "Puhuminen (SpeechCommands)"],
+            "variants": ["Kaikkeh käyttöh", "Kluassupertih"]
         }
     },
     "widget": {

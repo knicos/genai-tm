@@ -15,9 +15,10 @@ interface Props {
     setData: (data: ((old: IClassification[]) => IClassification[]) | IClassification[]) => void;
     disabled?: boolean;
     onFocused: (f: boolean) => void;
+    onLabelEdited?: (index: number) => void;
 }
 
-export function TrainingData({ active, data, setData, disabled, onFocused }: Props) {
+export function TrainingData({ active, data, setData, disabled, onFocused, onLabelEdited }: Props) {
     const { namespace, disableAddClass, modelVariant } = useVariant();
     const { t } = useTranslation(namespace);
     const [activeIndex, setActiveIndex] = useState(-1);
@@ -25,10 +26,6 @@ export function TrainingData({ active, data, setData, disabled, onFocused }: Pro
     const sectionRef = useRef<HTMLElement>(null);
 
     const isAudio = modelVariant === 'speech';
-
-    if (isAudio && data.length > 0) {
-        data[0].label = t('trainingdata.labels.noiseClass');
-    }
 
     useEffect(() => {
         if (disabled) {
@@ -59,7 +56,9 @@ export function TrainingData({ active, data, setData, disabled, onFocused }: Pro
 
     const doActivate = (ix: number) => active && setActiveIndex(ix);
 
-    const doDelete = (ix: number) => setData(data.filter((_, index) => index !== ix));
+    const doDelete = (ix: number) => {
+        setData(data.filter((_, index) => index !== ix));
+    };
 
     const doSetActive = useCallback((a: boolean, ix: number) => setActiveIndex(a ? ix : -1), []);
 
@@ -68,7 +67,8 @@ export function TrainingData({ active, data, setData, disabled, onFocused }: Pro
     };
 
     const addClass = () => {
-        setData([...data, { label: `${t('trainingdata.labels.class')} ${data.length + 1}`, samples: [] }]);
+        const nextIndex = modelVariant === 'speech' ? data.length : data.length + 1;
+        setData([...data, { label: `${t('trainingdata.labels.class')} ${nextIndex}`, samples: [] }]);
     };
 
     const doFocus = () => {
@@ -190,6 +190,7 @@ export function TrainingData({ active, data, setData, disabled, onFocused }: Pro
                     onActivate={doActivate}
                     setActive={doSetActive}
                     onSampleClick={handleSampleClick}
+                    onLabelEdited={onLabelEdited}
                 />
             ))}
             {!disableAddClass && (

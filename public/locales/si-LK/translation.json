@@ -103,13 +103,12 @@
         },
         "values": {
             "models": [
-                "පින්තූර (MobileNet)",
-                "උරහිස් තත්ත්වය (PoseNet)"
+                "පින්තූරය (MobileNet)",
+                "ස්ථාවරය (PoseNet)",
+                "අත් සාදනය (MediaPipe)",
+                "ශ්‍රව්‍යය (SpeechCommands)"
             ],
-            "variants": [
-                "සාමාන්‍ය භාවිතය",
-                "පාසල් භාවිතය"
-            ]
+            "variants": ["සාමාන්‍ය භාවිතය", "පාසල් භාවිතය"]
         }
     },
     "widget": {

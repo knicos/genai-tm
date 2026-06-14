@@ -9,6 +9,7 @@
         "models": {
             "image": "Picha",
             "pose": "Mikao",
+            "hand": "Ishara",
             "speech": "Sauti"
         },
         "github": "GitHub",

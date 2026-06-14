@@ -61,6 +61,22 @@ describe('Behaviour patch', () => {
         expect(result[2]).toBe(behaviors[2]);
     });
 
+    it('updates default text when a class is renamed', async ({ expect }) => {
+        const behaviors = [
+            { label: 'Class 1', text: { text: 'Class 1' } },
+            { label: 'Class 2', text: { text: 'Custom message' } },
+        ] as BehaviourType[];
+        const classes = ['Luokka 1', 'Luokka 2'];
+
+        const result = patchBehaviours(behaviors, classes);
+
+        expect(result).toHaveLength(2);
+        expect(result[0].label).toBe('Luokka 1');
+        expect(result[0].text?.text).toBe('Luokka 1');
+        expect(result[1].label).toBe('Luokka 2');
+        expect(result[1].text?.text).toBe('Custom message');
+    });
+
     it('allows two classes to be renamed', async ({ expect }) => {
         const behaviors = [
             { label: 'c1', text: { text: 'b1' } },

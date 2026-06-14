@@ -9,6 +9,7 @@
         "models": {
             "image": "රූප",
             "pose": "ඉරියව්",
+            "hand": "ඕස්ති",
             "speech": "කථනය"
         },
         "github": "GitHub",

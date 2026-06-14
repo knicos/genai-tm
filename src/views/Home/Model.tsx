@@ -46,6 +46,8 @@ export default function Model({ id, usb, image, icon }: Props) {
         return str === '{}' ? `/${id}/general` : `/${id}/general?c=${urlCode}`;
     }, [id, usb]);
 
+    const modelLabel = t(`app.models.${id}`);
+
     return (
         <Link
             to={url}
@@ -56,13 +58,13 @@ export default function Model({ id, usb, image, icon }: Props) {
                     src={image}
                     width={128}
                     height={128}
-                    alt={t(`app.models.${id}`)}
+                    alt={modelLabel}
                     className={style.stepImage}
                 />
             )}
             {icon && <div className={style.icon}>{icon}</div>}
             <div className={style.stepContent}>
-                <h2>{t(`app.models.${id}`)}</h2>
+                <h2>{modelLabel}</h2>
             </div>
         </Link>
     );

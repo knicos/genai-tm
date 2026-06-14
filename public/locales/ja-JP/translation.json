@@ -125,14 +125,8 @@
             "advanced": "詳細設定"
         },
         "values": {
-            "models": [
-                "画像(MobileNet)",
-                "姿勢(PoseNet)"
-            ],
-            "variants": [
-                "一般的な使用",
-                "教室"
-            ]
+            "models": ["画像 (MobileNet)", "ポーズ (PoseNet)", "ジェスチャー (MediaPipe)", "音声 (SpeechCommands)"],
+            "variants": ["一般的な使用", "教室"]
         }
     },
     "widget": {

@@ -130,14 +130,8 @@
             "advanced": "Avanzate"
         },
         "values": {
-            "models": [
-                "Immagine (MobileNet)",
-                "Pose (PoseNet)"
-            ],
-            "variants": [
-                "Uso Generale",
-                "Aula scolastica"
-            ]
+            "models": ["Immagine (MobileNet)", "Posa (PoseNet)", "Gesto (MediaPipe)", "Voce (SpeechCommands)"],
+            "variants": ["Uso Generale", "Aula scolastica"]
         }
     },
     "widget": {

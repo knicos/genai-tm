@@ -27,7 +27,12 @@ export function patchBehaviours(old: BehaviourType[], classes: string[]): Behavi
         } else {
             const shifted = unmapped.shift();
             if (shifted) {
-                result.push({ ...shifted, label: c });
+                const wasDefaultText = shifted.text?.text === shifted.label;
+                result.push({
+                    ...shifted,
+                    label: c,
+                    text: wasDefaultText && shifted.text ? { ...shifted.text, text: c } : shifted.text,
+                });
             } else {
                 result.push({ label: c, text: { text: c } });
             }
