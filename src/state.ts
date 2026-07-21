@@ -138,3 +138,32 @@ export const modelStats = atom<ModelStats>({ labels: [] });
 export const poseDetected = atom<boolean | null>(null);
 export const underTheHoodOpen = atom<boolean>(false);
 export const feedbackAtom = atom<boolean>(false);
+
+export interface INeuronActivationInfo {
+    neuronId: number;
+    activation: number;
+    deltaFromMean: number;
+    thumbnail?: HTMLCanvasElement;
+    weight: number;
+}
+
+export interface INeuronProfile {
+    neuronId: number;
+    weight: number;
+    meanActivation: number;
+    maxActivation: number;
+    thumbnail?: HTMLCanvasElement;
+}
+
+export interface IClassNeuronProfile {
+    userClassIndex: number;
+    userClassLabel: string;
+    topNeurons: INeuronProfile[];
+}
+
+export interface INeuronExplanation {
+    classNeuronProfiles: IClassNeuronProfile[];
+    predictedClassNeurons: INeuronActivationInfo[];
+}
+
+export const neuronExplanation = atom<INeuronExplanation | null>(null);

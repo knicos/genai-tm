@@ -2,9 +2,10 @@ import { useEffect, useMemo, useRef } from 'react';
 import { useAtomValue } from 'jotai';
 import { useTranslation } from 'react-i18next';
 import { Chart } from 'chart.js/auto';
-import { trainingHistory } from '../../state';
-import styles from './Charts.module.css';
+import { trainingHistory } from '../../../state';
+import styles from '../Charts.module.css';
 import { useVariant } from '@genaitm/util/variant';
+import { Help } from '@genai-fi/base';
 
 const crosshairPlugin = {
     id: 'crosshair',
@@ -42,7 +43,7 @@ export function LossPerEpoch() {
         const epochs = history.map((h) => h.epoch);
         const datasets = [
             {
-                label: t('charts.loss'),
+                label: t('charts.loss').toLocaleLowerCase(),
                 data: history.map((h) => h.loss),
                 borderColor: '#5eb3f6',
                 backgroundColor: '#5eb3f6',
@@ -75,11 +76,11 @@ export function LossPerEpoch() {
                     legend: { labels: { color: 'white', font: { size: 13 } } },
                     tooltip: {
                         backgroundColor: 'white',
-                        titleColor: '#111',
-                        bodyColor: '#333',
-                        borderColor: '#ddd',
+                        titleColor: styles.textDark,
+                        bodyColor: styles.textDark,
+                        borderColor: styles.borderGrey,
                         borderWidth: 1,
-                        titleFont: { size: 14, weight: 400 },
+                        titleFont: { size: 14, weight: 'bold' },
                         bodyFont: { size: 13, family: 'monospace' },
                         padding: 10,
                         boxPadding: 6,
@@ -138,7 +139,14 @@ export function LossPerEpoch() {
 
     return (
         <div className={styles.chartContainer}>
-            <h3 className={styles.chartTitle}>{t('charts.lossPerEpoch')}</h3>
+            <div className={styles.chartTitleRow}>
+                <h3 className={styles.chartTitle}>{t('charts.lossPerEpoch')}</h3>
+                <Help
+                    inplace
+                    message={t('charts.lossPerEpochHelp')}
+                    dark
+                />
+            </div>
             <div className={styles.chartScrollWrapper}>
                 <div style={{ minWidth: Math.max(300, maxEpoch * 6) + 'px', height: '250px' }}>
                     <canvas ref={canvasRef} />

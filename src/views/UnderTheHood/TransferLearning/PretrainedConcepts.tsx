@@ -1,5 +1,6 @@
-import style from './PretrainedStatistics.module.css';
-import underTheHoodStyle from './UnderTheHood.module.css';
+import style from './PretrainedConcepts.module.css';
+import chartStyle from '../Charts.module.css';
+import underTheHoodStyle from '../UnderTheHood.module.css';
 import ModelLines from './ModelLines';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useAtomValue } from 'jotai';
@@ -9,7 +10,7 @@ import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import DeviceHubIcon from '@mui/icons-material/DeviceHub';
 import { Help } from '@genai-fi/base';
 import { useVariant } from '@genaitm/util/variant';
-import { imageNetTop5 } from '../../state';
+import { imageNetTop5 } from '../../../state';
 
 interface PredictionRow {
     classId: number;
@@ -27,11 +28,11 @@ function numberArrayEqual(left: number[], right: number[]) {
     return true;
 }
 
-export function PretrainedStatistics() {
+export function PretrainedConcepts() {
     const { namespace } = useVariant();
     const { t } = useTranslation(namespace);
     const imageNetRows = useAtomValue(imageNetTop5);
-    const description = t('charts.pretrainedStatisticsHelp');
+    const description = t('charts.pretrainedConceptsHelp');
     const predictions: PredictionRow[] = useMemo(
         () =>
             imageNetRows.map((entry) => {
@@ -104,14 +105,13 @@ export function PretrainedStatistics() {
     }
 
     return (
-        <section className={style.pretrainedSection}>
-            <div className={style.titleRow}>
-                <div className={`${underTheHoodStyle.heatmapLabel} ${style.title}`}>
-                    {t('charts.pretrainedStatisticsTitle')}
+        <section className={chartStyle.section}>
+            <div className={chartStyle.titleRow}>
+                <div className={`${underTheHoodStyle.heatmapLabel} ${chartStyle.title}`}>
+                    {t('charts.pretrainedConceptsTitle')}
                 </div>
                 <Help
                     inplace
-                    placement="right"
                     message={description}
                     dark
                 />
@@ -125,9 +125,7 @@ export function PretrainedStatistics() {
                         </div>
                         <div className={style.pretrainedModelInfo}>
                             <div className={style.pretrainedModelTitle}>{t('charts.pretrainedModelLayers')}</div>
-                            <div className={style.pretrainedModelSubtitle}>
-                                {t('charts.pretrainedTrainingStepComplete')}
-                            </div>
+                            <div className={style.pretrainedModelSubtitle}>{t('charts.pretrainedModelSubtitle')}</div>
                         </div>
                     </div>
                     <div className={style.pretrainedPredictionsArea}>

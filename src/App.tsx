@@ -94,6 +94,10 @@ export const routes = createRoutesFromElements(
                 path="statistics"
                 lazy={() => import('./views/UnderTheHood')}
             />
+            <Route
+                path="transferLearning"
+                lazy={() => import('./views/UnderTheHood')}
+            />
         </Route>
     </Route>
 );

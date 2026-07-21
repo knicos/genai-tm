@@ -1,0 +1,96 @@
+@value borderGrey, textDark, chartDark1, chartDark2, chartDark3, chartDark4, chartDark5, chartDark6, chartDark7, chartDark8 from "@genai-fi/base/css/colours.module.css";
+
+.wrapper {
+    border: 1px solid borderGrey;
+    border-radius: 8px;
+    background: transparent;
+    padding: 0.75rem;
+    overflow-x: auto;
+    overflow-y: hidden;
+    position: relative;
+}
+
+.chartFrame {
+    position: relative;
+    min-width: 600px;
+    width: 100%;
+}
+
+.chartCanvas {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+.tooltip {
+    position: fixed;
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0;
+    transition: opacity 0.1s;
+    background: rgba(0, 0, 0, 0.8);
+    border-radius: 6px;
+    padding: 8px 10px;
+    overflow: visible;
+    font-family: Andika, sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.95);
+    white-space: nowrap;
+    min-width: 120px;
+}
+
+.tooltipFromRow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    text-align: center;
+}
+
+.tooltipSwatch {
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    border-radius: 2px;
+    flex-shrink: 0;
+}
+
+.tooltipArrow {
+    display: flex;
+    justify-content: center;
+    color: rgba(255, 255, 255, 0.55);
+    margin: 3px 0 1px;
+}
+
+.tooltipToLabel {
+    text-align: center;
+}
+
+.tooltipFlow {
+    text-align: center;
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 15px;
+    margin-top: 2px;
+}
+
+.tooltipImages {
+    display: flex;
+    gap: 4px;
+    margin-top: 8px;
+    justify-content: center;
+}
+
+.tooltipImage {
+    width: 56px;
+    height: 56px;
+    object-fit: cover;
+    border-radius: 3px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.tooltipCaret {
+    position: absolute;
+    width: 0;
+    height: 0;
+}

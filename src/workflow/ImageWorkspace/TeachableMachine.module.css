@@ -71,6 +71,16 @@
     align-items: center;
 }
 
+.previewActions {
+    display: flex;
+    flex-direction: row;
+    gap: 0.75rem;
+    align-items: flex-start;
+    justify-content: flex-start;
+    margin-top: -0.5rem;
+    flex-wrap: nowrap;
+}
+
 .padded {
     margin: 1rem 0;
 }

@@ -5,19 +5,17 @@ import Alert from '@mui/material/Alert';
 import { useAtomValue } from 'jotai';
 import { prediction, predictionError } from '../../state';
 import PreviewMenu from './PreviewMenu';
-import { SidebarMode } from './PreviewMenu';
 import { PercentageBar, Widget } from '@genai-fi/base';
 import { Colours } from '@genai-fi/base/main/components/PercentageBar/PercentageBar';
 import { useHasModel } from '@genaitm/util/TeachableModel';
 interface Props {
     onExport?: () => void;
     onClone?: () => void;
-    onSidebar?: (mode: SidebarMode) => void;
 }
 
 const colourWheel: Colours[] = ['orange', 'purple', 'blue', 'green', 'red'];
 
-export default function Preview({ onExport, onClone, onSidebar }: Props) {
+export default function Preview({ onExport, onClone }: Props) {
     const { namespace } = useVariant();
     const { t } = useTranslation(namespace);
     const preds = useAtomValue(prediction);
@@ -38,7 +36,6 @@ export default function Preview({ onExport, onClone, onSidebar }: Props) {
                     disabled={!model}
                     onExport={onExport}
                     onClone={onClone}
-                    onSidebar={onSidebar}
                 />
             }
         >

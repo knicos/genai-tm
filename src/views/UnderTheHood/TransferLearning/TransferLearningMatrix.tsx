@@ -3,9 +3,10 @@ import { useAtomValue } from 'jotai';
 import { useTranslation } from 'react-i18next';
 import { useVariant } from '@genaitm/util/variant';
 import { Help } from '@genai-fi/base';
-import { transferLearningExplanation } from '../../state';
+import { transferLearningExplanation } from '../../../state';
 import style from './TransferLearningMatrix.module.css';
-import underTheHoodStyle from './UnderTheHood.module.css';
+import chartStyle from '../Charts.module.css';
+import underTheHoodStyle from '../UnderTheHood.module.css';
 
 function toPercent(value: number) {
     const pct = Math.max(0, value) * 100;
@@ -16,8 +17,6 @@ export function TransferLearningMatrix() {
     const { namespace } = useVariant();
     const { t } = useTranslation(namespace);
     const explanation = useAtomValue(transferLearningExplanation);
-    const description = t('charts.transferLearningMatrixHelp');
-    const similarityDescription = t('charts.transferLearningSimilarityHelp');
 
     const conceptColumns = useMemo(() => {
         if (!explanation) return [];
@@ -60,15 +59,14 @@ export function TransferLearningMatrix() {
     }
 
     return (
-        <section className={style.section}>
-            <div className={style.titleRow}>
-                <div className={`${underTheHoodStyle.heatmapLabel} ${style.title}`}>
+        <section className={chartStyle.section}>
+            <div className={chartStyle.titleRow}>
+                <div className={`${underTheHoodStyle.heatmapLabel} ${chartStyle.title}`}>
                     {t('charts.transferLearningMatrix')}
                 </div>
                 <Help
                     inplace
-                    placement="right"
-                    message={description}
+                    message={t('charts.transferLearningMatrixHelp')}
                     dark
                 />
             </div>
@@ -86,8 +84,7 @@ export function TransferLearningMatrix() {
                                     <span>{t('charts.transferLearningSimilarity')}</span>
                                     <Help
                                         inplace
-                                        placement="top"
-                                        message={similarityDescription}
+                                        message={t('charts.transferLearningSimilarityHelp')}
                                         dark
                                     />
                                 </div>

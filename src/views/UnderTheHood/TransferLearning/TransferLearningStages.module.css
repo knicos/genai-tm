@@ -1,0 +1,10 @@
+.stageNav {
+    margin-bottom: 1rem;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    justify-content: flex-start !important;
+}
+
+.stageContent {
+    min-width: 0;
+}

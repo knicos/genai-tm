@@ -30,10 +30,15 @@ import DeployWrapper from './DeployWrapper';
 import ExportDialog from './ExportDialog';
 import { useModelCreator, useXAICanvas } from '../../util/TeachableModel';
 import { useWorkspaceRoute } from '../../util/useWorkspaceRoute';
+import useOrientation from '../../util/useOrientation';
 import OpenDialog from './OpenDialog';
 import CloneDialog from './CloneDialog';
 import { IConnection, WorkflowLayout, SidePanel } from '@genai-fi/base';
-import { SidebarMode } from '../Preview/PreviewMenu';
+import BoxButton from '@genai-fi/base/components/BoxButton';
+import type { SidebarMode } from '../Preview/PreviewMenu';
+import InsertChartOutlinedIcon from '@mui/icons-material/InsertChartOutlined';
+import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
+import DeviceHubIcon from '@mui/icons-material/DeviceHub';
 
 const SAVE_PERIOD = 5 * 60 * 1000; // 5 mins
 
@@ -43,8 +48,12 @@ const CONNECTIONS: IConnection[] = [
     { start: 'model', end: 'behaviour', startPoint: 'right', endPoint: 'left' },
     { start: 'behaviour', end: 'output', startPoint: 'right', endPoint: 'left' },
     { start: 'input', end: 'model', startPoint: 'bottom', endPoint: 'top' },
+    { start: 'model', end: 'statistics', startPoint: 'bottom', endPoint: 'top' },
     { start: 'model', end: 'heatmap', startPoint: 'bottom', endPoint: 'top' },
+    { start: 'model', end: 'transferLearning', startPoint: 'bottom', endPoint: 'top' },
 ];
+
+const CONNECTIONS_NO_TL = CONNECTIONS.filter(({ end }) => end !== 'transferLearning');
 
 interface Props {
     step: number;
@@ -69,7 +78,13 @@ function addCloseAlert() {
 }
 
 export default function Workspace({ step, visitedStep, onComplete, saveTrigger, onSkip, onSaveRemind }: Props) {
-    const { namespace, resetOnLoad, modelVariant } = useVariant();
+    const {
+        namespace,
+        resetOnLoad,
+        modelVariant,
+        showTransferLearning: supportsTransferLearning,
+        allowHeatmap,
+    } = useVariant();
     const { t, i18n } = useTranslation(namespace);
     const [data, setData] = useAtom(classState);
     const [labelModified, setLabelModified] = useAtom(classLabelModifiedState);
@@ -85,10 +100,13 @@ export default function Workspace({ step, visitedStep, onComplete, saveTrigger, 
     const outlet = useOutlet();
     const location = useLocation();
     const { closeSidebar, openSidebar } = useWorkspaceRoute();
+    const orientation = useOrientation();
     const showSidebar = !!outlet;
     const heatmapEnabled = useAtomValue(xaiEnabled);
-    const { allowHeatmap } = useVariant();
     const lastVariantRef = useRef(modelVariant);
+    const canShowTransferLearning = modelVariant === 'image' && supportsTransferLearning;
+    const connections = canShowTransferLearning ? CONNECTIONS : CONNECTIONS_NO_TL;
+    const sidePanelPosition = orientation === 'portrait' ? 'bottom' : 'right';
 
     const getDefaultLabel = useCallback(
         (index: number, variant: string) => {
@@ -281,7 +299,10 @@ export default function Workspace({ step, visitedStep, onComplete, saveTrigger, 
     );
 
     return (
-        <main className={style.workspace}>
+        <main
+            className={style.workspace}
+            style={{ flexDirection: sidePanelPosition === 'bottom' ? 'column' : 'row' }}
+        >
             <DeployWrapper />
             <ModelLoader
                 onLoaded={doLoaded}
@@ -290,7 +311,7 @@ export default function Workspace({ step, visitedStep, onComplete, saveTrigger, 
             <ModelSaver onSaved={doSaved} />
             <div className={style.workspaceContent}>
                 <WorkflowLayout
-                    connections={CONNECTIONS}
+                    connections={connections}
                     ignoredColumns={visitedStep < 1 ? 2 : 0}
                 >
                     <TrainingData
@@ -313,8 +334,32 @@ export default function Workspace({ step, visitedStep, onComplete, saveTrigger, 
                         <Preview
                             onExport={doShare}
                             onClone={doClone}
-                            onSidebar={doSidebar}
                         />
+                        <div className={style.previewActions}>
+                            <BoxButton
+                                label={'Statistics'}
+                                icon={<InsertChartOutlinedIcon />}
+                                widget={'statistics'}
+                                onClick={() => doSidebar('statistics')}
+                                style={{ width: 68, height: 68 }}
+                            />
+                            <BoxButton
+                                label={'Heatmap'}
+                                icon={<VisibilityOutlinedIcon />}
+                                widget={'heatmap'}
+                                onClick={() => doSidebar('visualization')}
+                                style={{ width: 68, height: 68 }}
+                            />
+                            {canShowTransferLearning && (
+                                <BoxButton
+                                    label={'Transfer Learning'}
+                                    icon={<DeviceHubIcon />}
+                                    widget={'transferLearning'}
+                                    onClick={() => doSidebar('transferLearning')}
+                                    style={{ width: 68, height: 68 }}
+                                />
+                            )}
+                        </div>
                     </div>
                     <Behaviours
                         hidden={visitedStep < 1}
@@ -327,7 +372,7 @@ export default function Workspace({ step, visitedStep, onComplete, saveTrigger, 
 
             <SidePanel
                 open={showSidebar}
-                position="right"
+                position={sidePanelPosition}
                 onClose={closeSidebar}
                 dark
             >

@@ -1,4 +1,4 @@
-@value borderGrey, primary from "@genai-fi/base/css/colours.module.css";
+@value borderGrey, primary, textDark from "@genai-fi/base/css/colours.module.css";
 
 .chartContainer {
     margin-bottom: 2rem;
@@ -6,9 +6,30 @@
     color: inherit;
 }
 
-.chartTitle {
+.section {
+    margin-top: 2rem;
+}
+
+.title {
     font-size: 1rem;
     color: inherit;
+    font-weight: bold;
+}
+
+.chartTitle {
+    composes: title;
+    margin: 0;
+}
+
+.titleRow {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.chartTitleRow {
+    composes: titleRow;
     margin-bottom: 0.5rem;
 }
 

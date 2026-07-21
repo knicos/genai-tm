@@ -2,7 +2,7 @@ import { FormControlLabel, Switch } from '@mui/material';
 import WarningAmberIcon from '@mui/icons-material/WarningAmber';
 import { useTranslation } from 'react-i18next';
 import { useVariant } from '@genaitm/util/variant';
-import style from './UnderTheHood.module.css';
+import style from '../UnderTheHood.module.css';
 import { ColorLegend } from './ColorLegend';
 import { Help } from '@genai-fi/base';
 
@@ -67,7 +67,6 @@ export function HeatmapPanel({
                     />
                     <Help
                         inplace
-                        placement="left"
                         message={t('heatmap.colorScaleHelp')}
                         dark
                     />

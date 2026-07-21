@@ -12,22 +12,26 @@ import {
 import { useVariant } from '@genaitm/util/variant';
 import { getXAI, isXAICopied, markXAICopied, markXAIUncopied } from '../../util/xaiCanvas';
 import style from './UnderTheHood.module.css';
-import { AccuracyPerClass } from './AccuracyPerClass';
-import { ConfusionMatrix } from './ConfusionMatrix';
-import { AccuracyPerEpoch } from './AccuracyPerEpoch';
-import { LossPerEpoch } from './LossPerEpoch';
-import { HeatmapPanel } from './HeatmapPanel';
-import { SidebarMode } from '../../workflow/Preview/PreviewMenu';
-import { PretrainedStatistics } from './PretrainedStatistics';
-import { TransferLearningMatrix } from './TransferLearningMatrix';
-import { TransferLearningGraph } from './TransferLearningGraph';
+import { AccuracyPerClass } from './Statistics/AccuracyPerClass';
+import { ConfusionMatrix } from './Statistics/ConfusionMatrix';
+import { AccuracyPerEpoch } from './Statistics/AccuracyPerEpoch';
+import { LossPerEpoch } from './Statistics/LossPerEpoch';
+import { HeatmapPanel } from './Heatmap/HeatmapPanel';
+import { TransferLearningStages } from './TransferLearning/TransferLearningStages';
+import type { SidebarMode } from '../../workflow/Preview/PreviewMenu';
 
 interface Props {
     mode: SidebarMode;
 }
 
+const titleKeyByMode: Record<SidebarMode, string> = {
+    visualization: 'underTheHood.visualization',
+    statistics: 'underTheHood.statistics',
+    transferLearning: 'underTheHood.transferLearning',
+};
+
 export function UnderTheHood({ mode }: Props) {
-    const { namespace, modelVariant, showTransferLearning, allowHeatmap } = useVariant();
+    const { namespace, modelVariant, showTransferLearning: supportsTransferLearning, allowHeatmap } = useVariant();
     const { t } = useTranslation(namespace);
     const model = useAtomValue(modelState);
     const training = useAtomValue(modelTraining);
@@ -42,7 +46,9 @@ export function UnderTheHood({ mode }: Props) {
     const imageSize = model?.getImageSize();
     const showVisualization = mode === 'visualization';
     const showStatistics = mode === 'statistics';
+    const showTransferLearning = mode === 'transferLearning';
     const canXAI = canPredict && modelVariant !== 'speech' && allowHeatmap;
+    const canShowTransferLearning = showTransferLearning && modelVariant === 'image' && canPredict && supportsTransferLearning;
 
     const displayCanvasRef = useRef<HTMLCanvasElement | null>(null);
 
@@ -78,31 +84,8 @@ export function UnderTheHood({ mode }: Props) {
     return (
         <div className={style.underTheHood}>
             <div className={style.header}>
-                <h2 className={style.title}>
-                    {showStatistics ? t('underTheHood.statistics') : t('underTheHood.title')}
-                </h2>
+                <h2 className={style.title}>{t(titleKeyByMode[mode])}</h2>
             </div>
-            {showVisualization && (
-                <>
-                    {canXAI && (
-                        <HeatmapPanel
-                            enabled={enabled}
-                            canPredict={canPredict}
-                            onToggle={handleToggle}
-                            canvasRef={handleCanvasRef}
-                            size={imageSize}
-                            poseDetected={modelVariant === 'pose' ? poseDetected : null}
-                        />
-                    )}
-                    {modelVariant === 'image' && canPredict && showTransferLearning && (
-                        <>
-                            <PretrainedStatistics />
-                            <TransferLearningMatrix />
-                            <TransferLearningGraph />
-                        </>
-                    )}
-                </>
-            )}
             {showStatistics && canPredict && (hasStats || hasHistory) && (
                 <>
                     {hasStats && (
@@ -119,6 +102,17 @@ export function UnderTheHood({ mode }: Props) {
                     )}
                 </>
             )}
+            {showVisualization && canXAI && (
+                <HeatmapPanel
+                    enabled={enabled}
+                    canPredict={canPredict}
+                    onToggle={handleToggle}
+                    canvasRef={handleCanvasRef}
+                    size={imageSize}
+                    poseDetected={modelVariant === 'pose' ? poseDetected : null}
+                />
+            )}
+            {canShowTransferLearning && <TransferLearningStages />}
         </div>
     );
 }

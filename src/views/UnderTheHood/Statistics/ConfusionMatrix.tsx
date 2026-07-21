@@ -1,10 +1,10 @@
 import { useMemo, useState } from 'react';
 import { useAtomValue } from 'jotai';
 import { useTranslation } from 'react-i18next';
-import { modelStats } from '../../state';
-import styles from './Charts.module.css';
+import { modelStats } from '../../../state';
+import styles from '../Charts.module.css';
 import { useVariant } from '@genaitm/util/variant';
-import { InfoPop } from '@genai-fi/base';
+import { Help, InfoPop } from '@genai-fi/base';
 
 export function ConfusionMatrix() {
     const { namespace } = useVariant();
@@ -28,7 +28,14 @@ export function ConfusionMatrix() {
 
     return (
         <div className={styles.chartContainer}>
-            <h3 className={styles.chartTitle}>{t('charts.confusionMatrix')}</h3>
+            <div className={styles.chartTitleRow}>
+                <h3 className={styles.chartTitle}>{t('charts.confusionMatrix')}</h3>
+                <Help
+                    inplace
+                    message={t('charts.confusionMatrixHelp')}
+                    dark
+                />
+            </div>
             <div className={styles.matrixScrollWrapper}>
                 <div className={styles.matrixContainer}>
                     <div className={styles.matrixHeaderRow}>

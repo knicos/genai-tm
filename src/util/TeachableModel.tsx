@@ -1,11 +1,13 @@
 import {
     IClassification,
     ITransferLearningExplanation,
+    INeuronExplanation,
     modelState,
     predictedIndex,
     prediction,
     imageNetTop5,
     transferLearningExplanation,
+    neuronExplanation,
     predictionError,
     trainingHistory,
     modelStats,
@@ -18,6 +20,7 @@ import { useCallback, useEffect, useState, useRef } from 'react';
 import { AudioExample, createModel, TeachableModel } from '@genai-fi/classifier';
 import { calculateModelStatistics } from './modelStats';
 import { getXAI, wasXAIDrawn } from './xaiCanvas';
+import { useTranslation } from 'react-i18next';
 
 export type TMType = 'image' | 'pose' | 'hand' | 'speech';
 
@@ -30,6 +33,7 @@ export interface ExplainedPredictionsOutput {
     predictions: PredictionsOutput[];
     heatmap?: number[][];
     transferLearning?: ITransferLearningExplanation;
+    neuronExplanation?: INeuronExplanation;
 }
 
 export function usePredictions() {
@@ -44,9 +48,11 @@ export function usePredictions() {
 
 export function useTeachableModel() {
     const model = useAtomValue(modelState);
+    const { i18n } = useTranslation();
     const setPredictions = useSetAtom(prediction);
     const setImageNetTop5 = useSetAtom(imageNetTop5);
     const setTransferLearningExplanation = useSetAtom(transferLearningExplanation);
+    const setNeuronExplanation = useSetAtom(neuronExplanation);
     const setError = useSetAtom(predictionError);
     const setIndex = useSetAtom(predictedIndex);
     const setPoseDetected = useSetAtom(poseDetectedAtom);
@@ -67,9 +73,11 @@ export function useTeachableModel() {
                     const isPose = variant === 'pose';
                     const isMobileNet = variant === 'image';
 
-                    const p = await model.predict(image, staticImageMode);
+                    const language = i18n.language;
+                    const p = await model.predict(image, staticImageMode, language);
 
                     setTransferLearningExplanation(p.transferLearning || null);
+                    // setNeuronExplanation(p.neuronExplanation || null);
 
                     if (isMobileNet) {
                         setImageNetTop5(p.transferLearning?.currentImageTopConcepts.slice(0, 5) || []);
@@ -100,15 +108,18 @@ export function useTeachableModel() {
                     setPredictions([]);
                     setImageNetTop5([]);
                     setTransferLearningExplanation(null);
+                    setNeuronExplanation(null);
                     setIndex(-1);
                     setError(true);
                 }
             },
             [
                 model,
+                i18n.language,
                 setPredictions,
                 setImageNetTop5,
                 setTransferLearningExplanation,
+                setNeuronExplanation,
                 setIndex,
                 setPoseDetected,
                 setError,

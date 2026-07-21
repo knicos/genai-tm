@@ -11,6 +11,7 @@ import { serialWriterInstance } from '@genaitm/state';
 import CircularProgress from '@mui/material/CircularProgress';
 import { useTabActive } from '../../util/useTabActive';
 import SentimentVeryDissatisfiedIcon from '@mui/icons-material/SentimentVeryDissatisfied';
+import { getContrastingColour } from '../../util/colour';
 
 interface Props extends React.PropsWithChildren {
     scaleFactor: number;
@@ -18,24 +19,6 @@ interface Props extends React.PropsWithChildren {
     predicted: number;
     volume: number;
     error?: string;
-}
-
-function hexToRgb(hex: string) {
-    const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-    return result
-        ? {
-              r: parseInt(result[1], 16),
-              g: parseInt(result[2], 16),
-              b: parseInt(result[3], 16),
-          }
-        : null;
-}
-
-function bgColour(colour: string): string {
-    const col = hexToRgb(colour);
-    if (!col) return 'white';
-    const Y = 0.2126 * col.r + 0.7152 * col.g + 0.0722 * col.b;
-    return Y < 128 ? 'white' : 'black';
 }
 
 export default function RawOutput({ scaleFactor, behaviours, predicted, volume, error, children }: Props) {
@@ -116,7 +99,7 @@ export default function RawOutput({ scaleFactor, behaviours, predicted, volume, 
                                         left: behaviour.text.align === 'left' ? 0 : undefined,
                                         right: behaviour.text.align === 'right' ? 0 : undefined,
                                         textAlign: behaviour.text.align || 'center',
-                                        backgroundColor: bgColour(behaviour.text.color || '#000000'),
+                                        backgroundColor: getContrastingColour(behaviour.text.color || '#000000'),
                                     }}
                                     aria-hidden={ix !== predicted}
                                 >

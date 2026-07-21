@@ -8,6 +8,14 @@
     margin: 1rem;
 }
 
+.actionRow {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin: 0 1rem 1rem;
+    width: fit-content;
+}
+
 .widget {
     max-width: 300px;
     width: 100%;

@@ -92,7 +92,7 @@ vi.mock('@genai-fi/classifier', () => {
 describe('UnderTheHood component', () => {
     it('renders', async ({ expect }) => {
         render(<UnderTheHood mode="visualization" />, { wrapper: TestWrapper });
-        await waitFor(() => expect(screen.getByText('underTheHood.title')).toBeVisible());
+        await waitFor(() => expect(screen.getByText('underTheHood.visualization')).toBeVisible());
     });
 
     it('shows history', async ({ expect }) => {
@@ -148,7 +148,7 @@ describe('UnderTheHood component', () => {
 
         render(<UnderTheHood mode="statistics" />, { wrapper: NoPredWrapper });
 
-        await waitFor(() => expect(screen.getByText('charts.samples')).toBeVisible());
+        await waitFor(() => expect(screen.getByText('charts.testSamples')).toBeVisible());
         expect(screen.getAllByText('class1')).toHaveLength(3);
         expect(screen.getAllByText('class2')).toHaveLength(3);
         expect(screen.getAllByText('5')).toHaveLength(3);

@@ -1,28 +1,5 @@
 @value borderGrey, primary, bgSubdued1, textDark from "@genai-fi/base/css/colours.module.css";
 
-.section {
-    margin-top: 2rem;
-}
-
-.titleRow {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    margin-bottom: 1rem;
-}
-
-.title {
-    font-size: 1rem;
-    color: inherit;
-}
-
-.description {
-    margin: 0 0 0.75rem 0;
-    font-size: 0.875rem;
-    color: inherit;
-    opacity: 0.9;
-}
-
 .scroll {
     overflow-x: auto;
 }

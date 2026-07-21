@@ -10,20 +10,17 @@ import { fatalWebcam, sessionCode, shareModel } from '@genaitm/state';
 import { ListItemIcon, ListItemText } from '@mui/material';
 import ShareIcon from '@mui/icons-material/Share';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
-import InsertChartOutlinedIcon from '@mui/icons-material/InsertChartOutlined';
 import LinkIcon from '@mui/icons-material/Link';
-import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
-
-export type SidebarMode = 'visualization' | 'statistics';
 
 interface Props {
     disabled?: boolean;
     onExport?: () => void;
     onClone?: () => void;
-    onSidebar?: (mode: SidebarMode) => void;
 }
 
-export default function PreviewMenu({ disabled, onExport, onClone, onSidebar }: Props) {
+export type SidebarMode = 'visualization' | 'statistics' | 'transferLearning';
+
+export default function PreviewMenu({ disabled, onExport, onClone }: Props) {
     const { namespace, usep2p, allowModelSharing, modelVariant } = useVariant();
     const { t } = useTranslation(namespace);
     const fatal = useAtomValue(fatalWebcam);
@@ -110,28 +107,6 @@ export default function PreviewMenu({ disabled, onExport, onClone, onSidebar }: 
                         <ListItemText>{t('model.actions.bm')}</ListItemText>
                     </MenuItem>
                 )}
-
-                <MenuItem
-                    disabled={disabled || !onSidebar}
-                    onClick={() => {
-                        handleClose();
-                        if (onSidebar) onSidebar('visualization');
-                    }}
-                >
-                    <ListItemIcon>{<VisibilityOutlinedIcon />}</ListItemIcon>
-                    <ListItemText>{t('underTheHood.title')}</ListItemText>
-                </MenuItem>
-
-                <MenuItem
-                    disabled={disabled || !onSidebar}
-                    onClick={() => {
-                        handleClose();
-                        if (onSidebar) onSidebar('statistics');
-                    }}
-                >
-                    <ListItemIcon>{<InsertChartOutlinedIcon />}</ListItemIcon>
-                    <ListItemText>{t('underTheHood.statistics')}</ListItemText>
-                </MenuItem>
             </Menu>
         </div>
     );
