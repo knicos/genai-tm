@@ -9,11 +9,12 @@ import { useAtom, useAtomValue } from 'jotai';
 import { fatalWebcam, modelLoaded } from '@genaitm/state';
 import { Spinner, Webcam } from '@genai-fi/base';
 import CapturePanel from '@genaitm/components/CapturePanel/CapturePanel';
+import { createModelOverlayPreviews } from './sampleCanvas';
 
 interface Props {
     visible?: boolean;
     onClose: () => void;
-    onCapture: (image: HTMLCanvasElement) => void;
+    onCapture: (image: HTMLCanvasElement, preview?: HTMLCanvasElement, fullPreview?: HTMLCanvasElement) => void;
 }
 
 export default function WebcamCapture({ visible, onCapture, onClose }: Props) {
@@ -22,7 +23,7 @@ export default function WebcamCapture({ visible, onCapture, onClose }: Props) {
     const [capturing, setCapturing] = useState(false);
     const [fatal, setFatal] = useAtom(fatalWebcam);
     const buttonRef = useRef<HTMLButtonElement>(null);
-    const { draw, imageSize } = useTeachableModel();
+    const { draw, imageSize, model, variant } = useTeachableModel();
     const loaded = useAtomValue(modelLoaded);
 
     const startCapture = useCallback(() => setCapturing(true), [setCapturing]);
@@ -51,6 +52,19 @@ export default function WebcamCapture({ visible, onCapture, onClose }: Props) {
 
     const doFatal = useCallback(() => setFatal(true), [setFatal]);
 
+    const handleCapture = useCallback(
+        async (image: HTMLCanvasElement) => {
+            if ((variant !== 'hand' && variant !== 'pose') || !model) {
+                onCapture(image);
+                return;
+            }
+
+            const { preview, fullPreview } = await createModelOverlayPreviews(image, model, variant, false);
+            onCapture(image, preview, fullPreview);
+        },
+        [model, onCapture, variant]
+    );
+
     return visible ? (
         <CapturePanel
             title={t('trainingdata.actions.webcam')}
@@ -62,7 +76,7 @@ export default function WebcamCapture({ visible, onCapture, onClose }: Props) {
             >
                 <Webcam
                     capture={capturing}
-                    onCapture={onCapture}
+                    onCapture={handleCapture}
                     interval={200}
                     onPostprocess={draw}
                     size={imageSize}

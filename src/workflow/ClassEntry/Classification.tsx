@@ -21,6 +21,8 @@ import DatasetPicker from '@genaitm/components/DatasetPicker/DatasetPicker';
 import AudioExampleRecorder from '@genaitm/components/AudioExampleRecorder/AudioExampleRecorder';
 import { AudioExample } from '@genai-fi/classifier';
 import { validateAudioBlob } from '@genaitm/util/audio';
+import { useTeachableModel } from '@genaitm/util/TeachableModel';
+import { createCanvasSamples } from './sampleCanvas';
 
 const SAMPLEMIN_DEFAULT = 2;
 const SAMPLEMIN_AUDIO_NOISE = 20;
@@ -60,6 +62,7 @@ export function Classification({
     const [showDatasetPicker, setShowDatasetPicker] = useState(false);
     const [audioBlob, setAudioBlob] = useState<Blob | null>(null);
     const fatal = useAtomValue(fatalWebcam);
+    const { model } = useTeachableModel();
 
     const isAudio = modelVariant === 'speech';
 
@@ -90,16 +93,13 @@ export function Classification({
                     setLoading(false);
                 }
             } else {
-                canvasesFromFiles(Array.from(e.target.files || [])).then((canvases) => {
+                canvasesFromFiles(Array.from(e.target.files || [])).then(async (canvases) => {
                     if (canvases.length > 0) {
-                        canvases.forEach((v) => {
-                            v.style.width = '58px';
-                            v.style.height = '58px';
-                        });
+                        const samples = await createCanvasSamples(canvases, model, modelVariant);
                         setData(
                             (data) => ({
                                 label: data.label,
-                                samples: [...canvases.map((c) => ({ data: c, id: '' })), ...data.samples],
+                                samples: [...samples, ...data.samples],
                             }),
                             index
                         );
@@ -109,7 +109,7 @@ export function Classification({
             }
             e.target.value = '';
         },
-        [setLoading, setData, index, isAudio, setActive]
+        [setLoading, setData, index, isAudio, setActive, model, modelVariant]
     );
 
     const [dropProps, drop] = useDrop(
@@ -154,14 +154,11 @@ export function Classification({
                         const canvases = await canvasFromDataTransfer(items);
 
                         if (canvases.length > 0) {
-                            canvases.forEach((v) => {
-                                v.style.width = '58px';
-                                v.style.height = '58px';
-                            });
+                            const samples = await createCanvasSamples(canvases, model, modelVariant);
                             setData(
                                 (data) => ({
                                     label: data.label,
-                                    samples: [...canvases.map((c) => ({ data: c, id: '' })), ...data.samples],
+                                    samples: [...samples, ...data.samples],
                                 }),
                                 index
                             );
@@ -185,7 +182,7 @@ export function Classification({
                 };
             },
         },
-        [setData, index, setShowDropError, setLoading, isAudio, setActive]
+        [setData, index, setShowDropError, setLoading, isAudio, setActive, model, modelVariant]
     );
 
     const setTitle = useCallback(
@@ -207,14 +204,14 @@ export function Classification({
     }, [index, setData]);
 
     const onCapture = useCallback(
-        (image: HTMLCanvasElement) => {
+        (image: HTMLCanvasElement, preview?: HTMLCanvasElement, fullPreview?: HTMLCanvasElement) => {
             image.style.width = '58px';
             image.style.height = '58px';
 
             setData(
                 (data) => ({
                     label: name,
-                    samples: [{ data: image, id: '' }, ...data.samples],
+                    samples: [{ data: image, id: '', preview, fullPreview }, ...data.samples],
                 }),
                 index
             );
@@ -281,18 +278,19 @@ export function Classification({
     );
 
     const doDatasetSelected = useCallback(
-        (canvases: HTMLCanvasElement[]) => {
+        async (canvases: HTMLCanvasElement[]) => {
             if (canvases.length > 0) {
+                const samples = await createCanvasSamples(canvases, model, modelVariant);
                 setData(
                     (data) => ({
                         label: data.label,
-                        samples: [...canvases.map((c) => ({ data: c, id: '' })), ...data.samples],
+                        samples: [...samples, ...data.samples],
                     }),
                     index
                 );
             }
         },
-        [setData, index]
+        [setData, index, model, modelVariant]
     );
 
     const doDropErrorClose = useCallback(() => setShowDropError(false), [setShowDropError]);
@@ -445,7 +443,10 @@ export function Classification({
                                 <Sample
                                     key={data.samples.length - ix}
                                     index={data.samples.length - ix}
-                                    image={s.data instanceof HTMLCanvasElement ? s.data : s.data.spectrogramCanvas}
+                                    image={
+                                        s.preview ??
+                                        (s.data instanceof HTMLCanvasElement ? s.data : s.data.spectrogramCanvas)
+                                    }
                                     onDelete={doDelete}
                                     onClick={handleSampleClick}
                                 />

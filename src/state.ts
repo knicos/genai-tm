@@ -6,6 +6,8 @@ import { AudioExample, TeachableModel } from '@genai-fi/classifier';
 export interface ISample {
     data: HTMLCanvasElement | AudioExample;
     id: string;
+    preview?: HTMLCanvasElement;
+    fullPreview?: HTMLCanvasElement;
 }
 
 export interface IClassification {

@@ -131,6 +131,72 @@ describe('Trainer component', () => {
         await waitFor(() => expect(screen.getByTestId('alert-complete')).toBeVisible());
     });
 
+    it('feeds raw samples to addExample without static image mode during training', async ({ expect }) => {
+        const user = userEvent.setup();
+        const sample1 = document.createElement('canvas');
+        const sample2 = document.createElement('canvas');
+        const sample3 = document.createElement('canvas');
+        const sample4 = document.createElement('canvas');
+
+        const model = {
+            ready: vi.fn(async () => true),
+            isTrained: vi.fn(() => false),
+            addExample: vi.fn(),
+            train: vi.fn(),
+            variant: 'hand',
+        } as unknown as TeachableModel;
+
+        let modelInstance: TeachableModel | undefined;
+        const setModel = (newModel: TeachableModel | undefined) => {
+            modelInstance = newModel;
+        };
+
+        const store = createStore();
+        store.set(modelState, model);
+        store.set(classState, [
+            {
+                label: 'Class 1',
+                samples: [
+                    { data: sample1, id: '' },
+                    { data: sample2, id: '' },
+                ],
+            },
+            {
+                label: 'Class 2',
+                samples: [
+                    { data: sample3, id: '' },
+                    { data: sample4, id: '' },
+                ],
+            },
+        ]);
+
+        function PredWrapper({ children }: React.PropsWithChildren) {
+            return (
+                <TestWrapper initializeState={store}>
+                    <RecoilObserver<TeachableModel | undefined>
+                        node={modelState}
+                        onChange={setModel}
+                    />
+                    {children}
+                </TestWrapper>
+            );
+        }
+
+        render(<Trainer />, { wrapper: PredWrapper });
+
+        await user.click(screen.getByTestId('train-button'));
+        await waitFor(() => expect(screen.getByTestId('alert-complete')).toBeVisible());
+
+        expect(modelInstance).toBeDefined();
+        const addExample = vi.mocked(modelInstance!.addExample);
+
+        expect(addExample).toHaveBeenCalledWith(0, sample1);
+        expect(addExample).toHaveBeenCalledWith(0, sample2);
+        expect(addExample).toHaveBeenCalledWith(1, sample3);
+        expect(addExample).toHaveBeenCalledWith(1, sample4);
+        expect(addExample.mock.calls.every((call) => call.length === 2)).toBe(true);
+    });
+
     it('can train with disabled classes filtered out', async ({ expect }) => {
         const user = userEvent.setup();
 

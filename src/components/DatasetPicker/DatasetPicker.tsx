@@ -21,7 +21,7 @@ import { Alert } from '@mui/material';
 interface DatasetPickerProps {
     open: boolean;
     onClose: () => void;
-    onDatasetSelected: (canvases: HTMLCanvasElement[]) => void;
+    onDatasetSelected: (canvases: HTMLCanvasElement[]) => void | Promise<void>;
 }
 
 export default function DatasetPicker({ open, onClose, onDatasetSelected }: DatasetPickerProps) {
@@ -53,7 +53,7 @@ export default function DatasetPicker({ open, onClose, onDatasetSelected }: Data
             });
 
             if (canvases.length > 0) {
-                onDatasetSelected(canvases);
+                await onDatasetSelected(canvases);
                 listRef.current?.clearSelection();
                 onClose();
             } else {

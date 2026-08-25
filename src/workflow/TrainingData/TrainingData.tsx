@@ -212,7 +212,10 @@ export function TrainingData({ active, data, setData, disabled, onFocused, onLab
                     imageUrl={
                         currentSample && modalState
                             ? !isAudio
-                                ? (currentSample.data as HTMLCanvasElement).toDataURL()
+                                ? (
+                                      currentSample.fullPreview ??
+                                      (currentSample.data as HTMLCanvasElement)
+                                  ).toDataURL()
                                 : (currentSample.data as AudioExample).spectrogramCanvas?.toDataURL()
                             : undefined
                     }
