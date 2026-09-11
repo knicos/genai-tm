@@ -53,6 +53,7 @@ export default function Preview({ onExport, onClone }: Props) {
                                         <PercentageBar
                                             colour={colourWheel[ix % colourWheel.length]}
                                             value={p.probability * 100}
+                                            style={{ fontSize: '0.8rem', minHeight: '1.4rem' }}
                                         />
                                     </td>
                                 </tr>

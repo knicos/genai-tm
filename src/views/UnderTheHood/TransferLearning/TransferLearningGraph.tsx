@@ -1,16 +1,15 @@
 import { type CSSProperties, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
-import { Chart } from 'chart.js/auto';
+import { Chart, TooltipModel } from 'chart.js/auto';
 import { SankeyController, Flow } from 'chartjs-chart-sankey';
 import { useAtomValue } from 'jotai';
 import { useTranslation } from 'react-i18next';
 import { useVariant } from '@genaitm/util/variant';
-import { Help } from '@genai-fi/base';
+import { Help, PercentageBar } from '@genai-fi/base';
 import { transferLearningExplanation } from '../../../state';
 import { brightenColor, withAlpha } from '../../../util/colour';
 import {
     buildTransferLearningGraphData,
-    formatFlowPercent,
     getTooltipCaretStyle,
     type TransferLearningGraphLink,
 } from './TransferLearningGraphData';
@@ -19,7 +18,7 @@ import chartStyle from '../Charts.module.css';
 
 Chart.register(SankeyController, Flow);
 
-const SANKEY_LABEL_COLOR = 'rgba(255, 255, 255, 0.95)';
+const SANKEY_LABEL_COLOR = 'rgba(0, 0, 0, 1)';
 const SANKEY_LABEL_FONT = {
     family: 'Andika, sans-serif',
     size: 14,
@@ -42,7 +41,7 @@ interface GraphTooltipState {
     top: number;
     fromLabel: string;
     toLabel: string;
-    flow: string;
+    flow: number;
     color: string;
     images: string[];
     caretStyle: CSSProperties;
@@ -90,7 +89,7 @@ export function TransferLearningGraph() {
         const conceptImageUrlsRef = chartData.conceptImageUrls;
         const labelsRef = chartData.labels;
 
-        const externalTooltip = (ctx: { chart: Chart; tooltip: any }) => {
+        const externalTooltip = (ctx: { chart: Chart; tooltip: TooltipModel<'sankey'> }) => {
             const { tooltip } = ctx;
             if (tooltip.opacity === 0) {
                 setTooltipState(null);
@@ -113,7 +112,7 @@ export function TransferLearningGraph() {
                 top: rect.top + tooltip.y,
                 fromLabel,
                 toLabel,
-                flow: formatFlowPercent(raw.flow),
+                flow: raw.flow,
                 color,
                 images,
                 caretStyle: getTooltipCaretStyle(tooltip),
@@ -245,10 +244,15 @@ export function TransferLearningGraph() {
                         <span>{tooltipState.fromLabel}</span>
                     </div>
                     <div className={style.tooltipArrow}>
-                        <ArrowDownwardIcon style={{ fontSize: 22, color: 'rgba(255,255,255,0.7)' }} />
+                        <ArrowDownwardIcon style={{ fontSize: 22, color: 'black' }} />
                     </div>
                     <div className={style.tooltipToLabel}>{tooltipState.toLabel}</div>
-                    <div className={style.tooltipFlow}>{tooltipState.flow}</div>
+                    <div className={style.tooltipFlow}>
+                        <PercentageBar
+                            colour="blue"
+                            value={tooltipState.flow * 100}
+                        />
+                    </div>
                     {tooltipState.images.length > 0 && (
                         <div className={style.tooltipImages}>
                             {tooltipState.images.map((url) => (

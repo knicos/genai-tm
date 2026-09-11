@@ -168,6 +168,7 @@ export function PretrainedConcepts() {
                                                 <PercentageBar
                                                     value={parseInt(item.value)}
                                                     colour="blue"
+                                                    style={{ fontSize: '0.9rem', minHeight: '1.4rem' }}
                                                 />
                                             </div>
                                             <div className={style.pretrainedToken}>{item.label}</div>

@@ -135,7 +135,7 @@
 .pretrainedSamplesRow {
     margin: 0.5rem 0;
     display: grid;
-    grid-template-columns: repeat(5, minmax(56px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(56px, 1fr));
     gap: 0.4rem;
 }
 
