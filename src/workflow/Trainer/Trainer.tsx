@@ -8,7 +8,7 @@ import LinearProgress from '@mui/material/LinearProgress';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Alert from '@mui/material/Alert';
 import TextField from '@mui/material/TextField';
-import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
+import HelpOutlineIcon from '@mui/icons-material/HelpOutlineOutlined';
 import Tooltip, { TooltipProps, tooltipClasses } from '@mui/material/Tooltip';
 import { styled } from '@mui/material/styles';
 import { useTranslation } from 'react-i18next';

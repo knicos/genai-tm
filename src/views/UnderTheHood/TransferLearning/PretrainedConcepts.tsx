@@ -8,7 +8,7 @@ import { useTranslation } from 'react-i18next';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import DeviceHubIcon from '@mui/icons-material/DeviceHub';
-import { Help } from '@genai-fi/base';
+import { Help, PercentageBar } from '@genai-fi/base';
 import { useVariant } from '@genaitm/util/variant';
 import { imageNetTop5 } from '../../../state';
 
@@ -54,6 +54,7 @@ export function PretrainedConcepts() {
     const [rowCenters, setRowCenters] = useState<number[]>([]);
     const [linesHeight, setLinesHeight] = useState<number>(0);
     const rowButtonRefs = useRef<Record<string, HTMLButtonElement | null>>({});
+    const [showModelLines, setShowModelLines] = useState<boolean>(true);
 
     useEffect(() => {
         const current = expandedLabelRef.current;
@@ -73,6 +74,12 @@ export function PretrainedConcepts() {
 
         const updateGeometry = () => {
             const rowsRect = rowsElement.getBoundingClientRect();
+            if (rowsRect.width < 250) {
+                setShowModelLines(false);
+            } else if (rowsRect.width >= 250 + 80) {
+                setShowModelLines(true);
+            }
+
             const measuredCenters = predictions.map(({ label }) => {
                 const button = rowButtonRefs.current[label];
                 if (!button) {
@@ -129,15 +136,17 @@ export function PretrainedConcepts() {
                         </div>
                     </div>
                     <div className={style.pretrainedPredictionsArea}>
-                        <div className={style.pretrainedModelLines}>
-                            <ModelLines
-                                rowCenters={rowCenters}
-                                height={linesHeight}
-                            />
-                        </div>
+                        {showModelLines && (
+                            <div className={style.pretrainedModelLines}>
+                                <ModelLines
+                                    rowCenters={rowCenters}
+                                    height={linesHeight}
+                                />
+                            </div>
+                        )}
                         <div
-                            ref={rowsRef}
                             className={style.pretrainedRows}
+                            ref={rowsRef}
                         >
                             {predictions.map((item) => (
                                 <div
@@ -154,16 +163,15 @@ export function PretrainedConcepts() {
                                             setExpandedLabel(expandedLabel === item.label ? null : item.label)
                                         }
                                     >
-                                        <span className={style.pretrainedToken}>
-                                            <span className={style.pretrainedTokenText}>{item.label}</span>
-                                        </span>
-                                        <div className={style.pretrainedBarTrack}>
-                                            <div
-                                                className={style.pretrainedBarFill}
-                                                style={{ width: `${item.value}%` }}
-                                            />
+                                        <div className={style.labelGroup}>
+                                            <div style={{ minWidth: '80px', background: 'white', borderRadius: '4px' }}>
+                                                <PercentageBar
+                                                    value={parseInt(item.value)}
+                                                    colour="blue"
+                                                />
+                                            </div>
+                                            <div className={style.pretrainedToken}>{item.label}</div>
                                         </div>
-                                        <span className={style.pretrainedValue}>{item.displayValue}</span>
                                         <span className={style.pretrainedExpandIcon}>
                                             {expandedLabel === item.label ? (
                                                 <KeyboardArrowUpIcon />

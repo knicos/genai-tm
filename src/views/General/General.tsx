@@ -1,6 +1,6 @@
 import { IVariantContext, VariantContext } from '../../util/variant';
 import _settings from './configuration.json';
-import { useSearchParams, useParams } from 'react-router-dom';
+import { useSearchParams, useParams } from 'react-router';
 import { decompressFromEncodedURIComponent } from 'lz-string';
 import Classifier from './Classifier';
 import { Privacy } from '@genai-fi/base';

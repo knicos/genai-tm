@@ -6,7 +6,7 @@ import { menuShowSettings } from '@genaitm/state';
 import { Button } from '@genaitm/components/button/Button';
 import SettingsForm, { DEFAULTS } from './SettingsForm';
 import { IVariantContext } from '@genaitm/util/variant';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 import { compressToEncodedURIComponent } from 'lz-string';
 import { VARIANTS } from '../General/General';
 import { useWorkspaceRoute } from '../../util/useWorkspaceRoute';

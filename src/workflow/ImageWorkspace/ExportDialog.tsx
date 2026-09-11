@@ -92,17 +92,19 @@ export default function ExportDialog({ open, onClose, ready }: Props) {
                         label="Link"
                         variant="outlined"
                         value={link}
-                        InputProps={{
-                            endAdornment: (
-                                <InputAdornment position="end">
-                                    <IconButton
-                                        disabled={!navigator?.clipboard?.writeText}
-                                        onClick={doCopy}
-                                    >
-                                        <ContentCopyIcon />
-                                    </IconButton>
-                                </InputAdornment>
-                            ),
+                        slotProps={{
+                            input: {
+                                endAdornment: (
+                                    <InputAdornment position="end">
+                                        <IconButton
+                                            disabled={!navigator?.clipboard?.writeText}
+                                            onClick={doCopy}
+                                        >
+                                            <ContentCopyIcon />
+                                        </IconButton>
+                                    </InputAdornment>
+                                ),
+                            },
                         }}
                     />
                 </DialogContent>

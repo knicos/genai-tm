@@ -17,6 +17,7 @@ export default defineConfig(({ mode }) => ({
         environment: 'jsdom',
         setupFiles: './src/setupTests.ts',
         clearMocks: true,
+        execArgv: ['--no-webstorage'],
         coverage: {
             provider: 'v8',
             reporter: ['cobertura', 'html'],
@@ -29,7 +30,7 @@ export default defineConfig(({ mode }) => ({
     },
     resolve: {
         alias: {
-            '@genaitm': path.resolve(__dirname, './src'),
+            '@genaitm': path.resolve(import.meta.dirname, './src'),
         },
     },
 }));

@@ -1,7 +1,7 @@
 import style from './ModelLines.module.css';
 
 const FIXED_WIDTH = 72;
-const FIXED_END_X = 70;
+const FIXED_END_X = 72;
 const ORIGIN_X = 30;
 const START_Y = 0;
 const CURVE = 14;
@@ -32,9 +32,8 @@ export default function ModelLines({ rowCenters, height, branchStartX = ORIGIN_X
                                 y - CURVE
                             }, ${branchBendX} ${y}, ${FIXED_END_X} ${y}`}
                             fill="none"
-                            stroke="#e8f0fe"
+                            stroke="white"
                             strokeWidth="5"
-                            strokeLinecap="round"
                         />
                     );
                 })}
