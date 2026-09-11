@@ -30,6 +30,16 @@ const mockLabels = ['class 1', 'class 2'];
 
 vi.mock('@tensorflow/tfjs');
 
+vi.mock('../../state', async (importOriginal) => {
+    const original = await importOriginal<typeof import('../../state')>();
+    const { atom } = await import('jotai');
+
+    return {
+        ...original,
+        featureFlagsAtom: atom({ allowReportProblem: false, allowTransferLearning: true }),
+    };
+});
+
 vi.mock('@genai-fi/base', async (importOriginal) => ({
     ...(await importOriginal<typeof import('@genai-fi/base')>()),
     Webcam: function ({

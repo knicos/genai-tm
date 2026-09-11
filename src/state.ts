@@ -3,6 +3,47 @@ import { BehaviourType } from './workflow/Behaviour/Behaviour';
 import { SaveProperties } from './workflow/ImageWorkspace/SaveDialog';
 import randomId from './util/randomId';
 import { AudioExample, TeachableModel } from '@genai-fi/classifier';
+
+interface FeatureFlags {
+    allowReportProblem?: boolean;
+    allowTransferLearning?: boolean;
+}
+
+function applyFeatureOverridesFromUrl(features: FeatureFlags): FeatureFlags {
+    const params = new URLSearchParams(window.location.search);
+    const patched = { ...features };
+
+    for (const [key, raw] of params.entries()) {
+        if (!(key in patched)) continue;
+        const v = raw?.toLowerCase();
+
+        if (v === 'true' || v === '1') {
+            patched[key as keyof FeatureFlags] = true;
+        } else if (v === 'false' || v === '0') {
+            patched[key as keyof FeatureFlags] = false;
+        } else if (v === '' || v === 'on') {
+            patched[key as keyof FeatureFlags] = true;
+        }
+    }
+
+    return patched;
+}
+
+export const featureFlagsAtom = atom(async () => {
+    try {
+        const isStagingEnv = !window.location.hostname.endsWith('gen-ai.fi');
+        const response = await fetch(`${import.meta.env.VITE_APP_API}/features/${isStagingEnv ? 'tm-staging' : 'tm'}`);
+        const data: { features: FeatureFlags } = await response.json();
+        const features = data.features as FeatureFlags;
+        return applyFeatureOverridesFromUrl(features);
+    } catch {
+        return {
+            allowReportProblem: false,
+            allowTransferLearning: false,
+        };
+    }
+});
+
 export interface ISample {
     data: HTMLCanvasElement | AudioExample;
     id: string;

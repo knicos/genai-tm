@@ -1,8 +1,18 @@
-import { it } from 'vitest';
+import { it, vi } from 'vitest';
 import { render, screen, waitFor } from '@testing-library/react';
 import { Component } from './General';
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { Provider } from 'jotai';
+
+vi.mock('../../state', async (importOriginal) => {
+    const original = await importOriginal<typeof import('../../state')>();
+    const { atom } = await import('jotai');
+
+    return {
+        ...original,
+        featureFlagsAtom: atom({ allowReportProblem: false, allowTransferLearning: true }),
+    };
+});
 
 it('renders general view', async ({ expect }) => {
     render(

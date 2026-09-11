@@ -16,6 +16,7 @@ import {
     prediction,
     predictedIndex,
     xaiEnabled,
+    featureFlagsAtom,
 } from '../../state';
 import style from './TeachableMachine.module.css';
 import { useVariant } from '../../util/variant';
@@ -78,13 +79,8 @@ function addCloseAlert() {
 }
 
 export default function Workspace({ step, visitedStep, onComplete, saveTrigger, onSkip, onSaveRemind }: Props) {
-    const {
-        namespace,
-        resetOnLoad,
-        modelVariant,
-        showTransferLearning: supportsTransferLearning,
-        allowHeatmap,
-    } = useVariant();
+    const { namespace, resetOnLoad, modelVariant, allowHeatmap } = useVariant();
+    const { allowTransferLearning } = useAtomValue(featureFlagsAtom);
     const { t, i18n } = useTranslation(namespace);
     const [data, setData] = useAtom(classState);
     const [labelModified, setLabelModified] = useAtom(classLabelModifiedState);
@@ -104,7 +100,7 @@ export default function Workspace({ step, visitedStep, onComplete, saveTrigger, 
     const showSidebar = !!outlet;
     const heatmapEnabled = useAtomValue(xaiEnabled);
     const lastVariantRef = useRef(modelVariant);
-    const canShowTransferLearning = modelVariant === 'image' && supportsTransferLearning;
+    const canShowTransferLearning = modelVariant === 'image' && allowTransferLearning;
     const connections = canShowTransferLearning ? CONNECTIONS : CONNECTIONS_NO_TL;
     const sidePanelPosition = orientation === 'portrait' ? 'bottom' : 'right';
 

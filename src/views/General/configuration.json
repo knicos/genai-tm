@@ -31,7 +31,6 @@
         "enableCollaboration": true,
         "allowModelSharing": true,
         "allowHeatmap": true,
-        "showTransferLearning": false,
         "allowSerialUSB": false
     },
     "image": {

@@ -38,7 +38,6 @@ export interface IVariantContext {
     allowModelSharing?: boolean;
     allowHeatmap?: boolean;
     allowSerialUSB?: boolean;
-    showTransferLearning?: boolean;
 }
 
 export const VariantContext = React.createContext<IVariantContext>({

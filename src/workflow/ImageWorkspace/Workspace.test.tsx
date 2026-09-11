@@ -3,6 +3,16 @@ import { render, screen, waitFor } from '@testing-library/react';
 import ImageWorkspace from './Workspace';
 import TestWrapper from '../../util/TestWrapper';
 
+vi.mock('../../state', async (importOriginal) => {
+    const original = await importOriginal<typeof import('../../state')>();
+    const { atom } = await import('jotai');
+
+    return {
+        ...original,
+        featureFlagsAtom: atom({ allowReportProblem: false, allowTransferLearning: true }),
+    };
+});
+
 describe('ImageWorkspace component', () => {
     it('renders step 1', async ({ expect }) => {
         const complete = vi.fn();

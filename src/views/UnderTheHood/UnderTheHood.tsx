@@ -8,6 +8,7 @@ import {
     trainingHistory,
     poseDetected as poseDetectedAtom,
     xaiEnabled,
+    featureFlagsAtom,
 } from '../../state';
 import { useVariant } from '@genaitm/util/variant';
 import { getXAI, isXAICopied, markXAICopied, markXAIUncopied } from '../../util/xaiCanvas';
@@ -31,7 +32,8 @@ const titleKeyByMode: Record<SidebarMode, string> = {
 };
 
 export function UnderTheHood({ mode }: Props) {
-    const { namespace, modelVariant, showTransferLearning: supportsTransferLearning, allowHeatmap } = useVariant();
+    const { namespace, modelVariant, allowHeatmap } = useVariant();
+    const { allowTransferLearning } = useAtomValue(featureFlagsAtom);
     const { t } = useTranslation(namespace);
     const model = useAtomValue(modelState);
     const training = useAtomValue(modelTraining);
@@ -48,7 +50,8 @@ export function UnderTheHood({ mode }: Props) {
     const showStatistics = mode === 'statistics';
     const showTransferLearning = mode === 'transferLearning';
     const canXAI = canPredict && modelVariant !== 'speech' && allowHeatmap;
-    const canShowTransferLearning = showTransferLearning && modelVariant === 'image' && canPredict && supportsTransferLearning;
+    const canShowTransferLearning =
+        showTransferLearning && modelVariant === 'image' && canPredict && allowTransferLearning;
 
     const displayCanvasRef = useRef<HTMLCanvasElement | null>(null);
 
