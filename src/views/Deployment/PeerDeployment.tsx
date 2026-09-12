@@ -1,6 +1,6 @@
 import { useState, useCallback, useEffect } from 'react';
 import Deployment from './Deployment';
-import { useSearchParams, useParams } from 'react-router-dom';
+import { useSearchParams, useParams } from 'react-router';
 import style from './style.module.css';
 import { Alert, IconButton } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';

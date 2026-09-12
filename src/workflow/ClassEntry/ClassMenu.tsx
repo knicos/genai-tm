@@ -72,8 +72,10 @@ export default function ClassMenu({
                 <MenuIcon fontSize="small" />
             </IconButton>
             <Menu
-                MenuListProps={{
-                    'aria-labelledby': `class-menu-button-${index}`,
+                slotProps={{
+                    list: {
+                        'aria-labelledby': `class-menu-button-${index}`,
+                    },
                 }}
                 id={`class-menu-${index}`}
                 anchorEl={anchorEl}

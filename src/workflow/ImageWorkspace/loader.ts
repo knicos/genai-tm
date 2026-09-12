@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { BehaviourType } from '../Behaviour/Behaviour';
 import { behaviourState, classState, fileData, loadState, modelState, sessionCode } from '../../state';
 import { useAtom, useSetAtom } from 'jotai';
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams } from 'react-router';
 import ClassifierApp, { TeachableModel } from '@genai-fi/classifier';
 import { ISample } from '@genai-fi/classifier/main/ClassifierApp';
 

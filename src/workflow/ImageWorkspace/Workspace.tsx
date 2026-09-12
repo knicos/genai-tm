@@ -1,5 +1,5 @@
 import { useRef, useEffect, useState, useCallback } from 'react';
-import { useOutlet, useLocation } from 'react-router-dom';
+import { useOutlet, useLocation } from 'react-router';
 import { TrainingData } from '../TrainingData/TrainingData';
 import Trainer from '../Trainer/Trainer';
 import Preview from '../Preview/Preview';

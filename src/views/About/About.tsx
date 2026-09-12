@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
 import style from './style.module.css';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router';
 import { Button } from '../../components/button/Button';
 import { useTranslation } from 'react-i18next';
 import Markdown from 'react-markdown';

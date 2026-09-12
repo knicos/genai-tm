@@ -1,4 +1,4 @@
-@value backgroundLight, borderGrey, textDark, primary, bgOk, bgColourful3, workspaceBg from "@genai-fi/base/css/colours.module.css";
+@value backgroundLight, borderGrey, textDark, primary, primaryLight, bgOk, bgColourful3, workspaceBg from "@genai-fi/base/css/colours.module.css";
 
 .pretrainedFlow {
     display: flex;
@@ -15,7 +15,7 @@
     width: 64px;
     height: 64px;
     border-radius: 50%;
-    border: 6px solid primary;
+    border: 6px solid primaryLight;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -48,10 +48,8 @@
 }
 
 .pretrainedPredictionsArea {
-    display: grid;
-    grid-template-columns: 72px 1fr;
+    display: flex;
     align-items: start;
-    gap: 0.45rem;
     padding-left: 8px;
     width: 100%;
     box-sizing: border-box;
@@ -72,6 +70,8 @@
 
 .pretrainedModelLines {
     margin-top: 0.1rem;
+    width: 72px;
+    flex-shrink: 0;
 }
 
 .pretrainedRows {
@@ -94,8 +94,7 @@
     padding: 0;
     cursor: pointer;
     text-align: left;
-    display: grid;
-    grid-template-columns: 168px minmax(0, 1fr) 24px 42px;
+    display: flex;
     align-items: center;
     gap: 0.6rem;
 }
@@ -104,52 +103,17 @@
     min-width: 0;
 }
 
-.pretrainedToken {
-    height: 46px;
-    min-height: 46px;
-    width: 100%;
-    max-width: 100%;
-    box-sizing: border-box;
-    border-radius: 7px;
-    background: backgroundLight;
-    border-bottom: 3px solid primary;
-    color: textDark;
-    font-weight: 600;
+.labelGroup {
+    background: white;
+    color: black;
     display: flex;
+    gap: 1rem;
     align-items: center;
-    justify-content: center;
-    overflow: hidden;
-    padding: 0.35rem 0.35rem;
-}
-
-.pretrainedTokenText {
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    line-clamp: 2;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    text-align: center;
-    white-space: normal;
-    overflow-wrap: anywhere;
-    word-break: break-word;
-    line-height: 1.15;
-    font-weight: 600;
-    text-transform: none;
-}
-
-.pretrainedBarTrack {
-    margin-left: 0;
-    height: 10px;
-    border-radius: 999px;
-    background: backgroundLight;
-    overflow: hidden;
-}
-
-.pretrainedBarFill {
-    height: 100%;
-    border-radius: 999px;
-    background: bgColourful3;
+    justify-content: flex-start;
+    padding: 0.5rem 0.5rem;
+    padding-right: 1rem;
+    border-radius: 10px;
+    flex-grow: 1;
 }
 
 .pretrainedValue {
@@ -162,15 +126,16 @@
 .pretrainedExpandIcon {
     display: inline-flex;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-end;
     color: inherit;
     font-size: 1.75rem;
+    flex-shrink: 0;
 }
 
 .pretrainedSamplesRow {
     margin: 0.5rem 0;
     display: grid;
-    grid-template-columns: repeat(5, minmax(56px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(56px, 1fr));
     gap: 0.4rem;
 }
 
@@ -179,7 +144,8 @@
     aspect-ratio: 1 / 1;
     object-fit: cover;
     border-radius: 8px;
-    border: 1px solid borderGrey;
+    border: 1px solid white;
+    box-sizing: border-box;
     background: workspaceBg;
     display: block;
 }

@@ -49,8 +49,10 @@ export default function PreviewMenu({ disabled, onExport, onClone }: Props) {
                 <MenuIcon fontSize="small" />
             </IconButton>
             <Menu
-                MenuListProps={{
-                    'aria-labelledby': `preview-menu-button`,
+                slotProps={{
+                    list: {
+                        'aria-labelledby': `preview-menu-button`,
+                    },
                 }}
                 id={`preview-menu`}
                 anchorEl={anchorEl}

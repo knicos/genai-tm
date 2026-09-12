@@ -10,7 +10,7 @@ import TextField from '@mui/material/TextField';
 import style from './TeachableMachine.module.css';
 import { useAtom, useSetAtom } from 'jotai';
 import { fileData, showOpenDialog } from '../../state';
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams } from 'react-router';
 import FileOpenIcon from '@mui/icons-material/FileOpen';
 
 export default function OpenDialog() {

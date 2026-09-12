@@ -1,6 +1,6 @@
 import React, { useState, useCallback, useEffect, useRef, RefObject } from 'react';
 import style from './style.module.css';
-import { useParams } from 'react-router-dom';
+import { useParams } from 'react-router';
 import { VerticalButton } from '../../components/button/Button';
 import randomId from '../../util/randomId';
 import { SampleState, SampleStateValue } from '../../components/ImageGrid/Sample';

@@ -8,6 +8,7 @@ import { useEffect, useRef, useState } from 'react';
 import style from './Output.module.css';
 import { useTranslation } from 'react-i18next';
 import HelpIcon from '@mui/icons-material/Help';
+
 export default function SerialUSBConnector() {
     const [serialUSBWriter, setSerialUSBWriter] = useAtom(serialWriterInstance);
     const [open, setOpen] = useState(false);
@@ -117,8 +118,11 @@ export default function SerialUSBConnector() {
             <div className={style.SerialConnectContainer}>
                 <Stack
                     direction={'row'}
-                    gap={1}
-                    alignItems="center"
+                    spacing={1}
+                    useFlexGap
+                    sx={{
+                        alignItems: 'center',
+                    }}
                 >
                     {<UsbIcon color={serialConnection ? 'success' : 'disabled'} />}
                     <Typography>{t('output.labels.serialdevice')}</Typography>

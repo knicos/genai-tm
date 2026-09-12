@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom';
+import { useParams } from 'react-router';
 import { ThemeProvider } from '@mui/material/styles';
 import { theme, useRandom } from '@genai-fi/base';
 import ConnectionStatus from '@genaitm/components/ConnectionStatus/ConnectionStatus';

@@ -8,7 +8,7 @@ import {
     createRoutesFromElements,
     useRouteError,
     Navigate,
-} from 'react-router-dom';
+} from 'react-router';
 import { Provider } from 'jotai';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';

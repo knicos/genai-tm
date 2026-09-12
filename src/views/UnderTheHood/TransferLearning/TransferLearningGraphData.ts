@@ -45,8 +45,8 @@ export function formatFlowPercent(flow: number) {
 }
 
 export function getTooltipCaretStyle(tooltip: TooltipGeometry): CSSProperties {
-    const caretSize = 6;
-    const bgColor = 'rgba(0,0,0,0.8)';
+    const caretSize = 8;
+    const bgColor = 'white';
     const xAlign = tooltip.xAlign || 'center';
     const yAlign = tooltip.yAlign || 'center';
     const caretRelY = tooltip.caretY - tooltip.y;
@@ -182,7 +182,7 @@ export function buildTransferLearningGraphData(
         ...explanation.userClassProfiles.map((profile) => ({
             key: `class${profile.userClassIndex}`,
             label: profile.userClassLabel,
-            secondary: t('charts.transferLearningSamples', { count: profile.sampleCount }),
+            secondary: '',
         })),
     ];
 
@@ -227,7 +227,7 @@ export function buildTransferLearningGraphData(
 
     rightNodesBase.forEach(([classId, meta], index) => {
         const key = `concept${classId}`;
-        labels[key] = meta.className;
+        labels[key] = meta.className.split(',')[0].trim();
         columns[key] = 1;
         priority[key] = index;
     });

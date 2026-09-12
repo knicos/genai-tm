@@ -1,7 +1,7 @@
 import { it, vi } from 'vitest';
 import { render, screen, waitFor } from '@testing-library/react';
 import { Component } from './General';
-import { MemoryRouter, Route, Routes } from 'react-router-dom';
+import { MemoryRouter, Route, Routes } from 'react-router';
 import { Provider } from 'jotai';
 
 vi.mock('../../state', async (importOriginal) => {

@@ -76,7 +76,7 @@ class IntersectionObserver {
     }
 }
 
-global.IntersectionObserver = IntersectionObserver;
+(global as any).IntersectionObserver = IntersectionObserver;
 
 // runs a cleanup after each test case (e.g. clearing jsdom)
 afterEach(() => {
