@@ -38,7 +38,7 @@ import { IConnection, WorkflowLayout, SidePanel } from '@genai-fi/base';
 import BoxButton from '@genai-fi/base/components/BoxButton';
 import type { SidebarMode } from '../Preview/PreviewMenu';
 import InsertChartOutlinedIcon from '@mui/icons-material/InsertChartOutlined';
-import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
+import LocalFireDepartmentIcon from '@mui/icons-material/LocalFireDepartment';
 import DeviceHubIcon from '@mui/icons-material/DeviceHub';
 
 const SAVE_PERIOD = 5 * 60 * 1000; // 5 mins
@@ -341,7 +341,7 @@ export default function Workspace({ step, visitedStep, onComplete, saveTrigger, 
                             />
                             <BoxButton
                                 label={'Heatmap'}
-                                icon={<VisibilityOutlinedIcon />}
+                                icon={<LocalFireDepartmentIcon />}
                                 widget={'heatmap'}
                                 onClick={() => doSidebar('visualization')}
                                 style={{ width: 68, height: 68 }}

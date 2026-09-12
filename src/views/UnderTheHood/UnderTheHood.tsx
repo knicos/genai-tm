@@ -20,6 +20,7 @@ import { LossPerEpoch } from './Statistics/LossPerEpoch';
 import { HeatmapPanel } from './Heatmap/HeatmapPanel';
 import { TransferLearningStages } from './TransferLearning/TransferLearningStages';
 import type { SidebarMode } from '../../workflow/Preview/PreviewMenu';
+import { Alert } from '@mui/material';
 
 interface Props {
     mode: SidebarMode;
@@ -115,6 +116,8 @@ export function UnderTheHood({ mode }: Props) {
                     poseDetected={modelVariant === 'pose' ? poseDetected : null}
                 />
             )}
+            {showVisualization && !canXAI && <Alert severity="info">{t('model.labels.mustTrain')}</Alert>}
+            {showStatistics && !canPredict && <Alert severity="info">{t('model.labels.mustTrain')}</Alert>}
             {canShowTransferLearning && <TransferLearningStages />}
         </div>
     );
