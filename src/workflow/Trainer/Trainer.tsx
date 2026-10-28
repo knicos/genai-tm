@@ -123,6 +123,7 @@ export default function Trainer({ onTrained, editing, ...props }: Props) {
     return (
         <Widget
             dataWidget="trainer"
+            data-tour-target="trainer"
             title={t('training.labels.title')}
             className={style.widget}
             activated={isTrainable}

@@ -7,6 +7,7 @@ import { AudioExample, TeachableModel } from '@genai-fi/classifier';
 interface FeatureFlags {
     allowReportProblem?: boolean;
     allowTransferLearning?: boolean;
+    allowClassMapFull?: boolean;
 }
 
 function applyFeatureOverridesFromUrl(features: FeatureFlags): FeatureFlags {
@@ -15,32 +16,44 @@ function applyFeatureOverridesFromUrl(features: FeatureFlags): FeatureFlags {
 
     for (const [key, raw] of params.entries()) {
         if (!(key in patched)) continue;
-        const v = raw?.toLowerCase();
+        const value = raw.toLowerCase();
 
-        if (v === 'true' || v === '1') {
+        if (value === 'true' || value === '1' || value === '' || value === 'on') {
             patched[key as keyof FeatureFlags] = true;
-        } else if (v === 'false' || v === '0') {
+        } else if (value === 'false' || value === '0') {
             patched[key as keyof FeatureFlags] = false;
-        } else if (v === '' || v === 'on') {
-            patched[key as keyof FeatureFlags] = true;
         }
     }
 
     return patched;
 }
 
+function isLocalOrStagingHost(hostname: string) {
+    const host = hostname.toLowerCase();
+    return host === 'localhost' || host === '127.0.0.1' || host === '[::1]' || host.includes('staging');
+}
+
 export const featureFlagsAtom = atom(async () => {
+    const localOrStaging = isLocalOrStagingHost(window.location.hostname);
+    const defaults: FeatureFlags = {
+        allowReportProblem: false,
+        allowTransferLearning: false,
+        allowClassMapFull: false,
+    };
+
     try {
-        const isStagingEnv = !window.location.hostname.endsWith('gen-ai.fi');
-        const response = await fetch(`${import.meta.env.VITE_APP_API}/features/${isStagingEnv ? 'tm-staging' : 'tm'}`);
+        const response = await fetch(
+            `${import.meta.env.VITE_APP_API}/features/${localOrStaging ? 'tm-staging' : 'tm'}`
+        );
         const data: { features: FeatureFlags } = await response.json();
-        const features = data.features as FeatureFlags;
+        const features: FeatureFlags = {
+            ...defaults,
+            ...data.features,
+        };
         return applyFeatureOverridesFromUrl(features);
     } catch {
-        return {
-            allowReportProblem: false,
-            allowTransferLearning: false,
-        };
+        // Keep URL overrides working even when the local API/proxy is unavailable.
+        return applyFeatureOverridesFromUrl(defaults);
     }
 });
 
@@ -69,20 +82,26 @@ export interface IImageNetTopClass {
     className: string;
     probability: number;
     imageUrls: string[];
+    gridRow: number;
+    gridColumn: number;
+    gridIndex: number;
 }
 
-export interface ITransferLearningConcept {
+export interface ITransferLearningClass {
     classId: number;
     className: string;
     probability: number;
     imageUrls: string[];
+    gridRow: number;
+    gridColumn: number;
+    gridIndex: number;
 }
 
 export interface ITransferLearningClassProfile {
     userClassIndex: number;
     userClassLabel: string;
     sampleCount: number;
-    topConcepts: ITransferLearningConcept[];
+    topConcepts: ITransferLearningClass[];
 }
 
 export interface ITransferLearningSimilarity {
@@ -92,7 +111,8 @@ export interface ITransferLearningSimilarity {
 }
 
 export interface ITransferLearningExplanation {
-    currentImageTopConcepts: ITransferLearningConcept[];
+    currentImageConcepts?: ITransferLearningClass[];
+    currentImageTopConcepts: ITransferLearningClass[];
     userClassProfiles: ITransferLearningClassProfile[];
     userClassSimilarity: ITransferLearningSimilarity[];
 }

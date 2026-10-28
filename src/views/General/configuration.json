@@ -31,7 +31,8 @@
         "enableCollaboration": true,
         "allowModelSharing": true,
         "allowHeatmap": true,
-        "allowSerialUSB": false
+        "allowSerialUSB": false,
+        "allowClassMapFull": true
     },
     "image": {
         "modelVariant": "image"

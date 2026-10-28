@@ -67,6 +67,12 @@ export default function Input(props: Props) {
         setPoseDetected(null);
     }, [modelVariant, setRemoteInput, setPoseDetected]);
 
+    useEffect(() => {
+        if (remoteInput && !isAudio) {
+            setTabIndex(2);
+        }
+    }, [isAudio, remoteInput]);
+
     const doChangeTab = useCallback(
         (_: React.SyntheticEvent, newValue: number) => {
             setTabIndex(newValue);
@@ -93,7 +99,7 @@ export default function Input(props: Props) {
 
     useEffect(() => {
         if (tabIndex === 2 && remoteInput) {
-            doPrediction(remoteInput, timeRef.current);
+            doPrediction(remoteInput, timeRef.current, true);
         } else if (file) {
             doPrediction(file, timeRef.current, true).then(() => {
                 if (file instanceof HTMLCanvasElement) {
@@ -121,6 +127,7 @@ export default function Input(props: Props) {
         <Widget
             noPadding
             dataWidget="input"
+            data-tour-target="test-input"
             activated={enableInput}
             title={t('input.labels.title')}
             menu={

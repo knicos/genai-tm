@@ -142,10 +142,24 @@
 .pretrainedSampleThumb {
     width: 100%;
     aspect-ratio: 1 / 1;
-    object-fit: cover;
     border-radius: 8px;
     border: 1px solid white;
     box-sizing: border-box;
     background: workspaceBg;
+    object-fit: cover;
     display: block;
+}
+
+.pretrainedMoreSamples {
+    color: backgroundLight;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100%;
+    padding: 0 0.2rem;
+    text-align: center;
+    font-size: 0.9rem;
+    line-height: 1.1;
+    font-weight: 700;
+    letter-spacing: 0;
 }

@@ -1,5 +1,5 @@
 import { useRef, useEffect, useState, useCallback } from 'react';
-import { useOutlet, useLocation } from 'react-router';
+import { useOutlet } from 'react-router';
 import { TrainingData } from '../TrainingData/TrainingData';
 import Trainer from '../Trainer/Trainer';
 import Preview from '../Preview/Preview';
@@ -94,7 +94,6 @@ export default function Workspace({ step, visitedStep, onComplete, saveTrigger, 
     const [showShare, setShowShare] = useState(false);
     const [showClone, setShowClone] = useState(false);
     const outlet = useOutlet();
-    const location = useLocation();
     const { closeSidebar, openSidebar } = useWorkspaceRoute();
     const orientation = useOrientation();
     const showSidebar = !!outlet;
@@ -118,7 +117,7 @@ export default function Workspace({ step, visitedStep, onComplete, saveTrigger, 
 
     // Ensure an initial model exists
     useModelCreator(modelVariant);
-    useXAICanvas(showSidebar && location.pathname.endsWith('/visualization') && heatmapEnabled && !!allowHeatmap);
+    useXAICanvas(modelVariant !== 'speech' && heatmapEnabled && !!allowHeatmap);
 
     // Clear samples when model variant changes
     useEffect(() => {

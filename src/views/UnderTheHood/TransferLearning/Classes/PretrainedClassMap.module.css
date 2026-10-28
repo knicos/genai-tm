@@ -1,0 +1,345 @@
+@value backgroundDark, backgroundDark2, backgroundLight, borderGrey, bgColourful3, bgSubdued3, textLight from "@genai-fi/base/css/colours.module.css";
+
+.mapPreviewButton {
+    position: relative;
+    width: 100%;
+    border: 0;
+    padding: 0;
+    background: transparent;
+    cursor: zoom-in;
+    display: block;
+    overflow: hidden;
+}
+
+.mapPreviewStatic {
+    cursor: default;
+}
+
+.previewTooltip {
+    composes: tooltip from "../TransferLearningTooltip.module.css";
+    position: absolute;
+    z-index: 2;
+    min-width: 8rem;
+    max-width: min(15rem, calc(100% - 1rem));
+    text-align: left;
+}
+
+.mapPreviewButton:focus-visible {
+    outline: 3px solid white;
+    outline-offset: 3px;
+}
+
+.mapPreviewCanvas,
+.viewerMapCanvas {
+    --class-map-accent: bgColourful3;
+    --class-map-significant-border: bgSubdued3;
+    --class-map-selected-border: backgroundDark2;
+    --class-map-surface: white;
+}
+
+.mapPreviewCanvas {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 6px;
+    background: white;
+}
+
+.viewerMapCanvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+    background: white;
+    pointer-events: none;
+}
+
+.viewerOverlay {
+    position: fixed;
+    inset: 0;
+    z-index: 10000;
+    background: color-mix(in srgb, backgroundDark2 72%, transparent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.25rem;
+}
+
+.viewer {
+    width: min(1440px, 96vw);
+    height: calc(100vh - 2.5rem);
+    height: calc(100dvh - 2.5rem);
+    border-radius: 8px;
+    background: backgroundDark;
+    color: backgroundLight;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 12px 36px color-mix(in srgb, backgroundDark2 42%, transparent);
+    overflow: hidden;
+}
+
+.viewerHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1rem 1.15rem;
+    border-bottom: 1px solid color-mix(in srgb, white 12%, transparent);
+}
+
+.viewerHeaderActions {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+}
+
+.viewerTitle {
+    color: textLight;
+    font-weight: 700;
+    font-size: 1.25rem;
+}
+
+.viewerSubtitle {
+    margin-top: 0.15rem;
+    color: backgroundLight;
+    font-size: 0.95rem;
+    line-height: 1.35;
+}
+
+.viewerBody {
+    min-height: 0;
+    flex: 1;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 300px;
+}
+
+.mapViewport {
+    min-width: 0;
+    min-height: 0;
+    position: relative;
+    background: white;
+    overflow: hidden;
+}
+
+.panSurface {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    touch-action: none;
+    cursor: grab;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+.panSurface:active {
+    cursor: grabbing;
+}
+
+.mapControls {
+    position: absolute;
+    top: 0.75rem;
+    right: 0.75rem;
+    z-index: 10;
+    display: flex;
+    gap: 0.35rem;
+}
+
+.canvasTouchTooltip {
+    composes: tooltip from "../TransferLearningTooltip.module.css";
+    position: absolute;
+    z-index: 9;
+    max-width: min(20rem, calc(100% - 1.5rem));
+}
+
+.canvasPointerTooltip {
+    composes: tooltip from "../TransferLearningTooltip.module.css";
+    position: absolute;
+    z-index: 9;
+    max-width: min(20rem, calc(100% - 1.5rem));
+}
+
+.hoveredCellOutline {
+    position: absolute;
+    z-index: 8;
+    box-sizing: border-box;
+    border: 1px solid backgroundDark2;
+    pointer-events: none;
+}
+
+.iconButton {
+    width: 2.75rem;
+    height: 2.75rem;
+    color: backgroundLight;
+    background: backgroundDark2;
+}
+
+.iconButton.iconButton:hover {
+    background: backgroundDark2;
+}
+
+.mapControlIcon {
+    font-size: 2rem;
+}
+
+@media (pointer: coarse) {
+    .viewerOverlay {
+        padding: 0.75rem;
+    }
+
+    .viewer {
+        width: calc(100vw - 1.5rem);
+        height: calc(100vh - 1.5rem);
+        height: calc(100dvh - 1.5rem);
+    }
+
+    .iconButton {
+        width: 3rem;
+        height: 3rem;
+    }
+}
+
+.detailPanel {
+    min-width: 0;
+    padding: 1rem;
+    background: color-mix(in srgb, backgroundDark2 20%, transparent);
+    border-left: 1px solid color-mix(in srgb, white 12%, transparent);
+    overflow-y: auto;
+}
+
+.detailClassId {
+    color: backgroundLight;
+    font-size: 0.9rem;
+    line-height: 1.35;
+}
+
+.detailTitle {
+    margin-top: 0.25rem;
+    color: textLight;
+    font-size: 1.2rem;
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+.detailProbability {
+    margin-top: 0.4rem;
+    color: textLight;
+    font-weight: 700;
+    font-size: 1.55rem;
+}
+
+.sampleGrid {
+    margin-top: 1rem;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.5rem;
+}
+
+.sampleImage {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    border-radius: 7px;
+    border: 1px solid borderGrey;
+    background: backgroundLight;
+}
+
+.tooltip {
+    composes: tooltip from "../TransferLearningTooltip.module.css";
+    position: fixed;
+    z-index: 10001;
+    max-width: 16rem;
+}
+
+.previewTooltip,
+.canvasTouchTooltip,
+.canvasPointerTooltip,
+.tooltip {
+    box-sizing: border-box;
+    display: grid;
+    gap: 0.15rem;
+    line-height: 1.2;
+}
+
+.previewTooltip span,
+.canvasTouchTooltip span,
+.canvasPointerTooltip span {
+    color: bgColourful3;
+    font-weight: 700;
+}
+
+.tooltipTitle {
+    display: block;
+    font-weight: 700;
+}
+
+.tooltipValue {
+    display: block;
+    margin-top: 0.2rem;
+    font-weight: 700;
+    color: bgColourful3;
+}
+
+/* A narrow landscape viewport still has room for a side panel. Keep it slim
+   and use one sample column so the map retains most of the available width. */
+@media (min-width: 761px) and (max-width: 1024px) {
+    .viewerBody {
+        grid-template-columns: minmax(0, 1fr) 12rem;
+    }
+
+    .detailPanel {
+        padding: 0.75rem;
+    }
+
+    .sampleGrid {
+        grid-template-columns: 1fr;
+        gap: 0.4rem;
+    }
+}
+
+@media (max-width: 760px) {
+    .viewerOverlay {
+        padding: 0.75rem;
+    }
+
+    .viewer {
+        width: min(96vw, 620px);
+        height: calc(100vh - 1.5rem);
+        height: calc(100dvh - 1.5rem);
+    }
+
+    .viewerHeader {
+        padding: 0.8rem 0.9rem;
+    }
+
+    .viewerBody {
+        grid-template-columns: 1fr;
+        grid-template-rows: minmax(0, 1fr) auto;
+    }
+
+    .mapViewport {
+        min-height: 0;
+    }
+
+    .detailPanel {
+        border-left: 0;
+        border-top: 1px solid color-mix(in srgb, white 12%, transparent);
+        padding: 0.75rem 0.9rem;
+        overflow: hidden;
+    }
+
+    .sampleGrid {
+        margin-top: 0.75rem;
+        display: flex;
+        overflow-x: auto;
+        overscroll-behavior-inline: contain;
+        scroll-snap-type: inline proximity;
+        gap: 0.35rem;
+        padding-bottom: 0.25rem;
+    }
+
+    .sampleImage {
+        flex: 0 0 5.5rem;
+        width: 5.5rem;
+        border-radius: 5px;
+        scroll-snap-align: start;
+    }
+}

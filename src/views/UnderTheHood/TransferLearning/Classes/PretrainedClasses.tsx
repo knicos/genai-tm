@@ -1,7 +1,8 @@
-import style from './PretrainedConcepts.module.css';
-import chartStyle from '../Charts.module.css';
-import underTheHoodStyle from '../UnderTheHood.module.css';
+import style from './PretrainedClasses.module.css';
+import chartStyle from '../../Charts.module.css';
+import underTheHoodStyle from '../../UnderTheHood.module.css';
 import ModelLines from './ModelLines';
+import { PretrainedClassMap } from './PretrainedClassMap';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useAtomValue } from 'jotai';
 import { useTranslation } from 'react-i18next';
@@ -10,7 +11,7 @@ import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import DeviceHubIcon from '@mui/icons-material/DeviceHub';
 import { Help, PercentageBar } from '@genai-fi/base';
 import { useVariant } from '@genaitm/util/variant';
-import { imageNetTop5 } from '../../../state';
+import { imageNetTop5 } from '../../../../state';
 
 interface PredictionRow {
     classId: number;
@@ -28,11 +29,11 @@ function numberArrayEqual(left: number[], right: number[]) {
     return true;
 }
 
-export function PretrainedConcepts() {
+export function PretrainedClasses() {
     const { namespace } = useVariant();
     const { t } = useTranslation(namespace);
     const imageNetRows = useAtomValue(imageNetTop5);
-    const description = t('charts.pretrainedConceptsHelp');
+    const description = t('charts.pretrainedClassesHelp');
     const predictions: PredictionRow[] = useMemo(
         () =>
             imageNetRows.map((entry) => {
@@ -115,7 +116,7 @@ export function PretrainedConcepts() {
         <section className={chartStyle.section}>
             <div className={chartStyle.titleRow}>
                 <div className={`${underTheHoodStyle.heatmapLabel} ${chartStyle.title}`}>
-                    {t('charts.pretrainedConceptsTitle')}
+                    {t('charts.pretrainedClassesTitle')}
                 </div>
                 <Help
                     inplace
@@ -124,7 +125,10 @@ export function PretrainedConcepts() {
                 />
             </div>
 
-            <div className={style.pretrainedPredictionsScroller}>
+            <div
+                className={style.pretrainedPredictionsScroller}
+                data-tour-target="pretrained-classes"
+            >
                 <div className={style.pretrainedScrollableContent}>
                     <div className={style.pretrainedFlow}>
                         <div className={style.pretrainedModelNode}>
@@ -197,6 +201,15 @@ export function PretrainedConcepts() {
                                                     className={style.pretrainedSampleThumb}
                                                 />
                                             ))}
+                                            {item.samples.length > 0 && (
+                                                <span
+                                                    className={style.pretrainedMoreSamples}
+                                                    aria-label={t('charts.pretrainedMoreSamples')}
+                                                    title={t('charts.pretrainedMoreSamples')}
+                                                >
+                                                    {t('charts.pretrainedMoreSamples')}
+                                                </span>
+                                            )}
                                         </div>
                                     )}
                                 </div>
@@ -205,6 +218,7 @@ export function PretrainedConcepts() {
                     </div>
                 </div>
             </div>
+            <PretrainedClassMap />
         </section>
     );
 }

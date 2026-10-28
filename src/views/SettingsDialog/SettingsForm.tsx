@@ -13,11 +13,14 @@ import {
 } from '@mui/material';
 import { FormEvent, useCallback, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useAtomValue } from 'jotai';
+import { featureFlagsAtom } from '../../state';
 import { VariantConfiguration, VARIANTS } from '../General/General';
 import style from './style.module.css';
 import _settings from '../General/configuration.json';
 import { LANGS } from '@genaitm/components/AppBar/AppBar';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import { useSearchParams } from 'react-router';
 
 export const DEFAULTS = _settings as VariantConfiguration;
 
@@ -29,6 +32,11 @@ interface Props {
 export default function SettingsForm({ state, setState }: Props) {
     const variant = useVariant();
     const { i18n, t } = useTranslation();
+    const { allowClassMapFull } = useAtomValue(featureFlagsAtom);
+    const [searchParams] = useSearchParams();
+    const classMapParam = searchParams.get('allowClassMapFull');
+    const effectiveAllowClassMapFull =
+        classMapParam === null ? allowClassMapFull : classMapParam === 'true';
     //const [state, setState] = useState<IVariantContext>(DEFAULTS.base);
     const template: VARIANTS = 'general';
 
@@ -43,6 +51,10 @@ export default function SettingsForm({ state, setState }: Props) {
     useEffect(() => {
         setState((old) => ({ ...old, ...variant }));
     }, [variant, setState]);
+
+    useEffect(() => {
+        setState((old) => ({ ...old, allowClassMapFull: effectiveAllowClassMapFull }));
+    }, [effectiveAllowClassMapFull, setState]);
 
     const doCheckChange = useCallback(
         (event: FormEvent<HTMLInputElement>) => {
@@ -371,6 +383,16 @@ export default function SettingsForm({ state, setState }: Props) {
                                     />
                                 }
                                 label="Show XAI Heatmap"
+                            />
+                            <FormControlLabel
+                                control={
+                                    <Checkbox
+                                        checked={state.allowClassMapFull}
+                                        name="allowClassMapFull"
+                                        onChange={doCheckChange}
+                                    />
+                                }
+                                label="Allow full ImageNet class map"
                             />
                             <FormControlLabel
                                 control={

@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useAtom, useAtomValue } from 'jotai';
 import {
@@ -42,6 +42,7 @@ export function UnderTheHood({ mode }: Props) {
     const history = useAtomValue(trainingHistory);
     const poseDetected = useAtomValue(poseDetectedAtom);
     const [enabled, setEnabled] = useAtom(xaiEnabled);
+    const [transferLearningStage, setTransferLearningStage] = useState(0);
 
     const hasStats = stats.confusionMatrix && stats.confusionMatrix.length > 0;
     const hasHistory = history.length > 0;
@@ -51,8 +52,9 @@ export function UnderTheHood({ mode }: Props) {
     const showStatistics = mode === 'statistics';
     const showTransferLearning = mode === 'transferLearning';
     const canXAI = canPredict && modelVariant !== 'speech' && allowHeatmap;
-    const canShowTransferLearning =
-        showTransferLearning && modelVariant === 'image' && canPredict && allowTransferLearning;
+    const canUseTransferLearning =
+        showTransferLearning && modelVariant === 'image' && allowTransferLearning;
+    const canShowTransferLearning = canUseTransferLearning && canPredict;
 
     const displayCanvasRef = useRef<HTMLCanvasElement | null>(null);
 
@@ -118,7 +120,12 @@ export function UnderTheHood({ mode }: Props) {
             )}
             {showVisualization && !canXAI && <Alert severity="info">{t('model.labels.mustTrain')}</Alert>}
             {showStatistics && !canPredict && <Alert severity="info">{t('model.labels.mustTrain')}</Alert>}
-            {canShowTransferLearning && <TransferLearningStages />}
+            {canShowTransferLearning && (
+                <TransferLearningStages
+                    activeStage={transferLearningStage}
+                    onStageChange={setTransferLearningStage}
+                />
+            )}
         </div>
     );
 }

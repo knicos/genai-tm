@@ -6,15 +6,15 @@ import { useAtomValue } from 'jotai';
 import { useTranslation } from 'react-i18next';
 import { useVariant } from '@genaitm/util/variant';
 import { Help, PercentageBar } from '@genai-fi/base';
-import { transferLearningExplanation } from '../../../state';
-import { brightenColor, withAlpha } from '../../../util/colour';
+import { transferLearningExplanation } from '../../../../state';
+import { brightenColor, withAlpha } from '../../../../util/colour';
 import {
     buildTransferLearningGraphData,
     getTooltipCaretStyle,
     type TransferLearningGraphLink,
 } from './TransferLearningGraphData';
 import style from './TransferLearningGraph.module.css';
-import chartStyle from '../Charts.module.css';
+import chartStyle from '../../Charts.module.css';
 
 Chart.register(SankeyController, Flow);
 
@@ -86,7 +86,7 @@ export function TransferLearningGraph() {
             ])
         ) as Record<string, string>;
 
-        const conceptImageUrlsRef = chartData.conceptImageUrls;
+        const classImageUrlsRef = chartData.classImageUrls;
         const labelsRef = chartData.labels;
 
         const externalTooltip = (ctx: { chart: Chart; tooltip: TooltipModel<'sankey'> }) => {
@@ -104,7 +104,7 @@ export function TransferLearningGraph() {
             const fromLabel = labelsRef[raw.from] || raw.from;
             const toLabel = labelsRef[raw.to] || raw.to;
             const color = sourceColorByKey[raw.from] || fallbackColor;
-            const images = raw.to?.startsWith('concept') ? (conceptImageUrlsRef[raw.to] ?? []).slice(0, 3) : [];
+            const images = raw.to?.startsWith('imageNetClass') ? (classImageUrlsRef[raw.to] ?? []).slice(0, 3) : [];
 
             const rect = ctx.chart.canvas.getBoundingClientRect();
             setTooltipState({
@@ -214,6 +214,7 @@ export function TransferLearningGraph() {
 
             <div
                 className={style.wrapper}
+                data-tour-target="transfer-learning-graph-chart"
                 data-chart-wrapper
                 onMouseLeave={hideTooltip}
             >

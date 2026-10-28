@@ -1,11 +1,11 @@
-import { ReactNode, useMemo, useState } from 'react';
+import { ReactNode, useCallback, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { StageBar, type StageBarItemStatus } from '@genai-fi/base';
 import { useVariant } from '@genaitm/util/variant';
-import { PretrainedConcepts } from './PretrainedConcepts';
-import { TransferLearningGraph } from './TransferLearningGraph';
-import { TransferLearningBarChart } from './TransferLearningBarChart';
-import { TransferLearningMatrix } from './TransferLearningMatrix';
+import { PretrainedClasses } from './Classes/PretrainedClasses';
+import { TransferLearningGraph } from './Connections/TransferLearningGraph';
+import { TransferLearningBarChart } from './Connections/TransferLearningBarChart';
+import { TransferLearningMatrix } from './Advanced/TransferLearningMatrix';
 import style from './TransferLearningStages.module.css';
 
 interface Stage {
@@ -14,17 +14,22 @@ interface Stage {
     content: ReactNode;
 }
 
-export function TransferLearningStages() {
+interface TransferLearningStagesProps {
+    activeStage?: number;
+    onStageChange?: (stage: number) => void;
+}
+
+export function TransferLearningStages({ activeStage, onStageChange }: TransferLearningStagesProps) {
     const { namespace } = useVariant();
     const { t } = useTranslation(namespace);
-    const [activeStage, setActiveStage] = useState(0);
+    const [internalActiveStage, setInternalActiveStage] = useState(0);
 
     const stages = useMemo<Stage[]>(
         () => [
             {
-                id: 'concepts',
-                labelKey: 'charts.transferLearningStageConcepts',
-                content: <PretrainedConcepts />,
+                id: 'classes',
+                labelKey: 'charts.transferLearningStageClasses',
+                content: <PretrainedClasses />,
             },
             {
                 id: 'connections',
@@ -45,8 +50,22 @@ export function TransferLearningStages() {
         []
     );
 
+    const selectedStage = Math.min(Math.max(activeStage ?? internalActiveStage, 0), stages.length - 1);
+
+    const setSelectedStage = useCallback(
+        (stage: number) => {
+            if (onStageChange) {
+                onStageChange(stage);
+                return;
+            }
+            setInternalActiveStage(stage);
+        },
+        [onStageChange]
+    );
+
     const stageItems = stages.map((stage, index) => {
-        const status: StageBarItemStatus = index < activeStage ? 'complete' : index === activeStage ? 'available' : 'upcoming';
+        const status: StageBarItemStatus =
+            index < selectedStage ? 'complete' : index === selectedStage ? 'available' : 'upcoming';
         return {
             id: stage.id,
             label: t(stage.labelKey),
@@ -60,15 +79,15 @@ export function TransferLearningStages() {
                 className={style.stageNav}
                 ariaLabel={t('charts.transferLearningStages')}
                 items={stageItems}
-                activeId={stages[activeStage].id}
+                activeId={stages[selectedStage].id}
                 onChange={(id: string) => {
                     const index = stages.findIndex((stage) => stage.id === id);
                     if (index >= 0) {
-                        setActiveStage(index);
+                        setSelectedStage(index);
                     }
                 }}
             />
-            <div className={style.stageContent}>{stages[activeStage].content}</div>
+            <div className={style.stageContent}>{stages[selectedStage].content}</div>
         </>
     );
 }

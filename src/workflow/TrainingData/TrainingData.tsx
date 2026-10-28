@@ -171,6 +171,7 @@ export function TrainingData({ active, data, setData, disabled, onFocused, onLab
         <section
             tabIndex={-1}
             data-widget="container"
+            data-tour-target="training-data"
             className={disabled ? style.containerDisabled : style.trainingcontainer}
             onBlur={doDeactivate}
             onFocus={doFocus}

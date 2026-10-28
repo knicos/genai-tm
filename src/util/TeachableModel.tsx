@@ -14,6 +14,7 @@ import {
     TrainingMetrics,
     poseDetected as poseDetectedAtom,
     modelLoaded,
+    xaiEnabled,
 } from '../state';
 import { useAtom, useSetAtom, useAtomValue } from 'jotai';
 import { useCallback, useEffect, useState, useRef } from 'react';
@@ -36,6 +37,19 @@ export interface ExplainedPredictionsOutput {
     neuronExplanation?: INeuronExplanation;
 }
 
+function registerXAICanvas(model: TeachableModel) {
+    if (!model.isTrained()) return;
+
+    const size = model.getImageSize();
+    if (!size || size <= 0) return;
+
+    try {
+        model.setXAICanvas(getXAI(size).proxy);
+    } catch {
+        console.warn('ImageModel/PoseModel not loaded yet');
+    }
+}
+
 export function usePredictions() {
     const predictions = useAtomValue(prediction);
     const index = useAtomValue(predictedIndex);
@@ -48,6 +62,7 @@ export function usePredictions() {
 
 export function useTeachableModel() {
     const model = useAtomValue(modelState);
+    const heatmapEnabled = useAtomValue(xaiEnabled);
     const { i18n } = useTranslation();
     const setPredictions = useSetAtom(prediction);
     const setImageNetTop5 = useSetAtom(imageNetTop5);
@@ -56,7 +71,6 @@ export function useTeachableModel() {
     const setError = useSetAtom(predictionError);
     const setIndex = useSetAtom(predictedIndex);
     const setPoseDetected = useSetAtom(poseDetectedAtom);
-
     return {
         model,
         imageSize: model?.getImageSize() || 224,
@@ -73,8 +87,12 @@ export function useTeachableModel() {
                     const isPose = variant === 'pose';
                     const isMobileNet = variant === 'image';
 
+                    if (heatmapEnabled && variant !== 'speech') {
+                        registerXAICanvas(model);
+                    }
+
                     const language = i18n.language;
-                    const p = await model.predict(image, staticImageMode, language);
+                    const p: ExplainedPredictionsOutput = await model.predict(image, staticImageMode, language);
 
                     setTransferLearningExplanation(p.transferLearning || null);
                     // setNeuronExplanation(p.neuronExplanation || null);
@@ -115,6 +133,7 @@ export function useTeachableModel() {
             },
             [
                 model,
+                heatmapEnabled,
                 i18n.language,
                 setPredictions,
                 setImageNetTop5,
@@ -217,19 +236,8 @@ export function useXAICanvas(active: boolean) {
     useEffect(() => {
         if (!model || !active) return;
 
-        const register = () => {
-            if (!model.isTrained()) return;
-            const size = model.getImageSize();
-            if (!size || size <= 0) return;
-            try {
-                model.setXAICanvas(getXAI(size).proxy);
-            } catch {
-                console.warn('ImageModel/PoseModel not loaded yet');
-            }
-        };
-
-        register();
-        model.ready().then(() => register());
+        registerXAICanvas(model);
+        model.ready().then(() => registerXAICanvas(model));
     }, [model, active]);
 }
 
@@ -367,6 +375,7 @@ export function useModelTrainer() {
 
                 setModel(tm);
                 setStage('done');
+                return tm;
             },
             [
                 model,

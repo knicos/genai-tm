@@ -1,6 +1,6 @@
 import { type CSSProperties } from 'react';
 import { type TFunction } from 'i18next';
-import { type ITransferLearningExplanation } from '../../../state';
+import { type ITransferLearningExplanation } from '../../../../state';
 
 export interface TransferLearningGraphLink {
     from: string;
@@ -14,11 +14,11 @@ export interface TransferLearningGraphData {
     columns: Record<string, number>;
     priority: Record<string, number>;
     sourceIndexByKey: Record<string, number>;
-    conceptImageUrls: Record<string, string[]>;
+    classImageUrls: Record<string, string[]>;
     chartHeight: number;
 }
 
-interface ConceptMeta {
+interface ClassMeta {
     className: string;
     maxWeight: number;
     imageUrls: string[];
@@ -95,12 +95,12 @@ export function getTooltipCaretStyle(tooltip: TooltipGeometry): CSSProperties {
     };
 }
 
-function collectConceptMeta(explanation: ITransferLearningExplanation) {
-    const conceptMeta = new Map<number, ConceptMeta>();
+function collectClassMeta(explanation: ITransferLearningExplanation) {
+    const classMeta = new Map<number, ClassMeta>();
 
-    const upsertConceptMeta = (classId: number, className: string, probability: number, imageUrls: string[]) => {
-        const current = conceptMeta.get(classId);
-        conceptMeta.set(classId, {
+    const upsertClassMeta = (classId: number, className: string, probability: number, imageUrls: string[]) => {
+        const current = classMeta.get(classId);
+        classMeta.set(classId, {
             className,
             maxWeight: Math.max(current?.maxWeight || 0, probability),
             imageUrls: current?.imageUrls?.length ? current.imageUrls : imageUrls,
@@ -108,16 +108,16 @@ function collectConceptMeta(explanation: ITransferLearningExplanation) {
     };
 
     explanation.userClassProfiles.forEach((profile) => {
-        profile.topConcepts.forEach((concept) => {
-            upsertConceptMeta(concept.classId, concept.className, concept.probability, concept.imageUrls ?? []);
+        profile.topConcepts.forEach((imageNetClass) => {
+            upsertClassMeta(imageNetClass.classId, imageNetClass.className, imageNetClass.probability, imageNetClass.imageUrls ?? []);
         });
     });
 
-    explanation.currentImageTopConcepts.forEach((concept) => {
-        upsertConceptMeta(concept.classId, concept.className, concept.probability, concept.imageUrls ?? []);
+    explanation.currentImageTopConcepts.forEach((imageNetClass) => {
+        upsertClassMeta(imageNetClass.classId, imageNetClass.className, imageNetClass.probability, imageNetClass.imageUrls ?? []);
     });
 
-    return conceptMeta;
+    return classMeta;
 }
 
 function getOrderedLinks(links: TransferLearningGraphLink[]) {
@@ -160,17 +160,17 @@ export function buildTransferLearningGraphData(
 ): TransferLearningGraphData | null {
     if (!explanation || explanation.userClassProfiles.length === 0) return null;
 
-    const conceptMeta = collectConceptMeta(explanation);
-    const rightNodesBase = [...conceptMeta.entries()].sort((a, b) => b[1].maxWeight - a[1].maxWeight);
+    const classMeta = collectClassMeta(explanation);
+    const rightNodesBase = [...classMeta.entries()].sort((a, b) => b[1].maxWeight - a[1].maxWeight);
 
-    const conceptImageUrls: Record<string, string[]> = {};
+    const classImageUrls: Record<string, string[]> = {};
     rightNodesBase.forEach(([classId, meta]) => {
-        conceptImageUrls[`concept${classId}`] = meta.imageUrls;
+        classImageUrls[`class${classId}`] = meta.imageUrls;
     });
 
-    const rightNodeByConcept = new Map<number, string>();
+    const rightNodeByClass = new Map<number, string>();
     rightNodesBase.forEach(([classId]) => {
-        rightNodeByConcept.set(classId, `concept${classId}`);
+        rightNodeByClass.set(classId, `class${classId}`);
     });
 
     const leftNodesBase: GraphNode[] = [
@@ -188,25 +188,25 @@ export function buildTransferLearningGraphData(
 
     const links: TransferLearningGraphLink[] = [];
 
-    explanation.currentImageTopConcepts.forEach((concept) => {
-        const toKey = rightNodeByConcept.get(concept.classId);
+    explanation.currentImageTopConcepts.forEach((imageNetClass) => {
+        const toKey = rightNodeByClass.get(imageNetClass.classId);
         if (!toKey) return;
         links.push({
             from: 'currentInput',
             to: toKey,
-            flow: concept.probability,
+            flow: imageNetClass.probability,
         });
     });
 
     explanation.userClassProfiles.forEach((profile) => {
         const fromKey = `class${profile.userClassIndex}`;
-        profile.topConcepts.forEach((concept) => {
-            const toKey = rightNodeByConcept.get(concept.classId);
+        profile.topConcepts.forEach((imageNetClass) => {
+            const toKey = rightNodeByClass.get(imageNetClass.classId);
             if (!toKey) return;
             links.push({
                 from: fromKey,
                 to: toKey,
-                flow: concept.probability,
+                flow: imageNetClass.probability,
             });
         });
     });
@@ -226,7 +226,7 @@ export function buildTransferLearningGraphData(
     });
 
     rightNodesBase.forEach(([classId, meta], index) => {
-        const key = `concept${classId}`;
+        const key = `class${classId}`;
         labels[key] = meta.className.split(',')[0].trim();
         columns[key] = 1;
         priority[key] = index;
@@ -241,7 +241,7 @@ export function buildTransferLearningGraphData(
         columns,
         priority,
         sourceIndexByKey,
-        conceptImageUrls,
+        classImageUrls,
         chartHeight,
     };
 }

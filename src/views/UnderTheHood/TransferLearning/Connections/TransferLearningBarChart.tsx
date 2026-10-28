@@ -4,10 +4,10 @@ import { useTranslation } from 'react-i18next';
 import { Help } from '@genai-fi/base';
 import { useVariant } from '@genaitm/util/variant';
 import { Chart } from 'chart.js/auto';
-import { transferLearningExplanation } from '../../../state';
-import { softenColor } from '../../../util/colour';
+import { transferLearningExplanation } from '../../../../state';
+import { softenColor } from '../../../../util/colour';
 import style from './TransferLearningBarChart.module.css';
-import chartStyle from '../Charts.module.css';
+import chartStyle from '../../Charts.module.css';
 import graphStyle from './TransferLearningGraph.module.css';
 
 const SOURCE_COLORS = [
@@ -217,7 +217,10 @@ export function TransferLearningBarChart() {
                 />
             </div>
 
-            <div className={chartStyle.chartScrollWrapper}>
+            <div
+                className={chartStyle.chartScrollWrapper}
+                data-tour-target="transfer-learning-similarity-chart"
+            >
                 <div
                     className={style.chartFrame}
                     style={{ minWidth: `${Math.max(320, rows.length * 120)}px` }}

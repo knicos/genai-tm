@@ -150,6 +150,13 @@ describe('Trainer component', () => {
         const setModel = (newModel: TeachableModel | undefined) => {
             modelInstance = newModel;
         };
+        const getTrainedModel = () => {
+            if (!modelInstance) {
+                throw new Error('Expected the trained model to be available');
+            }
+
+            return modelInstance;
+        };
 
         const store = createStore();
         store.set(modelState, model);
@@ -187,13 +194,17 @@ describe('Trainer component', () => {
         await user.click(screen.getByTestId('train-button'));
         await waitFor(() => expect(screen.getByTestId('alert-complete')).toBeVisible());
 
-        expect(modelInstance).toBeDefined();
-        const addExample = vi.mocked(modelInstance!.addExample);
+        // The completion alert and the observer's effect are scheduled independently.
+        // Wait for the trained model before inspecting its calls.
+        await waitFor(() => {
+            const trainedModel = getTrainedModel();
+            expect(trainedModel.addExample).toHaveBeenCalledWith(0, sample1);
+            expect(trainedModel.addExample).toHaveBeenCalledWith(0, sample2);
+            expect(trainedModel.addExample).toHaveBeenCalledWith(1, sample3);
+            expect(trainedModel.addExample).toHaveBeenCalledWith(1, sample4);
+        });
 
-        expect(addExample).toHaveBeenCalledWith(0, sample1);
-        expect(addExample).toHaveBeenCalledWith(0, sample2);
-        expect(addExample).toHaveBeenCalledWith(1, sample3);
-        expect(addExample).toHaveBeenCalledWith(1, sample4);
+        const addExample = vi.mocked(getTrainedModel().addExample);
         expect(addExample.mock.calls.every((call) => call.length === 2)).toBe(true);
     });
 

@@ -1,0 +1,12 @@
+.tooltip {
+    pointer-events: none;
+    padding: 8px 10px;
+    border-radius: 6px;
+    background: white;
+    color: black;
+    box-shadow: 2px 2px 4px var(--dropShadow);
+    font-family: Andika, sans-serif;
+    font-size: 0.9rem;
+    font-weight: bold;
+    overflow: visible;
+}

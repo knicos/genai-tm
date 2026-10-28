@@ -22,22 +22,13 @@
 }
 
 .tooltip {
+    composes: tooltip from "../TransferLearningTooltip.module.css";
     position: fixed;
-    pointer-events: none;
     z-index: 9999;
     opacity: 0;
     transition: opacity 0.1s;
-    background: white;
-    border-radius: 6px;
-    padding: 8px 10px;
-    overflow: visible;
-    font-family: Andika, sans-serif;
-    font-size: 0.9rem;
-    font-weight: bold;
-    color: black;
     white-space: nowrap;
     min-width: 120px;
-    box-shadow: 2px 2px 4px var(--dropShadow);
 }
 
 .tooltipFromRow {

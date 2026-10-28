@@ -28,6 +28,7 @@ export default function Preview({ onExport, onClone }: Props) {
         <Widget
             noPadding
             dataWidget="model"
+            data-tour-target="classification-result"
             title={t('model.labels.title')}
             className={style.widget}
             activated={model}
