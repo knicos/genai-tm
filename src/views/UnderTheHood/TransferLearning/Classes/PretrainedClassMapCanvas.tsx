@@ -1,12 +1,4 @@
-import {
-    CSSProperties,
-    PointerEvent,
-    useCallback,
-    useEffect,
-    useLayoutEffect,
-    useRef,
-    useState,
-} from 'react';
+import { CSSProperties, PointerEvent, useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import style from './PretrainedClassMap.module.css';
 import type { ClassMapItem, ClassMapLayout, PanPosition } from './PretrainedClassMap';
 import {
@@ -33,8 +25,8 @@ interface Props {
 }
 
 const MAX_DEVICE_PIXEL_RATIO = 2;
-const THUMBNAIL_CONCURRENCY = 6;
-const THUMBNAIL_REDRAW_INTERVAL_MS = 200;
+const THUMBNAIL_CONCURRENCY = 16;
+const THUMBNAIL_REDRAW_INTERVAL_MS = 80;
 
 type ThumbnailState = 'loading' | 'loaded' | 'failed';
 
@@ -114,7 +106,7 @@ function drawViewerCellContrast(
     }
 
     context.save();
-    context.globalAlpha = 0.92 * (1 - emphasis);
+    context.globalAlpha = 0.84 * (1 - emphasis);
     context.fillStyle = colors.surface;
     context.fillRect(x, y, size, size);
     context.globalAlpha = 0.18 * emphasis;
@@ -190,6 +182,7 @@ export function PretrainedClassMapCanvas({
 
             const context = canvas.getContext('2d');
             if (!context) return;
+            context.imageSmoothingQuality = 'high';
 
             const colors = colorsRef.current || getClassMapCanvasColors(canvas);
             colorsRef.current = colors;

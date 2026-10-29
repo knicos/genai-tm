@@ -2,7 +2,7 @@ import { theme } from '@genai-fi/base';
 import { hexToRgb, type Rgb } from '../../../../util/colour';
 
 export const GRID_WIDTH = 980;
-export const GRID_GAP = 3;
+export const GRID_GAP = 1;
 export const DETAIL_IMAGE_LIMIT = 5;
 export const MIN_ZOOM = 1;
 export const MAX_ZOOM = 12;
