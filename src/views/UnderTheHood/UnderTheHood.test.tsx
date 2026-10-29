@@ -105,6 +105,12 @@ describe('UnderTheHood component', () => {
         await waitFor(() => expect(screen.getByText('underTheHood.visualization')).toBeVisible());
     });
 
+    it('shows the train-first message for transfer learning before a classifier is trained', async ({ expect }) => {
+        render(<UnderTheHood mode="transferLearning" />, { wrapper: TestWrapper });
+
+        await waitFor(() => expect(screen.getByRole('alert')).toBeVisible());
+    });
+
     it('shows history', async ({ expect }) => {
         const store = createStore();
         store.set(trainingHistory, [
