@@ -139,7 +139,11 @@ export function PretrainedClasses() {
                             <div className={style.pretrainedModelSubtitle}>{t('charts.pretrainedModelSubtitle')}</div>
                         </div>
                     </div>
-                    <div className={style.pretrainedPredictionsArea}>
+                    <div
+                        className={`${style.pretrainedPredictionsArea} ${
+                            showModelLines ? style.withModelLines : style.withoutModelLines
+                        }`}
+                    >
                         {showModelLines && (
                             <div className={style.pretrainedModelLines}>
                                 <ModelLines
@@ -168,14 +172,16 @@ export function PretrainedClasses() {
                                         }
                                     >
                                         <div className={style.labelGroup}>
-                                            <div style={{ minWidth: '80px', background: 'white', borderRadius: '4px' }}>
+                                            <div className={style.pretrainedProbability}>
                                                 <PercentageBar
                                                     value={parseInt(item.value)}
                                                     colour="blue"
                                                     style={{ fontSize: '0.9rem', minHeight: '1.4rem' }}
                                                 />
                                             </div>
-                                            <div className={style.pretrainedToken}>{item.label}</div>
+                                            <div className={style.pretrainedToken}>
+                                                <span>{item.label}</span>
+                                            </div>
                                         </div>
                                         <span className={style.pretrainedExpandIcon}>
                                             {expandedLabel === item.label ? (

@@ -120,6 +120,9 @@ export function UnderTheHood({ mode }: Props) {
             )}
             {showVisualization && !canXAI && <Alert severity="info">{t('model.labels.mustTrain')}</Alert>}
             {showStatistics && !canPredict && <Alert severity="info">{t('model.labels.mustTrain')}</Alert>}
+            {canUseTransferLearning && !canPredict && (
+                <Alert severity="info">{t('model.labels.mustTrain')}</Alert>
+            )}
             {canShowTransferLearning && (
                 <TransferLearningStages
                     activeStage={transferLearningStage}
