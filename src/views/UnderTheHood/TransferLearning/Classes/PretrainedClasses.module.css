@@ -59,13 +59,6 @@
 .pretrainedPredictionsScroller {
     width: 100%;
     max-width: 100%;
-    overflow-x: auto;
-}
-
-@container (max-width: 440px) {
-    .pretrainedScrollableContent {
-        min-width: 300px;
-    }
 }
 
 .pretrainedModelLines {
@@ -78,7 +71,8 @@
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
-    width: 99%;
+    flex: 1;
+    min-width: 0;
     padding: 1rem 0rem;
 }
 
@@ -114,6 +108,40 @@
     padding-right: 1rem;
     border-radius: 10px;
     flex-grow: 1;
+    min-width: 0;
+}
+
+.pretrainedProbability {
+    flex: 0 0 80px;
+    background: white;
+    border-radius: 4px;
+}
+
+.pretrainedToken {
+    flex: 1;
+    min-width: 0;
+    height: 1.25rem;
+    display: flex;
+    align-items: center;
+}
+
+.pretrainedToken > span {
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.withoutModelLines .pretrainedToken {
+    height: 2.5rem;
+}
+
+.withoutModelLines .pretrainedToken > span {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    line-height: 1.25rem;
+    white-space: normal;
 }
 
 .pretrainedValue {
