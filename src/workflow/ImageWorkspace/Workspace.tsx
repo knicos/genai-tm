@@ -54,8 +54,6 @@ const CONNECTIONS: IConnection[] = [
     { start: 'model', end: 'transferLearning', startPoint: 'bottom', endPoint: 'top' },
 ];
 
-const CONNECTIONS_NO_TL = CONNECTIONS.filter(({ end }) => end !== 'transferLearning');
-
 interface Props {
     step: number;
     visitedStep: number;
@@ -99,8 +97,13 @@ export default function Workspace({ step, visitedStep, onComplete, saveTrigger, 
     const showSidebar = !!outlet;
     const heatmapEnabled = useAtomValue(xaiEnabled);
     const lastVariantRef = useRef(modelVariant);
+    const canShowHeatmap = modelVariant === 'image' && !!allowHeatmap;
     const canShowTransferLearning = modelVariant === 'image' && allowTransferLearning;
-    const connections = canShowTransferLearning ? CONNECTIONS : CONNECTIONS_NO_TL;
+    const connections = CONNECTIONS.filter(({ end }) => {
+        if (end === 'heatmap') return canShowHeatmap;
+        if (end === 'transferLearning') return canShowTransferLearning;
+        return true;
+    });
     const sidePanelPosition = orientation === 'portrait' ? 'bottom' : 'right';
 
     const getDefaultLabel = useCallback(
@@ -117,7 +120,7 @@ export default function Workspace({ step, visitedStep, onComplete, saveTrigger, 
 
     // Ensure an initial model exists
     useModelCreator(modelVariant);
-    useXAICanvas(modelVariant !== 'speech' && heatmapEnabled && !!allowHeatmap);
+    useXAICanvas(canShowHeatmap && heatmapEnabled);
 
     // Clear samples when model variant changes
     useEffect(() => {
@@ -338,13 +341,15 @@ export default function Workspace({ step, visitedStep, onComplete, saveTrigger, 
                                 onClick={() => doSidebar('statistics')}
                                 style={{ width: 68, height: 68 }}
                             />
-                            <BoxButton
-                                label={'Heatmap'}
-                                icon={<LocalFireDepartmentIcon />}
-                                widget={'heatmap'}
-                                onClick={() => doSidebar('visualization')}
-                                style={{ width: 68, height: 68 }}
-                            />
+                            {canShowHeatmap && (
+                                <BoxButton
+                                    label={'Heatmap'}
+                                    icon={<LocalFireDepartmentIcon />}
+                                    widget={'heatmap'}
+                                    onClick={() => doSidebar('visualization')}
+                                    style={{ width: 68, height: 68 }}
+                                />
+                            )}
                             {canShowTransferLearning && (
                                 <BoxButton
                                     label={'Transfer Learning'}
