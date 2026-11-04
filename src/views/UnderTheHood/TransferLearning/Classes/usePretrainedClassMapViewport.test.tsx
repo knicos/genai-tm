@@ -7,7 +7,7 @@ afterEach(() => vi.unstubAllGlobals());
 describe('Class map viewport', () => {
     it('applies the initial readable zoom when the dialog surface mounts after opening', () => {
         vi.stubGlobal('matchMedia', () => ({ matches: false }));
-        const layout = { columns: 32, width: 980, height: 980 };
+        const layout = { columns: 32, rows: 32, width: 980, height: 980 };
         const { result } = renderHook(() =>
             usePretrainedClassMapViewport({
                 active: true,
