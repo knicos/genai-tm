@@ -17,6 +17,7 @@ export type ClassMapItem = ITransferLearningClass;
 
 export interface ClassMapLayout {
     columns: number;
+    rows: number;
     width: number;
     height: number;
 }
@@ -45,6 +46,7 @@ export function PretrainedClassMap() {
 
         return {
             columns,
+            rows,
             width: GRID_WIDTH,
             height: rows > 0 ? rows * cellSize + (rows - 1) * GRID_GAP : 0,
         };

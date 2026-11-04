@@ -48,6 +48,25 @@ export function clamp(value: number, min: number, max: number) {
     return Math.min(max, Math.max(min, value));
 }
 
+export function getDevicePixelAlignedAxisCells(
+    count: number,
+    offset: number,
+    stride: number,
+    size: number,
+    pixelRatio: number
+) {
+    const ratio = pixelRatio > 0 ? pixelRatio : 1;
+    const align = (value: number) => Math.round(value * ratio) / ratio;
+
+    return Array.from({ length: count }, (_, index) => {
+        const rawStart = offset + index * stride;
+        const start = align(rawStart);
+        const end = align(rawStart + size);
+
+        return { start, end, size: end - start };
+    });
+}
+
 export function formatPercent(probability: number) {
     const pct = probability * 100;
     return pct === 0 ? '0%' : pct < 1 ? '< 1%' : `${pct.toFixed(0)}%`;
