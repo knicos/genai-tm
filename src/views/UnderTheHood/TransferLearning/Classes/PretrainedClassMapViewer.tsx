@@ -200,7 +200,6 @@ export function PretrainedClassMapViewer({ items, layout, allowViewer }: Props) 
 
                 <DialogContent
                     className={style.viewerBody}
-                    sx={{ p: 0, overflow: 'hidden' }}
                 >
                     <div className={style.mapViewport}>
                         <div className={style.mapControls}>

@@ -1,4 +1,5 @@
-import { CSSProperties, PointerEvent, useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
+import type { CSSProperties, PointerEvent } from 'react';
 import style from './PretrainedClassMap.module.css';
 import type { ClassMapItem, ClassMapLayout, PanPosition } from './PretrainedClassMap';
 import {
@@ -25,8 +26,6 @@ interface Props {
 }
 
 const MAX_DEVICE_PIXEL_RATIO = 2;
-const THUMBNAIL_CONCURRENCY = 16;
-const THUMBNAIL_REDRAW_INTERVAL_MS = 80;
 
 type ThumbnailState = 'loading' | 'loaded' | 'failed';
 
@@ -44,37 +43,10 @@ interface PreviewTooltip {
 }
 
 const thumbnails = new Map<string, ThumbnailRecord>();
-const thumbnailQueue: string[] = [];
 const thumbnailSubscribers = new Set<() => void>();
-let activeThumbnailLoads = 0;
 
 function notifyThumbnailSubscribers() {
     thumbnailSubscribers.forEach((subscriber) => subscriber());
-}
-
-function loadQueuedThumbnails() {
-    while (activeThumbnailLoads < THUMBNAIL_CONCURRENCY && thumbnailQueue.length > 0) {
-        const imageUrl = thumbnailQueue.shift();
-        if (!imageUrl) continue;
-
-        const record = thumbnails.get(imageUrl);
-        if (!record || record.state !== 'loading') continue;
-
-        activeThumbnailLoads += 1;
-        record.image.onload = () => {
-            record.state = record.image.naturalWidth > 0 ? 'loaded' : 'failed';
-            activeThumbnailLoads -= 1;
-            notifyThumbnailSubscribers();
-            loadQueuedThumbnails();
-        };
-        record.image.onerror = () => {
-            record.state = 'failed';
-            activeThumbnailLoads -= 1;
-            notifyThumbnailSubscribers();
-            loadQueuedThumbnails();
-        };
-        record.image.src = imageUrl;
-    }
 }
 
 function requestThumbnail(imageUrl: string) {
@@ -82,12 +54,18 @@ function requestThumbnail(imageUrl: string) {
 
     const image = new Image();
     image.crossOrigin = 'anonymous';
-    thumbnails.set(imageUrl, {
-        image,
-        state: 'loading',
-    });
-    thumbnailQueue.push(imageUrl);
-    loadQueuedThumbnails();
+    image.decoding = 'async';
+    const record: ThumbnailRecord = { image, state: 'loading' };
+    thumbnails.set(imageUrl, record);
+    image.onload = () => {
+        record.state = image.naturalWidth > 0 ? 'loaded' : 'failed';
+        notifyThumbnailSubscribers();
+    };
+    image.onerror = () => {
+        record.state = 'failed';
+        notifyThumbnailSubscribers();
+    };
+    image.src = imageUrl;
 }
 
 function drawViewerCellContrast(
@@ -131,7 +109,7 @@ export function PretrainedClassMapCanvas({
 }: Props) {
     const canvasRef = useRef<HTMLCanvasElement | null>(null);
     const colorsRef = useRef<ClassMapCanvasColors | null>(null);
-    const redrawTimerRef = useRef<number | null>(null);
+    const redrawFrameRef = useRef<number | null>(null);
     const previewContainerRef = useRef<HTMLElement | null>(null);
     const setPreviewButtonRef = useCallback((element: HTMLButtonElement | null) => {
         previewContainerRef.current = element;
@@ -151,16 +129,16 @@ export function PretrainedClassMapCanvas({
         if (!interactive) return;
 
         const scheduleRedraw = () => {
-            if (redrawTimerRef.current !== null) return;
-            redrawTimerRef.current = window.setTimeout(() => {
-                redrawTimerRef.current = null;
+            if (redrawFrameRef.current !== null) return;
+            redrawFrameRef.current = window.requestAnimationFrame(() => {
+                redrawFrameRef.current = null;
                 setThumbnailRevision((revision) => revision + 1);
-            }, THUMBNAIL_REDRAW_INTERVAL_MS);
+            });
         };
         thumbnailSubscribers.add(scheduleRedraw);
         return () => {
             thumbnailSubscribers.delete(scheduleRedraw);
-            if (redrawTimerRef.current !== null) window.clearTimeout(redrawTimerRef.current);
+            if (redrawFrameRef.current !== null) window.cancelAnimationFrame(redrawFrameRef.current);
         };
     }, [interactive]);
 

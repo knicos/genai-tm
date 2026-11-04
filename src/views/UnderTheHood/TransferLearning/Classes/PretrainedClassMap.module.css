@@ -1,4 +1,4 @@
-@value backgroundDark, backgroundDark2, backgroundDark3, backgroundLight, borderGrey, bgColourful3, bgSubdued3, textDark, textLight from "@genai-fi/base/css/colours.module.css";
+@value backgroundDark, backgroundDark2, backgroundDark3, backgroundLight, borderGrey, bgColourful3, bgSubdued3, textDark from "@genai-fi/base/css/colours.module.css";
 
 .mapPreviewButton {
     position: relative;
@@ -16,7 +16,7 @@
 }
 
 .previewTooltip {
-    composes: tooltip from "../TransferLearningTooltip.module.css";
+    composes: tooltip from '../TransferLearningTooltip.module.css';
     position: absolute;
     z-index: 2;
     min-width: 8rem;
@@ -69,6 +69,7 @@
     flex: 1;
     display: grid;
     grid-template-columns: minmax(0, 1fr) 300px;
+    overflow: hidden;
 }
 
 .mapViewport {
@@ -100,12 +101,12 @@
     z-index: 10;
     display: flex;
     gap: 0.35rem;
-    color: backgroundLight;
+    color: white;
 }
 
 .darkIconButton {
     background: backgroundDark2;
-    color: textLight;
+    color: white;
 }
 
 .darkIconButton:hover {
@@ -113,14 +114,14 @@
 }
 
 .canvasTouchTooltip {
-    composes: tooltip from "../TransferLearningTooltip.module.css";
+    composes: tooltip from '../TransferLearningTooltip.module.css';
     position: absolute;
     z-index: 9;
     max-width: min(20rem, calc(100% - 1.5rem));
 }
 
 .canvasPointerTooltip {
-    composes: tooltip from "../TransferLearningTooltip.module.css";
+    composes: tooltip from '../TransferLearningTooltip.module.css';
     position: absolute;
     z-index: 9;
     max-width: min(20rem, calc(100% - 1.5rem));
@@ -188,7 +189,7 @@
 }
 
 .tooltip {
-    composes: tooltip from "../TransferLearningTooltip.module.css";
+    composes: tooltip from '../TransferLearningTooltip.module.css';
     position: fixed;
     z-index: 10001;
     max-width: 16rem;
