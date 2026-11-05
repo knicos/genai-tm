@@ -1,4 +1,4 @@
-@value backgroundDark, backgroundDark2, backgroundLight, borderGrey, bgColourful3, bgSubdued3, textLight from "@genai-fi/base/css/colours.module.css";
+@value backgroundDark, backgroundDark2, backgroundDark3, backgroundLight, borderGrey, bgColourful3, bgSubdued3, textDark from "@genai-fi/base/css/colours.module.css";
 
 .mapPreviewButton {
     position: relative;
@@ -16,7 +16,7 @@
 }
 
 .previewTooltip {
-    composes: tooltip from "../TransferLearningTooltip.module.css";
+    composes: tooltip from '../TransferLearningTooltip.module.css';
     position: absolute;
     z-index: 2;
     min-width: 8rem;
@@ -53,63 +53,23 @@
     pointer-events: none;
 }
 
-.viewerOverlay {
-    position: fixed;
-    inset: 0;
-    z-index: 10000;
-    background: color-mix(in srgb, backgroundDark2 72%, transparent);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 1.25rem;
-}
-
 .viewer {
-    width: min(1440px, 96vw);
+    width: min(1440px, calc(100vw - 4rem));
     height: calc(100vh - 2.5rem);
     height: calc(100dvh - 2.5rem);
-    border-radius: 8px;
     background: backgroundDark;
-    color: backgroundLight;
     display: flex;
     flex-direction: column;
-    box-shadow: 0 12px 36px color-mix(in srgb, backgroundDark2 42%, transparent);
     overflow: hidden;
 }
 
-.viewerHeader {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 1rem;
-    padding: 1rem 1.15rem;
-    border-bottom: 1px solid color-mix(in srgb, white 12%, transparent);
-}
-
-.viewerHeaderActions {
-    display: flex;
-    align-items: center;
-    gap: 0.6rem;
-}
-
-.viewerTitle {
-    color: textLight;
-    font-weight: 700;
-    font-size: 1.25rem;
-}
-
-.viewerSubtitle {
-    margin-top: 0.15rem;
-    color: backgroundLight;
-    font-size: 0.95rem;
-    line-height: 1.35;
-}
-
 .viewerBody {
+    padding: 0;
     min-height: 0;
     flex: 1;
     display: grid;
     grid-template-columns: minmax(0, 1fr) 300px;
+    overflow: hidden;
 }
 
 .mapViewport {
@@ -141,17 +101,27 @@
     z-index: 10;
     display: flex;
     gap: 0.35rem;
+    color: white;
+}
+
+.darkIconButton {
+    background: backgroundDark2;
+    color: white;
+}
+
+.darkIconButton:hover {
+    background: backgroundDark3;
 }
 
 .canvasTouchTooltip {
-    composes: tooltip from "../TransferLearningTooltip.module.css";
+    composes: tooltip from '../TransferLearningTooltip.module.css';
     position: absolute;
     z-index: 9;
     max-width: min(20rem, calc(100% - 1.5rem));
 }
 
 .canvasPointerTooltip {
-    composes: tooltip from "../TransferLearningTooltip.module.css";
+    composes: tooltip from '../TransferLearningTooltip.module.css';
     position: absolute;
     z-index: 9;
     max-width: min(20rem, calc(100% - 1.5rem));
@@ -165,55 +135,31 @@
     pointer-events: none;
 }
 
-.iconButton {
-    width: 2.75rem;
-    height: 2.75rem;
-    color: backgroundLight;
-    background: backgroundDark2;
-}
-
-.iconButton.iconButton:hover {
-    background: backgroundDark2;
-}
-
-.mapControlIcon {
-    font-size: 2rem;
-}
-
 @media (pointer: coarse) {
-    .viewerOverlay {
-        padding: 0.75rem;
-    }
-
     .viewer {
-        width: calc(100vw - 1.5rem);
+        width: calc(100vw - 3rem);
         height: calc(100vh - 1.5rem);
         height: calc(100dvh - 1.5rem);
-    }
-
-    .iconButton {
-        width: 3rem;
-        height: 3rem;
     }
 }
 
 .detailPanel {
     min-width: 0;
     padding: 1rem;
-    background: color-mix(in srgb, backgroundDark2 20%, transparent);
-    border-left: 1px solid color-mix(in srgb, white 12%, transparent);
+    background: white;
+    border-left: 1px solid borderGrey;
     overflow-y: auto;
 }
 
 .detailClassId {
-    color: backgroundLight;
+    color: textDark;
     font-size: 0.9rem;
     line-height: 1.35;
 }
 
 .detailTitle {
     margin-top: 0.25rem;
-    color: textLight;
+    color: textDark;
     font-size: 1.2rem;
     font-weight: 700;
     line-height: 1.2;
@@ -221,7 +167,7 @@
 
 .detailProbability {
     margin-top: 0.4rem;
-    color: textLight;
+    color: bgColourful3;
     font-weight: 700;
     font-size: 1.55rem;
 }
@@ -243,7 +189,7 @@
 }
 
 .tooltip {
-    composes: tooltip from "../TransferLearningTooltip.module.css";
+    composes: tooltip from '../TransferLearningTooltip.module.css';
     position: fixed;
     z-index: 10001;
     max-width: 16rem;
@@ -296,18 +242,10 @@
 }
 
 @media (max-width: 760px) {
-    .viewerOverlay {
-        padding: 0.75rem;
-    }
-
     .viewer {
-        width: min(96vw, 620px);
+        width: min(calc(100vw - 3rem), 620px);
         height: calc(100vh - 1.5rem);
         height: calc(100dvh - 1.5rem);
-    }
-
-    .viewerHeader {
-        padding: 0.8rem 0.9rem;
     }
 
     .viewerBody {
@@ -321,7 +259,7 @@
 
     .detailPanel {
         border-left: 0;
-        border-top: 1px solid color-mix(in srgb, white 12%, transparent);
+        border-top: 1px solid borderGrey;
         padding: 0.75rem 0.9rem;
         overflow: hidden;
     }

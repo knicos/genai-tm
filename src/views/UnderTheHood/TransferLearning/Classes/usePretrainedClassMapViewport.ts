@@ -97,6 +97,7 @@ function getMinimumClassZoom(layout: ClassMapLayout) {
 export function usePretrainedClassMapViewport({ active, items, layout, onSelectClass }: ViewportConfig) {
     const [view, setView] = useState<MapView>({ zoom: 1, pan: { x: 0, y: 0 } });
     const [viewportSize, setViewportSize] = useState({ width: 0, height: 0 });
+    const [panSurface, setPanSurface] = useState<HTMLDivElement | null>(null);
     const [touchTooltip, setTouchTooltip] = useState<HoveredClass | null>(null);
     const [hoveredClass, setHoveredClass] = useState<HoveredClass | null>(null);
     const [isPanning, setIsPanning] = useState(false);
@@ -160,8 +161,10 @@ export function usePretrainedClassMapViewport({ active, items, layout, onSelectC
     );
 
     useLayoutEffect(() => {
-        if (!active) return;
-        const panSurface = panSurfaceRef.current;
+        if (!active) {
+            initialFitPendingRef.current = true;
+            return;
+        }
         if (!panSurface) return;
         let resizeFrame: number | null = null;
 
@@ -216,7 +219,7 @@ export function usePretrainedClassMapViewport({ active, items, layout, onSelectC
             observer.disconnect();
             if (resizeFrame !== null) cancelAnimationFrame(resizeFrame);
         };
-    }, [active, commitView, layout.height, layout.width, minimumClassZoom]);
+    }, [active, commitView, layout.height, layout.width, minimumClassZoom, panSurface]);
 
     const updateZoom = useCallback(
         (nextZoom: number, anchor?: PanPosition) => {
@@ -286,6 +289,7 @@ export function usePretrainedClassMapViewport({ active, items, layout, onSelectC
         }
 
         panSurfaceRef.current = surface;
+        setPanSurface(surface);
         panSurfaceWheelListenerRef.current = null;
         if (!surface) return;
 

@@ -2,7 +2,7 @@ import { theme } from '@genai-fi/base';
 import { hexToRgb, type Rgb } from '../../../../util/colour';
 
 export const GRID_WIDTH = 980;
-export const GRID_GAP = 3;
+export const GRID_GAP = 1;
 export const DETAIL_IMAGE_LIMIT = 5;
 export const MIN_ZOOM = 1;
 export const MAX_ZOOM = 12;
@@ -46,6 +46,25 @@ export interface ClassMapCanvasColors {
 
 export function clamp(value: number, min: number, max: number) {
     return Math.min(max, Math.max(min, value));
+}
+
+export function getDevicePixelAlignedAxisCells(
+    count: number,
+    offset: number,
+    stride: number,
+    size: number,
+    pixelRatio: number
+) {
+    const ratio = pixelRatio > 0 ? pixelRatio : 1;
+    const align = (value: number) => Math.round(value * ratio) / ratio;
+
+    return Array.from({ length: count }, (_, index) => {
+        const rawStart = offset + index * stride;
+        const start = align(rawStart);
+        const end = align(rawStart + size);
+
+        return { start, end, size: end - start };
+    });
 }
 
 export function formatPercent(probability: number) {

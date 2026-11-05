@@ -7,8 +7,11 @@ import { useVariant } from '@genaitm/util/variant';
 import CloseIcon from '@mui/icons-material/Close';
 import ZoomInIcon from '@mui/icons-material/ZoomIn';
 import ZoomOutIcon from '@mui/icons-material/ZoomOut';
-import RestartAltIcon from '@mui/icons-material/RestartAlt';
+import CenterFocusStrongIcon from '@mui/icons-material/CenterFocusStrong';
 import IconButton from '@mui/material/IconButton';
+import Typography from '@mui/material/Typography';
+import { Dialog, DialogContent, DialogTitle } from '@mui/material';
+import datasetDialogStyles from '../../../../components/DatasetPicker/DatasetPicker.module.css';
 import style from './PretrainedClassMap.module.css';
 import type { ClassMapItem, ClassMapLayout } from './PretrainedClassMap';
 import { PretrainedClassDetailPanel } from './PretrainedClassDetailPanel';
@@ -77,6 +80,20 @@ export function PretrainedClassMapViewer({ items, layout, allowViewer }: Props) 
         setViewerOpen(false);
         setSelectedClassId(null);
     }, [resumeClassifier, viewport.resetView]);
+
+    useEffect(() => {
+        if (!viewerOpen) return;
+        // SidePanel closes on Escape making the class map full view close as well. This make Escape key closes the map first.
+        const handleEscape = (event: KeyboardEvent) => {
+            if (event.key !== 'Escape') return;
+            event.preventDefault();
+            event.stopPropagation();
+            event.stopImmediatePropagation();
+            closeViewer();
+        };
+        document.addEventListener('keydown', handleEscape, true);
+        return () => document.removeEventListener('keydown', handleEscape, true);
+    }, [closeViewer, viewerOpen]);
 
     useEffect(() => resumeClassifier, [resumeClassifier]);
     const touchTooltipItem = items.find((item) => item.classId === viewport.touchTooltip?.classId);
@@ -150,126 +167,136 @@ export function PretrainedClassMapViewer({ items, layout, allowViewer }: Props) 
                 onOpen={allowViewer ? openViewer : undefined}
             />
 
-            {viewerOpen ? (
-                <div
-                    className={style.viewerOverlay}
-                    role="dialog"
-                    aria-modal="true"
-                    aria-label={t('charts.imagenetClassMapTitle')}
+            <Dialog
+                open={viewerOpen}
+                onClose={closeViewer}
+                scroll="paper"
+                maxWidth={false}
+                slotProps={{ paper: { className: style.viewer } }}
+                aria-labelledby="imagenet-class-map-dialog-title"
+            >
+                <DialogTitle
+                    id="imagenet-class-map-dialog-title"
+                    component="div"
+                    className={datasetDialogStyles.dialogTitle}
                 >
-                    <div className={style.viewer}>
-                        <div className={style.viewerHeader}>
-                            <div>
-                                <div className={style.viewerTitle}>{t('charts.imagenetClassMapTitle')}</div>
-                                <div className={style.viewerSubtitle}>{t('charts.imagenetClassMapCount')}</div>
-                            </div>
-                            <div className={style.viewerHeaderActions}>
-                                <IconButton
-                                    className={style.iconButton}
-                                    onClick={closeViewer}
-                                    aria-label={t('charts.imagenetClassMapClose')}
-                                >
-                                    <CloseIcon />
-                                </IconButton>
-                            </div>
+                    <div>
+                        <div>{t('charts.imagenetClassMapTitle')}</div>
+                        <Typography
+                            variant="body2"
+                            color="text.secondary"
+                        >
+                            {t('charts.imagenetClassMapCount')}
+                        </Typography>
+                    </div>
+                    <IconButton
+                        className={datasetDialogStyles.closeButton}
+                        onClick={closeViewer}
+                        aria-label={t('charts.imagenetClassMapClose')}
+                    >
+                        <CloseIcon />
+                    </IconButton>
+                </DialogTitle>
+
+                <DialogContent
+                    className={style.viewerBody}
+                >
+                    <div className={style.mapViewport}>
+                        <div className={style.mapControls}>
+                            <IconButton
+                                className={style.darkIconButton}
+                                onClick={viewport.zoomIn}
+                                disabled={!viewport.canZoomIn}
+                                aria-label={t('charts.imagenetClassMapZoomIn')}
+                                color="inherit"
+                            >
+                                <ZoomInIcon />
+                            </IconButton>
+                            <IconButton
+                                className={style.darkIconButton}
+                                onClick={viewport.zoomOut}
+                                disabled={!viewport.canZoomOut}
+                                aria-label={t('charts.imagenetClassMapZoomOut')}
+                                color="inherit"
+                            >
+                                <ZoomOutIcon />
+                            </IconButton>
+                            <IconButton
+                                className={style.darkIconButton}
+                                onClick={viewport.resetView}
+                                aria-label={t('charts.imagenetClassMapReset')}
+                                color="inherit"
+                            >
+                                <CenterFocusStrongIcon />
+                            </IconButton>
                         </div>
-
-                        <div className={style.viewerBody}>
-                            <div className={style.mapViewport}>
-                                <div className={style.mapControls}>
-                                    <IconButton
-                                        className={style.iconButton}
-                                        onClick={viewport.zoomIn}
-                                        disabled={!viewport.canZoomIn}
-                                        aria-label={t('charts.imagenetClassMapZoomIn')}
-                                    >
-                                        <ZoomInIcon className={style.mapControlIcon} />
-                                    </IconButton>
-                                    <IconButton
-                                        className={style.iconButton}
-                                        onClick={viewport.zoomOut}
-                                        disabled={!viewport.canZoomOut}
-                                        aria-label={t('charts.imagenetClassMapZoomOut')}
-                                    >
-                                        <ZoomOutIcon className={style.mapControlIcon} />
-                                    </IconButton>
-                                    <IconButton
-                                        className={style.iconButton}
-                                        onClick={viewport.resetView}
-                                        aria-label={t('charts.imagenetClassMapReset')}
-                                    >
-                                        <RestartAltIcon className={style.mapControlIcon} />
-                                    </IconButton>
-                                </div>
+                        <div
+                            ref={setPanSurfaceRef}
+                            className={style.panSurface}
+                            onPointerDown={viewport.handlePanPointerDown}
+                            onPointerMove={viewport.handlePanPointerMove}
+                            onPointerLeave={viewport.handlePanPointerLeave}
+                            onPointerUp={viewport.handlePanPointerUp}
+                            onPointerCancel={viewport.handlePanPointerCancel}
+                        >
+                            <PretrainedClassMapCanvas
+                                items={items}
+                                layout={layout}
+                                interactive
+                                selectedClassId={selectedItem?.classId ?? null}
+                                view={viewport.view}
+                                ariaLabel={t('charts.imagenetClassMapTitle')}
+                            />
+                            {touchTooltipItem && (
                                 <div
-                                    ref={setPanSurfaceRef}
-                                    className={style.panSurface}
-                                    onPointerDown={viewport.handlePanPointerDown}
-                                    onPointerMove={viewport.handlePanPointerMove}
-                                    onPointerLeave={viewport.handlePanPointerLeave}
-                                    onPointerUp={viewport.handlePanPointerUp}
-                                    onPointerCancel={viewport.handlePanPointerCancel}
+                                    ref={touchTooltipRef}
+                                    className={style.canvasTouchTooltip}
+                                    role="status"
+                                    style={{
+                                        left:
+                                            touchTooltipPosition?.left ??
+                                            (viewport.touchTooltip
+                                                ? viewport.touchTooltip.left + viewport.touchTooltip.size / 2
+                                                : 0),
+                                        top: touchTooltipPosition?.top ?? viewport.touchTooltip?.top ?? 0,
+                                    }}
                                 >
-                                    <PretrainedClassMapCanvas
-                                        items={items}
-                                        layout={layout}
-                                        interactive
-                                        selectedClassId={selectedItem?.classId ?? null}
-                                        view={viewport.view}
-                                        ariaLabel={t('charts.imagenetClassMapTitle')}
-                                    />
-                                    {touchTooltipItem && (
-                                        <div
-                                            ref={touchTooltipRef}
-                                            className={style.canvasTouchTooltip}
-                                            role="status"
-                                            style={{
-                                                left:
-                                                    touchTooltipPosition?.left ??
-                                                    (viewport.touchTooltip
-                                                        ? viewport.touchTooltip.left + viewport.touchTooltip.size / 2
-                                                        : 0),
-                                                top: touchTooltipPosition?.top ?? viewport.touchTooltip?.top ?? 0,
-                                            }}
-                                        >
-                                            <strong>{touchTooltipItem.className}</strong>
-                                            <span>{formatPercent(touchTooltipItem.probability)}</span>
-                                        </div>
-                                    )}
-                                    {!touchTooltipItem && hoveredTooltipItem && viewport.hoveredClass && (
-                                        <>
-                                            <div
-                                                className={style.hoveredCellOutline}
-                                                aria-hidden="true"
-                                                style={{
-                                                    left: viewport.hoveredClass.left,
-                                                    top: viewport.hoveredClass.top,
-                                                    width: viewport.hoveredClass.size,
-                                                    height: viewport.hoveredClass.size,
-                                                }}
-                                            />
-                                            <div
-                                                ref={hoveredTooltipRef}
-                                                className={style.canvasPointerTooltip}
-                                                role="tooltip"
-                                                style={{
-                                                    left: hoveredTooltipPosition?.left ?? viewport.hoveredClass.x,
-                                                    top: hoveredTooltipPosition?.top ?? viewport.hoveredClass.y,
-                                                }}
-                                            >
-                                                <strong>{hoveredTooltipItem.className}</strong>
-                                                <span>{formatPercent(hoveredTooltipItem.probability)}</span>
-                                            </div>
-                                        </>
-                                    )}
+                                    <strong>{touchTooltipItem.className}</strong>
+                                    <span>{formatPercent(touchTooltipItem.probability)}</span>
                                 </div>
-                            </div>
-
-                            {selectedItem && <PretrainedClassDetailPanel item={selectedItem} />}
+                            )}
+                            {!touchTooltipItem && hoveredTooltipItem && viewport.hoveredClass && (
+                                <>
+                                    <div
+                                        className={style.hoveredCellOutline}
+                                        aria-hidden="true"
+                                        style={{
+                                            left: viewport.hoveredClass.left,
+                                            top: viewport.hoveredClass.top,
+                                            width: viewport.hoveredClass.size,
+                                            height: viewport.hoveredClass.size,
+                                        }}
+                                    />
+                                    <div
+                                        ref={hoveredTooltipRef}
+                                        className={style.canvasPointerTooltip}
+                                        role="tooltip"
+                                        style={{
+                                            left: hoveredTooltipPosition?.left ?? viewport.hoveredClass.x,
+                                            top: hoveredTooltipPosition?.top ?? viewport.hoveredClass.y,
+                                        }}
+                                    >
+                                        <strong>{hoveredTooltipItem.className}</strong>
+                                        <span>{formatPercent(hoveredTooltipItem.probability)}</span>
+                                    </div>
+                                </>
+                            )}
                         </div>
                     </div>
-                </div>
-            ) : null}
+
+                    {selectedItem && <PretrainedClassDetailPanel item={selectedItem} />}
+                </DialogContent>
+            </Dialog>
         </>
     );
 }
