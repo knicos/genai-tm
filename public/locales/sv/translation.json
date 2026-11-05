@@ -75,6 +75,26 @@
         "errorMessage": "Vi kunde inte skicka din feedback. Försök igen senare.",
         "thankYou": "Tack för din feedback!"
     },
+    "app": {
+        "report": {
+            "title": "Feedback eller bugg",
+            "reason": "Anledning",
+            "bug": "Det finns ett problem",
+            "feedback": "Jag har ett förslag",
+            "other": "Annan anledning",
+            "message": "Meddelande",
+            "send": "Skicka",
+            "error": "Det gick inte att skicka rapporten.",
+            "characterCount": "{{count}} av {{max}} tecken",
+            "cancel": "Avbryt",
+            "close": "Stäng",
+            "messageTooLong": "Meddelandet är för långt.",
+            "messageRequired": "Meddelandet måste anges.",
+            "thankYou": "Tack!",
+            "success": "Feedback har skickats."
+        },
+        "cancel": "Avbryt"
+    },
     "clock": {
         "hours": "tim",
         "minutes": "min",

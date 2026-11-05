@@ -9,8 +9,6 @@ import { useVariant } from '../../util/variant';
 import Fab from '@mui/material/Fab';
 import { theme } from '@genai-fi/base';
 import SettingsDialog from '../SettingsDialog/SettingsDialog';
-import { useSetAtom } from 'jotai';
-import { feedbackAtom } from '@genaitm/state';
 
 export default function ImageClassifier() {
     const { namespace, modelVariant } = useVariant();
@@ -21,7 +19,6 @@ export default function ImageClassifier() {
     const [saveTrigger, setSaveTrigger] = useState<(() => void) | undefined>(undefined);
     const [showReminder, setShowReminder] = useState(false);
     const lastVariantRef = useRef(modelVariant);
-    const setFeedback = useSetAtom(feedbackAtom);
 
     // Reset stepper to default state when model variant changes
     useEffect(() => {
@@ -52,10 +49,9 @@ export default function ImageClassifier() {
     const doSaveRemind = useCallback(() => setShowReminder(true), [setShowReminder]);
 
     const nextStep = useCallback(() => {
-        setFeedback(true);
         setStep(step + 1);
         setVisited((oldVisited) => Math.max(oldVisited, step + 1));
-    }, [setStep, setVisited, step, setFeedback]);
+    }, [setStep, setVisited, step]);
 
     const doSave = useCallback(() => setSaveTrigger(() => () => setSaveTrigger(undefined)), [setSaveTrigger]);
 

@@ -16,7 +16,9 @@
         "teachingMaterials": "Oppimateriaalit",
         "selectModel": "Mitä haluat luokitella?",
         "enableUSB": "Käytä USB-laitetta",
-        "subtitle": "Luo luokittelijoita omilla tiedoillasi ilman koodausta"
+        "subtitle": "Luo luokittelijoita omilla tiedoillasi ilman koodausta",
+        "reportProblem": "Palaute",
+        "reportProblemTip": "Ilmoita meille ongelmasta tai ideasta."
     },
     "save": {
         "title": "Tallenna luokittelija",
@@ -230,6 +232,11 @@
         },
         "aria": {
             "more": "Lisää asetuksia"
+        },
+        "buttons": {
+            "statistics": "Tilastot",
+            "heatmap": "Selitä",
+            "transferLearning": "Siirto"
         }
     },
     "output": {

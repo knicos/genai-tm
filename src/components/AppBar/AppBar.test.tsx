@@ -13,6 +13,16 @@ vi.mock('react-i18next', () => ({
     },
 }));
 
+vi.mock('../../state', async (importOriginal) => {
+    const original = await importOriginal<typeof import('../../state')>();
+    const { atom } = await import('jotai');
+
+    return {
+        ...original,
+        featureFlagsAtom: atom({ allowReportProblem: true, allowTransferLearning: true }),
+    };
+});
+
 describe('AppBar component', () => {
     it('renders with all elements', async ({ expect }) => {
         const saveFn = vi.fn();

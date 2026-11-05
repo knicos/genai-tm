@@ -16,7 +16,9 @@
         "teachingMaterials": "Lehrmaterialien",
         "selectModel": "Was möchtest du klassifizieren?",
         "enableUSB": "USB-Gerät verwenden",
-        "subtitle": "Erstelle Klassifikatoren mit deinen eigenen Daten, ganz ohne Programmierung"
+        "subtitle": "Erstelle Klassifikatoren mit deinen eigenen Daten, ganz ohne Programmierung",
+        "reportProblem": "Feedback",
+        "reportProblemTip": "Melde uns ein Problem oder teile deine Idee mit."
     },
     "load": {
         "title": "Klassifikator öffnen",
@@ -230,6 +232,11 @@
         },
         "aria": {
             "more": "mehr Optionen"
+        },
+        "buttons": {
+            "statistics": "Statistik",
+            "heatmap": "Erklären",
+            "transferLearning": "Transfer"
         }
     },
     "output": {

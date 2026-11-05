@@ -154,6 +154,26 @@
         "errorMessage": "フィードバックを送信できませんでした。時間をおいて再度お試しください。",
         "thankYou": "フィードバックありがとうございます！"
     },
+    "app": {
+        "report": {
+            "title": "フィードバックまたはバグ",
+            "reason": "理由",
+            "bug": "問題があります",
+            "feedback": "提案があります",
+            "other": "その他の理由",
+            "message": "メッセージ",
+            "send": "送信",
+            "error": "レポートを送信できませんでした。",
+            "characterCount": "{{count}} / {{max}} 文字",
+            "cancel": "キャンセル",
+            "close": "閉じる",
+            "messageTooLong": "メッセージが長すぎます。",
+            "messageRequired": "メッセージを入力してください。",
+            "thankYou": "ありがとうございます！",
+            "success": "フィードバックを送信しました。"
+        },
+        "cancel": "キャンセル"
+    },
     "clock": {
         "hours": "時",
         "minutes": "分",

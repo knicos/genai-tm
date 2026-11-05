@@ -16,7 +16,9 @@
         "teachingMaterials": "Opastusmaterjalat",
         "selectModel": "Midä sie tahtot luokitella?",
         "enableUSB": "Käytä USB-laitettu",
-        "subtitle": "Lua luokittelijat omil tiedoloil, ei koodandoa pidä"
+        "subtitle": "Lua luokittelijat omil tiedoloil, ei koodandoa pidä",
+        "reportProblem": "Palautettu",
+        "reportProblemTip": "Ilmoita meile ongelmasta vai ideasta."
     },
     "save": {
         "title": "Tallenda luokittelii",
@@ -230,6 +232,11 @@
         },
         "aria": {
             "more": "Ližiä azetustu"
+        },
+        "buttons": {
+            "statistics": "Tilastot",
+            "heatmap": "Selitä",
+            "transferLearning": "Siirto"
         }
     },
     "output": {

@@ -16,7 +16,9 @@
         "teachingMaterials": "Teaching Materials",
         "selectModel": "What do you want to classify?",
         "enableUSB": "Use USB device",
-        "subtitle": "Create classifiers with your own data, no coding required"
+        "subtitle": "Create classifiers with your own data, no coding required",
+        "reportProblem": "Feedback",
+        "reportProblemTip": "Report an issue or idea to us."
     },
     "load": {
         "title": "Open Classifier",
@@ -242,6 +244,11 @@
         },
         "aria": {
             "more": "more options"
+        },
+        "buttons": {
+            "statistics": "Statistics",
+            "heatmap": "Explain",
+            "transferLearning": "Transfer"
         }
     },
     "output": {

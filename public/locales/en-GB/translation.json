@@ -130,8 +130,16 @@
             "advanced": "Advanced"
         },
         "values": {
-            "models": ["Image (MobileNet)", "Pose (PoseNet)", "Hand (MediaPipe)", "Speech (SpeechCommands)"],
-            "variants": ["General Use", "Classroom"]
+            "models": [
+                "Image (MobileNet)",
+                "Pose (PoseNet)",
+                "Hand (MediaPipe)",
+                "Speech (SpeechCommands)"
+            ],
+            "variants": [
+                "General Use",
+                "Classroom"
+            ]
         }
     },
     "widget": {
@@ -158,6 +166,26 @@
         "error": "Oops!",
         "errorMessage": "We could not send your feedback. Please try again later.",
         "thankYou": "Thank you for your feedback!"
+    },
+    "app": {
+        "report": {
+            "title": "Feedback or Bug",
+            "reason": "Reason",
+            "bug": "There is a problem",
+            "feedback": "I have a suggestion",
+            "other": "Other reason",
+            "message": "Message",
+            "send": "Send",
+            "error": "Failed to send report.",
+            "characterCount": "{{count}} characters of {{max}}",
+            "cancel": "Cancel",
+            "close": "Close",
+            "messageTooLong": "Message is too long.",
+            "messageRequired": "Message is required.",
+            "thankYou": "Thank you!",
+            "success": "Feedback sent successfully."
+        },
+        "cancel": "Cancel"
     },
     "clock": {
         "hours": "Hr",

@@ -78,6 +78,26 @@
         "errorMessage": "Palautteen lähettäminen ei onnistunut. Yritä myöhemmin uudelleen.",
         "thankYou": "Kiitos palautteestasi!"
     },
+    "app": {
+        "report": {
+            "title": "Palaute tai virheilmoitus",
+            "reason": "Syy",
+            "bug": "On tapahtunut ongelma",
+            "feedback": "Minulla on ehdotus",
+            "other": "Muu syy",
+            "message": "Viesti",
+            "send": "Lähetä",
+            "error": "Ilmoituksen lähettäminen epäonnistui.",
+            "characterCount": "{{count}} / {{max}} merkkiä",
+            "cancel": "Peruuta",
+            "close": "Sulje",
+            "messageTooLong": "Viesti on liian pitkä.",
+            "messageRequired": "Viesti vaaditaan.",
+            "thankYou": "Kiitos!",
+            "success": "Palaute lähetettiin onnistuneesti."
+        },
+        "cancel": "Peruuta"
+    },
     "clock": {
         "hours": "h",
         "minutes": "min",

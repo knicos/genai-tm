@@ -16,7 +16,9 @@
         "teachingMaterials": "Öğretim Materyalleri",
         "selectModel": "Neyi sınıflandırmak istiyorsunuz?",
         "enableUSB": "USB cihazı kullan",
-        "subtitle": "Kendi verilerinizle, kodlama gerekmeden sınıflandırıcılar oluşturun"
+        "subtitle": "Kendi verilerinizle, kodlama gerekmeden sınıflandırıcılar oluşturun",
+        "reportProblem": "Geri Bildirim",
+        "reportProblemTip": "Bir sorunu veya fikrinizi bize bildirin."
     },
     "save": {
         "title": "Sınıflandırıcıyı Kaydet",
@@ -230,6 +232,11 @@
         },
         "aria": {
             "more": "Daha Fazla Seçenek"
+        },
+        "buttons": {
+            "statistics": "İstatistik",
+            "heatmap": "Açıkla",
+            "transferLearning": "Aktarım"
         }
     },
     "output": {

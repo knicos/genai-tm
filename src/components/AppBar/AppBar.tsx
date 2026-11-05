@@ -5,18 +5,17 @@ import SaveAltIcon from '@mui/icons-material/SaveAlt';
 import FileOpenIcon from '@mui/icons-material/FileOpen';
 import style from './AppBar.module.css';
 import { useAtomValue, useSetAtom } from 'jotai';
-import { feedbackAtom, loadState, menuShowSettings, saveState, showOpenDialog } from '../../state';
+import { featureFlagsAtom, loadState, menuShowSettings, saveState, showOpenDialog } from '../../state';
 import SettingsIcon from '@mui/icons-material/Settings';
-import { IconButton, Link as MUILink } from '@mui/material';
+import { IconButton, Link as MUILink, Tooltip } from '@mui/material';
 import Suggestion from '../Suggestion/Suggestion';
-import { BusyButton, Feedback, LangSelect } from '@genai-fi/base';
+import { BusyButton, Button, ReportDialog, LangSelect } from '@genai-fi/base';
+import ReportIcon from '@mui/icons-material/Report';
 
 interface Props {
     showReminder?: boolean;
     onSave: () => void;
 }
-
-const FEEDBACK_DELAY = 30 * 1000;
 
 export const LANGS = [
     { name: 'de-DE', label: 'Deutsch' },
@@ -45,7 +44,8 @@ export default function ApplicationBar({ showReminder, onSave }: Props) {
     const setShowOpenDialog = useSetAtom(showOpenDialog);
     const isloading = useAtomValue(loadState);
     const setShowSettings = useSetAtom(menuShowSettings);
-    const showFeedback = useAtomValue(feedbackAtom);
+    const { allowReportProblem } = useAtomValue(featureFlagsAtom);
+    const [showReportDialog, setShowReportDialog] = useState(false);
 
     const openFile = useCallback(() => {
         setShowOpenDialog(true);
@@ -106,14 +106,21 @@ export default function ApplicationBar({ showReminder, onSave }: Props) {
                     </BusyButton>
                 </div>
                 <div className={showSettings ? style.langBarWithSettings : style.langBar}>
-                    {showFeedback && (
-                        <Feedback
-                            application="tm"
-                            variant="contained"
-                            delay={FEEDBACK_DELAY}
-                            apiUrl={import.meta.env.VITE_FEEDBACK_URL}
-                            style={{ marginRight: '1rem' }}
-                        />
+                    {allowReportProblem && (
+                        <Tooltip
+                            title={t('app.reportProblemTip')}
+                            arrow
+                        >
+                            <Button
+                                variant="outlined"
+                                color="inherit"
+                                startIcon={<ReportIcon fontSize="small" />}
+                                sx={{ fontSize: '0.75rem', marginRight: '1rem' }}
+                                onClick={() => setShowReportDialog(true)}
+                            >
+                                {t('app.reportProblem')}
+                            </Button>
+                        </Tooltip>
                     )}
                     <LangSelect
                         languages={LANGS}
@@ -131,6 +138,14 @@ export default function ApplicationBar({ showReminder, onSave }: Props) {
                     >
                         <SettingsIcon fontSize="large" />
                     </IconButton>
+                )}
+                {allowReportProblem && showReportDialog && (
+                    <ReportDialog
+                        application="tm"
+                        apiURL={import.meta.env.VITE_APP_API}
+                        open={showReportDialog}
+                        onClose={() => setShowReportDialog(false)}
+                    />
                 )}
             </div>
         </nav>

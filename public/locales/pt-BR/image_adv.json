@@ -16,7 +16,9 @@
         "teachingMaterials": "Materiais didáticos",
         "selectModel": "O que você quer classificar?",
         "enableUSB": "Usar dispositivo USB",
-        "subtitle": "Crie classificadores com seus próprios dados, sem precisar programar"
+        "subtitle": "Crie classificadores com seus próprios dados, sem precisar programar",
+        "reportProblem": "Feedback",
+        "reportProblemTip": "Conte-nos sobre um problema ou uma ideia."
     },
     "save": {
         "title": "Salvar Classificador",
@@ -230,6 +232,11 @@
         },
         "aria": {
             "more": "mais opções"
+        },
+        "buttons": {
+            "statistics": "Estatísticas",
+            "heatmap": "Explicar",
+            "transferLearning": "Transferência"
         }
     },
     "output": {

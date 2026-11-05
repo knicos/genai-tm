@@ -78,6 +78,26 @@
         "errorMessage": "Emmo voinnuh lähettyä sinun palautettu. Kokeile uvvessah myöhembi.",
         "thankYou": "Kiitokseh sinun palauttehes!"
     },
+    "app": {
+        "report": {
+            "title": "Palautettu vai virheilmoitus",
+            "reason": "Syy",
+            "bug": "On tapahtunuh ongelmu",
+            "feedback": "Minul on ehdotus",
+            "other": "Toine syy",
+            "message": "Viesti",
+            "send": "Lähetä",
+            "error": "Ilmoitukseh lähettämine ei onnisšunuh.",
+            "characterCount": "{{count}} / {{max}} kirjainta",
+            "cancel": "Perävytä",
+            "close": "Salbua",
+            "messageTooLong": "Viesti on liijan pitkä.",
+            "messageRequired": "Viesti on tarvis.",
+            "thankYou": "Kiitokseh!",
+            "success": "Palautettu lähetettih onnisšuneh."
+        },
+        "cancel": "Perävytä"
+    },
     "clock": {
         "hours": "h",
         "minutes": "min",

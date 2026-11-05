@@ -116,6 +116,26 @@
         "errorMessage": "Geri bildiriminizi gönderemedik. Lütfen daha sonra tekrar deneyin.",
         "thankYou": "Geri bildiriminiz için teşekkürler!"
     },
+    "app": {
+        "report": {
+            "title": "Geri Bildirim veya Hata",
+            "reason": "Neden",
+            "bug": "Bir sorun var",
+            "feedback": "Bir önerim var",
+            "other": "Diğer neden",
+            "message": "Mesaj",
+            "send": "Gönder",
+            "error": "Rapor gönderilemedi.",
+            "characterCount": "{{max}} karakterden {{count}} karakter",
+            "cancel": "İptal",
+            "close": "Kapat",
+            "messageTooLong": "Mesaj çok uzun.",
+            "messageRequired": "Mesaj gerekli.",
+            "thankYou": "Teşekkürler!",
+            "success": "Geri bildirim başarıyla gönderildi."
+        },
+        "cancel": "İptal"
+    },
     "clock": {
         "hours": "Sa",
         "minutes": "Dak",

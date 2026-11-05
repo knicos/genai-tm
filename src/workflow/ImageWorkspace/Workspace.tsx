@@ -335,28 +335,28 @@ export default function Workspace({ step, visitedStep, onComplete, saveTrigger, 
                         />
                         <div className={style.previewActions}>
                             <BoxButton
-                                label={'Statistics'}
+                                label={t('model.buttons.statistics')}
                                 icon={<InsertChartOutlinedIcon />}
                                 widget={'statistics'}
                                 onClick={() => doSidebar('statistics')}
-                                style={{ width: 68, height: 68 }}
+                                style={{ width: 75, height: 75, wordBreak: 'break-word' }}
                             />
                             {canShowHeatmap && (
                                 <BoxButton
-                                    label={'Heatmap'}
+                                    label={t('model.buttons.heatmap')}
                                     icon={<LocalFireDepartmentIcon />}
                                     widget={'heatmap'}
                                     onClick={() => doSidebar('visualization')}
-                                    style={{ width: 68, height: 68 }}
+                                    style={{ width: 75, height: 75, wordBreak: 'break-word' }}
                                 />
                             )}
                             {canShowTransferLearning && (
                                 <BoxButton
-                                    label={'Transfer Learning'}
+                                    label={t('model.buttons.transferLearning')}
                                     icon={<DeviceHubIcon />}
                                     widget={'transferLearning'}
                                     onClick={() => doSidebar('transferLearning')}
-                                    style={{ width: 68, height: 68 }}
+                                    style={{ width: 75, height: 75, wordBreak: 'break-word' }}
                                 />
                             )}
                         </div>

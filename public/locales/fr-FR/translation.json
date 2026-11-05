@@ -159,6 +159,26 @@
         "errorMessage": "Nous n'avons pas pu envoyer votre avis. Veuillez réessayer plus tard.",
         "thankYou": "Merci pour votre avis !"
     },
+    "app": {
+        "report": {
+            "title": "Avis ou signalement de bug",
+            "reason": "Motif",
+            "bug": "Il y a un problème",
+            "feedback": "J'ai une suggestion",
+            "other": "Autre motif",
+            "message": "Message",
+            "send": "Envoyer",
+            "error": "Échec de l'envoi du signalement.",
+            "characterCount": "{{count}} caractères sur {{max}}",
+            "cancel": "Annuler",
+            "close": "Fermer",
+            "messageTooLong": "Le message est trop long.",
+            "messageRequired": "Un message est obligatoire.",
+            "thankYou": "Merci !",
+            "success": "Votre avis a été envoyé."
+        },
+        "cancel": "Annuler"
+    },
     "clock": {
         "hours": "h",
         "minutes": "min",

@@ -78,6 +78,26 @@
         "errorMessage": "Wir konnten dein Feedback nicht senden. Bitte versuche es später erneut.",
         "thankYou": "Vielen Dank für dein Feedback!"
     },
+    "app": {
+        "report": {
+            "title": "Feedback oder Fehler",
+            "reason": "Grund",
+            "bug": "Es gibt ein Problem",
+            "feedback": "Ich habe einen Vorschlag",
+            "other": "Anderer Grund",
+            "message": "Nachricht",
+            "send": "Senden",
+            "error": "Der Bericht konnte nicht gesendet werden.",
+            "characterCount": "{{count}} von {{max}} Zeichen",
+            "cancel": "Abbrechen",
+            "close": "Schließen",
+            "messageTooLong": "Die Nachricht ist zu lang.",
+            "messageRequired": "Eine Nachricht ist erforderlich.",
+            "thankYou": "Vielen Dank!",
+            "success": "Feedback erfolgreich gesendet."
+        },
+        "cancel": "Abbrechen"
+    },
     "clock": {
         "hours": "Std",
         "minutes": "Min",

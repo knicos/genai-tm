@@ -159,6 +159,26 @@
         "errorMessage": "Non siamo riusciti a inviare il tuo feedback. Riprova più tardi.",
         "thankYou": "Grazie per il tuo feedback!"
     },
+    "app": {
+        "report": {
+            "title": "Feedback o problema",
+            "reason": "Motivo",
+            "bug": "C'è un problema",
+            "feedback": "Ho un suggerimento",
+            "other": "Altro motivo",
+            "message": "Messaggio",
+            "send": "Invia",
+            "error": "Invio della segnalazione non riuscito.",
+            "characterCount": "{{count}} caratteri su {{max}}",
+            "cancel": "Annulla",
+            "close": "Chiudi",
+            "messageTooLong": "Il messaggio è troppo lungo.",
+            "messageRequired": "Il messaggio è obbligatorio.",
+            "thankYou": "Grazie!",
+            "success": "Feedback inviato correttamente."
+        },
+        "cancel": "Annulla"
+    },
     "clock": {
         "hours": "h",
         "minutes": "min",

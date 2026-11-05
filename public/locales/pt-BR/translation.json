@@ -78,6 +78,26 @@
         "errorMessage": "Não foi possível enviar seu feedback. Tente novamente mais tarde.",
         "thankYou": "Obrigado pelo seu feedback!"
     },
+    "app": {
+        "report": {
+            "title": "Feedback ou erro",
+            "reason": "Motivo",
+            "bug": "Há um problema",
+            "feedback": "Tenho uma sugestão",
+            "other": "Outro motivo",
+            "message": "Mensagem",
+            "send": "Enviar",
+            "error": "Falha ao enviar o relato.",
+            "characterCount": "{{count}} de {{max}} caracteres",
+            "cancel": "Cancelar",
+            "close": "Fechar",
+            "messageTooLong": "A mensagem é muito longa.",
+            "messageRequired": "A mensagem é obrigatória.",
+            "thankYou": "Obrigado!",
+            "success": "Feedback enviado com sucesso."
+        },
+        "cancel": "Cancelar"
+    },
     "clock": {
         "hours": "h",
         "minutes": "min",

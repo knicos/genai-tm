@@ -16,7 +16,9 @@
         "teachingMaterials": "Nyenzo za kufundishia",
         "selectModel": "Unataka kuainisha nini?",
         "enableUSB": "Tumia kifaa cha USB",
-        "subtitle": "Unda vichanganuzi kwa kutumia data yako mwenyewe bila kuandika msimbo"
+        "subtitle": "Unda vichanganuzi kwa kutumia data yako mwenyewe bila kuandika msimbo",
+        "reportProblem": "Maoni",
+        "reportProblemTip": "Tuarifu kuhusu tatizo au wazo."
     },
     "load": {
         "title": "Fungua Kichanganuzi",
@@ -230,6 +232,11 @@
         },
         "aria": {
             "zaidi": "chaguzi zaidi"
+        },
+        "buttons": {
+            "statistics": "Takwimu",
+            "heatmap": "Eleza",
+            "transferLearning": "Hamisha"
         }
     },
     "output": {

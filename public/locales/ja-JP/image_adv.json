@@ -16,7 +16,9 @@
         "teachingMaterials": "教材",
         "selectModel": "何を分類したいですか？",
         "enableUSB": "USB デバイスを使用",
-        "subtitle": "コーディング不要で、自分のデータを使って分類器を作成"
+        "subtitle": "コーディング不要で、自分のデータを使って分類器を作成",
+        "reportProblem": "フィードバック",
+        "reportProblemTip": "問題やアイデアをお知らせください。"
     },
     "load": {
         "title": "分類器を開く",
@@ -230,6 +232,11 @@
         },
         "aria": {
             "more": "詳細オプション"
+        },
+        "buttons": {
+            "statistics": "統計",
+            "heatmap": "説明",
+            "transferLearning": "転移"
         }
     },
     "output": {

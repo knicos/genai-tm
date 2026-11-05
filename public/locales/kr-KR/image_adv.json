@@ -16,7 +16,9 @@
         "teachingMaterials": "학습 자료",
         "selectModel": "무엇을 분류하고 싶나요?",
         "enableUSB": "USB 장치 사용",
-        "subtitle": "코딩 없이 나만의 데이터로 분류기를 만들어 보세요"
+        "subtitle": "코딩 없이 나만의 데이터로 분류기를 만들어 보세요",
+        "reportProblem": "피드백",
+        "reportProblemTip": "문제나 아이디어를 알려주세요."
     },
     "load": {
         "title": "분류기 열기",
@@ -230,6 +232,11 @@
         },
         "aria": {
             "more": "추가 옵션"
+        },
+        "buttons": {
+            "statistics": "통계",
+            "heatmap": "설명",
+            "transferLearning": "전이"
         }
     },
     "output": {

@@ -16,7 +16,9 @@
         "teachingMaterials": "Ressources pédagogiques",
         "selectModel": "Que voulez-vous classifier ?",
         "enableUSB": "Utiliser un appareil USB",
-        "subtitle": "Créez des classificateurs avec vos propres données, sans coder"
+        "subtitle": "Créez des classificateurs avec vos propres données, sans coder",
+        "reportProblem": "Avis",
+        "reportProblemTip": "Signalez-nous un problème ou partagez une idée."
     },
     "load": {
         "title": "Ouvrir le Classificateur",
@@ -231,6 +233,11 @@
         },
         "aria": {
             "more": "plus d'options"
+        },
+        "buttons": {
+            "statistics": "Stats",
+            "heatmap": "Expliquer",
+            "transferLearning": "Transfert"
         }
     },
     "output": {

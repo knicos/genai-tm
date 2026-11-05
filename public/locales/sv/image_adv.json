@@ -16,7 +16,9 @@
         "teachingMaterials": "Undervisningsmaterial",
         "selectModel": "Vad vill du klassificera?",
         "enableUSB": "Använd USB-enhet",
-        "subtitle": "Skapa klassificerare med dina egna data, utan kodning"
+        "subtitle": "Skapa klassificerare med dina egna data, utan kodning",
+        "reportProblem": "Feedback",
+        "reportProblemTip": "Rapportera ett problem eller dela en idé med oss."
     },
     "save": {
         "title": "Spara Klassificerare",
@@ -230,6 +232,11 @@
         },
         "aria": {
             "more": "fler alternativ"
+        },
+        "buttons": {
+            "statistics": "Statistik",
+            "heatmap": "Förklara",
+            "transferLearning": "Överför"
         }
     },
     "output": {

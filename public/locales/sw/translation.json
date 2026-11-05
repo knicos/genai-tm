@@ -159,6 +159,26 @@
         "errorMessage": "Hatukuweza kutuma maoni yako. Tafadhali jaribu tena baadaye.",
         "thankYou": "Asante kwa maoni yako!"
     },
+    "app": {
+        "report": {
+            "title": "Maoni au hitilafu",
+            "reason": "Sababu",
+            "bug": "Kuna tatizo",
+            "feedback": "Nina pendekezo",
+            "other": "Sababu nyingine",
+            "message": "Ujumbe",
+            "send": "Tuma",
+            "error": "Imeshindwa kutuma ripoti.",
+            "characterCount": "Herufi {{count}} kati ya {{max}}",
+            "cancel": "Ghairi",
+            "close": "Funga",
+            "messageTooLong": "Ujumbe ni mrefu sana.",
+            "messageRequired": "Ujumbe unahitajika.",
+            "thankYou": "Asante!",
+            "success": "Maoni yametumwa kikamilifu."
+        },
+        "cancel": "Ghairi"
+    },
     "clock": {
         "hours": "Saa",
         "minutes": "Dak",
