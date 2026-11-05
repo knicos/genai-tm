@@ -40,14 +40,16 @@ export function TransferLearningStages({ activeStage, onStageChange }: TransferL
     ];
 
     return (
-        <ThemeProvider theme={darkTheme}>
-            <Apps
-                activeApp={activeStage}
-                apps={apps}
-                onSelect={(app: AppEntry) => {
-                    onStageChange?.(app.id);
-                }}
-            />
+        <>
+            <ThemeProvider theme={darkTheme}>
+                <Apps
+                    activeApp={activeStage}
+                    apps={apps}
+                    onSelect={(app: AppEntry) => {
+                        onStageChange?.(app.id);
+                    }}
+                />
+            </ThemeProvider>
             <div className={style.stageContent}>
                 {activeStage === 'classes' && <PretrainedClasses />}
                 {activeStage === 'connections' && (
@@ -58,6 +60,6 @@ export function TransferLearningStages({ activeStage, onStageChange }: TransferL
                 )}
                 {activeStage === 'advanced' && <TransferLearningMatrix />}
             </div>
-        </ThemeProvider>
+        </>
     );
 }
