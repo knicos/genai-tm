@@ -19,7 +19,7 @@ export default function PeerDeployer() {
         >
             <ConnectionStatus
                 api={import.meta.env.VITE_APP_PEER_URL}
-                checkURL={import.meta.env.VITE_APP_API}
+                checkURL={import.meta.env.VITE_APP_PEER_URL}
                 appName="tm"
                 visibility={0}
             />

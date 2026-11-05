@@ -7,7 +7,7 @@ import style from './AppBar.module.css';
 import { useAtomValue, useSetAtom } from 'jotai';
 import { featureFlagsAtom, loadState, menuShowSettings, saveState, showOpenDialog } from '../../state';
 import SettingsIcon from '@mui/icons-material/Settings';
-import { IconButton, Link as MUILink, Tooltip } from '@mui/material';
+import { IconButton, Tooltip } from '@mui/material';
 import Suggestion from '../Suggestion/Suggestion';
 import { BusyButton, Button, ReportDialog, LangSelect } from '@genai-fi/base';
 import ReportIcon from '@mui/icons-material/Report';
@@ -130,7 +130,6 @@ export default function ApplicationBar({ showReminder, onSave }: Props) {
                 </div>
                 {showSettings && (
                     <IconButton
-                        component={MUILink}
                         onClick={doSettings}
                         size="large"
                         color="inherit"
