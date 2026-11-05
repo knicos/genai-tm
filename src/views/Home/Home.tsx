@@ -1,4 +1,5 @@
 import { useTranslation } from 'react-i18next';
+import { useLanguageQuery } from '../../util/useLanguageQuery';
 import style from './style.module.css';
 import Model from './Model';
 import { useState } from 'react';
@@ -14,6 +15,7 @@ import { LANGS } from '@genaitm/components/AppBar/AppBar';
 import RecordVoiceOverIcon from '@mui/icons-material/RecordVoiceOver';
 
 export default function Home() {
+    useLanguageQuery();
     const { t } = useTranslation('image_adv');
     const [usb, setUsb] = useState(false);
 

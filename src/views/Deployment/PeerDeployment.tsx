@@ -1,4 +1,5 @@
 import { useState, useCallback, useEffect } from 'react';
+import { useLanguageQuery } from '@genaitm/util/useLanguageQuery';
 import Deployment from './Deployment';
 import { useSearchParams, useParams } from 'react-router';
 import style from './style.module.css';
@@ -16,6 +17,7 @@ import { TeachableModel } from '@genai-fi/classifier';
 import { BehaviourType } from '@genaitm/workflow/Behaviour/Behaviour';
 
 export function Component() {
+    useLanguageQuery();
     const { code } = useParams();
     const [query, setQuery] = useSearchParams();
     const [hadError, setHadError] = useState(false);

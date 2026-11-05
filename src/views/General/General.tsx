@@ -5,6 +5,7 @@ import { decompressFromEncodedURIComponent } from 'lz-string';
 import Classifier from './Classifier';
 import { Privacy } from '@genai-fi/base';
 import gitInfo from '../../generatedGitInfo.json';
+import { useLanguageQuery } from '@genaitm/util/useLanguageQuery';
 
 export type VARIANTS = keyof typeof _settings;
 export type VariantConfiguration = Record<VARIANTS, IVariantContext>;
@@ -12,6 +13,7 @@ export type VariantConfiguration = Record<VARIANTS, IVariantContext>;
 const settings = _settings as VariantConfiguration;
 
 export function Component() {
+    useLanguageQuery();
     const [params] = useSearchParams();
     const { kind, variant } = useParams();
 

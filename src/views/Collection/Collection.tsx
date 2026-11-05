@@ -4,8 +4,10 @@ import { theme, useRandom } from '@genai-fi/base';
 import ConnectionStatus from '@genaitm/components/ConnectionStatus/ConnectionStatus';
 import { Peer } from '@genai-fi/base/hooks/peer';
 import { SampleCollector } from './SampleCollector';
+import { useLanguageQuery } from '@genaitm/util/useLanguageQuery';
 
 export function Component() {
+    useLanguageQuery();
     const { code } = useParams();
     const MYCODE = useRandom(8);
 
