@@ -320,7 +320,6 @@ export default function Workspace({ step, visitedStep, onComplete, saveTrigger, 
                         onLabelEdited={doLabelEdited}
                     />
                     <Trainer
-                        focus={step === 0}
                         editing={editingData}
                         onTrained={doTrained}
                     />

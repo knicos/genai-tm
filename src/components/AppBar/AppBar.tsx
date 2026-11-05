@@ -105,23 +105,24 @@ export default function ApplicationBar({ showReminder, onSave }: Props) {
                         {t('app.save')}
                     </BusyButton>
                 </div>
-                <div className={showSettings ? style.langBarWithSettings : style.langBar}>
-                    {allowReportProblem && (
-                        <Tooltip
-                            title={t('app.reportProblemTip')}
-                            arrow
+                {allowReportProblem && (
+                    <Tooltip
+                        title={t('app.reportProblemTip')}
+                        arrow
+                        className={style.reportButton}
+                    >
+                        <Button
+                            variant="outlined"
+                            color="inherit"
+                            startIcon={<ReportIcon fontSize="small" />}
+                            sx={{ fontSize: '0.75rem', marginRight: '1rem' }}
+                            onClick={() => setShowReportDialog(true)}
                         >
-                            <Button
-                                variant="outlined"
-                                color="inherit"
-                                startIcon={<ReportIcon fontSize="small" />}
-                                sx={{ fontSize: '0.75rem', marginRight: '1rem' }}
-                                onClick={() => setShowReportDialog(true)}
-                            >
-                                {t('app.reportProblem')}
-                            </Button>
-                        </Tooltip>
-                    )}
+                            {t('app.reportProblem')}
+                        </Button>
+                    </Tooltip>
+                )}
+                <div className={showSettings ? style.langBarWithSettings : style.langBar}>
                     <LangSelect
                         languages={LANGS}
                         dark
